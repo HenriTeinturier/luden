@@ -1,0 +1,8 @@
+node_modules
+.output
+.tanstack
+.nitro
+package-lock.json
+src/routeTree.gen.ts
+prisma/migrations
+prisma/schema.prisma

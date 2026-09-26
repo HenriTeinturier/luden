@@ -1,0 +1,512 @@
+@media (min-width: 1550px) {
+  .page {
+    padding-top: 48px;
+  }
+  .hero {
+    min-height: 400px;
+  }
+  .hero-art {
+    height: 400px;
+    transform: scale(1.08);
+    transform-origin: center;
+  }
+  .hero :is(h1, h2) {
+    font-size: 58px;
+  }
+  .hero-copy {
+    padding: 48px;
+  }
+  .hero p {
+    font-size: 13px;
+  }
+  .hero-art-caption {
+    bottom: 47px;
+  }
+  .home-games {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .platform-art {
+    height: 150px;
+  }
+  .platform-card-bottom h3 {
+    font-size: 15px;
+  }
+  .game-card h3 {
+    font-size: 14px;
+  }
+  .game-platform {
+    font-size: 10px;
+  }
+  .game-card-bottom {
+    font-size: 10px;
+  }
+  .page-heading h1 {
+    font-size: 39px;
+  }
+  .page-heading p {
+    font-size: 13px;
+  }
+}
+@media (max-width: 1200px) {
+  :root {
+    --sidebar: 206px;
+  }
+  .sidebar {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .page {
+    padding: 32px 28px 45px;
+  }
+  .topbar {
+    padding: 0 28px;
+  }
+  .topbar-breadcrumb {
+    display: none;
+  }
+  .topbar-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .game-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .platform-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .home-platforms {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .home-platforms .platform-card {
+    padding: 13px 10px;
+  }
+  .home-platforms .platform-card-bottom h3 {
+    font-size: 11px;
+  }
+  .stat {
+    padding: 18px 12px;
+    gap: 9px;
+  }
+  .stat-icon {
+    width: 28px;
+    height: 28px;
+  }
+  .stat-icon svg {
+    width: 16px;
+  }
+  .stat > svg:last-child {
+    display: none;
+  }
+  .stat strong {
+    font-size: 23px;
+  }
+  .stat div > span {
+    font-size: 8px;
+  }
+  .hero-copy {
+    padding: 33px;
+  }
+  .hero :is(h1, h2) {
+    font-size: 43px;
+  }
+  .hero-art {
+    min-width: 285px;
+  }
+  .memory-card {
+    width: 139px;
+    height: 208px;
+  }
+  .memory-card.front {
+    left: 46%;
+  }
+  .memory-card.middle {
+    left: 25%;
+  }
+  .memory-card.back {
+    left: 4%;
+  }
+  .hero-art-caption {
+    left: 13%;
+  }
+  .game-form {
+    grid-template-columns: minmax(0, 1fr) 230px;
+    gap: 18px;
+  }
+  .form-section {
+    padding: 20px;
+  }
+  .cover-editor {
+    padding: 16px;
+  }
+  .form-section-title h2 {
+    font-size: 15px;
+  }
+  .detail-layout {
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 30px;
+  }
+  .detail-content > h1 {
+    font-size: 32px;
+  }
+  .first-page {
+    padding: 23px;
+    gap: 18px;
+  }
+  .first-page h2 {
+    font-size: 17px;
+  }
+  .first-page .button {
+    padding: 10px;
+    font-size: 9px;
+  }
+}
+@media (max-width: 980px) {
+  .sidebar {
+    width: 76px;
+    padding: 26px 10px;
+  }
+  .workspace {
+    margin-left: 76px;
+  }
+  .brand {
+    font-size: 0;
+    margin: 0 11px 32px;
+    gap: 0;
+  }
+  .brand-dot {
+    display: none;
+  }
+  .brand-symbol {
+    min-width: 28px;
+  }
+  .sidebar-caption,
+  .nav-item span,
+  .nav-item small,
+  .sidebar-platforms,
+  .sidebar-bottom .local-note,
+  .profile-chip div {
+    display: none;
+  }
+  .nav-item {
+    justify-content: center;
+    padding: 15px 0;
+    font-size: 0;
+    gap: 0;
+  }
+  .nav-item svg {
+    width: 20px;
+    height: 20px;
+  }
+  .profile-chip {
+    justify-content: center;
+  }
+  .profile-chip .avatar {
+    font-size: 17px;
+  }
+  .nav-item svg {
+    display: block;
+  }
+  .game-form {
+    grid-template-columns: minmax(0, 1fr) 225px;
+  }
+  .page-heading h1 {
+    font-size: 30px;
+  }
+  .edition-badge {
+    display: none;
+  }
+  .gallery-toolbar {
+    flex-wrap: wrap;
+  }
+  .gallery-controls {
+    margin-left: auto;
+  }
+  .hero-art {
+    min-width: 290px;
+  }
+  .hero :is(h1, h2) {
+    font-size: 41px;
+  }
+  .hero-copy {
+    padding: 30px;
+  }
+  .machine-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .settings-title .status-pill {
+    font-size: 8px;
+  }
+  .detail-two-columns {
+    grid-template-columns: 1fr;
+  }
+  .detail-content > h1 {
+    font-size: 29px;
+  }
+}
+@media (max-width: 720px) {
+  .page {
+    padding: 27px 20px 35px;
+  }
+  .topbar {
+    height: 68px;
+    padding: 0 20px;
+  }
+  .global-search input {
+    width: 115px;
+  }
+  .topbar-actions {
+    gap: 10px;
+  }
+  .button-sm {
+    font-size: 10px;
+    padding: 9px 11px;
+  }
+  .page-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .page-heading h1 {
+    font-size: 29px;
+  }
+  .page-heading p {
+    font-size: 11px;
+  }
+  .hero-art {
+    display: none;
+  }
+  .hero {
+    min-height: 320px;
+  }
+  .hero-copy {
+    padding: 33px;
+  }
+  .hero :is(h1, h2) {
+    font-size: 47px;
+  }
+  .stats-row {
+    grid-template-columns: 1fr 1fr;
+  }
+  .stat:nth-child(3) {
+    border-left: 0;
+  }
+  .stat:nth-child(n + 3) {
+    border-top: 1px solid var(--line);
+  }
+  .stat {
+    padding: 20px 16px;
+  }
+  .stat div > span {
+    font-size: 9px;
+  }
+  .platform-grid,
+  .home-platforms {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 13px;
+  }
+  .game-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 23px 16px;
+  }
+  .first-page {
+    flex-wrap: wrap;
+  }
+  .first-page-art {
+    display: none;
+  }
+  .first-page .button {
+    margin-left: 0;
+  }
+  .first-page > div {
+    width: 100%;
+  }
+  .section-heading h2 {
+    font-size: 16px;
+  }
+  .section-heading .text-link {
+    font-size: 9px;
+  }
+  .gallery-controls {
+    flex-wrap: wrap;
+    margin: 0;
+    width: 100%;
+  }
+  .gallery-controls select {
+    font-size: 9px;
+    max-width: 160px;
+  }
+  .view-toggle {
+    margin-left: auto;
+  }
+  .gallery-hint {
+    display: none;
+  }
+  .advanced-filters {
+    flex-wrap: wrap;
+  }
+  .filter-search {
+    width: 100%;
+    flex-basis: 100%;
+  }
+  .platform-hero {
+    padding: 25px;
+  }
+  .platform-hero h1 {
+    font-size: 31px;
+  }
+  .platform-hero > .platform-art {
+    display: none;
+  }
+  .machine-grid {
+    grid-template-columns: 1fr;
+  }
+  .collections-grid {
+    grid-template-columns: 1fr;
+  }
+  .collection-context {
+    display: block;
+  }
+  .collection-context p {
+    margin-top: 10px;
+  }
+  .game-form {
+    grid-template-columns: 1fr;
+  }
+  .form-main {
+    order: 2;
+  }
+  .form-aside {
+    order: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+  .form-savebar {
+    order: 3;
+  }
+  .cover-upload-preview {
+    max-height: 180px;
+    aspect-ratio: 3/4;
+    margin: 14px auto;
+  }
+  .cover-editor {
+    padding: 15px;
+  }
+  .cover-editor .eyebrow {
+    font-size: 6px;
+  }
+  .desire-panel {
+    margin: 0;
+    padding: 17px;
+    align-self: start;
+  }
+  .form-savebar > span {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .form-savebar .button {
+    flex: 1;
+    font-size: 10px;
+  }
+  .import-search {
+    flex-wrap: wrap;
+  }
+  .import-search select {
+    width: 100%;
+    max-width: none;
+  }
+  .import-panel {
+    padding: 17px;
+  }
+  .import-panel > div:first-child > span {
+    display: none;
+  }
+  .igdb-results {
+    grid-template-columns: 1fr;
+  }
+  .form-row {
+    gap: 12px;
+  }
+  .form-section-title h2 {
+    font-size: 16px;
+  }
+  .detail-layout {
+    grid-template-columns: 1fr;
+  }
+  .detail-cover-column {
+    max-width: 230px;
+    margin: auto;
+    width: 100%;
+  }
+  .detail-content > h1 {
+    font-size: 32px;
+  }
+  .detail-two-columns {
+    grid-template-columns: 1fr 1fr;
+  }
+  .experience-body {
+    gap: 20px;
+  }
+  .detail-memory {
+    font-size: 18px;
+  }
+  .settings-section {
+    padding: 22px;
+  }
+  .settings-title {
+    flex-wrap: wrap;
+  }
+  .settings-title h2 {
+    font-size: 15px;
+  }
+  .settings-title .status-pill {
+    margin-left: 0;
+  }
+  .profile-form {
+    display: block;
+  }
+  .profile-form .button {
+    margin-top: 15px;
+  }
+  .footer {
+    padding: 18px 20px;
+  }
+  .footer > span:first-child > span:last-child {
+    display: none;
+  }
+  .footer > span:last-child {
+    font-size: 8px;
+  }
+  .collection-shelf {
+    height: 200px;
+  }
+  .shelf-cover {
+    height: 155px;
+    width: 105px;
+  }
+  .page-heading .button {
+    font-size: 10px;
+  }
+  .section-heading {
+    gap: 10px;
+  }
+  .collection-card-info h2 {
+    font-size: 21px;
+  }
+  .memory-quote {
+    padding: 25px 5px;
+  }
+  .memory-quote blockquote {
+    font-size: 21px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *:before,
+  *:after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

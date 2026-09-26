@@ -1,0 +1,191 @@
+import { coverFormat } from '../lib/presentation'
+import { useNavigate, useSearch } from '@tanstack/react-router'
+import { Search, LayoutGrid, List, SlidersHorizontal, X } from 'lucide-react'
+import { useState } from 'react'
+import { filterGames, type GallerySearch } from '../lib/gallery'
+import type { Game } from '../lib/types'
+import { playStatuses } from '../lib/platforms'
+import { EmptyState, GameCard, useLibrary } from './ui'
+
+export function Gallery({
+  games,
+  platformLocked = false,
+}: {
+  games: Game[]
+  platformLocked?: boolean
+}) {
+  const library = useLibrary()
+  const filters = useSearch({ strict: false }) as GallerySearch
+  const navigate = useNavigate()
+  const [advanced, setAdvanced] = useState(false)
+  const update = (patch: Partial<GallerySearch>) => {
+    void navigate({ to: '.', search: { ...filters, ...patch }, replace: true })
+  }
+  const visible = filterGames(games, filters)
+  const filtered = Boolean(
+    filters.q ||
+    filters.platform ||
+    filters.status ||
+    filters.machine ||
+    filters.favorite ||
+    (filters.owned && filters.owned !== 'all'),
+  )
+  return (
+    <>
+      <div className="gallery-toolbar">
+        <div className="filter-search">
+          <Search size={17} />
+          <input
+            aria-label="Filtrer les jeux"
+            placeholder="Un titre, un souvenir, un genre…"
+            value={filters.q ?? ''}
+            onChange={(e) => update({ q: e.target.value })}
+          />
+          {filters.q && (
+            <button
+              className="icon-button"
+              aria-label="Effacer la recherche"
+              onClick={() => update({ q: '' })}
+            >
+              <X size={14} />
+            </button>
+          )}
+        </div>
+        <div className="gallery-controls">
+          {!platformLocked && (
+            <select
+              aria-label="Filtrer par plateforme"
+              value={filters.platform ?? ''}
+              onChange={(e) => update({ platform: e.target.value })}
+            >
+              <option value="">Toutes les plateformes</option>
+              {library.platforms
+                .filter((p) => games.some((g) => g.platformId === p.id))
+                .map((p) => (
+                  <option key={p.id} value={p.id}>
+                    {p.name}
+                  </option>
+                ))}
+            </select>
+          )}
+          <select
+            aria-label="Trier les jeux"
+            value={filters.sort ?? 'recent'}
+            onChange={(e) => update({ sort: e.target.value as GallerySearch['sort'] })}
+          >
+            <option value="recent">Derniers ajouts / modifiés</option>
+            <option value="title">Titre A → Z</option>
+            <option value="rating">Ma note</option>
+            <option value="year">Année de sortie</option>
+            <option value="desire">Mon envie</option>
+          </select>
+          <button
+            className={`icon-button ${advanced ? 'selected' : ''}`}
+            aria-label="Afficher les filtres"
+            aria-expanded={advanced}
+            onClick={() => setAdvanced(!advanced)}
+          >
+            <SlidersHorizontal size={17} />
+          </button>
+          <div className="view-toggle">
+            <button
+              className={!filters.view || filters.view === 'grid' ? 'selected' : ''}
+              aria-label="Vue galerie"
+              aria-pressed={filters.view !== 'list'}
+              onClick={() => update({ view: 'grid' })}
+            >
+              <LayoutGrid size={16} />
+            </button>
+            <button
+              className={filters.view === 'list' ? 'selected' : ''}
+              aria-label="Vue compacte"
+              aria-pressed={filters.view === 'list'}
+              onClick={() => update({ view: 'list' })}
+            >
+              <List size={17} />
+            </button>
+          </div>
+        </div>
+      </div>
+      {advanced && (
+        <div className="advanced-filters">
+          <select
+            aria-label="Statut de jeu"
+            value={filters.status ?? ''}
+            onChange={(e) => update({ status: e.target.value })}
+          >
+            <option value="">Tous les statuts</option>
+            {Object.entries(playStatuses).map(([value, label]) => (
+              <option key={value} value={value}>
+                {label}
+              </option>
+            ))}
+          </select>
+          <select
+            aria-label="Possession"
+            value={filters.owned ?? 'all'}
+            onChange={(e) => update({ owned: e.target.value as GallerySearch['owned'] })}
+          >
+            <option value="all">Toutes les possessions</option>
+            <option value="current">Possédés actuellement</option>
+            <option value="past">Possédés autrefois</option>
+            <option value="none">Aucune possession</option>
+          </select>
+          <label className="check-inline">
+            <input
+              type="checkbox"
+              checked={filters.favorite ?? false}
+              onChange={(e) => update({ favorite: e.target.checked })}
+            />
+            Coups de cœur
+          </label>
+        </div>
+      )}
+      <div className="results-line">
+        <span>
+          {visible.length} jeu{visible.length !== 1 ? 'x' : ''}
+          {filtered && ` sur ${games.length}`}
+        </span>
+        {filtered && (
+          <button
+            className="text-link"
+            onClick={() =>
+              update({
+                q: '',
+                platform: '',
+                status: '',
+                machine: '',
+                favorite: false,
+                owned: 'all',
+              })
+            }
+          >
+            Réinitialiser les filtres <X size={13} />
+          </button>
+        )}
+        <span className="gallery-hint">Une petite part de votre histoire.</span>
+      </div>
+      {visible.length ? (
+        <div
+          className={
+            filters.view === 'list'
+              ? 'game-list'
+              : `game-grid ${visible.every((g) => coverFormat(g.platformId).wide) ? 'wide-grid' : 'mixed-grid'}`
+          }
+        >
+          {visible.map((game) => (
+            <GameCard key={game.id} game={game} compact={filters.view === 'list'} />
+          ))}
+        </div>
+      ) : filtered ? (
+        <EmptyState
+          title="Aucun jeu pour le moment."
+          description="Essayez un autre titre ou élargissez vos filtres."
+          add={false}
+        />
+      ) : (
+        <EmptyState />
+      )}
+    </>
+  )
+}

@@ -1,0 +1,216 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Profile {
+  id          String       @id @default(cuid())
+  name        String       @default("Ma vie de joueur")
+  games       Game[]
+  machines    Machine[]
+  collections Collection[]
+  media       Media[]
+  createdAt   DateTime     @default(now())
+}
+
+model Platform {
+  id        String @id
+  name      String
+  shortName String
+  family    String
+  color     String
+  era       String
+  igdbId    Int?   @unique
+  games     Game[]
+}
+
+model Machine {
+  id      String  @id @default(cuid())
+  name    String
+  ownerId String
+  owner   Profile @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  games   Game[]
+
+  @@unique([ownerId, name])
+}
+
+model Game {
+  id          String            @id @default(cuid())
+  ownerId     String
+  owner       Profile           @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  platformId  String
+  platform    Platform          @relation(fields: [platformId], references: [id])
+  machineId   String?
+  machine     Machine?          @relation(fields: [machineId], references: [id], onDelete: SetNull)
+  title       String
+  releaseYear Int?
+  developer   String            @default("")
+  publisher   String            @default("")
+  genres      String[]          @default([])
+  summary     String            @default("")
+  igdbId      Int?
+  sourceUrl   String?
+  discover    Boolean           @default(false)
+  desire      Float?
+  favorite    Boolean           @default(false)
+  coverId     String?
+  cover       Media?            @relation(fields: [coverId], references: [id], onDelete: SetNull)
+  experience  Experience?
+  possessions Possession[]
+  media       MediaAttachment[]
+  links       GameLink[]
+  entries     CollectionEntry[]
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  @@index([ownerId, platformId])
+  @@index([ownerId, updatedAt])
+}
+
+model Experience {
+  id     String     @id @default(cuid())
+  gameId String     @unique
+  game   Game       @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  status PlayStatus @default(UNPLAYED)
+  rating Float?
+  memory String     @default("")
+  period String     @default("")
+}
+
+enum PlayStatus {
+  UNPLAYED
+  PLAYED
+  PLAYING
+  FINISHED
+  ABANDONED
+}
+
+model Possession {
+  id     String            @id @default(cuid())
+  gameId String
+  game   Game              @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  format PossessionFormat
+  state  PossessionState   @default(CURRENT)
+  store  String            @default("")
+  media  MediaAttachment[]
+}
+
+enum PossessionFormat {
+  PHYSICAL
+  DIGITAL
+}
+
+enum PossessionState {
+  CURRENT
+  PAST
+}
+
+model Collection {
+  id          String            @id @default(cuid())
+  ownerId     String
+  owner       Profile           @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  name        String
+  description String            @default("")
+  kind        CollectionKind
+  visibility  Visibility        @default(PRIVATE)
+  entries     CollectionEntry[]
+  createdAt   DateTime          @default(now())
+
+  @@index([ownerId])
+}
+
+enum CollectionKind {
+  REAL
+  DREAM
+}
+
+enum Visibility {
+  PRIVATE
+  MEMBERS
+  UNLISTED
+  PUBLIC
+}
+
+model CollectionEntry {
+  collectionId String
+  collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  gameId       String
+  game         Game       @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  addedAt      DateTime   @default(now())
+
+  @@id([collectionId, gameId])
+}
+
+model Media {
+  id          String            @id @default(cuid())
+  ownerId     String
+  owner       Profile           @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  path        String            @unique
+  mimeType    String
+  width       Int
+  height      Int
+  sourceUrl   String?
+  source      MediaSource       @default(UPLOAD)
+  createdAt   DateTime          @default(now())
+  games       Game[]
+  attachments MediaAttachment[]
+}
+
+enum MediaSource {
+  UPLOAD
+  EXTERNAL_URL
+  IGDB
+}
+
+enum MediaCategory {
+  COVER
+  SCREENSHOT
+  BOX
+  MEDIA
+  DOCUMENT
+  OTHER
+}
+
+// Exactly one context (game or owned copy), enforced by the SQL migration.
+model MediaAttachment {
+  id           String        @id @default(cuid())
+  mediaId      String
+  media        Media         @relation(fields: [mediaId], references: [id], onDelete: Restrict)
+  gameId       String?
+  game         Game?         @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  possessionId String?
+  possession   Possession?   @relation(fields: [possessionId], references: [id], onDelete: Cascade)
+  category     MediaCategory @default(COVER)
+  position     Int           @default(0)
+  caption      String        @default("")
+  isPrimary    Boolean       @default(false)
+
+  @@unique([gameId, mediaId])
+  @@unique([possessionId, mediaId])
+  @@index([gameId, position])
+  @@index([possessionId, position])
+}
+
+enum LinkType {
+  VIDEO
+  REVIEW
+  ARTICLE
+  GUIDE
+  OTHER
+}
+
+model GameLink {
+  id       String   @id @default(cuid())
+  gameId   String
+  game     Game     @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  url      String
+  title    String   @default("")
+  type     LinkType @default(OTHER)
+  position Int      @default(0)
+
+  @@index([gameId, position])
+}

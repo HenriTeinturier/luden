@@ -1,0 +1,13 @@
+node_modules/
+.env
+.env.*
+!.env.example
+.output/
+dist/
+.tanstack/
+.nitro/
+coverage/
+*.log
+*.tsbuildinfo
+.local/
+media/

@@ -1,0 +1,10 @@
+@import '@fontsource-variable/dm-sans';
+@import '@fontsource-variable/fraunces';
+@import './styles/layout.css';
+@import './styles/home.css';
+@import './styles/gallery.css';
+@import './styles/forms.css';
+@import './styles/collections.css';
+@import './styles/responsive.css';
+@import './styles/media.css';
+@import './styles/theme.css';

@@ -1,0 +1,221 @@
+import { db, LOCAL_PROFILE_ID as ownerId } from './db'
+import { assertRealCollection, collectionSchema, gameSchema } from '../lib/validation'
+import { removeUnusedImages } from './media'
+
+export async function loadLibrary() {
+  const [profile, platforms, machines, games, collections] = await Promise.all([
+    db.profile.findUniqueOrThrow({ where: { id: ownerId }, select: { name: true } }),
+    db.platform.findMany({ orderBy: { name: 'asc' } }),
+    db.machine.findMany({ where: { ownerId }, orderBy: { name: 'asc' } }),
+    db.game.findMany({
+      where: { ownerId },
+      orderBy: { updatedAt: 'desc' },
+      include: {
+        platform: true,
+        machine: true,
+        cover: { select: { id: true, width: true, height: true } },
+        experience: true,
+        possessions: true,
+        media: {
+          orderBy: { position: 'asc' },
+          include: { media: { select: { width: true, height: true, source: true } } },
+        },
+        links: { orderBy: { position: 'asc' } },
+        entries: { select: { collectionId: true } },
+      },
+    }),
+    db.collection.findMany({
+      where: { ownerId },
+      orderBy: { createdAt: 'asc' },
+      include: { _count: { select: { entries: true } } },
+    }),
+  ])
+  return {
+    profile,
+    platforms,
+    machines,
+    games: games.map((g) => ({
+      ...g,
+      createdAt: g.createdAt.toISOString(),
+      updatedAt: g.updatedAt.toISOString(),
+      coverUrl: g.coverId ? `/media/${g.coverId}` : null,
+    })),
+    collections: collections.map((c) => ({ ...c, createdAt: c.createdAt.toISOString() })),
+    config: {
+      mediaConfigured: Boolean(process.env.LUDEN_DATA_DIR?.trim()),
+      igdbConfigured: Boolean(process.env.IGDB_CLIENT_ID && process.env.IGDB_CLIENT_SECRET),
+    },
+  }
+}
+
+export async function saveGame(input: unknown) {
+  const data = gameSchema.parse(input)
+  const { id, experience, possessions, collectionIds, media, links, ...fields } = data
+  const unused: string[] = []
+  const result = await db.$transaction(async (tx) => {
+    const existing = id
+      ? await tx.game.findFirstOrThrow({
+          where: { id, ownerId },
+          include: { media: true, possessions: { include: { media: true } } },
+        })
+      : null
+    // Older clients can omit the gallery; never erase it implicitly.
+    const images =
+      media ??
+      existing?.media ??
+      (fields.coverId
+        ? [
+            {
+              mediaId: fields.coverId,
+              category: 'COVER' as const,
+              position: 0,
+              caption: '',
+              isPrimary: true,
+            },
+          ]
+        : [])
+    fields.coverId = images.find((m) => m.isPrimary)?.mediaId ?? null
+    if (
+      (await tx.media.count({ where: { id: { in: images.map((m) => m.mediaId) }, ownerId } })) !==
+      images.length
+    )
+      throw new Error('Une image sélectionnée est introuvable.')
+    const possessionIds = possessions.flatMap((p) => (p.id ? [p.id] : []))
+    if (
+      new Set(possessionIds).size !== possessionIds.length ||
+      possessionIds.some((pid) => !existing?.possessions.some((p) => p.id === pid))
+    )
+      throw new Error('Un exemplaire sélectionné est introuvable.')
+    unused.push(
+      ...(existing?.media.map((m) => m.mediaId) ?? []),
+      ...(existing?.possessions
+        .filter((p) => !possessionIds.includes(p.id))
+        .flatMap((p) => p.media.map((m) => m.mediaId)) ?? []),
+    )
+    await tx.platform.findUniqueOrThrow({ where: { id: fields.platformId } })
+    if (fields.machineId) {
+      if (fields.platformId !== 'pc')
+        throw new Error('Un PC personnel ne peut être associé qu’à la plateforme PC.')
+      await tx.machine.findFirstOrThrow({ where: { id: fields.machineId, ownerId } })
+    }
+    if (fields.coverId) await tx.media.findFirstOrThrow({ where: { id: fields.coverId, ownerId } })
+    const selected = await tx.collection.findMany({ where: { id: { in: collectionIds }, ownerId } })
+    if (selected.length !== new Set(collectionIds).size)
+      throw new Error('Une collection sélectionnée est introuvable.')
+    assertRealCollection(
+      possessions,
+      selected.some((c) => c.kind === 'REAL'),
+    )
+    if (id) {
+      await tx.possession.deleteMany({ where: { gameId: id, id: { notIn: possessionIds } } })
+      for (const p of possessions.filter((p) => p.id)) {
+        const { id: possessionId, ...values } = p
+        await tx.possession.update({ where: { id: possessionId! }, data: values })
+      }
+      await tx.collectionEntry.deleteMany({ where: { gameId: id } })
+      await tx.mediaAttachment.deleteMany({ where: { gameId: id } })
+      if (links) await tx.gameLink.deleteMany({ where: { gameId: id } })
+      return tx.game.update({
+        where: { id },
+        data: {
+          ...fields,
+          experience: { upsert: { create: experience, update: experience } },
+          possessions: { create: possessions.filter((p) => !p.id) },
+          media: {
+            create: images.map(({ mediaId, category, position, caption, isPrimary }) => ({
+              mediaId,
+              category,
+              position,
+              caption,
+              isPrimary,
+            })),
+          },
+          ...(links ? { links: { create: links } } : {}),
+          entries: {
+            create: [...new Set(collectionIds)].map((collectionId) => ({ collectionId })),
+          },
+        },
+        select: { id: true },
+      })
+    }
+    return tx.game.create({
+      data: {
+        ...fields,
+        ownerId,
+        experience: { create: experience },
+        possessions: { create: possessions },
+        media: { create: images },
+        links: { create: links ?? [] },
+        entries: { create: [...new Set(collectionIds)].map((collectionId) => ({ collectionId })) },
+      },
+      select: { id: true },
+    })
+  })
+  await removeUnusedImages(unused)
+  return result
+}
+
+export async function deleteGame(id: string) {
+  const game = await db.game.findFirst({
+    where: { id, ownerId },
+    include: { media: true, possessions: { include: { media: true } } },
+  })
+  await db.game.deleteMany({ where: { id, ownerId } })
+  if (game)
+    await removeUnusedImages([
+      ...game.media.map((m) => m.mediaId),
+      ...game.possessions.flatMap((p) => p.media.map((m) => m.mediaId)),
+      ...(game.coverId ? [game.coverId] : []),
+    ])
+}
+
+export async function saveCollection(input: unknown) {
+  const { id, ...data } = collectionSchema.parse(input)
+  if (id) {
+    await db.collection.findFirstOrThrow({ where: { id, ownerId } })
+    if (data.kind === 'REAL') {
+      const invalid = await db.collectionEntry.count({
+        where: { collectionId: id, game: { possessions: { none: {} } } },
+      })
+      if (invalid)
+        throw new Error(
+          'Certains jeux n’ont aucune possession. Complète-les avant de convertir cette collection.',
+        )
+    }
+    return db.collection.update({ where: { id }, data, select: { id: true } })
+  }
+  return db.collection.create({ data: { ...data, ownerId }, select: { id: true } })
+}
+
+export async function deleteCollection(id: string) {
+  await db.collection.deleteMany({ where: { id, ownerId } })
+}
+
+export async function exportLibrary() {
+  const [profile, games, machines, collections, media] = await Promise.all([
+    db.profile.findUnique({ where: { id: ownerId } }),
+    db.game.findMany({
+      where: { ownerId },
+      include: {
+        platform: true,
+        experience: true,
+        possessions: { include: { media: true } },
+        media: true,
+        links: true,
+      },
+    }),
+    db.machine.findMany({ where: { ownerId } }),
+    db.collection.findMany({ where: { ownerId }, include: { entries: true } }),
+    db.media.findMany({ where: { ownerId } }),
+  ])
+  return {
+    format: 'luden',
+    version: 2,
+    exportedAt: new Date().toISOString(),
+    profile,
+    games,
+    machines,
+    collections,
+    media,
+  }
+}

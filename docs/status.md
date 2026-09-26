@@ -1,5 +1,14 @@
 # État courant
 
+## Première page plateforme : SNES
+
+- Habillage PAL dans `src/styles/platforms.css`, illustration locale `public/snes-console.svg`.
+- Boîtes horizontales à plat, proportions conservées ; titre et étoiles au premier plan.
+- SNES affiche les jeux joués par défaut (en cours, terminés et abandonnés inclus).
+- Vues visibles : Joués, À découvrir, Possédés actuellement, Tous mes jeux. Filtres dans l’URL.
+- Aucune modification des données ni des autres habillages plateforme. Amiga à travailler ensuite.
+- TypeScript et un test ciblé des filtres validés ; rendu à valider par Henri.
+
 ## Correction sidebar responsive
 
 - Collision de variables corrigée : largeur via `--sidebar-width`, couleur via `--sidebar-background`.

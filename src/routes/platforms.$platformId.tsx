@@ -2,7 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { ArrowLeft } from 'lucide-react'
 import { PlatformArt, useLibrary } from '../components/ui'
 import { Gallery } from '../components/gallery'
-import { gallerySearch } from '../lib/gallery'
+import { gallerySearch, hasPlayed } from '../lib/gallery'
 import type { CSSProperties } from 'react'
 export const Route = createFileRoute('/platforms/$platformId')({
   validateSearch: (input) => gallerySearch.parse(input),
@@ -21,8 +21,9 @@ function PlatformPage() {
       </div>
     )
   const chosen = games.filter((g) => g.platformId === platformId)
+  const isSnes = platformId === 'snes'
   return (
-    <div className="page">
+    <div className={`page ${isSnes ? 'platform-snes' : ''}`}>
       <Link to="/platforms" className="back-link">
         <ArrowLeft size={16} />
         Toutes les plateformes
@@ -33,19 +34,31 @@ function PlatformPage() {
       >
         <div>
           <span className="eyebrow">
-            {platform.family} / {platform.era}
+            {isSnes ? 'Nintendo / L’univers 16 bits' : `${platform.family} / ${platform.era}`}
           </span>
           <h1>
             {platform.name}
             <span>.</span>
           </h1>
-          <p>{chosen.length} jeux. Autant d’histoires à raconter.</p>
+          <p>
+            {isSnes
+              ? 'Les jeux restent. Les souvenirs aussi.'
+              : `${chosen.length} jeux. Autant d’histoires à raconter.`}
+          </p>
           <div className="platform-hero-tags">
-            <span>{chosen.filter((g) => g.experience?.status !== 'UNPLAYED').length} joués</span>
+            <span>{chosen.filter(hasPlayed).length} joués</span>
             <span>{chosen.filter((g) => g.favorite).length} coups de cœur</span>
           </div>
         </div>
-        <PlatformArt platform={platform} />
+        {isSnes ? (
+          <img
+            className="snes-console"
+            src="/snes-console.svg"
+            alt="Illustration de la Super Nintendo et de sa manette PAL"
+          />
+        ) : (
+          <PlatformArt platform={platform} />
+        )}
       </section>
       {platformId === 'pc' && machines.length > 0 && (
         <div className="filter-tabs">
@@ -70,7 +83,7 @@ function PlatformPage() {
           ))}
         </div>
       )}
-      <Gallery games={chosen} platformLocked />
+      <Gallery games={chosen} platformLocked defaultScope={isSnes ? 'played' : undefined} />
     </div>
   )
 }

@@ -1,5 +1,19 @@
 # Direction graphique actuelle
 
+## Super Nintendo
+
+Premier univers dédié : bandeau compact, console PAL illustrée, gris violacé et quatre accents
+de manette sur fond bleu nuit. Styles isolés sous `.platform-snes` dans `src/styles/platforms.css`.
+Galerie de faces avant à plat, horizontales, sans recadrage. Titre et étoiles sont prioritaires ;
+le souvenir complet reste dans la fiche. Les images choisies par l’utilisateur restent nécessaires :
+aucune conversion automatique d’une jaquette IGDB en boîte PAL.
+
+À l’entrée, afficher les jeux joués. Les boutons permettent de voir aussi les jeux à découvrir,
+possédés actuellement ou tous les jeux personnels SNES. L’état est conservé dans l’URL ;
+un accès sans filtre repart sur Joués. Les autres plateformes gardent leur comportement actuel.
+
+## Thème commun
+
 Direction actuelle : bleu nuit / Aurora. Fonds sobres bleut�s, navigation et interactions bleues,
 identit� violet/mauve, CTA corail, souvenirs et �toiles jaunes, cyan ponctuel.
 `src/styles/palette.css` centralise les couleurs et gradients ; `src/styles/theme.css` les applique.

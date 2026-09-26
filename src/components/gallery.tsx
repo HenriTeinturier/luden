@@ -10,12 +10,15 @@ import { EmptyState, GameCard, useLibrary } from './ui'
 export function Gallery({
   games,
   platformLocked = false,
+  defaultScope,
 }: {
   games: Game[]
   platformLocked?: boolean
+  defaultScope?: GallerySearch['scope']
 }) {
   const library = useLibrary()
-  const filters = useSearch({ strict: false }) as GallerySearch
+  const search = useSearch({ strict: false }) as GallerySearch
+  const filters = { ...search, scope: search.scope ?? defaultScope }
   const navigate = useNavigate()
   const [advanced, setAdvanced] = useState(false)
   const update = (patch: Partial<GallerySearch>) => {
@@ -24,6 +27,7 @@ export function Gallery({
   const visible = filterGames(games, filters)
   const filtered = Boolean(
     filters.q ||
+    (filters.scope && filters.scope !== 'all') ||
     filters.platform ||
     filters.status ||
     filters.machine ||
@@ -32,6 +36,27 @@ export function Gallery({
   )
   return (
     <>
+      {defaultScope && (
+        <div className="platform-scope" role="group" aria-label="Jeux à afficher">
+          {(
+            [
+              ['played', 'Joués'],
+              ['discover', 'À découvrir'],
+              ['owned', 'Possédés'],
+              ['all', 'Tous mes jeux'],
+            ] as const
+          ).map(([scope, label]) => (
+            <button
+              key={scope}
+              type="button"
+              aria-pressed={filters.scope === scope}
+              onClick={() => update({ scope, status: '', owned: 'all' })}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      )}
       <div className="gallery-toolbar">
         <div className="filter-search">
           <Search size={17} />
@@ -157,6 +182,7 @@ export function Gallery({
                 machine: '',
                 favorite: false,
                 owned: 'all',
+                scope: 'all',
               })
             }
           >
@@ -177,7 +203,7 @@ export function Gallery({
             <GameCard key={game.id} game={game} compact={filters.view === 'list'} />
           ))}
         </div>
-      ) : filtered ? (
+      ) : filtered && games.length > 0 ? (
         <EmptyState
           title="Aucun jeu pour le moment."
           description="Essayez un autre titre ou élargissez vos filtres."

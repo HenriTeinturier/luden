@@ -6,12 +6,16 @@ export const gallerySearch = z.object({
   platform: z.string().optional(),
   machine: z.string().optional(),
   status: z.string().optional(),
+  scope: z.enum(['all', 'played', 'discover', 'owned']).optional(),
   sort: z.enum(['recent', 'title', 'rating', 'year', 'desire']).optional(),
   view: z.enum(['grid', 'list']).optional(),
   owned: z.enum(['all', 'current', 'past', 'none']).optional(),
   favorite: z.boolean().optional(),
 })
 export type GallerySearch = z.infer<typeof gallerySearch>
+export function hasPlayed(game: Game) {
+  return Boolean(game.experience && game.experience.status !== 'UNPLAYED')
+}
 export function filterGames(games: Game[], filters: GallerySearch) {
   const normalize = (s: string) =>
     s
@@ -27,6 +31,9 @@ export function filterGames(games: Game[], filters: GallerySearch) {
       (!filters.platform || g.platformId === filters.platform) &&
       (!filters.machine || g.machineId === filters.machine) &&
       (!filters.status || (g.experience?.status ?? 'UNPLAYED') === filters.status) &&
+      (filters.scope !== 'played' || hasPlayed(g)) &&
+      (filters.scope !== 'discover' || g.discover) &&
+      (filters.scope !== 'owned' || g.possessions.some((p) => p.state === 'CURRENT')) &&
       (!filters.favorite || g.favorite) &&
       (!filters.owned ||
         filters.owned === 'all' ||

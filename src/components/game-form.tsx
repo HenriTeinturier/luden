@@ -70,7 +70,10 @@ export function GameForm({
           })),
           collectionIds: game.entries.map((e) => e.collectionId),
         }
-      : structuredClone(emptyGame),
+      : {
+          ...structuredClone(emptyGame),
+          experience: { ...emptyGame.experience, status: 'PLAYED' },
+        },
   )
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)

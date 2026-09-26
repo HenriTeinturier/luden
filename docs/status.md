@@ -1,5 +1,7 @@
 # État courant
 
+- Création de jeu : statut « Joué » présélectionné, modifiable. L’édition conserve le statut existant.
+
 - Navigation plateforme : fil d’Ariane « Mon espace / Mes plateformes / nom de la plateforme », parents cliquables. Retour redondant supprimé ; fil visible aussi sur écran étroit.
 
 ## Carte plateforme SNES

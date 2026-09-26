@@ -6,6 +6,7 @@ import { filterGames, type GallerySearch } from '../lib/gallery'
 import type { Game } from '../lib/types'
 import { playStatuses } from '../lib/platforms'
 import { EmptyState, GameCard, useLibrary } from './ui'
+import { groupByCategory } from '../lib/categories'
 
 export function Gallery({
   games,
@@ -25,6 +26,11 @@ export function Gallery({
     void navigate({ to: '.', search: { ...filters, ...patch }, replace: true })
   }
   const visible = filterGames(games, filters)
+  const grouping = filters.group ?? (defaultScope ? 'category' : 'none')
+  const groups =
+    grouping === 'category'
+      ? groupByCategory(visible, library.categories)
+      : [{ id: 'all', name: '', games: visible }]
   const filtered = Boolean(
     filters.q ||
     (filters.scope && filters.scope !== 'all') ||
@@ -77,6 +83,14 @@ export function Gallery({
           )}
         </div>
         <div className="gallery-controls">
+          <select
+            aria-label="Regrouper les jeux"
+            value={grouping}
+            onChange={(e) => update({ group: e.target.value as GallerySearch['group'] })}
+          >
+            <option value="none">Sans regroupement</option>
+            <option value="category">Par catégorie</option>
+          </select>
           {!platformLocked && (
             <select
               aria-label="Filtrer par plateforme"
@@ -192,15 +206,29 @@ export function Gallery({
         <span className="gallery-hint">Une petite part de votre histoire.</span>
       </div>
       {visible.length ? (
-        <div
-          className={
-            filters.view === 'list'
-              ? 'game-list'
-              : `game-grid ${visible.every((g) => coverFormat(g.platformId).wide) ? 'wide-grid' : 'mixed-grid'}`
-          }
-        >
-          {visible.map((game) => (
-            <GameCard key={game.id} game={game} compact={filters.view === 'list'} />
+        <div className="gallery-groups">
+          {groups.map((group) => (
+            <section key={group.id} className="gallery-category" aria-label={group.name || 'Jeux'}>
+              {grouping === 'category' && (
+                <h2 className="gallery-category-title">
+                  {group.name}
+                  <span>
+                    {group.games.length} jeu{group.games.length > 1 ? 'x' : ''}
+                  </span>
+                </h2>
+              )}
+              <div
+                className={
+                  filters.view === 'list'
+                    ? 'game-list'
+                    : `game-grid ${group.games.every((g) => coverFormat(g.platformId).wide) ? 'wide-grid' : 'mixed-grid'}`
+                }
+              >
+                {group.games.map((game) => (
+                  <GameCard key={game.id} game={game} compact={filters.view === 'list'} />
+                ))}
+              </div>
+            </section>
           ))}
         </div>
       ) : filtered && games.length > 0 ? (

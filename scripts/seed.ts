@@ -1,6 +1,7 @@
 import 'dotenv/config'
 import { PrismaClient } from '@prisma/client'
 import { platforms } from '../src/lib/platforms'
+import { defaultCategories } from '../src/lib/categories'
 
 const db = new PrismaClient()
 try {
@@ -11,6 +12,15 @@ try {
   })
   for (const platform of platforms) {
     await db.platform.upsert({ where: { id: platform.id }, create: platform, update: platform })
+  }
+  if (!(await db.gameCategory.count({ where: { ownerId: 'local' } }))) {
+    await db.gameCategory.createMany({
+      data: defaultCategories.map((name, position) => ({
+        ownerId: 'local',
+        name,
+        position,
+      })),
+    })
   }
   for (const collection of [
     {

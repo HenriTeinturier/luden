@@ -1,0 +1,50 @@
+.gallery-groups {
+  display: grid;
+  gap: 32px;
+}
+.gallery-category {
+  min-width: 0;
+}
+.gallery-category-title {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 20px;
+  margin: 0 0 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+}
+.gallery-category-title span {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--muted);
+}
+.category-editor {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+.category-editor-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.category-editor-row input {
+  flex: 1;
+}
+.category-editor-row .icon-button {
+  padding: 8px;
+}
+.category-editor-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 20px 0;
+}
+.gallery-controls {
+  flex-wrap: wrap;
+}

@@ -8,13 +8,14 @@ datasource db {
 }
 
 model Profile {
-  id          String       @id @default(cuid())
-  name        String       @default("Ma vie de joueur")
+  id          String         @id @default(cuid())
+  name        String         @default("Ma vie de joueur")
   games       Game[]
   machines    Machine[]
   collections Collection[]
   media       Media[]
-  createdAt   DateTime     @default(now())
+  categories  GameCategory[]
+  createdAt   DateTime       @default(now())
 }
 
 model Platform {
@@ -47,6 +48,8 @@ model Game {
   machineId   String?
   machine     Machine?          @relation(fields: [machineId], references: [id], onDelete: SetNull)
   title       String
+  categoryId  String?
+  category    GameCategory?     @relation(fields: [categoryId], references: [id], onDelete: SetNull)
   releaseYear Int?
   developer   String            @default("")
   publisher   String            @default("")
@@ -68,7 +71,19 @@ model Game {
   updatedAt   DateTime          @updatedAt
 
   @@index([ownerId, platformId])
+  @@index([categoryId])
   @@index([ownerId, updatedAt])
+}
+
+model GameCategory {
+  id       String  @id @default(cuid())
+  ownerId  String
+  owner    Profile @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  name     String
+  position Int
+  games    Game[]
+
+  @@index([ownerId, position])
 }
 
 model Experience {

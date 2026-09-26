@@ -31,6 +31,7 @@ export function GameForm({
           title: game.title,
           platformId: game.platformId,
           machineId: game.machineId,
+          categoryId: game.categoryId,
           releaseYear: game.releaseYear,
           developer: game.developer,
           publisher: game.publisher,

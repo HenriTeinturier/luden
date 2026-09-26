@@ -1,5 +1,14 @@
 # État courant
 
+## Catégories de rangement
+
+- Une catégorie facultative par jeu, distincte des genres IGDB. Onze catégories initiales.
+- Galerie par sections successives ; regroupement activé par défaut sur SNES, désactivable.
+- Renommage, ajout et ordre dans Paramètres. Jeux existants conservés dans « À classer ».
+- Migration additive appliquée ; client Prisma régénéré et serveur Vite relancé sur le port 3000.
+- TypeScript, lint et trois tests ciblés réussis. Aucun test visuel effectué.
+- Voir `docs/categories.md` pour le modèle, l’export et les fichiers concernés.
+
 - Création de jeu : statut « Joué » présélectionné, modifiable. L’édition conserve le statut existant.
 
 - Navigation plateforme : fil d’Ariane « Mon espace / Mes plateformes / nom de la plateforme », parents cliquables. Retour redondant supprimé ; fil visible aussi sur écran étroit.

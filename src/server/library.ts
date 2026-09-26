@@ -3,7 +3,7 @@ import { assertRealCollection, collectionSchema, gameSchema } from '../lib/valid
 import { removeUnusedImages } from './media'
 
 export async function loadLibrary() {
-  const [profile, platforms, machines, games, collections] = await Promise.all([
+  const [profile, platforms, machines, games, collections, categories] = await Promise.all([
     db.profile.findUniqueOrThrow({ where: { id: ownerId }, select: { name: true } }),
     db.platform.findMany({ orderBy: { name: 'asc' } }),
     db.machine.findMany({ where: { ownerId }, orderBy: { name: 'asc' } }),
@@ -29,11 +29,13 @@ export async function loadLibrary() {
       orderBy: { createdAt: 'asc' },
       include: { _count: { select: { entries: true } } },
     }),
+    db.gameCategory.findMany({ where: { ownerId }, orderBy: [{ position: 'asc' }, { id: 'asc' }] }),
   ])
   return {
     profile,
     platforms,
     machines,
+    categories,
     games: games.map((g) => ({
       ...g,
       createdAt: g.createdAt.toISOString(),
@@ -93,6 +95,8 @@ export async function saveGame(input: unknown) {
         .flatMap((p) => p.media.map((m) => m.mediaId)) ?? []),
     )
     await tx.platform.findUniqueOrThrow({ where: { id: fields.platformId } })
+    if (fields.categoryId)
+      await tx.gameCategory.findFirstOrThrow({ where: { id: fields.categoryId, ownerId } })
     if (fields.machineId) {
       if (fields.platformId !== 'pc')
         throw new Error('Un PC personnel ne peut être associé qu’à la plateforme PC.')
@@ -192,7 +196,7 @@ export async function deleteCollection(id: string) {
 }
 
 export async function exportLibrary() {
-  const [profile, games, machines, collections, media] = await Promise.all([
+  const [profile, games, machines, collections, media, categories] = await Promise.all([
     db.profile.findUnique({ where: { id: ownerId } }),
     db.game.findMany({
       where: { ownerId },
@@ -207,15 +211,17 @@ export async function exportLibrary() {
     db.machine.findMany({ where: { ownerId } }),
     db.collection.findMany({ where: { ownerId }, include: { entries: true } }),
     db.media.findMany({ where: { ownerId } }),
+    db.gameCategory.findMany({ where: { ownerId }, orderBy: { position: 'asc' } }),
   ])
   return {
     format: 'luden',
-    version: 2,
+    version: 3,
     exportedAt: new Date().toISOString(),
     profile,
     games,
     machines,
     collections,
     media,
+    categories,
   }
 }

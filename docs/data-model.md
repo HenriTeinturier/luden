@@ -22,3 +22,9 @@ Une fiche peut appartenir aux deux collections et avoir plusieurs possessions.
 Une note absente est null, jamais 0 implicite. Les identifiants IGDB sont facultatifs et non souverains.
 Les notes personnelles sont sur 5 par demi-étoiles ; contrainte SQL et validation Zod.
 Les médias et notes personnels ne sont jamais mutualisés entre profils.
+
+# Catégories de rangement
+
+`Game.categoryId` référence facultativement une `GameCategory` du même propriétaire.
+Les catégories ont un nom et un ordre personnalisables, indépendants des genres IGDB.
+Voir `docs/categories.md` pour l’affichage et la migration additive.

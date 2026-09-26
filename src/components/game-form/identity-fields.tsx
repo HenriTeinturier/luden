@@ -68,6 +68,23 @@ export function IdentityFields({ data, change }: GameFieldsProps) {
           <span className="field-hint">Les PC personnels se créent dans « Mes plateformes ».</span>
         </label>
       )}
+      <label>
+        Catégorie de rangement
+        <select
+          value={data.categoryId ?? ''}
+          onChange={(e) => change('categoryId', e.target.value || null)}
+        >
+          <option value="">À classer</option>
+          {library.categories.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
+        </select>
+        <span className="field-hint">
+          Facultative, pour regrouper tes jeux. Les genres IGDB restent indépendants.
+        </span>
+      </label>
       <details className="metadata-details">
         <summary>
           Développeur, genres et résumé <ChevronDown size={16} />

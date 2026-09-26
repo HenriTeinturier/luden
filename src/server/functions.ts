@@ -2,6 +2,15 @@ import { createServerFn } from '@tanstack/react-start'
 import { z } from 'zod'
 import { gameSchema, collectionSchema } from '../lib/validation'
 import { webUrlSchema } from '../lib/media'
+import { categoriesSchema } from '../lib/categories'
+
+export const saveCategoriesFn = createServerFn({ method: 'POST' })
+  .validator(categoriesSchema)
+  .handler(async ({ data }) => {
+    const { mutation } = await import('./request')
+    const { saveCategories } = await import('./categories')
+    return mutation(() => saveCategories(data))
+  })
 
 export const libraryFn = createServerFn({ method: 'GET' }).handler(async () => {
   const { assertLocalRequest } = await import('./request')

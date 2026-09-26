@@ -9,6 +9,7 @@ Lire `docs/status.md` pour reprendre le travail, puis UNIQUEMENT les documents u
 - Règles et données : `docs/data-model.md`
 - Structure / serveur / stockage : `docs/architecture.md`
 - Interface : `docs/design.md`
+- Catégories de rangement / regroupement : `docs/categories.md`
 - Décisions : `docs/decisions.md`
 - Installation / Docker : `README.md`
 - Prochaine étape : `docs/status.md` ; plan initial : `docs/implementation.md`

@@ -177,7 +177,15 @@ export function Cover({
     </div>
   )
 }
-export function GameCard({ game, compact = false }: { game: Game; compact?: boolean }) {
+export function GameCard({
+  game,
+  compact = false,
+  ratingOverlay = false,
+}: {
+  game: Game
+  compact?: boolean
+  ratingOverlay?: boolean
+}) {
   const rating = game.experience?.rating
   return (
     <Link
@@ -187,6 +195,11 @@ export function GameCard({ game, compact = false }: { game: Game; compact?: bool
     >
       <div className="cover-frame">
         <Cover game={game} />
+        {ratingOverlay && rating != null && (
+          <div className="cover-rating">
+            <Stars value={rating} />
+          </div>
+        )}
         {game.favorite && (
           <span className="favorite-badge" aria-label="Coup de cœur">
             <Heart size={13} fill="currentColor" />
@@ -200,7 +213,7 @@ export function GameCard({ game, compact = false }: { game: Game; compact?: bool
           {game.releaseYear ? ` · ${game.releaseYear}` : ''}
         </span>
         <h3>{game.title}</h3>
-        <Stars value={rating} />
+        {!ratingOverlay && <Stars value={rating} />}
         <div className="game-card-bottom">
           <span>{playStatuses[game.experience?.status ?? 'UNPLAYED']}</span>
           <span className="possession-icons">

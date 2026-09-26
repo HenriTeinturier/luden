@@ -177,13 +177,26 @@
   font-size: 16px;
   line-height: 1.4;
 }
-.platform-snes .game-card-bottom {
-  font-size: 12px;
+.platform-snes .game-grid .game-card h3 {
+  margin-bottom: 0;
+}
+.cover-rating {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 2;
+  display: flex;
+  padding: 6px 8px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--sidebar-background);
+}
+.cover-rating .stars small {
+  display: none;
 }
 .platform-snes .card-memory,
 .platform-snes .game-platform,
-.platform-snes .game-card-bottom > span:first-child,
-.platform-snes .game-card-bottom:not(:has(svg)) {
+.platform-snes .game-card-bottom {
   display: none;
 }
 .platform-snes .results-line {

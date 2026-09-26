@@ -95,7 +95,10 @@
 .platform-snes .game-card-bottom {
   font-size: 12px;
 }
-.platform-snes .card-memory {
+.platform-snes .card-memory,
+.platform-snes .game-platform,
+.platform-snes .game-card-bottom > span:first-child,
+.platform-snes .game-card-bottom:not(:has(svg)) {
   display: none;
 }
 .platform-snes .results-line {

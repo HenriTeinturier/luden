@@ -2,6 +2,7 @@
 
 ## Première page plateforme : SNES
 
+- Cartes allégées : plateforme, année et statut masqués ; titre, étoiles et éventuelles icônes de possession conservés.
 - Habillage PAL dans `src/styles/platforms.css`, illustration locale `public/snes-console.svg`.
 - Boîtes horizontales à plat, proportions conservées ; titre et étoiles au premier plan.
 - SNES affiche les jeux joués par défaut (en cours, terminés et abandonnés inclus).

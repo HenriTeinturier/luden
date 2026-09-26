@@ -1,5 +1,11 @@
 # État courant
 
+## Carte plateforme SNES
+
+- Logo et console fournis par Henri copiés sans modification dans `public/platforms/snes/`.
+- Carte SNES large (deux colonnes), fond Aurora en CSS, nom et compteur en HTML.
+- Assets de présentation du site versionnés ; distincts des médias personnels de la collection.
+
 ## Première page plateforme : SNES
 
 - Cartes allégées : plateforme, année et statut masqués ; titre, étoiles et éventuelles icônes de possession conservés.

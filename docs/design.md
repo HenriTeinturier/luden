@@ -2,6 +2,9 @@
 
 ## Super Nintendo
 
+Carte d’entrée : logo et console transparents fournis par Henri dans `public/platforms/snes/`.
+Composition large sur deux colonnes, fond CSS Aurora, textes HTML ; originaux conservés hors repo.
+
 Premier univers dédié : bandeau compact, console PAL illustrée, gris violacé et quatre accents
 de manette sur fond bleu nuit. Styles isolés sous `.platform-snes` dans `src/styles/platforms.css`.
 Galerie de faces avant à plat, horizontales, sans recadrage. Titre et étoiles sont prioritaires ;

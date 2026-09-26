@@ -111,14 +111,27 @@ export function PlatformCard({ platform, count }: { platform: Platform; count: n
     <Link
       to="/platforms/$platformId"
       params={{ platformId: platform.id }}
-      className="platform-card"
+      className={`platform-card ${platform.id === 'snes' ? 'platform-card-snes' : ''}`}
       style={{ '--platform-color': platform.color } as CSSProperties}
     >
       <div className="platform-card-top">
-        <span>{platform.family}</span>
+        {platform.id === 'snes' ? (
+          <img className="platform-card-logo" src="/platforms/snes/logo.webp" alt="" />
+        ) : (
+          <span>{platform.family}</span>
+        )}
         <ArrowUpRight size={18} />
       </div>
-      <PlatformArt platform={platform} />
+      {platform.id === 'snes' ? (
+        <img
+          className="platform-card-console"
+          src="/platforms/snes/console.webp"
+          alt=""
+          loading="lazy"
+        />
+      ) : (
+        <PlatformArt platform={platform} />
+      )}
       <div className="platform-card-bottom">
         <h3>{platform.name}</h3>
         <span>

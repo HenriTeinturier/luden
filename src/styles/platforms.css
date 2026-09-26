@@ -1,4 +1,74 @@
 /* First platform identity: PAL boxes, viewed flat. No changes to stored images. */
+.platform-card.platform-card-snes {
+  position: relative;
+  isolation: isolate;
+  grid-column: span 2;
+  min-height: 220px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background:
+    radial-gradient(
+      ellipse at 80% 85%,
+      color-mix(in srgb, var(--purple) 30%, transparent),
+      transparent 65%
+    ),
+    linear-gradient(120deg, var(--sidebar-background), var(--identity-background));
+  border-color: var(--hero-border);
+}
+.platform-card-snes::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(125deg, transparent 55%, var(--soft-light) 55% 66%, transparent 66%);
+  opacity: 0.3;
+}
+.platform-card-snes .platform-card-top,
+.platform-card-snes .platform-card-bottom {
+  position: relative;
+  z-index: 1;
+}
+.platform-card-snes .platform-card-top {
+  align-items: flex-start;
+}
+.platform-card-snes .platform-card-logo {
+  width: 48%;
+  max-width: 270px;
+  height: auto;
+}
+.platform-card-snes .platform-card-console {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  width: 53%;
+  height: 88%;
+  object-fit: contain;
+  object-position: bottom right;
+  filter: drop-shadow(0 12px 12px var(--soft-shadow));
+  z-index: -1;
+}
+.platform-card-snes .platform-card-bottom {
+  width: 45%;
+  margin-top: 55px;
+}
+.platform-card-snes .platform-card-bottom h3 {
+  font-size: 16px;
+}
+.platform-card-snes .platform-card-bottom > span {
+  font-size: 13px;
+  color: var(--text-soft);
+}
+.platform-card.platform-card-snes:hover {
+  border-color: var(--purple);
+}
+@media (max-width: 720px) {
+  .platform-card.platform-card-snes {
+    min-height: 190px;
+    padding: 18px;
+  }
+}
 .platform-snes {
   --snes-silver: #d3d0df;
   --snes-red: #ec6578;

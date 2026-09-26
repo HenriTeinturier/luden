@@ -1,6 +1,7 @@
 # Direction graphique actuelle
 
-Refonte rétro validée : aubergine profond, corail, jaune et turquoise. Illustrations pixel art ponctuelles,
+Variante actuelle « Console 90 » : anthracite chaud, ivoire, orange mandarine et bleu électrique.
+La version aubergine/corail précédente est conservée dans Git (commit `37c0077`). Illustrations pixel art ponctuelles,
 images de jeux au premier plan. Typographie sans serif lisible et titres plus expressifs.
 `src/styles/theme.css` porte le thème commun ; illustration locale `public/arcade-room.svg`.
 

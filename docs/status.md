@@ -1,5 +1,11 @@
 # État courant
 
+## Variante Console 90
+
+- Palette actuelle : anthracite chaud, ivoire, mandarine et bleu électrique. Structure inchangée.
+- Thème, logo, favicon et illustration d'accueil harmonisés. Survol sombre des compteurs conservé.
+- Référence précédente aubergine : commit `37c0077`. Validation visuelle laissée à Henri.
+
 - Compteurs d'accueil : libellés 14 px, chiffres 30 px, contraste renforcé et survol sombre corrigé.
 
 - Accueil : introduction « Votre vie, côté jeux » supprimée ; le bandeau illustré porte désormais le h1.

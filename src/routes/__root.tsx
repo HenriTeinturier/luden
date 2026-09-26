@@ -12,7 +12,7 @@ export const Route = createRootRoute({
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { title: 'Luden — Votre vie de joueur' },
       { name: 'robots', content: 'noindex, nofollow' },
-      { name: 'theme-color', content: '#1d1728' },
+      { name: 'theme-color', content: '#1c1b19' },
     ],
     links: [
       { rel: 'stylesheet', href: styles },

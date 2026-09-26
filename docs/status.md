@@ -1,5 +1,7 @@
 # État courant
 
+- Navigation plateforme : fil d’Ariane « Mon espace / Mes plateformes / nom de la plateforme », parents cliquables. Retour redondant supprimé ; fil visible aussi sur écran étroit.
+
 ## Carte plateforme SNES
 
 - Bandeau intérieur harmonisé : mêmes logo, console et fond Aurora que la carte ; titre accessible conservé via le logo.

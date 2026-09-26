@@ -26,6 +26,12 @@ export function Shell({ children, library }: { children: ReactNode; library: Lib
   const pathname = useLocation({ select: (l) => l.pathname })
   const navigate = useNavigate()
   const [search, setSearch] = useState('')
+  const currentPlatform = library?.platforms.find(
+    (platform) => pathname.replace(/\/$/, '') === `/platforms/${platform.id}`,
+  )
+  const currentSection = navigation.find((n) =>
+    n.to === '/' ? pathname === '/' : pathname.startsWith(n.to),
+  )
   const favorites =
     library?.platforms
       .filter((p) => library.games.some((g) => g.platformId === p.id))
@@ -92,11 +98,22 @@ export function Shell({ children, library }: { children: ReactNode; library: Lib
       </aside>
       <div className="workspace">
         <header className="topbar">
-          <div className="topbar-breadcrumb">
-            Mon espace <span>/</span>{' '}
-            {navigation.find((n) => (n.to === '/' ? pathname === '/' : pathname.startsWith(n.to)))
-              ?.label ?? (pathname.startsWith('/games') ? 'Fiche de jeu' : 'Paramètres')}
-          </div>
+          <nav className="topbar-breadcrumb" aria-label="Fil d’Ariane">
+            <Link to="/">Mon espace</Link>
+            <span aria-hidden="true">/</span>
+            {currentPlatform ? (
+              <>
+                <Link to="/platforms">Mes plateformes</Link>
+                <span aria-hidden="true">/</span>
+                <span aria-current="page">{currentPlatform.name}</span>
+              </>
+            ) : (
+              <span aria-current="page">
+                {currentSection?.label ??
+                  (pathname.startsWith('/games') ? 'Fiche de jeu' : 'Paramètres')}
+              </span>
+            )}
+          </nav>
           <div className="topbar-actions">
             <form
               className="global-search"

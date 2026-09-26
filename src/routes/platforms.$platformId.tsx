@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { ArrowLeft } from 'lucide-react'
 import { PlatformArt, useLibrary } from '../components/ui'
 import { Gallery } from '../components/gallery'
 import { gallerySearch, hasPlayed } from '../lib/gallery'
@@ -24,10 +23,6 @@ function PlatformPage() {
   const isSnes = platformId === 'snes'
   return (
     <div className={`page ${isSnes ? 'platform-snes' : ''}`}>
-      <Link to="/platforms" className="back-link">
-        <ArrowLeft size={16} />
-        Toutes les plateformes
-      </Link>
       <section
         className="platform-hero"
         style={{ '--platform-color': platform.color } as CSSProperties}

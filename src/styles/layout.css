@@ -294,12 +294,19 @@ main:focus {
   gap: 20px;
 }
 .topbar-breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
   font-size: 11px;
   color: #8b9084;
 }
-.topbar-breadcrumb span {
-  margin: 0 12px;
-  color: #bdc1b1;
+.topbar-breadcrumb [aria-current='page'] {
+  color: var(--ink);
+}
+.topbar-breadcrumb a:hover {
+  color: var(--link-accent);
+  text-decoration: underline;
 }
 .topbar-actions {
   display: flex;

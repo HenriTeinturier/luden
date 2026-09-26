@@ -61,8 +61,15 @@
   .topbar {
     padding: 0 28px;
   }
+  .topbar {
+    height: auto;
+    min-height: 83px;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-block: 12px;
+  }
   .topbar-breadcrumb {
-    display: none;
+    width: 100%;
   }
   .topbar-actions {
     width: 100%;
@@ -248,8 +255,8 @@
     padding: 27px 20px 35px;
   }
   .topbar {
-    height: 68px;
-    padding: 0 20px;
+    min-height: 68px;
+    padding: 12px 20px;
   }
   .global-search input {
     width: 115px;

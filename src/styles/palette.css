@@ -1,0 +1,57 @@
+/* Edit this palette to adjust the shared interface; SVG artwork has its own fills. */
+:root {
+  --paper: #0b1020;
+  --sidebar: #0e1326;
+  --surface: #151b31;
+  --elevated: #1b2240;
+  --line: #30395f;
+  --ink: #f6f4ff;
+  --muted: #aaa8c2;
+  --blue: #48a8ff;
+  --purple: #9468ff;
+  --mauve: #d979ff;
+  --coral: #ff8177;
+  --yellow: #ffd166;
+  --cyan: #55ded2;
+
+  --white: var(--surface);
+  --accent: var(--yellow);
+  --action: var(--coral);
+  --link-accent: var(--blue);
+  --text-soft: color-mix(in srgb, var(--ink) 75%, var(--muted));
+  --surface-hover: color-mix(in srgb, var(--elevated) 88%, var(--blue));
+  --border-strong: color-mix(in srgb, var(--line) 75%, var(--muted));
+  --active-background: color-mix(in srgb, var(--blue) 13%, var(--surface));
+  --identity-background: color-mix(in srgb, var(--purple) 15%, var(--surface));
+  --selection: color-mix(in srgb, var(--purple) 50%, var(--surface));
+  --soft-light: color-mix(in srgb, var(--ink) 12%, transparent);
+  --soft-shadow: color-mix(in srgb, var(--paper) 40%, transparent);
+  --overlay: color-mix(in srgb, var(--paper) 75%, transparent);
+  --topbar-background: color-mix(in srgb, var(--sidebar) 94%, transparent);
+  --cta-border: color-mix(in srgb, var(--coral) 75%, var(--ink));
+  --cta-hover: color-mix(in srgb, var(--coral) 78%, var(--ink));
+  --cta-shadow: color-mix(in srgb, var(--coral) 45%, var(--paper));
+  --danger-background: #702d49;
+  --danger-border: #c96783;
+  --danger-text: #ffc0cf;
+  --hero-border: color-mix(in srgb, var(--purple) 35%, var(--line));
+  --hero-background:
+    radial-gradient(
+      ellipse at 90% 20%,
+      color-mix(in srgb, var(--mauve) 12%, transparent),
+      transparent 60%
+    ),
+    linear-gradient(
+      115deg,
+      var(--sidebar),
+      var(--elevated) 48%,
+      color-mix(in srgb, var(--purple) 25%, var(--surface))
+    );
+  --page-background:
+    radial-gradient(
+      ellipse at 90% 0,
+      color-mix(in srgb, var(--purple) 6%, transparent),
+      transparent 55%
+    ),
+    var(--paper);
+}

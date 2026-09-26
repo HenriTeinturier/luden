@@ -1,10 +1,12 @@
 # État courant
 
-## Variante Console 90
+## Palette bleu nuit / Aurora
 
-- Palette actuelle : anthracite chaud, ivoire, mandarine et bleu électrique. Structure inchangée.
-- Thème, logo, favicon et illustration d'accueil harmonisés. Survol sombre des compteurs conservé.
-- Référence précédente aubergine : commit `37c0077`. Validation visuelle laissée à Henri.
+- Palette centralis�e dans `src/styles/palette.css`, appliqu�e par `theme.css`.
+- Surfaces bleu nuit, interactions bleues, hero violet/mauve, boutons corail, �toiles jaunes.
+- Logo, favicon et illustration recolor�s. Structure et dimensions inchang�es.
+- Variante pr�c�dente Console 90 : `761bdca`. Validation visuelle laiss�e � Henri.
+- V�rification limit�e au formatage et au diff ; aucun test visuel ou op�rationnel.
 
 - Compteurs d'accueil : libellés 14 px, chiffres 30 px, contraste renforcé et survol sombre corrigé.
 

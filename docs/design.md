@@ -1,9 +1,11 @@
 # Direction graphique actuelle
 
-Variante actuelle « Console 90 » : anthracite chaud, ivoire, orange mandarine et bleu électrique.
-La version aubergine/corail précédente est conservée dans Git (commit `37c0077`). Illustrations pixel art ponctuelles,
-images de jeux au premier plan. Typographie sans serif lisible et titres plus expressifs.
-`src/styles/theme.css` porte le thème commun ; illustration locale `public/arcade-room.svg`.
+Direction actuelle : bleu nuit / Aurora. Fonds sobres bleut�s, navigation et interactions bleues,
+identit� violet/mauve, CTA corail, souvenirs et �toiles jaunes, cyan ponctuel.
+`src/styles/palette.css` centralise les couleurs et gradients ; `src/styles/theme.css` les applique.
+Logo et illustration pixel art locale (`public/arcade-room.svg`) harmonis�s via leurs couleurs SVG.
+Cette passe conserve structure, dimensions, espacements et composants. Variante Console 90
+pr�c�dente conserv�e dans Git (`761bdca`).
 
 Consultation : fiches synthétiques (image, note sur 5, statut, avis), détails dépliables.
 Édition : formulaires structurés ; priorité à la saisie plutôt qu'à l'immersion.

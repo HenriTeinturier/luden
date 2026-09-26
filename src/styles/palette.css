@@ -1,7 +1,7 @@
 /* Edit this palette to adjust the shared interface; SVG artwork has its own fills. */
 :root {
   --paper: #0b1020;
-  --sidebar: #0e1326;
+  --sidebar-background: #0e1326;
   --surface: #151b31;
   --elevated: #1b2240;
   --line: #30395f;
@@ -27,7 +27,7 @@
   --soft-light: color-mix(in srgb, var(--ink) 12%, transparent);
   --soft-shadow: color-mix(in srgb, var(--paper) 40%, transparent);
   --overlay: color-mix(in srgb, var(--paper) 75%, transparent);
-  --topbar-background: color-mix(in srgb, var(--sidebar) 94%, transparent);
+  --topbar-background: color-mix(in srgb, var(--sidebar-background) 94%, transparent);
   --cta-border: color-mix(in srgb, var(--coral) 75%, var(--ink));
   --cta-hover: color-mix(in srgb, var(--coral) 78%, var(--ink));
   --cta-shadow: color-mix(in srgb, var(--coral) 45%, var(--paper));
@@ -43,7 +43,7 @@
     ),
     linear-gradient(
       115deg,
-      var(--sidebar),
+      var(--sidebar-background),
       var(--elevated) 48%,
       color-mix(in srgb, var(--purple) 25%, var(--surface))
     );

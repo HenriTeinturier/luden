@@ -1,5 +1,11 @@
 # État courant
 
+## Correction sidebar responsive
+
+- Collision de variables corrigée : largeur via `--sidebar-width`, couleur via `--sidebar-background`.
+- Sidebar et décalage du contenu partagent la même largeur : 236 px, 206 px puis 76 px sous 980 px.
+- Vérification ciblée CSS et formatage ; validation visuelle par Henri.
+
 ## Palette bleu nuit / Aurora
 
 - Palette centralis�e dans `src/styles/palette.css`, appliqu�e par `theme.css`.

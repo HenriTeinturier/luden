@@ -49,7 +49,7 @@
 }
 @media (max-width: 1200px) {
   :root {
-    --sidebar: 206px;
+    --sidebar-width: 206px;
   }
   .sidebar {
     padding-left: 15px;
@@ -162,12 +162,11 @@
   }
 }
 @media (max-width: 980px) {
-  .sidebar {
-    width: 76px;
-    padding: 26px 10px;
+  :root {
+    --sidebar-width: 76px;
   }
-  .workspace {
-    margin-left: 76px;
+  .sidebar {
+    padding: 26px 10px;
   }
   .brand {
     font-size: 0;

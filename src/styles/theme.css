@@ -56,7 +56,7 @@ input[type='radio'] {
   accent-color: var(--blue);
 }
 .sidebar {
-  background: var(--sidebar);
+  background: var(--sidebar-background);
   border-right-color: var(--line);
 }
 .brand {
@@ -526,7 +526,7 @@ input[type='radio'] {
   background: var(--surface-hover);
   color: var(--blue);
   border-radius: 10px;
-  box-shadow: 5px 5px 0 var(--sidebar);
+  box-shadow: 5px 5px 0 var(--sidebar-background);
 }
 .machine-card,
 .collection-card,
@@ -586,7 +586,7 @@ input[type='radio'] {
 .dialog-content input:not([type='radio']),
 .dialog-content textarea,
 .profile-form input {
-  background: var(--sidebar);
+  background: var(--sidebar-background);
   color: var(--ink);
   border-color: var(--border-strong);
 }
@@ -616,7 +616,7 @@ input[type='radio'] {
   font-family: inherit;
 }
 .cover-upload-preview {
-  background: var(--sidebar);
+  background: var(--sidebar-background);
   border-color: var(--border-strong);
   color: var(--muted);
 }
@@ -824,7 +824,7 @@ input[type='radio'] {
 }
 .config-code,
 .privacy-note {
-  background: var(--sidebar);
+  background: var(--sidebar-background);
   border-color: var(--line);
   color: var(--text-soft);
 }

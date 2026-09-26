@@ -9,7 +9,7 @@ Premier univers dédié : bandeau compact, console PAL illustrée, gris violacé
 de manette sur fond bleu nuit. Styles isolés sous `.platform-snes` dans `src/styles/platforms.css`.
 Galerie de faces avant à plat, horizontales, sans recadrage. Titre et étoiles sont prioritaires ;
 plateforme, année, statut et icônes de possession sont masqués sur les cartes SNES pour les alléger.
-En grille, les étoiles sont superposées en haut à gauche de la boîte sur fond sombre ; seul le titre reste dessous.
+En grille, les étoiles sont superposées en haut à gauche de la boîte sans fond ni bordure, avec une ombre légère ; seul le titre reste dessous.
 le souvenir complet reste dans la fiche. Les images choisies par l’utilisateur restent nécessaires :
 aucune conversion automatique d’une jaquette IGDB en boîte PAL.
 

@@ -187,9 +187,10 @@
   z-index: 2;
   display: flex;
   padding: 6px 8px;
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  background: var(--sidebar-background);
+  background: transparent;
+}
+.cover-rating .stars {
+  filter: drop-shadow(0 1px 1px var(--paper)) drop-shadow(0 0 2px var(--paper));
 }
 .cover-rating .stars small {
   display: none;

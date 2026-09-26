@@ -200,14 +200,7 @@ export function Gallery({
           }
         >
           {visible.map((game) => (
-            <GameCard
-              key={game.id}
-              game={game}
-              compact={filters.view === 'list'}
-              ratingOverlay={
-                platformLocked && game.platformId === 'snes' && filters.view !== 'list'
-              }
-            />
+            <GameCard key={game.id} game={game} compact={filters.view === 'list'} />
           ))}
         </div>
       ) : filtered && games.length > 0 ? (

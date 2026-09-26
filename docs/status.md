@@ -9,6 +9,7 @@
 
 ## Première page plateforme : SNES
 
+- Boutons de vue, recherche et tri regroupés dans une même barre ; retour à la ligne si l’espace manque.
 - Cartes SNES : fine bande d’étoiles centrées sous la boîte, titre masqué visuellement mais accessible ; icônes de possession masquées. Vue compacte : étoiles sous le titre conservées.
 - Cartes allégées : plateforme, année, statut et icônes de possession masqués.
 - Habillage PAL dans `src/styles/platforms.css`, illustration locale `public/snes-console.svg`.

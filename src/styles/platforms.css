@@ -8,6 +8,9 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+.platform-card.platform-card-snes,
+.platform-snes .platform-hero {
   background:
     radial-gradient(
       ellipse at 80% 85%,
@@ -17,7 +20,8 @@
     linear-gradient(120deg, var(--sidebar-background), var(--identity-background));
   border-color: var(--hero-border);
 }
-.platform-card-snes::before {
+.platform-card-snes::before,
+.platform-snes .platform-hero::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -78,11 +82,20 @@
 }
 .platform-snes .platform-hero {
   position: relative;
+  isolation: isolate;
   overflow: hidden;
   padding: 26px 32px;
   gap: 24px;
-  background: linear-gradient(115deg, var(--surface), var(--identity-background));
-  border-color: var(--hero-border);
+}
+.platform-snes .platform-hero > div {
+  min-width: 0;
+}
+.snes-hero-logo {
+  display: block;
+  width: 340px;
+  max-width: 100%;
+  height: auto;
+  margin-block: 6px 18px;
 }
 .platform-snes .platform-hero::after {
   content: '';
@@ -113,10 +126,12 @@
   font-size: 12px;
 }
 .snes-console {
-  width: 270px;
-  flex: 0 1 270px;
+  width: 300px;
+  height: 190px;
+  flex: 0 1 300px;
   min-width: 0;
   object-fit: contain;
+  filter: drop-shadow(0 12px 12px var(--soft-shadow));
 }
 .platform-scope {
   display: flex;

@@ -37,8 +37,20 @@ function PlatformPage() {
             {isSnes ? 'Nintendo / L’univers 16 bits' : `${platform.family} / ${platform.era}`}
           </span>
           <h1>
-            {platform.name}
-            <span>.</span>
+            {isSnes ? (
+              <img
+                className="snes-hero-logo"
+                src="/platforms/snes/logo.webp"
+                alt={platform.name}
+                width={800}
+                height={169}
+              />
+            ) : (
+              <>
+                {platform.name}
+                <span>.</span>
+              </>
+            )}
           </h1>
           <p>
             {isSnes
@@ -53,8 +65,10 @@ function PlatformPage() {
         {isSnes ? (
           <img
             className="snes-console"
-            src="/snes-console.svg"
-            alt="Illustration de la Super Nintendo et de sa manette PAL"
+            src="/platforms/snes/console.webp"
+            alt="Super Nintendo et sa manette PAL"
+            width={800}
+            height={497}
           />
         ) : (
           <PlatformArt platform={platform} />

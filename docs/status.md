@@ -2,6 +2,7 @@
 
 ## Carte plateforme SNES
 
+- Bandeau intérieur harmonisé : mêmes logo, console et fond Aurora que la carte ; titre accessible conservé via le logo.
 - Logo et console fournis par Henri copiés sans modification dans `public/platforms/snes/`.
 - Carte SNES large (deux colonnes), fond Aurora en CSS, nom et compteur en HTML.
 - Assets de présentation du site versionnés ; distincts des médias personnels de la collection.

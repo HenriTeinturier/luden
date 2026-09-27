@@ -1,5 +1,7 @@
 # État courant
 
+- Bandeau Amiga : composition élargie pour espacer joystick et ordinateur, sans agrandir les objets ni augmenter la hauteur.
+
 - Préremplissage plateforme : corrigé aussi pour « Ajouter mon premier jeu » dans une galerie vide, sur toutes les plateformes. Le header transmettait déjà la plateforme ; les deux accès initialisent désormais recherche IGDB et fiche via le même paramètre URL.
 
 - Bandeau Amiga : ordinateur et Quickjoy agrandis, cadrage partiel masqué par le bandeau, hauteur inchangée. Zoom réduit sous 1100 px ; matériel toujours masqué sur mobile. Carte de plateforme inchangée.

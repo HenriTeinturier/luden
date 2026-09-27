@@ -178,6 +178,15 @@
   background: var(--surface-hover);
   color: var(--ink);
 }
+.platform-scope .favorites-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.platform-scope .favorites-filter[aria-pressed='true'] {
+  color: var(--yellow);
+  border-color: var(--yellow);
+}
 .platform-scope button[aria-pressed='true'] {
   background: var(--active-background);
   border-color: var(--blue);

@@ -1,5 +1,7 @@
 # État courant
 
+- Grille Amiga : padding retiré autour des jaquettes, conservé uniquement autour du titre et des étoiles. Proportions des images conservées, vue liste inchangée.
+
 - Médias : catégorie « Publicités » (`ADVERTISEMENT`) ajoutée à l’import, au classement et à la galerie. Migration additive appliquée en base et client Prisma régénéré ; serveur Vite redémarré sur le port 3000. Données existantes conservées.
 
 - Barre commune : bouton cœur « Megastar » pour activer/désactiver les coups de cœur, combinable avec la vue courante. Réutilise le filtre favori et sa mémorisation navigateur ; infobulle « Mes coups de cœur ».

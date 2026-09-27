@@ -1,4 +1,4 @@
-/* First platform identity: PAL boxes, viewed flat. No changes to stored images. */
+/* Platform identities. No changes to stored game images. */
 @media (min-width: 1201px) {
   .page.platform-page {
     max-width: none;
@@ -238,5 +238,147 @@
   .platform-snes .gallery-toolbar,
   .platform-snes .results-line {
     flex-wrap: wrap;
+  }
+}
+
+/* Amiga: warm graphite, original hardware and the Commodore rainbow. */
+.platform-card.platform-card-amiga,
+.platform-amiga .platform-hero {
+  --amiga-border: #665456;
+  --amiga-warm: #ebc9a5;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 12% 90%, #443037 0, transparent 65%),
+    linear-gradient(115deg, #211c26, #121720 75%);
+  border-color: var(--amiga-border);
+}
+.platform-card-amiga::before,
+.platform-amiga .platform-hero::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0 0 0 30%;
+  background: url('/platforms/amiga/rainbow.webp') right center / cover no-repeat;
+  opacity: 0.55;
+  mask-image: linear-gradient(100deg, transparent, #000 85%);
+  pointer-events: none;
+}
+.platform-card.platform-card-amiga {
+  grid-column: span 2;
+  min-height: 220px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.platform-card-amiga .platform-card-top {
+  align-items: flex-start;
+}
+.platform-card-amiga .platform-card-logo {
+  width: 46%;
+  max-width: 255px;
+  height: auto;
+}
+.platform-card-amiga .platform-card-console {
+  position: absolute;
+  right: 8px;
+  bottom: 6px;
+  width: 56%;
+  height: 86%;
+  object-fit: contain;
+  object-position: bottom right;
+  filter: drop-shadow(0 12px 12px #0008);
+  z-index: -1;
+}
+.platform-card-amiga .platform-card-bottom {
+  width: 40%;
+  margin-top: 55px;
+}
+.platform-card-amiga .platform-card-bottom h3 {
+  font-size: 16px;
+}
+.platform-card-amiga .platform-card-bottom > span {
+  color: var(--text-soft);
+  font-size: 13px;
+}
+.platform-card.platform-card-amiga:hover {
+  border-color: var(--amiga-warm);
+}
+.platform-amiga .platform-hero {
+  padding: 26px 32px;
+  gap: 24px;
+}
+.platform-amiga .platform-hero > div:first-child {
+  flex: 1;
+  min-width: 0;
+}
+.platform-amiga .platform-hero .eyebrow {
+  color: var(--amiga-warm);
+}
+.amiga-hero-logo {
+  display: block;
+  width: 300px;
+  max-width: 100%;
+  height: auto;
+  margin-block: 6px 18px;
+}
+.platform-amiga .platform-hero p {
+  font-size: 14px;
+}
+.platform-amiga .platform-hero-tags span {
+  font-size: 12px;
+}
+.amiga-hero-hardware {
+  position: relative;
+  flex: 0 1 440px;
+  height: 190px;
+  min-width: 0;
+}
+.amiga-hero-hardware img {
+  position: absolute;
+  object-fit: contain;
+  filter: drop-shadow(0 14px 12px #0009);
+}
+.amiga-computer {
+  right: 0;
+  bottom: 0;
+  width: 85%;
+  height: 100%;
+  object-position: right bottom;
+}
+.amiga-joystick {
+  left: 0;
+  bottom: 0;
+  width: 31%;
+  height: 72%;
+  z-index: 1;
+}
+.platform-card:is(.platform-card-snes, .platform-card-amiga) {
+  height: 250px;
+}
+.amiga-hero-logo {
+  height: 72px;
+  object-fit: contain;
+  object-position: left center;
+}
+@media (max-width: 720px) {
+  .platform-card:is(.platform-card-snes, .platform-card-amiga) {
+    height: 190px;
+  }
+  .platform-card.platform-card-amiga {
+    min-height: 190px;
+    padding: 18px;
+  }
+  .platform-amiga .platform-hero {
+    padding: 22px;
+    flex-wrap: wrap;
+  }
+  .platform-amiga .platform-hero > div:first-child {
+    flex-basis: 100%;
+  }
+  .amiga-hero-hardware {
+    display: none;
   }
 }

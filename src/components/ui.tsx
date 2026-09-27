@@ -107,25 +107,30 @@ export function PlatformArt({
   )
 }
 export function PlatformCard({ platform, count }: { platform: Platform; count: number }) {
+  const illustrated = platform.id === 'snes' || platform.id === 'amiga'
   return (
     <Link
       to="/platforms/$platformId"
       params={{ platformId: platform.id }}
-      className={`platform-card ${platform.id === 'snes' ? 'platform-card-snes' : ''}`}
+      className={`platform-card ${illustrated ? `platform-card-${platform.id}` : ''}`}
       style={{ '--platform-color': platform.color } as CSSProperties}
     >
       <div className="platform-card-top">
-        {platform.id === 'snes' ? (
-          <img className="platform-card-logo" src="/platforms/snes/logo.webp" alt="" />
+        {illustrated ? (
+          <img className="platform-card-logo" src={`/platforms/${platform.id}/logo.webp`} alt="" />
         ) : (
           <span>{platform.family}</span>
         )}
         <ArrowUpRight size={18} />
       </div>
-      {platform.id === 'snes' ? (
+      {illustrated ? (
         <img
           className="platform-card-console"
-          src="/platforms/snes/console.webp"
+          src={
+            platform.id === 'amiga'
+              ? '/platforms/amiga/computer.webp'
+              : '/platforms/snes/console.webp'
+          }
           alt=""
           loading="lazy"
         />

@@ -1,5 +1,7 @@
 # État courant
 
+- Identité Amiga : carte large et bandeau intérieur avec logo, Amiga 500, arc-en-ciel et Quickjoy (bandeau). Assets fournis copiés dans `public/platforms/amiga/`, fond graphite chaud, adaptation mobile. Galerie inchangée ; rendu à valider par Henri.
+
 - Import d’image par URL : erreur affichée directement sous la ligne de saisie, associée au champ pour l’accessibilité et effacée à sa modification ou à une nouvelle tentative.
 
 - Ajout depuis une bibliothèque plateforme : le bouton du header transmet la plateforme au formulaire via l’URL ; recherche IGDB et champ plateforme préremplis, toujours modifiables. Une plateforme inconnue est ignorée ; ajout général et édition inchangés.

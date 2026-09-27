@@ -21,24 +21,31 @@ function PlatformPage() {
     )
   const chosen = games.filter((g) => g.platformId === platformId)
   const isSnes = platformId === 'snes'
+  const isAmiga = platformId === 'amiga'
   return (
-    <div className={`page platform-page ${isSnes ? 'platform-snes' : ''}`}>
+    <div
+      className={`page platform-page ${isSnes ? 'platform-snes' : isAmiga ? 'platform-amiga' : ''}`}
+    >
       <section
         className="platform-hero"
         style={{ '--platform-color': platform.color } as CSSProperties}
       >
         <div>
           <span className="eyebrow">
-            {isSnes ? 'Nintendo / L’univers 16 bits' : `${platform.family} / ${platform.era}`}
+            {isSnes
+              ? 'Nintendo / L’univers 16 bits'
+              : isAmiga
+                ? 'Commodore / Toute une génération'
+                : `${platform.family} / ${platform.era}`}
           </span>
           <h1>
-            {isSnes ? (
+            {isSnes || isAmiga ? (
               <img
-                className="snes-hero-logo"
-                src="/platforms/snes/logo.webp"
+                className={isAmiga ? 'amiga-hero-logo' : 'snes-hero-logo'}
+                src={`/platforms/${platformId}/logo.webp`}
                 alt={platform.name}
                 width={800}
-                height={169}
+                height={isAmiga ? 232 : 169}
               />
             ) : (
               <>
@@ -48,9 +55,11 @@ function PlatformPage() {
             )}
           </h1>
           <p>
-            {isSnes
-              ? 'Les jeux restent. Les souvenirs aussi.'
-              : `${chosen.length} jeux. Autant d’histoires à raconter.`}
+            {isAmiga
+              ? 'Le bruit des disquettes. Des souvenirs en couleurs.'
+              : isSnes
+                ? 'Les jeux restent. Les souvenirs aussi.'
+                : `${chosen.length} jeux. Autant d’histoires à raconter.`}
           </p>
           <div className="platform-hero-tags">
             <span>{chosen.filter(hasPlayed).length} joués</span>
@@ -65,6 +74,23 @@ function PlatformPage() {
             width={800}
             height={497}
           />
+        ) : isAmiga ? (
+          <div className="amiga-hero-hardware" aria-hidden="true">
+            <img
+              className="amiga-joystick"
+              src="/platforms/amiga/joystick.webp"
+              alt=""
+              width={600}
+              height={548}
+            />
+            <img
+              className="amiga-computer"
+              src="/platforms/amiga/computer.webp"
+              alt=""
+              width={1000}
+              height={695}
+            />
+          </div>
         ) : (
           <PlatformArt platform={platform} />
         )}

@@ -1,5 +1,15 @@
 # Direction graphique actuelle
 
+## Amiga
+
+Carte large et bandeau intérieur : fond graphite chaud, arc-en-ciel atténué à droite,
+logo blanc et Amiga 500 avec souris. Le joystick Quickjoy complète le bandeau intérieur.
+Assets fournis par Henri, conservés sans modification dans `public/platforms/amiga/`.
+Textes et compteurs en HTML ; proportions des images conservées. Cartes Amiga et SNES de même
+format : deux colonnes, hauteur 250 px (190 px sur mobile). Bandeau intérieur aligné sur SNES ;
+matériel masqué sur mobile comme pour SNES. Styles isolés dans `src/styles/platforms.css`.
+Cette passe concerne l’identité de la plateforme ; la galerie de jeux reste à affiner.
+
 ## Super Nintendo
 
 Carte d’entrée : logo et console transparents fournis par Henri dans `public/platforms/snes/`.

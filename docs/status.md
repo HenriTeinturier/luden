@@ -1,5 +1,7 @@
 # État courant
 
+- Cartes de jeux Amiga allégées : jaquette, titre et étoiles conservés ; plateforme/année, statut, icônes de possession, extrait de souvenir et note chiffrée masqués. Format vertical et favori conservés, détails toujours dans la fiche.
+
 - Bandeau Amiga : composition élargie pour espacer joystick et ordinateur, sans agrandir les objets ni augmenter la hauteur.
 
 - Préremplissage plateforme : corrigé aussi pour « Ajouter mon premier jeu » dans une galerie vide, sur toutes les plateformes. Le header transmettait déjà la plateforme ; les deux accès initialisent désormais recherche IGDB et fiche via le même paramètre URL.

@@ -234,6 +234,13 @@
 .platform-snes .results-line {
   font-size: 13px;
 }
+.platform-amiga .game-card :is(.game-platform, .game-card-bottom, .card-memory),
+.platform-amiga .game-card .stars small {
+  display: none;
+}
+.platform-amiga .game-card h3 {
+  margin: 0 0 8px;
+}
 @media (max-width: 720px) {
   .platform-snes .platform-hero {
     padding: 22px;

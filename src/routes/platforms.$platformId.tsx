@@ -30,14 +30,7 @@ function PlatformPage() {
         className="platform-hero"
         style={{ '--platform-color': platform.color } as CSSProperties}
       >
-        <div>
-          <span className="eyebrow">
-            {isSnes
-              ? 'Nintendo / L’univers 16 bits'
-              : isAmiga
-                ? 'Commodore / Toute une génération'
-                : `${platform.family} / ${platform.era}`}
-          </span>
+        <div className="platform-hero-identity">
           <h1>
             {isSnes || isAmiga ? (
               <img
@@ -54,13 +47,6 @@ function PlatformPage() {
               </>
             )}
           </h1>
-          <p>
-            {isAmiga
-              ? 'Le bruit des disquettes. Des souvenirs en couleurs.'
-              : isSnes
-                ? 'Les jeux restent. Les souvenirs aussi.'
-                : `${chosen.length} jeux. Autant d’histoires à raconter.`}
-          </p>
           <div className="platform-hero-tags">
             <span>{chosen.filter(hasPlayed).length} joués</span>
             <span>{chosen.filter((g) => g.favorite).length} coups de cœur</span>

@@ -1,6 +1,8 @@
 # État courant
 
-- Essai navigation horizontale : accès actuels conservés en haut, recherche et Ajouter/Enregistrer persistants, fil d’Ariane et Mes univers sur une seconde ligne. Menu dépliable sous 1650 px, informations locales en pied de page. Styles isolés dans `src/styles/header.css`. Version précédente : `21d7f4e`. TypeScript/lint validés ; rendu à valider par Henri.
+- Navigation et plateformes compactées : fil d’Ariane/seconde ligne supprimés, Mes univers en menu dans le header. Bandeaux plateforme d’environ 120 px sur desktop, sans textes décoratifs, alignés avec les filtres sur la largeur des jeux. Logos, compteurs et matériel conservés. TypeScript/lint validés ; rendu à valider par Henri.
+
+- Navigation horizontale : recherche et Ajouter/Enregistrer persistants, menu dépliable sous 1650 px, informations locales en pied de page. Styles isolés dans `src/styles/header.css`. Version avant passage à la navigation horizontale : `21d7f4e`.
 
 - Titre de Mes plateformes : Chakra Petch 600, rétro légèrement carrée, servie localement via Fontsource. Application limitée à ce titre ; couleur et taille conservées.
 

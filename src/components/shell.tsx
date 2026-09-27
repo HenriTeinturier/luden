@@ -13,6 +13,7 @@ import {
   Check,
   LoaderCircle,
   Menu,
+  ChevronDown,
   X,
 } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
@@ -35,9 +36,6 @@ export function Shell({ children, library }: { children: ReactNode; library: Lib
   const [formAction, setFormAction] = useState<FormAction | null>(null)
   const currentPlatform = library?.platforms.find(
     (platform) => pathname.replace(/\/$/, '') === `/platforms/${platform.id}`,
-  )
-  const currentSection = navigation.find((n) =>
-    n.to === '/' ? pathname === '/' : pathname.startsWith(n.to),
   )
   const favorites =
     library?.platforms
@@ -82,6 +80,42 @@ export function Shell({ children, library }: { children: ReactNode; library: Lib
                     {to === '/library' && <small>{library?.games.length ?? 0}</small>}
                   </Link>
                 ))}
+                {favorites.length > 0 && (
+                  <details
+                    className="universe-menu"
+                    onKeyDown={(event) => {
+                      if (event.key === 'Escape') {
+                        event.currentTarget.open = false
+                        event.currentTarget.querySelector('summary')?.focus()
+                      }
+                    }}
+                    onBlur={(event) => {
+                      if (!event.currentTarget.contains(event.relatedTarget as Node | null))
+                        event.currentTarget.open = false
+                    }}
+                  >
+                    <summary className="nav-item">
+                      <Gamepad2 size={18} /> Mes univers <ChevronDown size={14} />
+                    </summary>
+                    <div className="universe-links">
+                      {favorites.map((p) => (
+                        <Link
+                          key={p.id}
+                          to="/platforms/$platformId"
+                          params={{ platformId: p.id }}
+                          className="platform-nav"
+                          onClick={(event) => {
+                            const menu = event.currentTarget.closest('details')
+                            if (menu) menu.open = false
+                          }}
+                        >
+                          <span className="color-dot" style={{ background: p.color }} />
+                          {p.shortName}
+                        </Link>
+                      ))}
+                    </div>
+                  </details>
+                )}
               </nav>
 
               <div className="header-account">
@@ -151,41 +185,6 @@ export function Shell({ children, library }: { children: ReactNode; library: Lib
                 </Link>
               )}
             </div>
-          </div>
-          <div className="header-secondary">
-            <nav className="topbar-breadcrumb" aria-label="Fil d’Ariane">
-              <Link to="/">Mon espace</Link>
-              <span aria-hidden="true">/</span>
-              {currentPlatform ? (
-                <>
-                  <Link to="/platforms">Mes plateformes</Link>
-                  <span aria-hidden="true">/</span>
-                  <span aria-current="page">{currentPlatform.name}</span>
-                </>
-              ) : (
-                <span aria-current="page">
-                  {currentSection?.label ??
-                    (pathname.startsWith('/games') ? 'Fiche de jeu' : 'Paramètres')}
-                </span>
-              )}
-            </nav>
-
-            {favorites.length > 0 && (
-              <div className="header-universes">
-                <span className="header-caption">MES UNIVERS</span>
-                {favorites.map((p) => (
-                  <Link
-                    key={p.id}
-                    to="/platforms/$platformId"
-                    params={{ platformId: p.id }}
-                    className="platform-nav"
-                  >
-                    <span className="color-dot" style={{ background: p.color }} />
-                    {p.shortName}
-                  </Link>
-                ))}
-              </div>
-            )}
           </div>
         </header>
         <div className="workspace">

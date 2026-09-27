@@ -3,7 +3,8 @@
 ## Navigation horizontale (essai)
 
 La sidebar est remplacée par un header sticky : logo, navigation existante, paramètres,
-profil, recherche et action Ajouter/Enregistrer. Fil d’Ariane et Mes univers en seconde ligne.
+profil, recherche et action Ajouter/Enregistrer. Fil d’Ariane supprimé ; Mes univers est un menu
+compact dans la navigation principale, sans seconde ligne permanente.
 Sous 1650 px, le bouton Menu déplie navigation et profil ; recherche et action restent visibles.
 Les informations d’espace personnel sont conservées dans le footer. Aucun changement de routes
 ou d’options. Styles isolés dans `src/styles/header.css`, importé en dernier, ancien CSS conservé
@@ -33,7 +34,9 @@ de manette sur fond bleu nuit. Styles isolés sous `.platform-snes` dans `src/st
 Galerie de faces avant à plat, horizontales, sans recadrage. Titre et étoiles sont prioritaires ;
 plateforme, année, statut et icônes de possession sont masqués sur les cartes SNES pour les alléger.
 En grille SNES, une bande de 32 px accueille le titre à gauche et les étoiles à droite, sans chiffre répété. Le titre est tronqué si nécessaire, avec son nom complet au survol ; aucune note ne recouvre la jaquette.
-Sur desktop, les pages plateforme utilisent toute la largeur disponible pour la galerie, avec les marges habituelles. Bannière et filtres restent centrés, limités à 1456 px.
+Sur desktop, bandeau, filtres et galerie sont alignés sur toute la largeur disponible, avec les
+marges habituelles. Bandeau d’environ 120 px : logo ou nom, compteurs à côté et matériel à droite,
+sans surtitre ni phrase décorative. Espacement réduit avant les jeux ; adaptation sur mobile.
 le souvenir complet reste dans la fiche. Les images choisies par l’utilisateur restent nécessaires :
 aucune conversion automatique d’une jaquette IGDB en boîte PAL.
 

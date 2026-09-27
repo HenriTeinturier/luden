@@ -12,6 +12,8 @@ import {
   ArrowUpRight,
   Check,
   LoaderCircle,
+  Menu,
+  X,
 } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 import type { Library } from '../lib/types'
@@ -29,6 +31,7 @@ export function Shell({ children, library }: { children: ReactNode; library: Lib
   const pathname = useLocation({ select: (l) => l.pathname })
   const navigate = useNavigate()
   const [search, setSearch] = useState('')
+  const [menuOpen, setMenuOpen] = useState(false)
   const [formAction, setFormAction] = useState<FormAction | null>(null)
   const currentPlatform = library?.platforms.find(
     (platform) => pathname.replace(/\/$/, '') === `/platforms/${platform.id}`,
@@ -42,83 +45,64 @@ export function Shell({ children, library }: { children: ReactNode; library: Lib
       .slice(0, 6) ?? []
   return (
     <FormActionContext.Provider value={setFormAction}>
-      <div className="app-shell">
+      <div className="app-shell horizontal-shell">
         <a className="skip-link" href="#main">
           Aller au contenu
         </a>
-        <aside className="sidebar">
-          <Link to="/" className="brand" aria-label="Luden, accueil">
-            <picture className="brand-art">
-              <source media="(max-width: 980px)" srcSet="/favicon.svg" />
-              <img src="/luden-logo.svg" alt="" width="190" height="40" />
-            </picture>
-          </Link>
-          <div className="sidebar-caption">VOTRE VIE DE JOUEUR</div>
-          <nav aria-label="Navigation principale">
-            {navigation.map(({ to, label, icon: Icon }) => (
-              <Link
-                key={to}
-                to={to}
-                className={`nav-item ${(to === '/' ? pathname === '/' : pathname.startsWith(to)) ? 'active' : ''}`}
-              >
-                <Icon size={19} strokeWidth={1.7} />
-                <span>{label}</span>
-                {to === '/library' && <small>{library?.games.length ?? 0}</small>}
-              </Link>
-            ))}
-          </nav>
-          {favorites.length > 0 && (
-            <div className="sidebar-platforms">
-              <span className="sidebar-caption">MES UNIVERS</span>
-              {favorites.map((p) => (
-                <Link
-                  key={p.id}
-                  to="/platforms/$platformId"
-                  params={{ platformId: p.id }}
-                  className="platform-nav"
-                >
-                  <span className="color-dot" style={{ background: p.color }} />
-                  {p.shortName}
-                </Link>
-              ))}
-            </div>
-          )}
-          <div className="sidebar-bottom">
-            <div className="local-note">
-              <span className="live-dot" />
-              Un espace rien qu’à vous<small>Vos jeux. Vos souvenirs. Chez vous.</small>
-            </div>
-            <Link to="/settings" className={`nav-item ${pathname === '/settings' ? 'active' : ''}`}>
-              <Settings2 size={18} />
-              Paramètres
+        <header className="site-header">
+          <div className="header-primary">
+            <Link to="/" className="brand" aria-label="Luden, accueil">
+              <img src="/luden-logo.svg" alt="" width="150" height="32" />
             </Link>
-            <div className="profile-chip">
-              <span className="avatar">{library?.profile.name.charAt(0).toUpperCase() ?? 'L'}</span>
-              <div>
-                {library?.profile.name ?? 'Ma vie de joueur'}
-                <small>Bibliothèque personnelle</small>
+            <button
+              type="button"
+              className="button secondary header-menu-toggle"
+              aria-expanded={menuOpen}
+              aria-controls="header-menu"
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              {menuOpen ? <X size={18} /> : <Menu size={18} />} Menu
+            </button>
+            <div
+              id="header-menu"
+              className={`header-menu ${menuOpen ? 'is-open' : ''}`}
+              onClick={(event) => {
+                if ((event.target as HTMLElement).closest('a')) setMenuOpen(false)
+              }}
+            >
+              <nav aria-label="Navigation principale">
+                {navigation.map(({ to, label, icon: Icon }) => (
+                  <Link
+                    key={to}
+                    to={to}
+                    className={`nav-item ${(to === '/' ? pathname === '/' : pathname.startsWith(to)) ? 'active' : ''}`}
+                  >
+                    <Icon size={19} strokeWidth={1.7} />
+                    <span>{label}</span>
+                    {to === '/library' && <small>{library?.games.length ?? 0}</small>}
+                  </Link>
+                ))}
+              </nav>
+
+              <div className="header-account">
+                <Link
+                  to="/settings"
+                  className={`nav-item ${pathname === '/settings' ? 'active' : ''}`}
+                >
+                  <Settings2 size={18} />
+                  Paramètres
+                </Link>
+                <div className="profile-chip">
+                  <span className="avatar">
+                    {library?.profile.name.charAt(0).toUpperCase() ?? 'L'}
+                  </span>
+                  <div>
+                    {library?.profile.name ?? 'Ma vie de joueur'}
+                    <small>Bibliothèque personnelle</small>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </aside>
-        <div className="workspace">
-          <header className={`topbar ${formAction ? 'topbar-saving' : ''}`}>
-            <nav className="topbar-breadcrumb" aria-label="Fil d’Ariane">
-              <Link to="/">Mon espace</Link>
-              <span aria-hidden="true">/</span>
-              {currentPlatform ? (
-                <>
-                  <Link to="/platforms">Mes plateformes</Link>
-                  <span aria-hidden="true">/</span>
-                  <span aria-current="page">{currentPlatform.name}</span>
-                </>
-              ) : (
-                <span aria-current="page">
-                  {currentSection?.label ??
-                    (pathname.startsWith('/games') ? 'Fiche de jeu' : 'Paramètres')}
-                </span>
-              )}
-            </nav>
             <div className="topbar-actions">
               <form
                 className="global-search"
@@ -167,11 +151,53 @@ export function Shell({ children, library }: { children: ReactNode; library: Lib
                 </Link>
               )}
             </div>
-          </header>
+          </div>
+          <div className="header-secondary">
+            <nav className="topbar-breadcrumb" aria-label="Fil d’Ariane">
+              <Link to="/">Mon espace</Link>
+              <span aria-hidden="true">/</span>
+              {currentPlatform ? (
+                <>
+                  <Link to="/platforms">Mes plateformes</Link>
+                  <span aria-hidden="true">/</span>
+                  <span aria-current="page">{currentPlatform.name}</span>
+                </>
+              ) : (
+                <span aria-current="page">
+                  {currentSection?.label ??
+                    (pathname.startsWith('/games') ? 'Fiche de jeu' : 'Paramètres')}
+                </span>
+              )}
+            </nav>
+
+            {favorites.length > 0 && (
+              <div className="header-universes">
+                <span className="header-caption">MES UNIVERS</span>
+                {favorites.map((p) => (
+                  <Link
+                    key={p.id}
+                    to="/platforms/$platformId"
+                    params={{ platformId: p.id }}
+                    className="platform-nav"
+                  >
+                    <span className="color-dot" style={{ background: p.color }} />
+                    {p.shortName}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+        </header>
+        <div className="workspace">
           <main id="main" tabIndex={-1}>
             {children}
           </main>
           <footer className="footer">
+            <div className="local-note">
+              <span className="live-dot" />
+              Un espace rien qu’à vous<small>Vos jeux. Vos souvenirs. Chez vous.</small>
+            </div>
+
             <span>
               luden<span className="brand-dot">.</span>{' '}
               <span>Une vie de jeux, une collection de souvenirs.</span>

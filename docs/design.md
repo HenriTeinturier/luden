@@ -1,5 +1,14 @@
 # Direction graphique actuelle
 
+## Navigation horizontale (essai)
+
+La sidebar est remplacée par un header sticky : logo, navigation existante, paramètres,
+profil, recherche et action Ajouter/Enregistrer. Fil d’Ariane et Mes univers en seconde ligne.
+Sous 1650 px, le bouton Menu déplie navigation et profil ; recherche et action restent visibles.
+Les informations d’espace personnel sont conservées dans le footer. Aucun changement de routes
+ou d’options. Styles isolés dans `src/styles/header.css`, importé en dernier, ancien CSS conservé
+pour cette phase d’essai. Version avant essai : `21d7f4e`.
+
 Le titre « Les machines de votre histoire » utilise Chakra Petch 600 (sous-ensemble latin,
 servi localement via Fontsource), pour une touche rétro lisible. Les autres titres et textes
 conservent leur typographie. Règle limitée à `.platforms-index .page-heading h1`.

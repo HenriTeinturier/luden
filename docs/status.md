@@ -1,5 +1,7 @@
 # État courant
 
+- Essai navigation horizontale : accès actuels conservés en haut, recherche et Ajouter/Enregistrer persistants, fil d’Ariane et Mes univers sur une seconde ligne. Menu dépliable sous 1650 px, informations locales en pied de page. Styles isolés dans `src/styles/header.css`. Version précédente : `21d7f4e`. TypeScript/lint validés ; rendu à valider par Henri.
+
 - Titre de Mes plateformes : Chakra Petch 600, rétro légèrement carrée, servie localement via Fontsource. Application limitée à ce titre ; couleur et taille conservées.
 
 - Mes plateformes : en-tête simplifié en un seul titre « Les machines de votre histoire », sans surtitre ni sous-titre.

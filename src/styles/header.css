@@ -1,0 +1,204 @@
+/* Horizontal navigation trial. Scoped to preserve the previous layout styles. */
+.horizontal-shell .workspace {
+  margin-left: 0;
+}
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--sidebar-background);
+  border-bottom: 1px solid var(--line);
+}
+.header-primary {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  min-height: 78px;
+  padding: 12px 32px;
+}
+.site-header .brand {
+  flex-shrink: 0;
+  margin: 0;
+}
+.site-header .brand img {
+  display: block;
+  width: 150px;
+  height: auto;
+}
+.header-menu,
+.header-menu nav,
+.header-account {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.header-menu {
+  flex: 1;
+  min-width: 0;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.header-menu nav {
+  flex-wrap: wrap;
+}
+.site-header .nav-item {
+  margin: 0;
+  padding: 12px 10px;
+  font-size: 13px;
+  gap: 8px;
+  white-space: nowrap;
+  justify-content: flex-start;
+}
+.site-header .nav-item span,
+.site-header .nav-item small,
+.site-header .profile-chip div {
+  display: block;
+}
+.site-header .nav-item.active {
+  box-shadow: inset 0 -2px var(--blue);
+}
+.site-header .profile-chip {
+  border: 0;
+  padding: 0 8px;
+  justify-content: flex-start;
+}
+.site-header .profile-chip div {
+  max-width: 140px;
+  overflow-wrap: anywhere;
+}
+.site-header .profile-chip .avatar {
+  display: grid;
+}
+.site-header .topbar-actions {
+  display: flex;
+  gap: 12px;
+  flex-shrink: 0;
+  width: auto;
+  margin: 0;
+}
+.site-header .global-search {
+  display: flex;
+}
+.site-header .global-search input {
+  width: 145px;
+}
+.header-secondary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding: 8px 32px;
+  min-height: 43px;
+  border-top: 1px solid var(--line);
+}
+.site-header .topbar-breadcrumb {
+  display: flex;
+}
+.header-universes {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+}
+.header-caption {
+  color: var(--muted);
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+.header-universes .platform-nav {
+  padding: 4px 8px;
+  gap: 7px;
+  border-radius: 5px;
+}
+.header-universes .platform-nav:hover {
+  background: var(--elevated);
+  color: var(--ink);
+}
+.header-menu-toggle {
+  display: none;
+}
+.horizontal-shell .footer {
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.horizontal-shell .footer .local-note {
+  padding: 0;
+}
+.horizontal-shell .skip-link {
+  left: 16px;
+  z-index: 30;
+}
+@media (max-width: 1650px) {
+  .header-primary {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .header-menu-toggle {
+    display: inline-flex;
+  }
+  .site-header .topbar-actions {
+    margin-left: auto;
+  }
+  .header-menu {
+    display: none;
+    order: 4;
+    flex-basis: 100%;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+  }
+  .header-menu.is-open {
+    display: flex;
+  }
+  .header-menu nav {
+    flex-wrap: wrap;
+  }
+}
+@media (max-width: 720px) {
+  .header-primary,
+  .header-secondary {
+    padding-inline: 16px;
+  }
+  .site-header .brand img {
+    width: 125px;
+  }
+  .header-menu-toggle {
+    margin-left: auto;
+  }
+  .site-header .topbar-actions {
+    flex-basis: 100%;
+    flex-wrap: wrap;
+  }
+  .site-header .global-search {
+    flex: 1 1 140px;
+    min-width: 0;
+  }
+  .site-header .global-search input {
+    width: 100%;
+    min-width: 0;
+  }
+  .header-menu.is-open {
+    max-height: 40vh;
+    overflow-y: auto;
+  }
+  .header-menu nav {
+    width: 100%;
+  }
+  .site-header .nav-item {
+    padding: 10px;
+  }
+  .site-header .header-account {
+    flex-wrap: wrap;
+  }
+  .header-universes {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    max-width: 100%;
+  }
+  .header-universes > * {
+    flex-shrink: 0;
+  }
+}

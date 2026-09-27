@@ -16,7 +16,7 @@ import {
 export function Gallery({
   games,
   platformLocked = false,
-  defaultScope,
+  defaultScope = 'all',
 }: {
   games: Game[]
   platformLocked?: boolean
@@ -70,28 +70,26 @@ export function Gallery({
   )
   return (
     <>
-      <div className={`gallery-toolbar ${defaultScope ? 'gallery-toolbar-scoped' : ''}`}>
-        {defaultScope && (
-          <div className="platform-scope" role="group" aria-label="Jeux à afficher">
-            {(
-              [
-                ['played', 'Joués'],
-                ['discover', 'À découvrir'],
-                ['owned', 'Possédés'],
-                ['all', 'Tous mes jeux'],
-              ] as const
-            ).map(([scope, label]) => (
-              <button
-                key={scope}
-                type="button"
-                aria-pressed={filters.scope === scope}
-                onClick={() => update({ scope, status: '', owned: 'all' })}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
-        )}
+      <div className="gallery-toolbar gallery-toolbar-scoped">
+        <div className="platform-scope" role="group" aria-label="Jeux à afficher">
+          {(
+            [
+              ['played', 'Joués'],
+              ['discover', 'À découvrir'],
+              ['owned', 'Possédés'],
+              ['all', 'Tous mes jeux'],
+            ] as const
+          ).map(([scope, label]) => (
+            <button
+              key={scope}
+              type="button"
+              aria-pressed={filters.scope === scope}
+              onClick={() => update({ scope, status: '', owned: 'all' })}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
         <div className="filter-search">
           <Search size={17} />
           <input

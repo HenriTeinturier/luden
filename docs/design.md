@@ -26,7 +26,11 @@ aucune conversion automatique d’une jaquette IGDB en boîte PAL.
 
 À l’entrée, afficher les jeux joués. Les boutons permettent de voir aussi les jeux à découvrir,
 possédés actuellement ou tous les jeux personnels SNES. L’état est conservé dans l’URL ;
-un accès sans filtre repart sur Joués. Les autres plateformes gardent leur comportement actuel.
+un accès sans préférence mémorisée repart sur Joués, pour toutes les plateformes.
+La même barre est utilisée dans toutes les galeries, collections comprises. Bibliothèque et
+collections partent sur Tous mes jeux ; Découverte sur À découvrir, avec possibilité de changer
+de vue. Dans une collection, les boutons filtrent uniquement ses jeux. Les préférences navigateur
+restent propres à chaque galerie. La barre se replie sur plusieurs lignes si la largeur manque.
 
 ## Thème commun
 

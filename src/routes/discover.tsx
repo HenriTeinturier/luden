@@ -19,7 +19,7 @@ function Discover() {
         Une envie de jouer n’est pas une envie d’acheter. Vos jeux déjà possédés ont aussi leur
         place ici.
       </div>
-      <Gallery games={games.filter((g) => g.discover)} />
+      <Gallery games={games} defaultScope="discover" />
     </div>
   )
 }

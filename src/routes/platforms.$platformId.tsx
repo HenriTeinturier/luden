@@ -118,7 +118,7 @@ function PlatformPage() {
           ))}
         </div>
       )}
-      <Gallery games={chosen} platformLocked defaultScope={isSnes ? 'played' : undefined} />
+      <Gallery games={chosen} platformLocked defaultScope="played" />
     </div>
   )
 }

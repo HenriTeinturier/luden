@@ -7,7 +7,8 @@ Le choix est manuel : un import IGDB ne le remplace pas.
 ## Utilisation
 
 - Fiche : champ « Catégorie de rangement », valeur vide « À classer ».
-- Galerie : « Par catégorie » ou « Sans regroupement ». Par défaut, regroupement sur la SNES.
+- Galerie : « Par catégorie » ou « Sans regroupement ». Sans regroupement par défaut partout.
+- Préférences par URL de bibliothèque en localStorage (`luden:gallery:v1:`) : filtres, tri, vue et regroupement, hors texte de recherche. Les paramètres explicites de l’URL priment ; stockage absent ou indisponible sans effet bloquant. Aucune écriture en base.
 - Les filtres s’appliquent avant le regroupement ; le tri choisi reste valable dans chaque section.
 - Sections dans l’ordre personnel, vides masquées, « À classer » en dernier.
 - Paramètres : ajouter, renommer et monter/descendre les catégories, puis enregistrer.

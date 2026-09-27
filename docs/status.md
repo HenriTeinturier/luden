@@ -1,5 +1,7 @@
 # État courant
 
+- Bibliothèques : « Sans regroupement » par défaut. Filtres, tri, vue et regroupement mémorisés en localStorage par bibliothèque, hors texte de recherche. URL explicite prioritaire ; aucune écriture en base.
+
 - Après création d’un jeu : ouverture de sa bibliothèque plateforme, tri récent ; vue Joués ou Tous si le nouveau jeu est non joué. Après édition : retour à la fiche conservé.
 
 - Création/édition : le header remplace « Ajouter un jeu » par « Enregistrer » et reste visible au défilement. Soumission du même formulaire, désactivée pendant import/sauvegarde, erreurs focalisées. Retour au bouton Ajouter en quittant le formulaire.
@@ -7,7 +9,7 @@
 ## Catégories de rangement
 
 - Une catégorie facultative par jeu, distincte des genres IGDB. Onze catégories initiales.
-- Galerie par sections successives ; regroupement activé par défaut sur SNES, désactivable.
+- Galerie par sections successives en option ; sans regroupement par défaut, choix mémorisé dans le navigateur.
 - Renommage, ajout et ordre dans Paramètres. Jeux existants conservés dans « À classer ».
 - Migration additive appliquée ; client Prisma régénéré et serveur Vite relancé sur le port 3000.
 - TypeScript, lint et trois tests ciblés réussis. Aucun test visuel effectué.

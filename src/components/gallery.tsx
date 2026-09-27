@@ -1,12 +1,17 @@
 import { coverFormat } from '../lib/presentation'
-import { useNavigate, useSearch } from '@tanstack/react-router'
+import { useLocation, useNavigate, useSearch } from '@tanstack/react-router'
 import { Search, LayoutGrid, List, SlidersHorizontal, X } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { filterGames, type GallerySearch } from '../lib/gallery'
 import type { Game } from '../lib/types'
 import { playStatuses } from '../lib/platforms'
 import { EmptyState, GameCard, useLibrary } from './ui'
 import { groupByCategory } from '../lib/categories'
+import {
+  galleryPreferenceKey,
+  restoreGalleryPreferences,
+  saveGalleryPreferences,
+} from '../lib/gallery-preferences'
 
 export function Gallery({
   games,
@@ -21,12 +26,35 @@ export function Gallery({
   const search = useSearch({ strict: false }) as GallerySearch
   const filters = { ...search, scope: search.scope ?? defaultScope }
   const navigate = useNavigate()
+  const pathname = useLocation({ select: (location) => location.pathname })
+  const restoredPath = useRef<string | null>(null)
+  useEffect(() => {
+    if (restoredPath.current === pathname) return
+    restoredPath.current = pathname
+    try {
+      const restored = restoreGalleryPreferences(
+        localStorage.getItem(galleryPreferenceKey(pathname)),
+        search,
+      )
+      if (
+        Object.entries(restored).some(
+          ([key, value]) => search[key as keyof GallerySearch] !== value,
+        )
+      ) {
+        void navigate({ to: '.', search: restored, replace: true, resetScroll: false })
+      }
+    } catch {
+      // Browser storage is optional, including during private browsing.
+    }
+  }, [pathname, search, navigate])
   const [advanced, setAdvanced] = useState(false)
   const update = (patch: Partial<GallerySearch>) => {
-    void navigate({ to: '.', search: { ...filters, ...patch }, replace: true })
+    const next = { ...filters, ...patch }
+    saveGalleryPreferences(pathname, next)
+    void navigate({ to: '.', search: next, replace: true, resetScroll: false })
   }
   const visible = filterGames(games, filters)
-  const grouping = filters.group ?? (defaultScope ? 'category' : 'none')
+  const grouping = filters.group ?? 'none'
   const groups =
     grouping === 'category'
       ? groupByCategory(visible, library.categories)

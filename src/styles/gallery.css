@@ -431,3 +431,19 @@
   border-radius: 30px;
   color: #7d866e;
 }
+
+.gallery-results {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  font-size: 12px;
+  color: var(--text-soft);
+}
+.gallery-results > span,
+.gallery-results .text-link {
+  white-space: nowrap;
+}
+.gallery-toolbar ~ .gallery-groups {
+  margin-top: 16px;
+}

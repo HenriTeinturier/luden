@@ -1,5 +1,7 @@
 # État courant
 
+- Toutes les galeries : compteur de jeux et réinitialisation intégrés dans la barre de filtres, ligne inférieure supprimée. Retour à la ligne dans la barre si nécessaire, compteur annoncé aux lecteurs d’écran.
+
 - Cartes de jeux Amiga allégées : jaquette, titre et étoiles conservés ; plateforme/année, statut, icônes de possession, extrait de souvenir et note chiffrée masqués. Format vertical et favori conservés, détails toujours dans la fiche.
 
 - Bandeau Amiga : composition élargie pour espacer joystick et ordinateur, sans agrandir les objets ni augmenter la hauteur.

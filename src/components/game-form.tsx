@@ -3,7 +3,8 @@ import { useNotification } from './notifications'
 import { IdentityFields } from './game-form/identity-fields'
 import { ExperienceFields } from './game-form/experience-fields'
 import { PossessionFields } from './game-form/possession-fields'
-import { useState, type FormEvent } from 'react'
+import { useContext, useEffect, useId, useRef, useState, type FormEvent } from 'react'
+import { FormActionContext } from './form-action'
 import { Link, useNavigate, useRouter } from '@tanstack/react-router'
 import { ArrowLeft, Check, ImagePlus, Plus, Search, Sparkles, LoaderCircle } from 'lucide-react'
 import { emptyGame, gameSchema, type GameInput } from '../lib/validation'
@@ -79,6 +80,17 @@ export function GameForm({
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
   const [uploading, setUploading] = useState(false)
+  const formId = useId()
+  const setFormAction = useContext(FormActionContext)
+  const saving = useRef(false)
+  const errorRef = useRef<HTMLParagraphElement>(null)
+  useEffect(() => {
+    setFormAction({ formId, busy, uploading })
+    return () => setFormAction(null)
+  }, [setFormAction, formId, busy, uploading])
+  useEffect(() => {
+    if (error) errorRef.current?.focus()
+  }, [error])
   const [query, setQuery] = useState('')
   const [searching, setSearching] = useState(false)
   const [results, setResults] = useState<SearchResult[] | null>(null)
@@ -139,12 +151,14 @@ export function GameForm({
   }
   async function save(e: FormEvent) {
     e.preventDefault()
+    if (saving.current || uploading) return
     setError('')
     const parsed = gameSchema.safeParse(data)
     if (!parsed.success) {
       setError(parsed.error.issues[0].message)
       return
     }
+    saving.current = true
     setBusy(true)
     try {
       const result = await saveGameFn({ data: parsed.data })
@@ -162,6 +176,7 @@ export function GameForm({
     } catch {
       setError('Enregistrement impossible. Vos champs ont été conservés, vous pouvez réessayer.')
     } finally {
+      saving.current = false
       setBusy(false)
     }
   }
@@ -276,7 +291,7 @@ export function GameForm({
           )}
         </section>
       )}
-      <form onSubmit={save} className="game-form">
+      <form id={formId} onSubmit={save} className="game-form">
         <div className="form-main">
           <IdentityFields data={data} change={change} />
           <ExperienceFields data={data} change={change} experience={experience} />
@@ -333,7 +348,7 @@ export function GameForm({
         </aside>
         <div className="form-savebar">
           {error && (
-            <p className="form-error" role="alert">
+            <p ref={errorRef} tabIndex={-1} className="form-error" role="alert">
               {error}
             </p>
           )}

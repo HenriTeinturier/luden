@@ -1,5 +1,7 @@
 # État courant
 
+- Création/édition : le header remplace « Ajouter un jeu » par « Enregistrer » et reste visible au défilement. Soumission du même formulaire, désactivée pendant import/sauvegarde, erreurs focalisées. Retour au bouton Ajouter en quittant le formulaire.
+
 ## Catégories de rangement
 
 - Une catégorie facultative par jeu, distincte des genres IGDB. Onze catégories initiales.

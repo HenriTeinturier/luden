@@ -151,6 +151,15 @@ input[type='radio'] {
 .topbar {
   background: var(--topbar-background);
 }
+.topbar-saving {
+  position: sticky;
+  top: 0;
+  z-index: 15;
+  background: var(--sidebar-background);
+}
+.game-form :is(input, select, textarea, .form-error) {
+  scroll-margin-top: 150px;
+}
 .global-search {
   background: var(--surface);
   border: 1px solid var(--line);

@@ -18,11 +18,7 @@ function Platforms() {
   }
   return (
     <div className="page">
-      <PageHeading
-        eyebrow="LES MACHINES DE VOTRE HISTOIRE"
-        title="Des univers à retrouver."
-        description="De la première manette aux mondes d’aujourd’hui."
-      />
+      <PageHeading title="Les machines de votre histoire" />
       <div className="filter-tabs">
         {['Toutes', ...new Set(platforms.map((p) => p.family))].map((f) => (
           <button key={f} className={f === family ? 'active' : ''} onClick={() => setFamily(f)}>

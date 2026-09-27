@@ -1,5 +1,7 @@
 # État courant
 
+- Mes plateformes : en-tête simplifié en un seul titre « Les machines de votre histoire », sans surtitre ni sous-titre.
+
 - Mes plateformes : celles avec au moins un jeu enregistré passent en premier, puis tri alphabétique français dans chaque groupe (avec/sans jeux), également sous les filtres de famille. Ordre calculé, sans stockage ni glisser-déposer pour le moment.
 
 - Barre de galerie commune partout (bibliothèque, collections, découverte, toutes les plateformes) : Joués / À découvrir / Possédés / Tous mes jeux, recherche, regroupement, tri et vue. Plateformes ouvertes sur Joués, Découverte sur À découvrir ; préférences navigateur prioritaires. Les collections restent limitées à leurs jeux.

@@ -166,7 +166,18 @@ export function GameForm({
       else {
         await router.invalidate()
         onSaved?.()
-        await navigate({ to: '/games/$gameId', params: { gameId: result.data.id } })
+        if (game) {
+          await navigate({ to: '/games/$gameId', params: { gameId: result.data.id } })
+        } else {
+          await navigate({
+            to: '/platforms/$platformId',
+            params: { platformId: parsed.data.platformId },
+            search: {
+              sort: 'recent',
+              scope: parsed.data.experience.status === 'UNPLAYED' ? 'all' : 'played',
+            },
+          })
+        }
         notify(
           game
             ? 'Les modifications du jeu sont enregistrées.'

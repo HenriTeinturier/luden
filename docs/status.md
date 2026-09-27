@@ -1,5 +1,7 @@
 # État courant
 
+- Après création d’un jeu : ouverture de sa bibliothèque plateforme, tri récent ; vue Joués ou Tous si le nouveau jeu est non joué. Après édition : retour à la fiche conservé.
+
 - Création/édition : le header remplace « Ajouter un jeu » par « Enregistrer » et reste visible au défilement. Soumission du même formulaire, désactivée pendant import/sauvegarde, erreurs focalisées. Retour au bouton Ajouter en quittant le formulaire.
 
 ## Catégories de rangement

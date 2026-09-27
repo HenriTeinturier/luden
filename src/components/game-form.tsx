@@ -164,7 +164,8 @@ export function GameForm({
       const result = await saveGameFn({ data: parsed.data })
       if (!result.ok) setError(result.error)
       else {
-        await router.invalidate()
+        // Finish refreshing loader data before navigating to the saved game/library.
+        await router.invalidate({ sync: true })
         onSaved?.()
         if (game) {
           await navigate({ to: '/games/$gameId', params: { gameId: result.data.id } })

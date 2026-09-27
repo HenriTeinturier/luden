@@ -1,5 +1,7 @@
 # État courant
 
+- Sauvegarde de jeu : attendre le rafraîchissement complet des données (`invalidate({ sync: true })`) avant la navigation, pour éviter de revenir sur une bibliothèque encore obsolète. Signalement Magical Quest : deux ajouts étaient enregistrés ; doublon supprimé par l’utilisateur, aucune donnée modifiée pour le correctif. Cause exacte non reproduite.
+
 - Bibliothèques : « Sans regroupement » par défaut. Filtres, tri, vue et regroupement mémorisés en localStorage par bibliothèque, hors texte de recherche. URL explicite prioritaire ; aucune écriture en base.
 
 - Après création d’un jeu : ouverture de sa bibliothèque plateforme, tri récent ; vue Joués ou Tous si le nouveau jeu est non joué. Après édition : retour à la fiche conservé.

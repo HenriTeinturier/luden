@@ -17,7 +17,7 @@ function Platforms() {
     gameCounts.set(game.platformId, (gameCounts.get(game.platformId) ?? 0) + 1)
   }
   return (
-    <div className="page">
+    <div className="page platforms-index">
       <PageHeading title="Les machines de votre histoire" />
       <div className="filter-tabs">
         {['Toutes', ...new Set(platforms.map((p) => p.family))].map((f) => (
@@ -35,11 +35,7 @@ function Platforms() {
               a.name.localeCompare(b.name, 'fr', { sensitivity: 'base', numeric: true }),
           )
           .map((p) => (
-            <PlatformCard
-              key={p.id}
-              platform={p}
-              count={gameCounts.get(p.id) ?? 0}
-            />
+            <PlatformCard key={p.id} platform={p} count={gameCounts.get(p.id) ?? 0} />
           ))}
       </div>
       <SectionHeading title="Mes PC, mes repères." />

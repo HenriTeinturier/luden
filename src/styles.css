@@ -1,5 +1,6 @@
 @import '@fontsource-variable/dm-sans';
 @import '@fontsource-variable/fraunces';
+@import '@fontsource/chakra-petch/latin-600.css';
 @import './styles/layout.css';
 @import './styles/home.css';
 @import './styles/gallery.css';

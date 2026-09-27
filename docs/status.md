@@ -1,5 +1,7 @@
 # État courant
 
+- Titre de Mes plateformes : Chakra Petch 600, rétro légèrement carrée, servie localement via Fontsource. Application limitée à ce titre ; couleur et taille conservées.
+
 - Mes plateformes : en-tête simplifié en un seul titre « Les machines de votre histoire », sans surtitre ni sous-titre.
 
 - Mes plateformes : celles avec au moins un jeu enregistré passent en premier, puis tri alphabétique français dans chaque groupe (avec/sans jeux), également sous les filtres de famille. Ordre calculé, sans stockage ni glisser-déposer pour le moment.

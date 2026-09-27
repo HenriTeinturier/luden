@@ -1,5 +1,9 @@
 # Direction graphique actuelle
 
+Le titre « Les machines de votre histoire » utilise Chakra Petch 600 (sous-ensemble latin,
+servi localement via Fontsource), pour une touche rétro lisible. Les autres titres et textes
+conservent leur typographie. Règle limitée à `.platforms-index .page-heading h1`.
+
 ## Amiga
 
 Carte large et bandeau intérieur : fond graphite chaud, arc-en-ciel atténué à droite,

@@ -1,5 +1,7 @@
 # État courant
 
+- Bandeau Amiga : ordinateur et Quickjoy agrandis, cadrage partiel masqué par le bandeau, hauteur inchangée. Zoom réduit sous 1100 px ; matériel toujours masqué sur mobile. Carte de plateforme inchangée.
+
 - Navigation et plateformes compactées : fil d’Ariane/seconde ligne supprimés, Mes univers en menu dans le header. Bandeaux plateforme d’environ 120 px sur desktop, sans textes décoratifs, alignés avec les filtres sur la largeur des jeux. Logos, compteurs et matériel conservés. TypeScript/lint validés ; rendu à valider par Henri.
 
 - Navigation horizontale : recherche et Ajouter/Enregistrer persistants, menu dépliable sous 1650 px, informations locales en pied de page. Styles isolés dans `src/styles/header.css`. Version avant passage à la navigation horizontale : `21d7f4e`.

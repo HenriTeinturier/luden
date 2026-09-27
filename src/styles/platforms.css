@@ -441,6 +441,35 @@
 .platform-page > .gallery-toolbar {
   margin-top: 0;
 }
+.platform-amiga .amiga-hero-hardware {
+  flex-basis: 400px;
+  width: 400px;
+}
+.platform-amiga .amiga-computer {
+  height: 190px;
+  bottom: -46px;
+  right: -16px;
+}
+.platform-amiga .amiga-joystick {
+  width: 38%;
+  height: 145px;
+  bottom: -20px;
+}
+@media (max-width: 1100px) {
+  .platform-amiga .amiga-hero-hardware {
+    flex-basis: 260px;
+    width: 260px;
+  }
+  .platform-amiga .amiga-computer {
+    height: 135px;
+    bottom: -18px;
+    right: 0;
+  }
+  .platform-amiga .amiga-joystick {
+    height: 105px;
+    bottom: -10px;
+  }
+}
 @media (max-width: 720px) {
   .platform-page .platform-hero {
     padding: 16px;

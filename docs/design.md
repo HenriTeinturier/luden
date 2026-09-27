@@ -18,6 +18,8 @@ conservent leur typographie. Règle limitée à `.platforms-index .page-heading 
 
 Carte large et bandeau intérieur : fond graphite chaud, arc-en-ciel atténué à droite,
 logo blanc et Amiga 500 avec souris. Le joystick Quickjoy complète le bandeau intérieur.
+Dans le bandeau compact, matériel agrandi et partiellement cadré par les bords, joystick devant
+l’ordinateur. Zoom réduit sous 1100 px, sans augmenter la hauteur du bandeau.
 Assets fournis par Henri, conservés sans modification dans `public/platforms/amiga/`.
 Textes et compteurs en HTML ; proportions des images conservées. Cartes Amiga et SNES de même
 format : deux colonnes, hauteur 250 px (190 px sur mobile). Bandeau intérieur aligné sur SNES ;

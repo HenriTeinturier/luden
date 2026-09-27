@@ -1,7 +1,7 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import * as AlertDialog from '@radix-ui/react-alert-dialog'
 import { X, ArrowUpRight, Plus, Gamepad2, Monitor, Heart, Disc3, Cloud, Clock3 } from 'lucide-react'
-import { Link, useLoaderData } from '@tanstack/react-router'
+import { Link, useLoaderData, useParams } from '@tanstack/react-router'
 import { useState, type CSSProperties, type ReactNode } from 'react'
 import type { Game, Platform } from '../lib/types'
 import { playStatuses } from '../lib/platforms'
@@ -236,6 +236,7 @@ export function EmptyState({
   add?: boolean
   children?: ReactNode
 }) {
+  const { platformId } = useParams({ strict: false })
   return (
     <div className="empty-state">
       <div className="empty-icon">
@@ -244,7 +245,7 @@ export function EmptyState({
       <h2>{title}</h2>
       <p>{description}</p>
       {add && (
-        <Link to="/games/new" className="button">
+        <Link to="/games/new" search={{ platform: platformId }} className="button">
           <Plus size={17} />
           Ajouter mon premier jeu
         </Link>

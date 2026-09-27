@@ -187,6 +187,7 @@ enum MediaCategory {
   BOX
   MEDIA
   DOCUMENT
+  ADVERTISEMENT
   OTHER
 }
 

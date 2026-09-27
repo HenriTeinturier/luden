@@ -25,6 +25,19 @@ test('Galerie : plusieurs images par catégorie, principale unique et ordre apr�
   assert.deepEqual(orderImages([]), [])
 })
 
+test('Une publicité est acceptée dans la galerie du jeu', () => {
+  const media = [
+    { mediaId: 'advertisement', category: 'ADVERTISEMENT', position: 0, isPrimary: true },
+  ]
+  const parsed = gameSchema.parse({
+    ...structuredClone(emptyGame),
+    title: 'Un jeu',
+    platformId: 'amiga',
+    media,
+  })
+  assert.equal(parsed.media?.[0].category, 'ADVERTISEMENT')
+})
+
 test('Les liens conservent une URL HTTP(S), sans contenu actif ni identifiants', () => {
   const link = {
     url: 'https://www.youtube.com/watch?v=example',

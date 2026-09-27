@@ -2,6 +2,10 @@
 
 Lire ce document uniquement pour modifier l'import, la galerie ou les liens.
 
+Catégorie `ADVERTISEMENT` / « Publicités » : annonces de magazines et visuels promotionnels,
+groupe dédié dans l’éditeur et la fiche. Migration additive `20260927180000_advertisement_media`
+sur l’enum PostgreSQL `MediaCategory` ; fichiers et catégories existants conservés.
+
 - `src/lib/media.ts` : catégories, liens HTTP(S), validation de la principale unique et ordre.
 - `src/server/media.ts` : copie WebP locale (sans crop), lecture, nettoyage des fichiers inutilisés.
 - `src/server/remote-image.ts` : téléchargement borné et protection contre les accès au réseau privé.

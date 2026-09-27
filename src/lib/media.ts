@@ -6,6 +6,7 @@ export const mediaCategories = {
   BOX: 'Boîte',
   MEDIA: 'Support',
   DOCUMENT: 'Documents',
+  ADVERTISEMENT: 'Publicités',
   OTHER: 'Divers',
 } as const
 export const linkTypes = {
@@ -26,7 +27,7 @@ export const webUrlSchema = z
   }, 'Utilisez une URL HTTP ou HTTPS sans identifiants.')
 export const attachmentSchema = z.object({
   mediaId: z.string().min(1),
-  category: z.enum(['COVER', 'SCREENSHOT', 'BOX', 'MEDIA', 'DOCUMENT', 'OTHER']),
+  category: z.enum(['COVER', 'SCREENSHOT', 'BOX', 'MEDIA', 'DOCUMENT', 'ADVERTISEMENT', 'OTHER']),
   position: z.number().int().min(0).max(1000),
   caption: z.string().trim().max(500).default(''),
   isPrimary: z.boolean().default(false),

@@ -18,6 +18,7 @@ const groups = [
   { title: 'Boîte', categories: ['BOX'] },
   { title: 'Support', categories: ['MEDIA'] },
   { title: 'Documents / divers', categories: ['DOCUMENT', 'OTHER'] },
+  { title: 'Publicités', categories: ['ADVERTISEMENT'] },
 ]
 
 export function MediaFields({

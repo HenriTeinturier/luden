@@ -1,5 +1,7 @@
 # État courant
 
+- Médias : catégorie « Publicités » (`ADVERTISEMENT`) ajoutée à l’import, au classement et à la galerie. Migration additive appliquée en base et client Prisma régénéré ; serveur Vite redémarré sur le port 3000. Données existantes conservées.
+
 - Barre commune : bouton cœur « Megastar » pour activer/désactiver les coups de cœur, combinable avec la vue courante. Réutilise le filtre favori et sa mémorisation navigateur ; infobulle « Mes coups de cœur ».
 
 - Toutes les galeries : compteur de jeux et réinitialisation intégrés dans la barre de filtres, ligne inférieure supprimée. Retour à la ligne dans la barre si nécessaire, compteur annoncé aux lecteurs d’écran.

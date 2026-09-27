@@ -1,5 +1,7 @@
 # État courant
 
+- Mes plateformes : celles avec au moins un jeu enregistré passent en premier, puis tri alphabétique français dans chaque groupe (avec/sans jeux), également sous les filtres de famille. Ordre calculé, sans stockage ni glisser-déposer pour le moment.
+
 - Barre de galerie commune partout (bibliothèque, collections, découverte, toutes les plateformes) : Joués / À découvrir / Possédés / Tous mes jeux, recherche, regroupement, tri et vue. Plateformes ouvertes sur Joués, Découverte sur À découvrir ; préférences navigateur prioritaires. Les collections restent limitées à leurs jeux.
 
 - Identité Amiga : carte large et bandeau intérieur avec logo, Amiga 500, arc-en-ciel et Quickjoy (bandeau). Assets fournis copiés dans `public/platforms/amiga/`, fond graphite chaud, adaptation mobile. Galerie inchangée ; rendu à valider par Henri.

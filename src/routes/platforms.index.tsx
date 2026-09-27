@@ -12,6 +12,10 @@ function Platforms() {
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
   const router = useRouter()
+  const gameCounts = new Map<string, number>()
+  for (const game of games) {
+    gameCounts.set(game.platformId, (gameCounts.get(game.platformId) ?? 0) + 1)
+  }
   return (
     <div className="page">
       <PageHeading
@@ -29,11 +33,16 @@ function Platforms() {
       <div className="platform-grid">
         {platforms
           .filter((p) => family === 'Toutes' || p.family === family)
+          .sort(
+            (a, b) =>
+              Number(gameCounts.has(b.id)) - Number(gameCounts.has(a.id)) ||
+              a.name.localeCompare(b.name, 'fr', { sensitivity: 'base', numeric: true }),
+          )
           .map((p) => (
             <PlatformCard
               key={p.id}
               platform={p}
-              count={games.filter((g) => g.platformId === p.id).length}
+              count={gameCounts.get(p.id) ?? 0}
             />
           ))}
       </div>

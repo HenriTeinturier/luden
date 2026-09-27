@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { ArrowDown, ArrowUp, ImagePlus, LoaderCircle, Star, Trash2 } from 'lucide-react'
 import { mediaCategories, orderImages, type ImageInput } from '../../lib/media'
 import {
@@ -31,6 +31,8 @@ export function MediaFields({
   const [url, setUrl] = useState('')
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
+  const [urlError, setUrlError] = useState('')
+  const urlErrorId = useId()
   const [assets, setAssets] = useState<{ gameId: number; images: Asset[] } | null>(null)
   const [choices, setChoices] = useState<Record<string, ImageInput['category']>>({})
   const [imported, setImported] = useState<Record<string, string>>({})
@@ -47,14 +49,18 @@ export function MediaFields({
   }, [])
 
   const update = (next: ImageInput[]) => change('media', orderImages(next))
-  async function run(action: () => Promise<void>) {
+  async function run(action: () => Promise<void>, errorTarget: 'general' | 'url' = 'general') {
     setBusy(true)
     onBusyChange(true)
     setError('')
+    setUrlError('')
     try {
       await action()
     } catch (e) {
-      if (mounted.current) setError(e instanceof Error ? e.message : 'Import impossible.')
+      if (mounted.current) {
+        const reportError = errorTarget === 'url' ? setUrlError : setError
+        reportError(e instanceof Error ? e.message : 'Import impossible.')
+      }
     } finally {
       if (mounted.current) {
         setBusy(false)
@@ -155,7 +161,12 @@ export function MediaFields({
               placeholder="https://…/image.jpg"
               value={url}
               maxLength={2048}
-              onChange={(e) => setUrl(e.target.value)}
+              aria-invalid={Boolean(urlError)}
+              aria-describedby={urlError ? urlErrorId : undefined}
+              onChange={(e) => {
+                setUrl(e.target.value)
+                setUrlError('')
+              }}
             />
           </label>
           <button
@@ -168,12 +179,17 @@ export function MediaFields({
                 if (!result.ok) throw new Error(result.error)
                 added(result.data.id)
                 setUrl('')
-              })
+              }, 'url')
             }
           >
             Importer le lien
           </button>
         </div>
+        {urlError && (
+          <p id={urlErrorId} className="form-error" role="alert">
+            {urlError}
+          </p>
+        )}
         <p className="field-hint">
           Copie locale · JPG, PNG, WebP, GIF, AVIF · 12 Mo max. · proportions conservées.
         </p>

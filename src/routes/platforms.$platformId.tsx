@@ -22,7 +22,7 @@ function PlatformPage() {
   const chosen = games.filter((g) => g.platformId === platformId)
   const isSnes = platformId === 'snes'
   return (
-    <div className={`page ${isSnes ? 'platform-snes' : ''}`}>
+    <div className={`page platform-page ${isSnes ? 'platform-snes' : ''}`}>
       <section
         className="platform-hero"
         style={{ '--platform-color': platform.color } as CSSProperties}

@@ -199,7 +199,7 @@ export function GameCard({ game, compact = false }: { game: Game; compact?: bool
           {game.platform.shortName}
           {game.releaseYear ? ` · ${game.releaseYear}` : ''}
         </span>
-        <h3>{game.title}</h3>
+        <h3 title={game.title}>{game.title}</h3>
         <Stars value={rating} />
         <div className="game-card-bottom">
           <span>{playStatuses[game.experience?.status ?? 'UNPLAYED']}</span>

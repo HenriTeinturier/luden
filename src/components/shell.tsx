@@ -157,7 +157,11 @@ export function Shell({ children, library }: { children: ReactNode; library: Lib
                       : 'Enregistrer'}
                 </button>
               ) : (
-                <Link to="/games/new" className="button button-sm">
+                <Link
+                  to="/games/new"
+                  search={{ platform: currentPlatform?.id }}
+                  className="button button-sm"
+                >
                   <Plus size={17} />
                   Ajouter un jeu
                 </Link>

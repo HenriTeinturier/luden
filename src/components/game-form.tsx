@@ -16,10 +16,12 @@ type SearchResult = Extract<Awaited<ReturnType<typeof searchIgdbFn>>, { ok: true
 
 export function GameForm({
   game,
+  initialPlatformId,
   onSaved,
   onCancel,
 }: {
   game?: Game
+  initialPlatformId?: string
   onSaved?: () => void
   onCancel?: () => void
 }) {
@@ -74,6 +76,9 @@ export function GameForm({
         }
       : {
           ...structuredClone(emptyGame),
+          platformId: library.platforms.some((p) => p.id === initialPlatformId)
+            ? initialPlatformId!
+            : '',
           experience: { ...emptyGame.experience, status: 'PLAYED' },
         },
   )

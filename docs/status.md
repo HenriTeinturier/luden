@@ -1,5 +1,7 @@
 # État courant
 
+- Ajout depuis une bibliothèque plateforme : le bouton du header transmet la plateforme au formulaire via l’URL ; recherche IGDB et champ plateforme préremplis, toujours modifiables. Une plateforme inconnue est ignorée ; ajout général et édition inchangés.
+
 - Sauvegarde de jeu : attendre le rafraîchissement complet des données (`invalidate({ sync: true })`) avant la navigation, pour éviter de revenir sur une bibliothèque encore obsolète. Signalement Magical Quest : deux ajouts étaient enregistrés ; doublon supprimé par l’utilisateur, aucune donnée modifiée pour le correctif. Cause exacte non reproduite.
 
 - Bibliothèques : « Sans regroupement » par défaut. Filtres, tri, vue et regroupement mémorisés en localStorage par bibliothèque, hors texte de recherche. URL explicite prioritaire ; aucune écriture en base.

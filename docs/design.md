@@ -86,4 +86,4 @@ Ses mains dépassent de 18 px sans augmenter la hauteur ; le décor ignore les i
 pointeur et disparaît sous 1200 px pour préserver les compteurs et le logo. Le cadrage
 du CPC reste limité au bandeau.
 
-Les cartes de jeux coups de cœur portent un contour doré de 2 px, en plus du badge cœur. Ce repère utilise la couleur Megastar et reste visible indépendamment du filtre, dans toutes les galeries et en vue liste. Le contour ne modifie pas les dimensions des cartes.
+Les cartes de jeux coups de cœur portent un marque-page doré dans le coin supérieur droit : dégradé discret, ombre légère, découpe en V et cœur sombre. Le contour complet est retiré. Ce repère reste visible indépendamment du filtre Megastar, dans toutes les galeries, avec une variante réduite en vue liste. Les dimensions des cartes restent inchangées.

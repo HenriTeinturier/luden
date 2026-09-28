@@ -1,6 +1,6 @@
 # État courant
 
-- Coups de cœur : contour doré permanent sur les cartes de jeux, toutes plateformes et vues grille/liste, indépendamment du filtre Megastar. Badge cœur conservé, dimensions des cartes inchangées.
+- Coups de cœur : marque-page doré à découpe en V et cœur sombre dans le coin supérieur droit, sur toutes les cartes et indépendamment du filtre Megastar. Contour complet retiré ; variante réduite en vue liste, dimensions des cartes inchangées.
 
 - Univers Amstrad CPC : carte illustrée et bandeau compact avec logo, CPC et diagonales. Dimensions alignées sur SNES/Amiga, matériel adapté aux petits écrans. Disquette retirée. Crocodile V2 au milieu du bandeau, mains débordant de 18 px ; décor non interactif, masqué sous 1200 px.
 

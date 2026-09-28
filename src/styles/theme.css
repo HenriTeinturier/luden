@@ -440,13 +440,6 @@ input[type='radio'] {
   border-color: var(--muted);
   transform: translateY(-3px);
 }
-.game-card.game-card-favorite {
-  outline: 2px solid color-mix(in srgb, var(--yellow) 80%, var(--surface));
-  outline-offset: -1px;
-}
-.game-card.game-card-favorite:hover {
-  outline-color: var(--yellow);
-}
 .game-card:hover h3 {
   color: var(--blue);
 }
@@ -483,8 +476,13 @@ input[type='radio'] {
   font-weight: 750;
 }
 .favorite-badge {
-  background: var(--elevated);
-  color: var(--yellow);
+  color: #302519;
+}
+.favorite-badge::before {
+  background: linear-gradient(115deg, #ffe7a2, var(--yellow) 48%, #ce963a);
+  box-shadow:
+    inset 1px 0 #fff5,
+    inset -1px 0 #70441040;
 }
 .game-card.compact {
   background: var(--surface);

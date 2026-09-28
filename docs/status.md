@@ -1,5 +1,7 @@
 # État courant
 
+- Cartes Amiga : images alignées en haut du cadre pour supprimer l’espace lié au centrage des ratios différents, sans recadrage. Titres en 13 px sur une seule ligne, tronqués par « … » et nom complet au survol.
+
 - Grille Amiga : padding retiré autour des jaquettes, conservé uniquement autour du titre et des étoiles. Proportions des images conservées, vue liste inchangée.
 
 - Médias : catégorie « Publicités » (`ADVERTISEMENT`) ajoutée à l’import, au classement et à la galerie. Migration additive appliquée en base et client Prisma régénéré ; serveur Vite redémarré sur le port 3000. Données existantes conservées.

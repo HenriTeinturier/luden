@@ -24,8 +24,10 @@ Assets fournis par Henri, conservés sans modification dans `public/platforms/am
 Textes et compteurs en HTML ; proportions des images conservées. Cartes Amiga et SNES de même
 format : deux colonnes, hauteur 250 px (190 px sur mobile). Bandeau intérieur aligné sur SNES ;
 matériel masqué sur mobile comme pour SNES. Styles isolés dans `src/styles/platforms.css`.
-Cartes de jeux Amiga : format vertical conservé, titre puis étoiles ; pas de note chiffrée,
-plateforme/année, statut, icônes de possession ou extrait de souvenir. Favori conservé sur la
+Cartes de jeux Amiga : format vertical conservé, titre puis étoiles. Images alignées en haut
+sans padding, proportions conservées ; coins masqués par l’arrondi de la carte. Titre 13 px sur
+une seule ligne avec ellipsis et nom complet au survol. Pas de note chiffrée, plateforme/année,
+statut, icônes de possession ou extrait de souvenir. Favori conservé sur la
 jaquette comme pour SNES. Les informations détaillées restent dans la fiche.
 
 ## Super Nintendo

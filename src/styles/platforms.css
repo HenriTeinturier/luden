@@ -617,10 +617,10 @@
   bottom: -35px;
 }
 .amstrad-disk {
-  width: 100px;
-  height: 100px;
-  left: 5px;
-  bottom: -12px;
+  width: 60px;
+  height: 60px;
+  left: 55px;
+  bottom: -4px;
   transform: rotate(-12deg);
 }
 @media (max-width: 1100px) {
@@ -633,8 +633,9 @@
     bottom: -22px;
   }
   .amstrad-disk {
-    width: 70px;
-    height: 70px;
+    width: 42px;
+    height: 42px;
+    left: 15px;
     bottom: -4px;
   }
 }

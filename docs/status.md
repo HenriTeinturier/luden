@@ -1,6 +1,6 @@
 # État courant
 
-- Univers Amstrad CPC : carte illustrée et bandeau compact avec les quatre assets fournis (logo, CPC, diagonales, disquette). Dimensions alignées sur SNES/Amiga, matériel adapté aux petits écrans. Disquette réduite à 60 px (42 px sous 1100 px) et rapprochée du CPC pour rester discrète.
+- Univers Amstrad CPC : carte illustrée et bandeau compact avec logo, CPC et diagonales. Dimensions alignées sur SNES/Amiga, matériel adapté aux petits écrans. Disquette retirée et asset supprimé du projet.
 
 - Fiche de jeu : retour contextuel vers la plateforme, la collection, À découvrir ou Ma bibliothèque selon la carte d’origine. Filtres transmis dans l’URL et conservés après édition ; ouverture directe sans origine retourne à Ma bibliothèque.
 

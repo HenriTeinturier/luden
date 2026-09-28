@@ -81,13 +81,6 @@ function PlatformPage() {
         ) : isAmstrad ? (
           <div className="amstrad-hero-hardware" aria-hidden="true">
             <img
-              className="amstrad-disk"
-              src="/platforms/amstrad/disk.webp"
-              alt=""
-              width={700}
-              height={661}
-            />
-            <img
               className="amstrad-computer"
               src="/platforms/amstrad/computer.webp"
               alt=""

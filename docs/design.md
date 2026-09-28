@@ -72,3 +72,11 @@ s'appuyer sur cette séparation entre présentation et métadonnées.
 Les univers détaillés par plateforme seront affinés avec l'utilisateur. Les maquettes Figma historiques
 sont une référence de composition, pas un design à reproduire.
 Validation visuelle et parcours opérationnels par l'utilisateur, pas de suite navigateur automatique.
+
+## Amstrad CPC
+
+Carte illustrée de même format que SNES et Amiga (deux colonnes, 250 px ; 190 px sur mobile).
+Fond bleu nuit, halo bleu et diagonales rouges/grises atténuées, logo à gauche et CPC 6128
+avec écran à droite. Bandeau intérieur compact de 120 px : logo et compteurs à gauche,
+ordinateur légèrement recadré et disquette à droite. Matériel réduit sous 1100 px et masqué
+sur mobile. Les quatre assets fournis sont dans `public/platforms/amstrad/`.

@@ -108,7 +108,7 @@ export function PlatformArt({
   )
 }
 export function PlatformCard({ platform, count }: { platform: Platform; count: number }) {
-  const illustrated = platform.id === 'snes' || platform.id === 'amiga'
+  const illustrated = ['snes', 'amiga', 'amstrad'].includes(platform.id)
   return (
     <Link
       to="/platforms/$platformId"
@@ -128,9 +128,9 @@ export function PlatformCard({ platform, count }: { platform: Platform; count: n
         <img
           className="platform-card-console"
           src={
-            platform.id === 'amiga'
-              ? '/platforms/amiga/computer.webp'
-              : '/platforms/snes/console.webp'
+            platform.id === 'snes'
+              ? '/platforms/snes/console.webp'
+              : `/platforms/${platform.id}/computer.webp`
           }
           alt=""
           loading="lazy"

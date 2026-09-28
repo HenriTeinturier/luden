@@ -22,9 +22,10 @@ function PlatformPage() {
   const chosen = games.filter((g) => g.platformId === platformId)
   const isSnes = platformId === 'snes'
   const isAmiga = platformId === 'amiga'
+  const isAmstrad = platformId === 'amstrad'
   return (
     <div
-      className={`page platform-page ${isSnes ? 'platform-snes' : isAmiga ? 'platform-amiga' : ''}`}
+      className={`page platform-page ${isSnes || isAmiga || isAmstrad ? `platform-${platformId}` : ''}`}
     >
       <section
         className="platform-hero"
@@ -32,13 +33,13 @@ function PlatformPage() {
       >
         <div className="platform-hero-identity">
           <h1>
-            {isSnes || isAmiga ? (
+            {isSnes || isAmiga || isAmstrad ? (
               <img
-                className={isAmiga ? 'amiga-hero-logo' : 'snes-hero-logo'}
+                className={`${platformId}-hero-logo`}
                 src={`/platforms/${platformId}/logo.webp`}
                 alt={platform.name}
-                width={800}
-                height={isAmiga ? 232 : 169}
+                width={isAmstrad ? 900 : 800}
+                height={isAmstrad ? 375 : isAmiga ? 232 : 169}
               />
             ) : (
               <>
@@ -75,6 +76,23 @@ function PlatformPage() {
               alt=""
               width={1000}
               height={695}
+            />
+          </div>
+        ) : isAmstrad ? (
+          <div className="amstrad-hero-hardware" aria-hidden="true">
+            <img
+              className="amstrad-disk"
+              src="/platforms/amstrad/disk.webp"
+              alt=""
+              width={700}
+              height={661}
+            />
+            <img
+              className="amstrad-computer"
+              src="/platforms/amstrad/computer.webp"
+              alt=""
+              width={1000}
+              height={738}
             />
           </div>
         ) : (

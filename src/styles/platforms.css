@@ -526,3 +526,128 @@
     height: 50px;
   }
 }
+
+/* Amstrad CPC: midnight blue, red/graphite stripes and original hardware. */
+.platform-card.platform-card-amstrad,
+.platform-amstrad .platform-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 72% 100%, #123f82, transparent 65%),
+    linear-gradient(115deg, #0e172b, #101b3e);
+  border-color: #375b98;
+}
+.platform-card-amstrad::before,
+.platform-amstrad .platform-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 0 30%;
+  z-index: -1;
+  background: url('/platforms/amstrad/stripes.webp') center / cover no-repeat;
+  opacity: 0.32;
+  mask-image: linear-gradient(to right, transparent, #000 45%);
+  pointer-events: none;
+}
+.platform-card.platform-card-amstrad {
+  grid-column: span 2;
+  height: 250px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.platform-card-amstrad .platform-card-top {
+  align-items: flex-start;
+}
+.platform-card-amstrad .platform-card-logo {
+  width: 44%;
+  max-width: 250px;
+  height: auto;
+}
+.platform-card-amstrad .platform-card-console {
+  position: absolute;
+  right: 6px;
+  bottom: 4px;
+  width: 57%;
+  height: 92%;
+  object-fit: contain;
+  object-position: right bottom;
+  filter: drop-shadow(0 12px 12px #0009);
+  z-index: -1;
+}
+.platform-card-amstrad .platform-card-bottom {
+  width: 40%;
+}
+.platform-card-amstrad .platform-card-bottom h3 {
+  font-size: 16px;
+}
+.platform-card-amstrad .platform-card-bottom > span {
+  font-size: 13px;
+  color: var(--text-soft);
+}
+.platform-card.platform-card-amstrad:hover {
+  border-color: #6e9ef6;
+}
+.platform-amstrad .platform-hero-identity {
+  flex: 1;
+}
+.platform-page .amstrad-hero-logo {
+  display: block;
+  width: 240px;
+  max-width: 100%;
+  height: 76px;
+  object-fit: contain;
+  object-position: left center;
+}
+.amstrad-hero-hardware {
+  position: relative;
+  flex: 0 0 370px;
+  height: 96px;
+}
+.amstrad-hero-hardware img {
+  position: absolute;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 10px #0009);
+}
+.amstrad-computer {
+  width: 250px;
+  height: 160px;
+  right: 0;
+  bottom: -35px;
+}
+.amstrad-disk {
+  width: 100px;
+  height: 100px;
+  left: 5px;
+  bottom: -12px;
+  transform: rotate(-12deg);
+}
+@media (max-width: 1100px) {
+  .amstrad-hero-hardware {
+    flex-basis: 245px;
+  }
+  .amstrad-computer {
+    width: 185px;
+    height: 130px;
+    bottom: -22px;
+  }
+  .amstrad-disk {
+    width: 70px;
+    height: 70px;
+    bottom: -4px;
+  }
+}
+@media (max-width: 720px) {
+  .platform-card.platform-card-amstrad {
+    height: 190px;
+    padding: 18px;
+  }
+  .amstrad-hero-hardware {
+    display: none;
+  }
+  .platform-page .amstrad-hero-logo {
+    width: 200px;
+    height: 60px;
+  }
+}

@@ -79,4 +79,9 @@ Carte illustrée de même format que SNES et Amiga (deux colonnes, 250 px ; 190 
 Fond bleu nuit, halo bleu et diagonales rouges/grises atténuées, logo à gauche et CPC 6128
 avec écran à droite. Bandeau intérieur compact de 120 px : logo et compteurs à gauche,
 ordinateur légèrement recadré à droite. Matériel réduit sous 1100 px et masqué
-sur mobile. Les trois assets utilisés sont dans `public/platforms/amstrad/`.
+sur mobile. Les quatre assets utilisés sont dans `public/platforms/amstrad/`.
+
+Le crocodile Amstrad V2, aux couleurs atténuées, occupe le milieu du bandeau intérieur.
+Ses mains dépassent de 18 px sans augmenter la hauteur ; le décor ignore les interactions
+pointeur et disparaît sous 1200 px pour préserver les compteurs et le logo. Le cadrage
+du CPC reste limité au bandeau.

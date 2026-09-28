@@ -592,6 +592,29 @@
 .platform-amstrad .platform-hero-identity {
   flex: 1;
 }
+.platform-amstrad .platform-hero {
+  overflow: visible;
+  z-index: 1;
+}
+.platform-amstrad .platform-hero::before {
+  border-radius: inherit;
+}
+.amstrad-crocodile {
+  position: absolute;
+  left: 56%;
+  bottom: -18px;
+  width: 150px;
+  height: auto;
+  transform: translateX(-50%);
+  z-index: 2;
+  pointer-events: none;
+  user-select: none;
+}
+@media (max-width: 1200px) {
+  .amstrad-crocodile {
+    display: none;
+  }
+}
 .platform-page .amstrad-hero-logo {
   display: block;
   width: 240px;
@@ -604,6 +627,8 @@
   position: relative;
   flex: 0 0 370px;
   height: 96px;
+  /* Keep the computer cropped while the crocodile can overlap the banner edge. */
+  clip-path: inset(-12px -24px -12px 0);
 }
 .amstrad-hero-hardware img {
   position: absolute;

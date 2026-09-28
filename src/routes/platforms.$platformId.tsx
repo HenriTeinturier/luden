@@ -31,6 +31,16 @@ function PlatformPage() {
         className="platform-hero"
         style={{ '--platform-color': platform.color } as CSSProperties}
       >
+        {isAmstrad && (
+          <img
+            className="amstrad-crocodile"
+            src="/platforms/amstrad/crocodile.webp"
+            alt=""
+            aria-hidden="true"
+            width={1000}
+            height={880}
+          />
+        )}
         <div className="platform-hero-identity">
           <h1>
             {isSnes || isAmiga || isAmstrad ? (

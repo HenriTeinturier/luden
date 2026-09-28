@@ -202,7 +202,7 @@ export function GameCard({ game, compact = false }: { game: Game; compact?: bool
         fromId: platformId ?? collectionId,
         filters: gallerySearch.parse(location.search),
       }}
-      className={`game-card ${compact ? 'compact' : ''} ${coverFormat(game.platformId).wide ? 'wide-cover' : ''}`}
+      className={`game-card ${game.favorite ? 'game-card-favorite' : ''} ${compact ? 'compact' : ''} ${coverFormat(game.platformId).wide ? 'wide-cover' : ''}`}
     >
       <div className="cover-frame">
         <Cover game={game} />

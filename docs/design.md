@@ -85,3 +85,5 @@ Le crocodile Amstrad V2, aux couleurs atténuées, occupe le milieu du bandeau i
 Ses mains dépassent de 18 px sans augmenter la hauteur ; le décor ignore les interactions
 pointeur et disparaît sous 1200 px pour préserver les compteurs et le logo. Le cadrage
 du CPC reste limité au bandeau.
+
+Les cartes de jeux coups de cœur portent un contour doré de 2 px, en plus du badge cœur. Ce repère utilise la couleur Megastar et reste visible indépendamment du filtre, dans toutes les galeries et en vue liste. Le contour ne modifie pas les dimensions des cartes.

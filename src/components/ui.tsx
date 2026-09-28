@@ -1,12 +1,13 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import * as AlertDialog from '@radix-ui/react-alert-dialog'
 import { X, ArrowUpRight, Plus, Gamepad2, Monitor, Heart, Disc3, Cloud, Clock3 } from 'lucide-react'
-import { Link, useLoaderData, useParams } from '@tanstack/react-router'
+import { Link, useLoaderData, useParams, useLocation } from '@tanstack/react-router'
 import { useState, type CSSProperties, type ReactNode } from 'react'
 import type { Game, Platform } from '../lib/types'
 import { playStatuses } from '../lib/platforms'
 import { Stars } from './rating'
 import { coverFormat } from '../lib/presentation'
+import { gallerySearch } from '../lib/gallery'
 
 export function useLibrary() {
   const { library } = useLoaderData({ from: '__root__' })
@@ -184,10 +185,23 @@ export function Cover({
 }
 export function GameCard({ game, compact = false }: { game: Game; compact?: boolean }) {
   const rating = game.experience?.rating
+  const { platformId, collectionId } = useParams({ strict: false })
+  const location = useLocation()
   return (
     <Link
       to="/games/$gameId"
       params={{ gameId: game.id }}
+      search={{
+        from: platformId
+          ? 'platform'
+          : collectionId
+            ? 'collection'
+            : location.pathname === '/discover'
+              ? 'discover'
+              : 'library',
+        fromId: platformId ?? collectionId,
+        filters: gallerySearch.parse(location.search),
+      }}
       className={`game-card ${compact ? 'compact' : ''} ${coverFormat(game.platformId).wide ? 'wide-cover' : ''}`}
     >
       <div className="cover-frame">

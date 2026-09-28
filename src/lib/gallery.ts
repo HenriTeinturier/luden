@@ -14,6 +14,11 @@ export const gallerySearch = z.object({
   favorite: z.boolean().optional(),
 })
 export type GallerySearch = z.infer<typeof gallerySearch>
+export const gameReturnSearch = z.object({
+  from: z.enum(['library', 'platform', 'collection', 'discover']).optional().catch(undefined),
+  fromId: z.string().optional().catch(undefined),
+  filters: gallerySearch.optional().catch(undefined),
+})
 export function hasPlayed(game: Game) {
   return Boolean(game.experience && game.experience.status !== 'UNPLAYED')
 }

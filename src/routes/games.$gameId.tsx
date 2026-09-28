@@ -19,11 +19,20 @@ import { Cover, Confirm, useLibrary } from '../components/ui'
 import { GameForm } from '../components/game-form'
 import { deleteGameFn } from '../server/functions'
 import { playStatuses } from '../lib/platforms'
-export const Route = createFileRoute('/games/$gameId')({ component: GamePage })
+import { gameReturnSearch } from '../lib/gallery'
+export const Route = createFileRoute('/games/$gameId')({
+  validateSearch: (input) => gameReturnSearch.parse(input),
+  component: GamePage,
+})
 function GamePage() {
   const notify = useNotification()
   const { gameId } = Route.useParams()
-  const { games, collections } = useLibrary()
+  const { games, collections, platforms } = useLibrary()
+  const origin = Route.useSearch()
+  const sourcePlatform =
+    origin.from === 'platform' ? platforms.find((p) => p.id === origin.fromId) : undefined
+  const sourceCollection =
+    origin.from === 'collection' ? collections.find((c) => c.id === origin.fromId) : undefined
   const game = games.find((g) => g.id === gameId)
   const [editing, setEditing] = useState(false)
   const [error, setError] = useState('')
@@ -43,9 +52,26 @@ function GamePage() {
   const inCollections = collections.filter((c) => game.entries.some((e) => e.collectionId === c.id))
   return (
     <div className={`page detail-page ${coverFormat(game.platformId).wide ? 'detail-wide' : ''}`}>
-      <Link to="/library" className="back-link">
+      <Link
+        {...(sourcePlatform
+          ? { to: '/platforms/$platformId' as const, params: { platformId: sourcePlatform.id } }
+          : sourceCollection
+            ? {
+                to: '/collections/$collectionId' as const,
+                params: { collectionId: sourceCollection.id },
+              }
+            : { to: origin.from === 'discover' ? ('/discover' as const) : ('/library' as const) })}
+        search={origin.filters ?? {}}
+        className="back-link"
+      >
         <ArrowLeft size={16} />
-        Ma bibliothèque
+        {sourcePlatform
+          ? `Retour à ${sourcePlatform.name}`
+          : sourceCollection
+            ? `Retour à ${sourceCollection.name}`
+            : origin.from === 'discover'
+              ? 'Retour aux jeux à découvrir'
+              : 'Retour à ma bibliothèque'}
       </Link>
       <div className="detail-layout">
         <aside className="detail-cover-column">

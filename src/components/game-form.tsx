@@ -173,7 +173,7 @@ export function GameForm({
         await router.invalidate({ sync: true })
         onSaved?.()
         if (game) {
-          await navigate({ to: '/games/$gameId', params: { gameId: result.data.id } })
+          await navigate({ to: '/games/$gameId', params: { gameId: result.data.id }, search: true })
         } else {
           await navigate({
             to: '/platforms/$platformId',

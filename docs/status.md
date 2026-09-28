@@ -1,5 +1,7 @@
 # État courant
 
+- Fiche de jeu : retour contextuel vers la plateforme, la collection, À découvrir ou Ma bibliothèque selon la carte d’origine. Filtres transmis dans l’URL et conservés après édition ; ouverture directe sans origine retourne à Ma bibliothèque.
+
 - Cartes Amiga : images alignées en haut du cadre pour supprimer l’espace lié au centrage des ratios différents, sans recadrage. Titres en 13 px sur une seule ligne, tronqués par « … » et nom complet au survol.
 
 - Grille Amiga : padding retiré autour des jaquettes, conservé uniquement autour du titre et des étoiles. Proportions des images conservées, vue liste inchangée.

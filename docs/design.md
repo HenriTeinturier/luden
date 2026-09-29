@@ -90,4 +90,4 @@ Les cartes de jeux coups de cœur portent un marque-page doré dans le coin sup�
 
 Cartes de jeux Amstrad : ratio 3:4 adapté aux visuels de disquettes, image entière sans recadrage ni padding extérieur en grille. Présentation compacte comme Amiga : titre sur une ligne avec ellipse, étoiles seules, sans plateforme, année, statut ni souvenir. Le marque-page doré reste visible pour les coups de cœur.
 
-Dans les univers Amiga et Amstrad, la grille utilise des colonnes de 230 px minimum au-dessus de 700 px pour donner plus de place aux jaquettes. Le ratio reste identique ; les deux colonnes mobiles et la vue liste sont conservées.
+Dans les univers Amiga et Amstrad, la grille utilise des colonnes de 210 px minimum au-dessus de 700 px pour donner plus de place aux jaquettes. Le ratio reste identique ; les deux colonnes mobiles et la vue liste sont conservées.

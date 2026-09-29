@@ -243,11 +243,13 @@
 .platform-snes .results-line {
   font-size: 13px;
 }
-.platform-amiga .game-card :is(.game-platform, .game-card-bottom, .card-memory),
-.platform-amiga .game-card .stars small {
+:is(.platform-amiga, .platform-amstrad)
+  .game-card
+  :is(.game-platform, .game-card-bottom, .card-memory),
+:is(.platform-amiga, .platform-amstrad) .game-card .stars small {
   display: none;
 }
-.platform-amiga .game-card h3 {
+:is(.platform-amiga, .platform-amstrad) .game-card h3 {
   margin: 0 0 8px;
   display: block;
   font-size: 13px;
@@ -256,18 +258,18 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.platform-amiga .game-grid .game-card {
+:is(.platform-amiga, .platform-amstrad) .game-grid .game-card {
   padding: 0;
   overflow: hidden;
 }
-.platform-amiga .game-grid .game-cover {
+:is(.platform-amiga, .platform-amstrad) .game-grid .game-cover {
   border: 0;
   border-radius: 0;
 }
-.platform-amiga .game-grid .game-cover img {
+:is(.platform-amiga, .platform-amstrad) .game-grid .game-cover img {
   object-position: center top;
 }
-.platform-amiga .game-grid .game-card-info {
+:is(.platform-amiga, .platform-amstrad) .game-grid .game-card-info {
   padding: 12px;
 }
 @media (max-width: 720px) {

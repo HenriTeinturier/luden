@@ -1,5 +1,7 @@
 # État courant
 
+- Cartes Amstrad : images au ratio 3:4, sans padding autour du visuel et sans recadrage. Titre sur une ligne avec ellipse, étoiles sans note chiffrée ; métadonnées et statut masqués, marque-page des coups de cœur conservé.
+
 - Coups de cœur : marque-page doré à découpe en V et cœur sombre dans le coin supérieur droit, sur toutes les cartes et indépendamment du filtre Megastar. Contour complet retiré ; variante réduite en vue liste, dimensions des cartes inchangées.
 
 - Univers Amstrad CPC : carte illustrée et bandeau compact avec logo, CPC et diagonales. Dimensions alignées sur SNES/Amiga, matériel adapté aux petits écrans. Disquette retirée. Crocodile V2 au milieu du bandeau, mains débordant de 18 px ; décor non interactif, masqué sous 1200 px.

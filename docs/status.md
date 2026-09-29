@@ -1,5 +1,7 @@
 # État courant
 
+- Vignettes Amiga et Amstrad agrandies : colonnes de 230 px minimum au-dessus de 700 px, contre 175 px auparavant. Ratio des jaquettes conservé ; grille mobile et vue liste inchangées.
+
 - Cartes Amstrad : images au ratio 3:4, sans padding autour du visuel et sans recadrage. Titre sur une ligne avec ellipse, étoiles sans note chiffrée ; métadonnées et statut masqués, marque-page des coups de cœur conservé.
 
 - Coups de cœur : marque-page doré à découpe en V et cœur sombre dans le coin supérieur droit, sur toutes les cartes et indépendamment du filtre Megastar. Contour complet retiré ; variante réduite en vue liste, dimensions des cartes inchangées.

@@ -89,3 +89,5 @@ du CPC reste limité au bandeau.
 Les cartes de jeux coups de cœur portent un marque-page doré dans le coin supérieur droit : dégradé discret, ombre légère, découpe en V et cœur sombre. Le contour complet est retiré. Ce repère reste visible indépendamment du filtre Megastar, dans toutes les galeries, avec une variante réduite en vue liste. Les dimensions des cartes restent inchangées.
 
 Cartes de jeux Amstrad : ratio 3:4 adapté aux visuels de disquettes, image entière sans recadrage ni padding extérieur en grille. Présentation compacte comme Amiga : titre sur une ligne avec ellipse, étoiles seules, sans plateforme, année, statut ni souvenir. Le marque-page doré reste visible pour les coups de cœur.
+
+Dans les univers Amiga et Amstrad, la grille utilise des colonnes de 230 px minimum au-dessus de 700 px pour donner plus de place aux jaquettes. Le ratio reste identique ; les deux colonnes mobiles et la vue liste sont conservées.

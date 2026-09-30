@@ -9,6 +9,8 @@
 
 ## Consultation des jeux — 2026-09-30
 
+- Sidebar : note chiffrée masquée à côté des étoiles, note accessible et sélecteur conservés. Tous les genres du jeu sont affichés sur la ligne d’informations, sans limite à deux tags.
+
 - Sidebar : nouvelle version recadrée du logo Super Metroid importée (600 × 266, transparence conservée), affectée au jeu et rangée dans ses médias ; ancien logo conservé dans la galerie. Position du logo à 16 px du haut, ce qui remonte le dessin après retrait des marges transparentes. Boîte abaissée seule de 16 px ; cartouche fixe. Média servi en HTTP 200, vérification du formatage et du diff CSS.
 
 - Sidebar : boîte avec cartouche alignée à gauche sur la marge des étoiles (24 px, 18 px sur petit mobile) : suppression du centrage interne de son image et position calculée depuis la marge commune. Taille/hauteur et position de la cartouche conservées ; boîte seule centrée. Vérification CSS/formatage.

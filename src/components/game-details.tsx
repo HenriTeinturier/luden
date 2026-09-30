@@ -282,7 +282,7 @@ function QuickExperience({
               </span>
             )}
             {game.releaseYear && <span className="sidebar-year">{game.releaseYear}</span>}
-            {game.genres.slice(0, 2).map((genre) => (
+            {game.genres.map((genre) => (
               <span key={genre}>{genre}</span>
             ))}
           </div>

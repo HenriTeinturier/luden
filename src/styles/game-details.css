@@ -452,6 +452,9 @@
   padding: 4px 7px;
   flex-shrink: 0;
 }
+.sidebar-rating > .stars > small {
+  display: none;
+}
 .sidebar-rating > .stars,
 .sidebar-rating > .unrated {
   flex-shrink: 0;

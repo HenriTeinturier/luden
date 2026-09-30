@@ -4,6 +4,9 @@
 
 Toutes les plateformes partagent le même parcours, dans `game-explorer.tsx` et `game-details.tsx`.
 Le clic sur une carte ouvre un panneau occupant environ un tiers à droite et réduit la galerie.
+La carte consultée porte un contour bleu clair de 3 px autour de son périmètre complet, un halo
+et un fond bleu/violet plus marqué sous le titre. Le repère est porté par la carte pour éviter
+le rognage par ses coins ; dimensions et marque-page des coups de cœur conservés, y compris en liste.
 Sur écran étroit (800 px et moins), seul le panneau est visible. Les proportions des visuels
 suivent la plateforme ; les différences futures sont uniquement de présentation.
 

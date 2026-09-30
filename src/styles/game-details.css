@@ -44,11 +44,17 @@
 .with-game-sidebar .advanced-filters {
   flex-wrap: wrap;
 }
-.game-card[aria-current='true'] .cover-frame {
-  border-radius: 9px;
-  outline: 2px solid var(--purple);
-  outline-offset: 5px;
-  box-shadow: 0 0 28px #9468ff32;
+.game-workspace .game-card[aria-current='true'] {
+  border-color: #85cbff;
+  outline: 3px solid #85cbff;
+  outline-offset: 3px;
+  box-shadow:
+    0 0 0 7px #48a8ff20,
+    0 0 30px #48a8ff45;
+  background: #273553;
+}
+.game-card[aria-current='true'] .game-card-info {
+  background: linear-gradient(115deg, #34466f, #302b52);
 }
 .game-card[aria-current='true'] h3 {
   color: var(--ink);

@@ -302,7 +302,7 @@
 }
 .dossier-compact .scene-identity {
   position: absolute;
-  top: 4px;
+  top: 16px;
   left: 180px;
   right: 68px;
   width: auto;
@@ -338,6 +338,7 @@
   height: 112%;
   max-width: 74%;
   flex: 0 0 74%;
+  translate: 0 16px;
 }
 .dossier-compact .scene-wide-box .scene-box {
   max-width: 100%;

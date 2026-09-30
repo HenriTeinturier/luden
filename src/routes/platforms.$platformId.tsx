@@ -2,6 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { PlatformArt, useLibrary } from '../components/ui'
 import { Gallery } from '../components/gallery'
 import { MegastarTrophy } from '../components/megastar-trophy'
+import { useGameSelection } from '../components/game-selection'
 import { gallerySearch, hasPlayed } from '../lib/gallery'
 import type { CSSProperties } from 'react'
 import { Gamepad2, CirclePlay, ShieldCheck } from 'lucide-react'
@@ -13,6 +14,7 @@ function PlatformPage() {
   const { platformId } = Route.useParams()
   const search = Route.useSearch()
   const { platforms, games, machines } = useLibrary()
+  const selection = useGameSelection()
   const platform = platforms.find((p) => p.id === platformId)
   if (!platform)
     return (
@@ -33,10 +35,12 @@ function PlatformPage() {
       className={`page platform-page ${isSnes || isAmiga || isAmstrad ? `platform-${platformId}` : ''}`}
     >
       {isSnes && (
+        <h1 id="snes-overview-title" className="sr-only">
+          {platform.name}
+        </h1>
+      )}
+      {isSnes && selection?.sidebarVisible !== false && (
         <section className="snes-overview" aria-labelledby="snes-overview-title">
-          <h1 id="snes-overview-title" className="sr-only">
-            {platform.name}
-          </h1>
           <dl className="snes-overview-stats">
             {[
               {

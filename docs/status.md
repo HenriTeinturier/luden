@@ -9,6 +9,8 @@
 
 ## Consultation des jeux — 2026-09-30
 
+- Galerie SNES : les quatre cartes de statistiques disparaissent lorsque la sidebar est masquée et reviennent à sa réouverture (accueil ou jeu), en complément des deux colonnes supplémentaires. Titre accessible conservé. Fermeture/réouverture vérifiées dans le navigateur ; TypeScript, lint ciblé et formatage validés.
+
 - Sidebar masquée : bouton « Sidebar » avec icône de panneau dans les réglages de galerie pour réafficher l’accueil de l’univers. Focus clavier restauré et nombre de colonnes réajusté automatiquement à l’ouverture. Vérifié dans le navigateur : fermeture → 9 colonnes, bouton → accueil et 7 colonnes, Échap → bouton avec focus. TypeScript, lint ciblé et formatage passent.
 
 - Carte de statistiques SNES « Megastar » : remplace « coups de cœur », avec le trophée partagé par la sidebar et le filtre, fond violet et bordure violet/bleu électrique. Compteur et pourcentage des favoris conservés.

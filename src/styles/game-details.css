@@ -346,7 +346,7 @@
 .dossier-compact .has-support .scene-box {
   max-width: 65%;
   flex-basis: 65%;
-  transform: translateX(5%);
+  transform: translateX(1%);
 }
 .dossier-compact .scene-support-stand {
   position: relative;

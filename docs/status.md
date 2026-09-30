@@ -9,6 +9,8 @@
 
 ## Consultation des jeux — 2026-09-30
 
+- Sidebar : espace boîte/cartouche augmenté en ramenant le décalage horizontal de la boîte de 5 % à 1 % de son cadre (environ 20 px d’écart supplémentaires sur le grand écran). Taille et position verticale conservées. Vérification CSS/formatage.
+
 - Sidebar : boîte agrandie de 12 % en hauteur, bas conservé au même niveau ; déplacement vers la droite de 5 % de son cadre en présence d’une cartouche pour réduire l’écart entre les objets. Boîte seule toujours centrée, cartouche et disposition de la fiche complète inchangées. Vérification CSS/formatage.
 
 - Sidebar : boîte/cartouche abaissées de 40 px supplémentaires (débordement 148 px), espace réservé ajusté pour garder les étoiles dégagées. Les trois cartes actives ont un fond opaque vert/corail/violet plus soutenu, une bordure nette et une coche.

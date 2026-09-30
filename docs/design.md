@@ -16,8 +16,8 @@ un écran 2560 × 1440, y compris avec une hauteur utile de navigateur réduite 
 
 Sidebar : navigation superposée au fond, sans bandeau opaque ni surtitre plateforme/année.
 Logo agrandi et incliné ; boîte et support plus grands, décalés sous le fond de 148 px. Support droit,
-boîte agrandie de 12 % en hauteur avec son bas ancré et décalée de 5 % de son cadre vers la droite
-lorsqu’un support est présent, pour rapprocher les deux objets sans déplacer la cartouche.
+boîte agrandie de 12 % en hauteur avec son bas ancré et décalée de 1 % de son cadre vers la droite
+lorsqu’un support est présent, pour conserver un espace visible entre les deux objets.
 Ombre elliptique de contact sous le support. Le titre n’est affiché que dans la scène (logo ou texte),
 sans répétition au-dessus des étoiles ; un titre masqué reste accessible aux lecteurs d’écran.
 Éditeur, année et deux genres occupent une ligne défilable si nécessaire.

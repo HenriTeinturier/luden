@@ -9,6 +9,8 @@
 
 ## Consultation des jeux — 2026-09-30
 
+- Sidebar : boîte agrandie de 12 % en hauteur, bas conservé au même niveau ; déplacement vers la droite de 5 % de son cadre en présence d’une cartouche pour réduire l’écart entre les objets. Boîte seule toujours centrée, cartouche et disposition de la fiche complète inchangées. Vérification CSS/formatage.
+
 - Sidebar : boîte/cartouche abaissées de 40 px supplémentaires (débordement 148 px), espace réservé ajusté pour garder les étoiles dégagées. Les trois cartes actives ont un fond opaque vert/corail/violet plus soutenu, une bordure nette et une coche.
 - Vérifié : TypeScript/lint, contrôle des trois états actifs et des coches, 2560 × 1280 sans défilement interne et 26 px entre le groupe de visuels et la notation ; rendu étroit contrôlé.
 

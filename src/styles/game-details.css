@@ -330,7 +330,7 @@
   perspective: 850px;
 }
 .dossier-compact .scene-box {
-  height: 100%;
+  height: 112%;
   max-width: 74%;
   flex: 0 0 74%;
 }
@@ -346,6 +346,7 @@
 .dossier-compact .has-support .scene-box {
   max-width: 65%;
   flex-basis: 65%;
+  transform: translateX(5%);
 }
 .dossier-compact .scene-support-stand {
   position: relative;

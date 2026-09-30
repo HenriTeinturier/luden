@@ -16,7 +16,9 @@ un écran 2560 × 1440, y compris avec une hauteur utile de navigateur réduite 
 
 Sidebar : navigation superposée au fond, sans bandeau opaque ni surtitre plateforme/année.
 Logo agrandi et incliné ; boîte et support plus grands, décalés sous le fond de 148 px. Support droit,
-avec ombre elliptique de contact sous l’objet. Le titre n’est affiché que dans la scène (logo ou texte),
+boîte agrandie de 12 % en hauteur avec son bas ancré et décalée de 5 % de son cadre vers la droite
+lorsqu’un support est présent, pour rapprocher les deux objets sans déplacer la cartouche.
+Ombre elliptique de contact sous le support. Le titre n’est affiché que dans la scène (logo ou texte),
 sans répétition au-dessus des étoiles ; un titre masqué reste accessible aux lecteurs d’écran.
 Éditeur, année et deux genres occupent une ligne défilable si nécessaire.
 Trois cartes séparées partagent le même style : « Dans ma collection », « Joué » et « À découvrir ».

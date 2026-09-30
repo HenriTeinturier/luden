@@ -232,7 +232,7 @@
   min-height: 190px;
 }
 .dossier-compact .game-scene {
-  aspect-ratio: 6 / 5;
+  aspect-ratio: 16 / 7;
 }
 .dossier-compact .scene-identity {
   padding: 22px 26px 0;
@@ -302,6 +302,17 @@
 }
 .dossier-personal {
   margin-top: 24px;
+}
+.dossier-compact .dossier-personal {
+  margin-top: 18px;
+}
+.dossier-compact .dossier-memory {
+  margin-top: 16px;
+  padding-top: 14px;
+}
+.dossier-compact .dossier-ownership,
+.dossier-compact .detail-screenshots {
+  margin-top: 16px;
 }
 .detail-section-heading {
   display: flex;
@@ -489,7 +500,9 @@
   gap: 8px;
 }
 .screenshot-strip.is-compact button {
-  flex-basis: 42%;
+  height: clamp(80px, 9dvh, 112px);
+  flex-basis: auto;
+  flex-shrink: 0;
   border-radius: 6px;
 }
 .dossier-actions {
@@ -778,7 +791,7 @@ kbd {
 }
 .crop-preview {
   position: relative;
-  aspect-ratio: 6 / 5;
+  aspect-ratio: 16 / 7;
   max-width: 390px;
   margin: 20px auto;
   overflow: hidden;
@@ -878,6 +891,9 @@ kbd {
   }
   .dossier-compact .game-scene {
     max-height: none;
+    aspect-ratio: 6 / 5;
+  }
+  .crop-preview {
     aspect-ratio: 6 / 5;
   }
   .dossier-compact .scene-identity {

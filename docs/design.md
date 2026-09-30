@@ -9,6 +9,10 @@ et un fond bleu/violet plus marqué sous le titre. Le repère est porté par la 
 le rognage par ses coins ; dimensions et marque-page des coups de cœur conservés, y compris en liste.
 Sur écran étroit (800 px et moins), seul le panneau est visible. Les proportions des visuels
 suivent la plateforme ; les différences futures sont uniquement de présentation.
+La scène de la sidebar est au ratio paysage 16:7 sur desktop (6:5 sur mobile), avec le même ratio
+dans l’outil de cadrage. Les captures font 80–112 px de haut selon la hauteur de l’écran, indépendamment
+de la largeur du panneau. Espacements compacts pour garder les informations et actions visibles sur
+un écran 2560 × 1440, y compris avec une hauteur utile de navigateur réduite à 1280 px.
 
 La sidebar présente les visuels, le titre, les informations courtes, l’expérience modifiable,
 un extrait de souvenir, la possession et les captures agrandissables. Deux actions : fiche complète

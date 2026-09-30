@@ -2,6 +2,7 @@
 
 ## Consultation des jeux — 2026-09-30
 
+- Sidebar compactée pour les grands écrans : scène au ratio paysage 16:7 sur desktop, captures limitées à 80–112 px selon la hauteur disponible, espacements réduits entre sections. Aperçu de cadrage aligné sur ce nouveau ratio ; format mobile conservé. Contrôle ciblé à 2560 × 1280 : Super Mario World tient sans défilement interne, captures et actions comprises.
 - Carte sélectionnée renforcée : contour bleu clair de 3 px autour de toute la carte, halo et fond contrasté sous le titre. L’ancien contour sur l’image était rogné par les cartes avec débordement masqué. Toutes plateformes et vue liste ; dimensions conservées. Vérification ciblée CSS/formatage, validation visuelle par Henri.
 - Parcours commun à toutes les plateformes : clic → sidebar à droite (environ un tiers), puis fiche complète immersive. La grille se réduit ; sous 800 px, la sidebar occupe la largeur disponible.
 - Gauche/droite suivent les jeux filtrés, triés et regroupés au moment de l’ouverture, sans boucler. Échap revient de la fiche complète à la sidebar du jeu courant, puis ferme celle-ci. Les champs de saisie et modales gardent leur clavier.

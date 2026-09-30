@@ -14,6 +14,14 @@ dans l’outil de cadrage. Les captures font 80–112 px de haut selon la hauteu
 de la largeur du panneau. Espacements compacts pour garder les informations et actions visibles sur
 un écran 2560 × 1440, y compris avec une hauteur utile de navigateur réduite à 1280 px.
 
+Sidebar : navigation superposée au fond, sans bandeau opaque ni surtitre plateforme/année.
+Logo agrandi et incliné ; boîte et support plus grands, décalés sous le fond de 62 px, support en
+perspective CSS. Les étoiles et leur édition suivent directement le titre. Éditeur, année,
+deux genres et parcours occupent une ligne défilable si nécessaire. Boutons persistants
+« Dans ma collection » (vert si possession actuelle, sinon gris ; ouvre l’édition) et
+« En favori » (rose si actif, sinon gris ; bascule rapide), raccourci découverte/rejeu à côté.
+La fiche complète conserve sa composition et ses contrôles précédents.
+
 La sidebar présente les visuels, le titre, les informations courtes, l’expérience modifiable,
 un extrait de souvenir, la possession et les captures agrandissables. Deux actions : fiche complète
 et édition. Aucun bouton de lancement, aucune note communautaire inventée, résumé réservé à la fiche.

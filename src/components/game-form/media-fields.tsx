@@ -34,6 +34,7 @@ export function MediaFields({
   const [url, setUrl] = useState('')
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
+  const importError = useRef<HTMLParagraphElement>(null)
   const [urlError, setUrlError] = useState('')
   const urlErrorId = useId()
   const [assets, setAssets] = useState<{ gameId: number; images: Asset[] } | null>(null)
@@ -41,6 +42,9 @@ export function MediaFields({
   const [imported, setImported] = useState<Record<string, string>>({})
   const pending = useRef(new Set<string>())
   const mounted = useRef(true)
+  useEffect(() => {
+    if (error) importError.current?.focus()
+  }, [error])
   useEffect(() => {
     mounted.current = true
     const uploads = pending.current
@@ -119,6 +123,11 @@ export function MediaFields({
         Une jaquette, une boîte, un souvenir en image. L’étoile choisit l’image affichée dans votre
         bibliothèque.
       </p>
+      {error && (
+        <p ref={importError} className="form-error" role="alert" tabIndex={-1}>
+          {error}
+        </p>
+      )}
       <fieldset disabled={busy}>
         <VisualFields
           data={data}
@@ -442,11 +451,6 @@ export function MediaFields({
       {busy && (
         <p className="success-note" role="status">
           <LoaderCircle size={16} className="spin" /> Import en cours…
-        </p>
-      )}
-      {error && (
-        <p className="form-error" role="alert">
-          {error}
         </p>
       )}
       <p className="field-hint">

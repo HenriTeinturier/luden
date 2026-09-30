@@ -15,6 +15,7 @@ import {
   Trash2,
   Check,
   LoaderCircle,
+  ShieldCheck,
 } from 'lucide-react'
 import type { z } from 'zod'
 import type { Game } from '../lib/types'
@@ -146,10 +147,12 @@ function GameScene({ game, compact }: { game: Game; compact: boolean }) {
       )}
       <div className="scene-shade" />
       <div className="scene-identity">
-        <span className="scene-platform">
-          {game.platform.name}
-          {game.releaseYear ? ` · ${game.releaseYear}` : ''}
-        </span>
+        {!compact && (
+          <span className="scene-platform">
+            {game.platform.name}
+            {game.releaseYear ? ` · ${game.releaseYear}` : ''}
+          </span>
+        )}
         {visuals.logo && !failedLogo ? (
           <img
             className="scene-logo"
@@ -192,9 +195,13 @@ function GameScene({ game, compact }: { game: Game; compact: boolean }) {
 function QuickExperience({
   game,
   onBusyChange,
+  compact = false,
+  onEdit,
 }: {
   game: Game
   onBusyChange: (busy: boolean) => void
+  compact?: boolean
+  onEdit?: () => void
 }) {
   const router = useRouter()
   const [busy, setBusy] = useState(false)
@@ -220,6 +227,103 @@ function QuickExperience({
       setBusy(false)
       onBusyChange(false)
     }
+  }
+  if (compact) {
+    const owned = game.possessions.some((p) => p.state === 'CURRENT')
+    return (
+      <section className="sidebar-experience" aria-label="Mon expérience">
+        <fieldset disabled={busy}>
+          <div className="sidebar-rating">
+            <Stars value={game.experience?.rating} />
+            <select
+              aria-label="Ma note sur 5"
+              value={game.experience?.rating ?? ''}
+              onChange={(e) =>
+                void update({ rating: e.target.value === '' ? null : Number(e.target.value) })
+              }
+            >
+              <option value="">Sans note</option>
+              {Array.from({ length: 11 }, (_, i) => i / 2).map((n) => (
+                <option key={n} value={n}>
+                  {n.toLocaleString('fr-FR')} / 5
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="sidebar-facts" aria-label="Informations du jeu">
+            {(game.publisher || game.developer) && (
+              <span className="sidebar-publisher" title={game.publisher || game.developer}>
+                {game.publisher || game.developer}
+              </span>
+            )}
+            {game.releaseYear && <span className="sidebar-year">{game.releaseYear}</span>}
+            {game.genres.slice(0, 2).map((genre) => (
+              <span key={genre}>{genre}</span>
+            ))}
+            <select
+              aria-label="Mon parcours"
+              value={game.experience?.status ?? 'UNPLAYED'}
+              onChange={(e) =>
+                void update({ status: e.target.value as NonNullable<Game['experience']>['status'] })
+              }
+            >
+              {Object.entries(playStatuses).map(([value, label]) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="sidebar-collection-actions">
+            <button
+              type="button"
+              className={`sidebar-collection ${owned ? 'is-owned' : ''}`}
+              onClick={onEdit}
+              title="Modifier mes possessions et collections"
+              aria-label={`Dans ma collection : ${owned ? 'oui' : 'non'}. Modifier mes possessions et collections`}
+            >
+              <ShieldCheck size={23} />
+              <span>
+                <strong>Dans ma collection</strong>
+                <small>
+                  {owned
+                    ? 'Possédé actuellement'
+                    : game.possessions.length
+                      ? 'Possédé autrefois'
+                      : 'Non possédé'}
+                </small>
+              </span>
+            </button>
+            <button
+              type="button"
+              className={`sidebar-favorite ${game.favorite ? 'is-favorite' : ''}`}
+              aria-pressed={game.favorite}
+              onClick={() => void update({ favorite: !game.favorite })}
+            >
+              <Heart size={23} fill={game.favorite ? 'currentColor' : 'none'} /> En favori
+            </button>
+            <button
+              type="button"
+              className={`sidebar-discover ${game.discover ? 'is-discover' : ''}`}
+              title="À découvrir / rejouer"
+              aria-label="À découvrir / rejouer"
+              aria-pressed={game.discover}
+              onClick={() => void update({ discover: !game.discover })}
+            >
+              <Sparkles size={19} />
+            </button>
+          </div>
+        </fieldset>
+        <span className="sr-only" role="status">
+          {busy ? 'Enregistrement…' : message}
+        </span>
+        {error && (
+          <p className="form-error" role="alert">
+            {error}
+          </p>
+        )}
+      </section>
+    )
   }
   return (
     <section className="quick-experience">
@@ -413,7 +517,6 @@ export function GameDetails({
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
   const inCollections = collections.filter((c) => game.entries.some((e) => e.collectionId === c.id))
-  const owned = game.possessions.some((p) => p.state === 'CURRENT')
   function busyChange(value: boolean) {
     setBusy(value)
     onBusyChange(value)
@@ -432,11 +535,13 @@ export function GameDetails({
             ) : readPresentation(game.presentation).logo ? (
               <h1 className="dossier-title">{game.title}</h1>
             ) : null}
-            <div className="dossier-byline">
-              {[game.developer, compact ? game.releaseYear : null, game.machine?.name]
-                .filter(Boolean)
-                .join(' · ')}
-            </div>
+            {!compact && (
+              <div className="dossier-byline">
+                {[game.developer, compact ? game.releaseYear : null, game.machine?.name]
+                  .filter(Boolean)
+                  .join(' · ')}
+              </div>
+            )}
           </div>
           {!compact && (
             <button className="button secondary" disabled={busy} onClick={onEdit}>
@@ -445,52 +550,33 @@ export function GameDetails({
             </button>
           )}
         </div>
-        {compact && game.genres.length > 0 && (
-          <div className="dossier-tags">
-            {game.genres.slice(0, 3).map((genre) => (
-              <span className="tag" key={genre}>
-                {genre}
-              </span>
-            ))}
-          </div>
+        {compact && (
+          <QuickExperience game={game} onBusyChange={busyChange} compact onEdit={onEdit} />
         )}
         <div className="dossier-personal">
-          <QuickExperience game={game} onBusyChange={busyChange} />
-          <section className="dossier-memory">
-            <div className="detail-section-heading">
-              <h2>Mes souvenirs</h2>
-              {game.experience?.period && <span>{game.experience.period}</span>}
-            </div>
-            {game.experience?.memory ? (
-              <p className={compact ? 'memory-excerpt' : 'full-memory'}>{game.experience.memory}</p>
-            ) : (
-              <p className="memory-empty">Une aventure, une époque, un souvenir à raconter.</p>
-            )}
-            {!compact && (
-              <button className="text-link" disabled={busy} onClick={onEdit}>
-                <Pencil size={13} />
-                {game.experience?.memory ? 'Préciser mon souvenir' : 'Écrire mon souvenir'}
-              </button>
-            )}
-          </section>
-        </div>
-        {compact && (
-          <div className={`dossier-ownership ${owned ? 'is-owned' : ''}`}>
-            <Disc3 size={18} />
-            <div>
-              <strong>
-                {owned
-                  ? 'Possédé actuellement'
-                  : game.possessions.length
-                    ? 'Possédé autrefois'
-                    : 'Aucune possession renseignée'}
-              </strong>
-              {inCollections.length > 0 && (
-                <small>{inCollections.map((c) => c.name).join(' · ')}</small>
+          {!compact && <QuickExperience game={game} onBusyChange={busyChange} />}
+          {(!compact || game.experience?.memory) && (
+            <section className="dossier-memory">
+              <div className="detail-section-heading">
+                <h2>Mes souvenirs</h2>
+                {game.experience?.period && <span>{game.experience.period}</span>}
+              </div>
+              {game.experience?.memory ? (
+                <p className={compact ? 'memory-excerpt' : 'full-memory'}>
+                  {game.experience.memory}
+                </p>
+              ) : (
+                <p className="memory-empty">Une aventure, une époque, un souvenir à raconter.</p>
               )}
-            </div>
-          </div>
-        )}
+              {!compact && (
+                <button className="text-link" disabled={busy} onClick={onEdit}>
+                  <Pencil size={13} />
+                  {game.experience?.memory ? 'Préciser mon souvenir' : 'Écrire mon souvenir'}
+                </button>
+              )}
+            </section>
+          )}
+        </div>
         <Screenshots game={game} compact={compact} />
         {compact ? (
           <div className="dossier-actions">

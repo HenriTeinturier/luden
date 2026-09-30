@@ -7,6 +7,7 @@ import {
 } from '../lib/validation'
 import { retainVisuals } from '../lib/game-visuals'
 import { removeUnusedImages } from './media'
+import { organizeGameImages } from './media-organization'
 
 export async function loadLibrary() {
   const [profile, platforms, machines, games, collections, categories] = await Promise.all([
@@ -167,8 +168,18 @@ export async function saveGame(input: unknown) {
       select: { id: true },
     })
   })
-  await removeUnusedImages(unused)
-  return result
+  // The game is already saved: a disk error must not invite a duplicate creation on retry.
+  // Copy-first organization leaves the previous DB path readable when it fails.
+  let mediaWarning: string | null = null
+  try {
+    await removeUnusedImages(unused)
+    await organizeGameImages(result.id)
+  } catch (error) {
+    console.warn('Rangement des médias différé pour le jeu.', result.id, error)
+    mediaWarning =
+      'Le rangement des images n’a pas pu être terminé. Elles restent conservées ; vérifiez l’accès au dossier de données puis enregistrez à nouveau la fiche.'
+  }
+  return { ...result, mediaWarning }
 }
 
 export async function quickUpdateGame(input: unknown) {

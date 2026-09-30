@@ -35,7 +35,8 @@ try {
   imageIds.push(second.id)
   const info = await db.media.findUniqueOrThrow({ where: { id: image.id } })
   assert.equal(info.width / info.height, 320 / 180)
-  const originalFile = resolveMediaPath(process.env.LUDEN_DATA_DIR!, info.path)
+  const provisionalFile = resolveMediaPath(process.env.LUDEN_DATA_DIR!, info.path)
+  assert.ok(info.path.startsWith('_imports/'))
   // Legacy input with only coverId must still create the new default gallery.
   const base = {
     ...emptyGame,
@@ -48,12 +49,25 @@ try {
   }
   const created = await saveGame(base)
   gameIds.push(created.id)
+  assert.equal(created.mediaWarning, null)
+  const organized = await db.media.findUniqueOrThrow({ where: { id: image.id } })
+  assert.ok(organized.path.startsWith('jeux/snes/luden-controle-temporaire-medias--'))
+  assert.ok(await readImage(image.id))
+  await assert.rejects(access(provisionalFile))
   const initial = await db.game.findUniqueOrThrow({
     where: { id: created.id },
     include: { media: true, possessions: true },
   })
   assert.equal(initial.media[0].category, 'COVER')
   assert.equal(initial.media[0].isPrimary, true)
+  const shared = await saveGame({ ...base, title: 'Luden · partage temporaire', possessions: [] })
+  gameIds.push(shared.id)
+  assert.equal(shared.mediaWarning, null)
+  assert.ok(
+    (await db.media.findUniqueOrThrow({ where: { id: image.id } })).path.startsWith('_partages/'),
+  )
+  await deleteGame(shared.id)
+  assert.ok(await readImage(image.id), 'Deleting one game preserves an image shared with another')
   const possessionId = initial.possessions[0].id
   await db.mediaAttachment.create({
     data: { mediaId: image.id, possessionId, category: 'BOX', isPrimary: true },
@@ -99,11 +113,23 @@ try {
   assert.equal(await db.mediaAttachment.count({ where: { gameId: created.id } }), 2)
   assert.equal(await db.gameLink.count({ where: { gameId: created.id } }), 1)
   const exported = await exportLibrary()
-  assert.equal(exported.version, 2)
+  assert.equal(exported.version, 4)
   assert.equal(exported.games.find((g) => g.id === created.id)?.links.length, 1)
   await saveGame({ ...changed, media: [], links: [] })
   assert.equal(await db.media.count({ where: { id: second.id } }), 0)
   assert.ok(await readImage(image.id), 'Photo of a retained copy must not be removed')
+  const renamed = await saveGame({
+    ...changed,
+    title: 'Luden · autre titre',
+    platformId: 'amiga',
+    media: [],
+    links: [],
+  })
+  assert.equal(renamed.id, created.id)
+  assert.equal(renamed.mediaWarning, null)
+  const moved = await db.media.findUniqueOrThrow({ where: { id: image.id } })
+  assert.ok(moved.path.startsWith('jeux/amiga/luden-autre-titre--'))
+  const originalFile = resolveMediaPath(process.env.LUDEN_DATA_DIR!, moved.path)
   await access(originalFile)
   await deleteGame(created.id)
   assert.equal(await db.media.count({ where: { id: image.id } }), 0)

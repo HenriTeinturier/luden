@@ -5,11 +5,12 @@ import { randomUUID } from 'node:crypto'
 import sharp, { type OutputInfo } from 'sharp'
 import { db, LOCAL_PROFILE_ID as ownerId } from './db'
 import { resolveMediaPath } from './media-path'
+import { pruneEmptyMediaDirectories, withMediaStorageLock } from './media-storage'
 
 export const MAX_IMAGE_BYTES = 12 * 1024 * 1024
 export async function saveImage(bytes: Buffer, sourceUrl?: string, source: MediaSource = 'UPLOAD') {
   const root = process.env.LUDEN_DATA_DIR?.trim() ?? ''
-  const relative = `images/${randomUUID()}.webp`
+  const relative = `_imports/${randomUUID()}.webp`
   const absolute = resolveMediaPath(root, relative)
   if (bytes.length > MAX_IMAGE_BYTES) throw new Error('Image trop volumineuse : 12 Mo maximum.')
   let result: { data: Buffer; info: OutputInfo }
@@ -50,12 +51,19 @@ export async function saveImage(bytes: Buffer, sourceUrl?: string, source: Media
 export async function importImageUrl(url: string, source: MediaSource = 'EXTERNAL_URL') {
   const { downloadImage } = await import('./remote-image')
   // Fail before downloading if the media folder has not been configured.
-  resolveMediaPath(process.env.LUDEN_DATA_DIR ?? '', 'images/check.webp')
+  resolveMediaPath(process.env.LUDEN_DATA_DIR ?? '', '_imports/check.webp')
   return saveImage(await downloadImage(url), url, source)
 }
 
 // Only copies no longer referenced by any game or owned copy can be removed.
 export async function removeUnusedImages(ids: string[]) {
+  if (!ids.length) return
+  const root = process.env.LUDEN_DATA_DIR ?? ''
+  if (!root.trim()) return
+  return withMediaStorageLock(root, () => removeUnusedImagesLocked(ids))
+}
+
+async function removeUnusedImagesLocked(ids: string[]) {
   for (const id of new Set(ids)) {
     const media = await db.media.findFirst({
       where: { id, ownerId, games: { none: {} }, attachments: { none: {} } },
@@ -71,6 +79,8 @@ export async function removeUnusedImages(ids: string[]) {
           if (error.code !== 'ENOENT')
             console.warn('Un fichier média détaché reste sur disque.', media.id)
         })
+      if (removed.count)
+        await pruneEmptyMediaDirectories(process.env.LUDEN_DATA_DIR ?? '', path.dirname(absolute))
     } catch {
       console.warn('Nettoyage du média différé.', id)
     }
@@ -84,6 +94,14 @@ export async function readImage(id: string) {
     const bytes = await readFile(resolveMediaPath(process.env.LUDEN_DATA_DIR ?? '', media.path))
     return { bytes, mimeType: media.mimeType }
   } catch {
-    return null
+    // A reorganization may have committed a new path after the initial query.
+    const current = await db.media.findFirst({ where: { id, ownerId } })
+    if (!current || current.path === media.path) return null
+    try {
+      const bytes = await readFile(resolveMediaPath(process.env.LUDEN_DATA_DIR ?? '', current.path))
+      return { bytes, mimeType: current.mimeType }
+    } catch {
+      return null
+    }
   }
 }

@@ -192,9 +192,10 @@ export function GameForm({
           })
         }
         notify(
-          game
-            ? 'Les modifications du jeu sont enregistrées.'
-            : 'Le jeu a été ajouté à votre bibliothèque.',
+          result.data.mediaWarning ??
+            (game
+              ? 'Les modifications du jeu sont enregistrées.'
+              : 'Le jeu a été ajouté à votre bibliothèque.'),
         )
       }
     } catch {

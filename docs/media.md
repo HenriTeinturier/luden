@@ -2,6 +2,43 @@
 
 Lire ce document uniquement pour modifier l'import, la galerie ou les liens.
 
+## Rangement sur disque
+
+Tous les imports (fichier, URL, IGDB) vont d’abord dans `media/_imports/`. À l’enregistrement de
+la fiche, `media-organization.ts` les range sous
+`media/jeux/<plateforme>/<titre-normalisé>--<id-jeu>/<catégorie>-<id-média>.webp`.
+Exemple : `jeux/snes/super-mario-world--<id>/jaquette-<id-média>.webp`.
+Les titres sont limités à 48 caractères, sans accents ni caractères interdits Windows ; les
+identifiants complets évitent les collisions. Les catégories donnent des préfixes français :
+jaquette, capture, boite, support, document, publicite, image. Le fond et le logo restent des
+rôles de présentation, indépendants de ces catégories.
+
+Le titre, la plateforme ou la catégorie modifiés entraînent un nouveau rangement à la sauvegarde.
+Les médias des exemplaires suivent aussi leur jeu. Un fichier partagé par plusieurs jeux reste
+unique dans `_partages/`. Les médias sans jeu sont conservés dans `_sans-jeu/` lors d’une migration.
+Les identifiants et URLs `/media/:id` restent stables ; seul `Media.path` change.
+
+Les déplacements et nettoyages sont sérialisés par `.organisation.lock` (PID local). Copie vers
+un fichier `.pending`, vérification SHA-256, renommage, mise à jour conditionnelle en base, puis
+suppression de l’ancien fichier ; seuls les dossiers vides sont retirés. Un échec avant la mise
+à jour laisse l’ancien chemin lisible. Un échec de rangement après sauvegarde de fiche est signalé
+dans la notification sans faire passer la fiche pour non enregistrée. Réenregistrer permet de réessayer.
+
+### Migration des anciens dossiers
+
+- `npm run media:organize` : inventaire et simulation sans mutation.
+- `npm run media:organize:apply` : sauvegarde PostgreSQL via Docker Compose (`pg_dump -Fc`),
+  journal `plan.json`, déplacement et contrôle final des empreintes et chemins DB.
+- `node --import tsx scripts/organize-media.ts --resume "<chemin-absolu-vers-plan.json>"` :
+  reprendre le même journal après interruption ; les copies déjà vérifiées sont réutilisées.
+
+La sauvegarde et le journal restent dans `LUDEN_DATA_DIR/backups/rangement-medias-<date>/`, jamais
+dans Git. Éviter de modifier les fiches pendant cette maintenance. Les fichiers sans référence
+sont préservés sous `_sans-reference/` avec leur ancienne arborescence. Une image manquante liée
+à un jeu bloque le précontrôle ; une entrée sans fichier ni aucune référence est nettoyée après
+sauvegarde. Aucun retrait global des fichiers inconnus. Ne pas restaurer le dump seul après le
+rangement : il contient les anciens chemins ; le journal garde leur correspondance.
+
 ## Présentation des fiches
 
 Migration `20260930120000_game_presentation` : `Game.presentation` JSONB, défaut `{}`, sans modifier
@@ -37,8 +74,9 @@ sur l’enum PostgreSQL `MediaCategory` ; fichiers et catégories existants cons
 - `src/styles/media.css` : previews avec `object-fit: contain`.
 
 Migration `20260926150000_game_media` : ajoute les rattachements et liens, transforme chaque coverId
-existant en COVER principale sans modifier les fichiers. Les nouveaux fichiers sont dans `media/images/` ;
-les anciens chemins `games/covers/` restent valides. Media contient le fichier, MediaAttachment son usage.
+existant en COVER principale sans modifier les fichiers. Les anciens emplacements `images/` et
+`games/covers/` sont repris par le rangement décrit ci-dessus. Media contient le fichier,
+MediaAttachment son usage.
 Contraintes SQL supplémentaires : contexte exclusif, position positive et principale unique par contexte.
 Un média encore utilisé par un exemplaire ou un autre jeu n'est jamais nettoyé.
 

@@ -22,8 +22,14 @@ Le mot de passe initial d'un volume PostgreSQL n'est pas changé simplement en m
 Renseigner `LUDEN_DATA_DIR` dans `.env`, par exemple `C:/Users/vous/OneDrive/Luden`, puis redémarrer.
 Le dossier doit être absolu, accessible en écriture et disponible localement dans OneDrive.
 Sans ce chemin, toutes les fonctions sauf l'import d'images restent disponibles.
-Luden stocke une copie WebP optimisée (1600×2000 maximum), avec proportions conservées.
+Luden stocke une copie WebP optimisée (2560×2560 maximum), avec proportions conservées.
+Les images sont rangées dans `media/jeux/<plateforme>/<titre>--<id-jeu>/` à l’enregistrement
+de la fiche. Les imports en attente restent dans `media/_imports/`.
 Ajout depuis un fichier, un lien direct ou IGDB. Les copies locales retirées sont supprimées après enregistrement si elles ne sont plus utilisées. Pas de purge globale.
+
+Pour ranger d’anciens médias : `npm run media:organize` simule, puis
+`npm run media:organize:apply` sauvegarde PostgreSQL et applique les déplacements avec contrôle
+d’intégrité. Sauvegarde et journal dans `LUDEN_DATA_DIR/backups/`. Reprise et détails : `docs/media.md`.
 
 IGDB est facultatif. Créer des identifiants d'application selon https://api-docs.igdb.com/#getting-started,
 puis renseigner `IGDB_CLIENT_ID` / `IGDB_CLIENT_SECRET` dans `.env` et redémarrer.

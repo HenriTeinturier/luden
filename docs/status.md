@@ -1,5 +1,12 @@
 # État courant
 
+## Rangement des médias — 2026-09-30
+
+- Imports provisoires dans `media/_imports/`, puis classement automatique à l’enregistrement sous `media/jeux/<plateforme>/<titre>--<id-jeu>/<catégorie>-<id-média>.webp`. Renommage et changement de plateforme/catégorie suivis ; médias des exemplaires inclus, fichiers partagés préservés. Avertissement si rangement différé après sauvegarde.
+- Migration réelle terminée : **1 122 fichiers** (SNES 196, Amiga 803, Amstrad 123), chemins en base mis à jour, empreintes SHA-256 identiques. Une ancienne entrée sans fichier ni jeu a été nettoyée. Aucun fichier sans référence trouvé. Simulation finale : aucun déplacement restant.
+- Sauvegarde PostgreSQL et journal dans `LUDEN_DATA_DIR/backups/rangement-medias-2026-09-30T16-07-50-974Z/`. Code de migration reprenable ; copie vérifiée avant changement de chemin puis retrait de l’original. URLs et identifiants médias conservés, aucune migration de schéma.
+- Vérifié : TypeScript, lint, 18 tests, compilation ; contrôle DB temporaire des imports, rangement, changement de titre/plateforme, partage et suppression ; contrôle HTTP des médias des trois plateformes (200 WebP). Procédure de simulation/application/reprise dans `docs/media.md`.
+
 ## Consultation des jeux — 2026-09-30
 
 - Formulaire des visuels : dimensions du fond **2 560 × 1 440 px (16:9)** mises en évidence dans un encadré permanent au-dessus des quatre rôles. Choix automatique du visuel principal expliqué sous le champ boîte : image classée Boîte, sinon image principale de bibliothèque.

@@ -25,6 +25,9 @@ confirmation. `Game.presentation` est validé par Zod et limité aux médias att
 ## Stockage
 
 `LUDEN_DATA_DIR` absolu fourni par l'utilisateur. Médias sous `media/`, DB avec chemins relatifs.
+Imports provisoires dans `_imports/`, puis rangement par plateforme/jeu à la sauvegarde de fiche.
+`media-organization.ts` calcule les destinations ; `media-storage.ts` assure copie vérifiée,
+verrou local et retrait des anciens fichiers après mise à jour de `Media.path`.
 Validation de taille/format, décodage et conversion WebP côté serveur, sans recadrage.
 Import fichier, URL publique ou sélection IGDB : même stockage local, dimensions et source conservées.
 `remote-image.ts` : HTTP(S), IP publiques uniquement, DNS vérifié et fixé pour la connexion,

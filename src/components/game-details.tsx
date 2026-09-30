@@ -41,10 +41,12 @@ export function useGameKeys({
   enabled,
   close,
   move,
+  moveVertical = move,
 }: {
   enabled: boolean
   close: () => void
-  move: (delta: number) => void
+  move?: (delta: number) => void
+  moveVertical?: (delta: number) => void
 }) {
   useEffect(() => {
     if (!enabled) return
@@ -69,14 +71,18 @@ export function useGameKeys({
         event.preventDefault()
         close()
       }
-      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+      if (move && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) {
         event.preventDefault()
         move(event.key === 'ArrowLeft' ? -1 : 1)
+      }
+      if (moveVertical && (event.key === 'ArrowUp' || event.key === 'ArrowDown')) {
+        event.preventDefault()
+        moveVertical(event.key === 'ArrowUp' ? -1 : 1)
       }
     }
     document.addEventListener('keydown', handle)
     return () => document.removeEventListener('keydown', handle)
-  }, [enabled, close, move])
+  }, [enabled, close, move, moveVertical])
 }
 
 export function GameNavigation({
@@ -926,7 +932,9 @@ export function GameDetails({
         )}
         <p className="dossier-keyboard">
           <kbd>←</kbd>
-          <kbd>→</kbd> parcourir les jeux <span>·</span>
+          <kbd>→</kbd>
+          <kbd>↑</kbd>
+          <kbd>↓</kbd> parcourir les jeux <span>·</span>
           <kbd>Échap</kbd> {compact ? 'fermer' : 'revenir à l’aperçu'}
         </p>
       </div>

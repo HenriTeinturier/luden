@@ -13,6 +13,7 @@ import { MegastarTrophy } from './megastar-trophy'
 import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties } from 'react'
 import { useGameSelection } from './game-selection'
 import { filterGames, type GallerySearch } from '../lib/gallery'
+import { stepGalleryColumns } from '../lib/gallery-navigation'
 import type { Game } from '../lib/types'
 import { playStatuses } from '../lib/platforms'
 import { EmptyState, GameCard, useLibrary } from './ui'
@@ -50,6 +51,7 @@ export function Gallery({
   const desktop = useSyncExternalStore(subscribeDesktop, isDesktop, serverDesktop)
   const columnBonus = desktop && selection?.sidebarVisible === false ? 2 : 0
   const gallery = useRef<HTMLDivElement>(null)
+  const lastWheel = useRef(-Infinity)
   const [autoColumns, setAutoColumns] = useState<{ pathname: string; count: number } | null>(null)
   const measuredAuto = autoColumns?.pathname === pathname ? autoColumns.count : undefined
   const displayedColumns =
@@ -113,6 +115,43 @@ export function Gallery({
     saveGalleryPreferences(pathname, next)
     void navigate({ to: '.', search: next, replace: true, resetScroll: false })
   }
+  useEffect(() => {
+    const container = gallery.current
+    if (!container || filters.view === 'list') return
+    function wheel(event: WheelEvent) {
+      if (!event.ctrlKey || event.metaKey || event.altKey || !event.deltaY) return
+      if (document.querySelector('[role="dialog"], [role="alertdialog"]')) return
+      if (document.activeElement?.closest('input, textarea, select, [contenteditable="true"]'))
+        return
+      const grid = container!.querySelector('.game-grid')
+      if (!grid || !grid.getBoundingClientRect().width) return
+      // A native non-passive listener replaces browser zoom only over the gallery.
+      event.preventDefault()
+      const now = performance.now()
+      if (now - lastWheel.current < 160) return
+      lastWheel.current = now
+      const current =
+        typeof displayedColumns === 'number'
+          ? displayedColumns
+          : getComputedStyle(grid).gridTemplateColumns.split(' ').length
+      const columns = stepGalleryColumns(current, columnBonus, event.deltaY)
+      if (columns === filters.columns) return
+      const next = { ...search, columns }
+      saveGalleryPreferences(pathname, next)
+      void navigate({ to: '.', search: next, replace: true, resetScroll: false })
+    }
+    container.addEventListener('wheel', wheel, { passive: false })
+    return () => container.removeEventListener('wheel', wheel)
+  }, [
+    filters.view,
+    filters.columns,
+    displayedColumns,
+    columnBonus,
+    search,
+    pathname,
+    navigate,
+    visible.length,
+  ])
   const grouping = filters.group ?? 'none'
   const groups =
     grouping === 'category'
@@ -245,7 +284,7 @@ export function Gallery({
           </div>
           <label
             className="gallery-density"
-            title="Jaquettes par ligne : 4 à 10 avec la sidebar, 2 de plus sans elle, selon la place disponible"
+            title="Jaquettes par ligne : 4 à 10 avec la sidebar, 2 de plus sans elle. Ctrl + molette sur les jaquettes pour ajuster."
           >
             <Columns3 size={16} aria-hidden="true" />
             <select

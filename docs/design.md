@@ -77,6 +77,14 @@ captures de 96–140 px de haut pour voir l’expérience, les souvenirs et les 
 écran. Les informations longues et les médias supplémentaires restent accessibles en défilant.
 
 Gauche/droite parcourent l’ordre visible au moment de l’ouverture, regroupement compris, sans boucle.
+Haut/bas passent à la rangée voisine, sur la jaquette la plus proche horizontalement, sans boucler
+aux extrémités. Le calcul suit les positions affichées, même avec des catégories ou une dernière
+rangée incomplète. En fiche complète ou sur mobile, haut/bas parcourent le jeu précédent/suivant.
+Ctrl + molette sur la grille règle les colonnes : vers le haut, moins de colonnes et des jaquettes
+plus grandes ; vers le bas, davantage de colonnes. Auto devient une valeur manuelle issue de la
+grille courante, bornée à 4–10 (6–12 sans sidebar sur desktop), mémorisée comme le sélecteur.
+Le zoom navigateur reste disponible en dehors de la grille ; la vue liste, les champs et modales
+ne sont pas concernés. Les gestes continus sont limités à un changement toutes les 160 ms.
 Échap remonte d’un niveau et conserve le jeu courant. Les raccourcis ignorent les champs et modales.
 Filtres et défilement sont conservés ; modifier les filtres referme la sélection. Le parcours intégré
 reste sur l’URL de la galerie ; les URLs de jeu servent toujours à l’ouverture directe/nouvel onglet.

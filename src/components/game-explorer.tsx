@@ -5,6 +5,7 @@ import { GameSelectionContext } from './game-selection'
 import { GameDetails, GameNavigation, useGameKeys } from './game-details'
 import { GameForm } from './game-form'
 import { UniverseSidebar } from './universe-sidebar'
+import { verticalGameNeighbor } from '../lib/gallery-navigation'
 
 export function GameExplorer({
   children,
@@ -87,12 +88,36 @@ export function GameExplorer({
         })
     }
   }
+  function moveVertical(direction: number) {
+    if (!game) return
+    if (mode !== 'sidebar' || window.innerWidth <= 800) {
+      move(direction)
+      return
+    }
+    const sequence = new Set(ids)
+    const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-game-id]'))
+      .filter((card) => sequence.has(card.dataset.gameId!))
+      .flatMap((card) => {
+        const rect = card.getBoundingClientRect()
+        // Layout offsets ignore the hover lift applied to a cover.
+        let top = 0
+        let element: HTMLElement | null = card
+        while (element) {
+          top += element.offsetTop
+          element = element.offsetParent as HTMLElement | null
+        }
+        return rect.width && rect.height
+          ? [{ id: card.dataset.gameId!, top, centerX: rect.left + rect.width / 2 }]
+          : []
+      })
+    const nextId = verticalGameNeighbor(cards, game.id, direction)
+    if (nextId) move(ids.indexOf(nextId) - index)
+  }
   useGameKeys({
     enabled: (Boolean(game) || showUniverse) && mode !== 'edit' && !busy,
     close,
-    move: (delta) => {
-      if (game) move(delta)
-    },
+    move: game ? move : undefined,
+    moveVertical: game ? moveVertical : undefined,
   })
   useEffect(() => {
     if (!game || mode === 'edit') return

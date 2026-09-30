@@ -9,6 +9,9 @@
 
 ## Consultation des jeux — 2026-09-30
 
+- Raccourcis galerie : Ctrl + molette sur les jaquettes ajuste les colonnes et mémorise la préférence (haut = agrandir, bas = densifier, limites 4–10 / 6–12). Haut/bas parcourent les rangées visibles, catégories et rangées incomplètes comprises ; précédent/suivant en fiche complète et mobile. Champs, modales et liste protégés ; rappel dans l’infobulle de densité et aide clavier de la fiche.
+- Vérifié : TypeScript, lint et 22 tests ; quatre flèches contrôlées dans le navigateur (Super Metroid ↔ NBA Jam verticalement, Super Metroid ↔ Super Star Wars horizontalement). Animation de survol exclue du calcul des rangées. Limites de molette testées par logique ; geste Ctrl + molette physique restant à valider par l’utilisateur.
+
 - Galerie SNES : les quatre cartes de statistiques disparaissent lorsque la sidebar est masquée et reviennent à sa réouverture (accueil ou jeu), en complément des deux colonnes supplémentaires. Titre accessible conservé. Fermeture/réouverture vérifiées dans le navigateur ; TypeScript, lint ciblé et formatage validés.
 
 - Sidebar masquée : bouton « Sidebar » avec icône de panneau dans les réglages de galerie pour réafficher l’accueil de l’univers. Focus clavier restauré et nombre de colonnes réajusté automatiquement à l’ouverture. Vérifié dans le navigateur : fermeture → 9 colonnes, bouton → accueil et 7 colonnes, Échap → bouton avec focus. TypeScript, lint ciblé et formatage passent.

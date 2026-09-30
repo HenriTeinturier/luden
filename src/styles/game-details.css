@@ -45,6 +45,7 @@
 .gallery-density {
   display: inline-flex;
   align-items: center;
+  flex-shrink: 0;
   padding-left: 10px;
   border: 1px solid var(--line);
   border-radius: 5px;
@@ -52,8 +53,9 @@
   color: var(--text-soft);
 }
 .gallery-controls .gallery-density select {
-  width: 64px;
-  padding-left: 6px;
+  width: 76px;
+  flex-shrink: 0;
+  padding-inline: 6px 8px;
   border: 0;
   background: var(--elevated);
   color: var(--ink);

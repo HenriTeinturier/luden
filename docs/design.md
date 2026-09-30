@@ -107,7 +107,7 @@ collections partent sur Tous mes jeux ; Découverte sur À découvrir, avec poss
 de vue. Dans une collection, les boutons filtrent uniquement ses jeux. Les préférences navigateur
 restent propres à chaque galerie. La barre se replie sur plusieurs lignes si la largeur manque.
 
-À côté du choix grille/liste, une icône de colonnes et un sélecteur compact (92 px) règlent
+À côté du choix grille/liste, une icône de colonnes et un sélecteur compact (104 px) règlent
 le nombre de jaquettes par ligne : `Auto` ou 4 à 10. Choix mémorisé par galerie et conservé
 dans l’URL, y compris au retour de fiche. La sidebar reste ouverte lors du réglage.
 En mode manuel, chaque carte occupe une colonne, même dans une galerie mélangeant les formats.

@@ -1,6 +1,6 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import * as AlertDialog from '@radix-ui/react-alert-dialog'
-import { X, ArrowUpRight, Plus, Gamepad2, Monitor, Heart, Disc3, Cloud, Clock3 } from 'lucide-react'
+import { X, ArrowUpRight, Plus, Gamepad2, Monitor, Disc3, Cloud, Clock3 } from 'lucide-react'
 import { Link, useLoaderData, useParams, useLocation } from '@tanstack/react-router'
 import { useState, type CSSProperties, type ReactNode } from 'react'
 import type { Game, Platform } from '../lib/types'
@@ -232,8 +232,8 @@ export function GameCard({
       <div className="cover-frame">
         <Cover game={game} />
         {game.favorite && (
-          <span className="favorite-badge" aria-label="Coup de cœur">
-            <Heart size={13} fill="currentColor" />
+          <span className="favorite-badge">
+            <img src="/megastar.webp" alt="Megastar — Jeu culte" width={400} height={394} />
           </span>
         )}
       </div>

@@ -475,15 +475,6 @@ input[type='radio'] {
   font-family: inherit;
   font-weight: 750;
 }
-.favorite-badge {
-  color: #302519;
-}
-.favorite-badge::before {
-  background: linear-gradient(115deg, #ffe7a2, var(--yellow) 48%, #ce963a);
-  box-shadow:
-    inset 1px 0 #fff5,
-    inset -1px 0 #70441040;
-}
 .game-card.compact {
   background: var(--surface);
 }

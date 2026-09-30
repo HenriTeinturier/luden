@@ -6,7 +6,7 @@ Toutes les plateformes partagent le même parcours, dans `game-explorer.tsx` et 
 Le clic sur une carte ouvre un panneau occupant environ un tiers à droite et réduit la galerie.
 La carte consultée porte un contour bleu clair de 3 px autour de son périmètre complet, un halo
 et un fond bleu/violet plus marqué sous le titre. Le repère est porté par la carte pour éviter
-le rognage par ses coins ; dimensions et marque-page des coups de cœur conservés, y compris en liste.
+le rognage par ses coins ; dimensions et sceau Megastar conservés, y compris en liste.
 Sur écran étroit (800 px et moins), seul le panneau est visible. Les proportions des visuels
 suivent la plateforme ; les différences futures sont uniquement de présentation.
 La scène de la sidebar est au ratio paysage 16:7 sur desktop (6:5 sur mobile), avec le même ratio
@@ -20,10 +20,12 @@ avec ombre elliptique de contact sous l’objet. Les étoiles et leur édition s
 deux genres et parcours occupent une ligne défilable si nécessaire. Boutons persistants
 « Dans ma collection » (vert si possession actuelle, sinon gris ; ouvre l’édition) et
 « À découvrir / rejouer » avec texte visible. Le favori est un trophée étoilé « Megastar · Jeu culte »
-sur la ligne de notation : dessin SVG dédié, doré si actif et gris sinon ; même booléen favori que
+sur la ligne de notation : dessin SVG dédié, violet/bleu électrique si actif et lavande discret sinon ; même booléen favori que
 les étiquettes de jaquettes et le filtre Megastar, aucun nouvel indicateur indépendant.
-La barre commune réutilise le même trophée via `MegastarTrophy` et les mêmes couleurs gris/doré
-pour le filtre Megastar ; son libellé reste compact sur une ligne.
+La barre commune réutilise le même trophée via `MegastarTrophy` et la même palette : violet `#7C5CFF`,
+profondeur `#4324B7`, bleu électrique `#37C8FF`, texte actif `#F3F5FF`, fond `#0D1535` et bordure
+inactive `#55608F`. Un séparateur vertical distingue le trophée du libellé, sans chevron.
+L’état actif reçoit une bordure en dégradé violet/bleu et un halo ; le filtre reste compact sur une ligne.
 La fiche complète conserve sa composition et ses contrôles précédents.
 
 La sidebar présente les visuels, le titre, les informations courtes, l’expérience modifiable,
@@ -135,8 +137,8 @@ Ses mains dépassent de 18 px sans augmenter la hauteur ; le décor ignore les i
 pointeur et disparaît sous 1200 px pour préserver les compteurs et le logo. Le cadrage
 du CPC reste limité au bandeau.
 
-Les cartes de jeux coups de cœur portent un marque-page doré dans le coin supérieur droit : dégradé discret, ombre légère, découpe en V et cœur sombre. Le contour complet est retiré. Ce repère reste visible indépendamment du filtre Megastar, dans toutes les galeries, avec une variante réduite en vue liste. Les dimensions des cartes restent inchangées.
+Les cartes de jeux favoris portent le sceau violet/bleu Megastar fourni (`public/megastar.webp`) en surimpression dans le coin supérieur droit de la jaquette. Le logo transparent remplace le marque-page à cœur, avec une ombre légère et un débordement de 12 px en haut et 10 px à droite (8 px en liste). Le cadre de carte laisse déborder le sceau ; la jaquette et le pied de carte conservent leurs coins arrondis. Largeur de 28 % bornée à 54–84 px en grille, 38 px en liste. Ce repère reste visible indépendamment du filtre Megastar, dans toutes les galeries. Les dimensions des cartes restent inchangées.
 
-Cartes de jeux Amstrad : ratio 3:4 adapté aux visuels de disquettes, image entière sans recadrage ni padding extérieur en grille. Présentation compacte comme Amiga : titre sur une ligne avec ellipse, étoiles seules, sans plateforme, année, statut ni souvenir. Le marque-page doré reste visible pour les coups de cœur.
+Cartes de jeux Amstrad : ratio 3:4 adapté aux visuels de disquettes, image entière sans recadrage ni padding extérieur en grille. Présentation compacte comme Amiga : titre sur une ligne avec ellipse, étoiles seules, sans plateforme, année, statut ni souvenir. Le sceau Megastar reste visible pour les favoris.
 
 Dans les univers Amiga et Amstrad, la grille utilise des colonnes de 210 px minimum au-dessus de 700 px pour donner plus de place aux jaquettes. Le ratio reste identique ; les deux colonnes mobiles et la vue liste sont conservées.

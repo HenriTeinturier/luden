@@ -9,6 +9,9 @@
 
 ## Consultation des jeux — 2026-09-30
 
+- Identité Megastar actualisée : sceau WebP transparent fourni intégré aux jaquettes à la place du cœur, débordant en haut à droite sans rognage ; variante réduite en liste et coins de cartes conservés. Sidebar et filtre partagent trophée, séparateur vertical et palette violet/bleu électrique de la maquette, halo actif et lavande inactif. Les données de favoris restent identiques.
+- Vérifié : TypeScript/lint, contrôle navigateur du sceau chargé et débordant, filtre actif (8 jeux), états actifs/inactifs et alignement compact de la sidebar.
+
 - Filtre Megastar de la barre commune harmonisé avec la sidebar : même trophée étoilé (composant partagé), aspect grisé au repos et doré quand le filtre est actif. Fonctionnement du filtre favori conservé dans toutes les galeries.
 - Ajustement sidebar : cartouche droite avec ombre de contact elliptique ; boîte/support abaissés de 46 px supplémentaires (débordement 108 px). Découverte/rejeu affiche désormais son texte. Favori remplacé dans la sidebar par un trophée SVG étoilé « Megastar · Jeu culte » à côté de la note : doré actif/gris inactif, conserve les favoris existants et leur bascule. Aucun champ d’appréciation ajouté.
 - Vérifié : TypeScript/lint, contrôle ciblé Super Metroid (2560 × 1280 sans scroll interne, support sans rotation, débordement 108 px), trophée actif sur Super Mario World et ligne de notation sans débordement à 1280 px. Serveur Vite relancé sur 3000.

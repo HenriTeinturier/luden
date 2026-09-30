@@ -102,7 +102,7 @@ export function Gallery({
             onClick={() => update({ favorite: !filters.favorite })}
           >
             <MegastarTrophy />
-            Megastar
+            <span>Megastar</span>
           </button>
         </div>
         <div className="filter-search">

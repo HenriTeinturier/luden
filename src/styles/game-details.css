@@ -409,10 +409,10 @@
   gap: 8px;
   margin-left: auto;
   padding: 5px 12px 5px 7px;
-  border: 1px solid #ffffff25;
+  border: 1px solid #55608f;
   border-radius: 9px;
-  background: #ffffff04;
-  color: var(--muted);
+  background: #0d1535;
+  color: #bab2ed;
   text-align: left;
   flex-shrink: 0;
 }
@@ -431,21 +431,45 @@
   font-size: 9px;
   opacity: 0.8;
 }
+.sidebar-megastar,
+.platform-scope .favorites-filter {
+  color: #bab2ed;
+  border-color: #55608f;
+  background: linear-gradient(115deg, #20163e, #0d1535);
+  transition:
+    box-shadow 160ms ease,
+    filter 160ms ease;
+}
+.sidebar-megastar > span,
+.favorites-filter > span {
+  border-left: 1px solid #7c5cff;
+  padding-left: 9px;
+}
 .sidebar-megastar.is-favorite,
 .platform-scope .favorites-filter[aria-pressed='true'] {
-  color: #ffda82;
-  border-color: #eabd5f85;
-  background: linear-gradient(125deg, #be791825, #f8cf7320 48%, #86561912);
+  color: #f3f5ff;
+  border-color: transparent;
+  background:
+    linear-gradient(115deg, #4324b7, #19134a 65%, #101d48) padding-box,
+    linear-gradient(110deg, #cb8aff, #7c5cff 50%, #37c8ff) border-box;
   box-shadow:
-    inset 0 1px #ffe6a820,
-    0 0 16px #efb74d0d;
+    inset 0 0 12px #7c5cff35,
+    -2px 0 7px #7c5cff70,
+    2px 0 7px #37c8ff50;
 }
 .sidebar-megastar.is-favorite .megastar-trophy,
 .favorites-filter[aria-pressed='true'] .megastar-trophy {
-  filter: drop-shadow(0 2px 5px #ffc34d40);
+  color: #d6b6ff;
+  filter: drop-shadow(0 0 4px #7c5cff);
 }
-.sidebar-megastar:hover {
-  filter: brightness(1.2);
+.sidebar-megastar:hover,
+.platform-scope .favorites-filter:hover {
+  filter: brightness(1.15);
+}
+.sidebar-megastar:focus-visible,
+.platform-scope .favorites-filter:focus-visible {
+  outline: 2px solid #37c8ff;
+  outline-offset: 3px;
 }
 .sidebar-rating .sidebar-megastar + select {
   margin-left: 0;

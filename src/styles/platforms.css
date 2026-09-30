@@ -188,9 +188,6 @@
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  color: var(--muted);
-  border-color: #ffffff25;
-  background: #ffffff04;
 }
 .favorites-filter .megastar-trophy {
   width: 22px;
@@ -208,15 +205,16 @@
 }
 .platform-snes .game-grid .game-card {
   padding: 0;
-  overflow: hidden;
+  overflow: visible;
   background: var(--surface);
   border-color: var(--line);
 }
 .platform-snes .game-grid .game-cover {
-  border-radius: 0;
+  border-radius: 9px 9px 0 0;
   background: var(--sidebar-background);
 }
 .platform-snes .game-grid .game-card-info {
+  border-radius: 0 0 9px 9px;
   height: 32px;
   padding: 6px 12px;
   display: flex;
@@ -270,16 +268,17 @@
 }
 :is(.platform-amiga, .platform-amstrad) .game-grid .game-card {
   padding: 0;
-  overflow: hidden;
+  overflow: visible;
 }
 :is(.platform-amiga, .platform-amstrad) .game-grid .game-cover {
   border: 0;
-  border-radius: 0;
+  border-radius: 9px 9px 0 0;
 }
 :is(.platform-amiga, .platform-amstrad) .game-grid .game-cover img {
   object-position: center top;
 }
 :is(.platform-amiga, .platform-amstrad) .game-grid .game-card-info {
+  border-radius: 0 0 9px 9px;
   padding: 12px;
 }
 @media (max-width: 720px) {

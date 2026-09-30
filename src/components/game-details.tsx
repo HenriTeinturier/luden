@@ -306,6 +306,7 @@ function QuickExperience({
                       : 'Non possédé'}
                 </small>
               </span>
+              {owned && <Check size={16} className="sidebar-active-check" aria-hidden="true" />}
             </button>
             <button
               type="button"
@@ -315,6 +316,7 @@ function QuickExperience({
             >
               <Gamepad2 size={23} />
               <strong>Joué</strong>
+              {played && <Check size={16} className="sidebar-active-check" aria-hidden="true" />}
             </button>
             <button
               type="button"
@@ -324,6 +326,9 @@ function QuickExperience({
             >
               <Sparkles size={23} />
               <strong>À découvrir</strong>
+              {game.discover && (
+                <Check size={16} className="sidebar-active-check" aria-hidden="true" />
+              )}
             </button>
           </div>
         </fieldset>

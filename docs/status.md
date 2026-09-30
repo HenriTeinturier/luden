@@ -9,6 +9,9 @@
 
 ## Consultation des jeux — 2026-09-30
 
+- Sidebar : boîte/cartouche abaissées de 40 px supplémentaires (débordement 148 px), espace réservé ajusté pour garder les étoiles dégagées. Les trois cartes actives ont un fond opaque vert/corail/violet plus soutenu, une bordure nette et une coche.
+- Vérifié : TypeScript/lint, contrôle des trois états actifs et des coches, 2560 × 1280 sans défilement interne et 26 px entre le groupe de visuels et la notation ; rendu étroit contrôlé.
+
 - Sidebar : capsule remplacée par deux cartes distinctes « Joué » et « À découvrir », de même style que « Dans ma collection ». Trois bascules indépendantes, même hauteur et bordure ; états actifs vert/corail/violet, inactifs gris. Trois cartes sur une ligne en largeur suffisante ; collection au-dessus des deux autres sous 540 px.
 
 - Sidebar : menu de parcours remplacé par une capsule à deux boutons « Joué » (corail) / « À découvrir » (violet), à côté de « Dans ma collection » ou dessous si la largeur manque. Bascules indépendantes, statuts détaillés conservés dans la fiche complète et l’édition. Libellé découverte raccourci ; titre répété au-dessus des étoiles masqué visuellement, conservé pour l’accessibilité.

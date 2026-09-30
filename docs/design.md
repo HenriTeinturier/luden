@@ -15,13 +15,15 @@ de la largeur du panneau. Espacements compacts pour garder les informations et a
 un écran 2560 × 1440, y compris avec une hauteur utile de navigateur réduite à 1280 px.
 
 Sidebar : navigation superposée au fond, sans bandeau opaque ni surtitre plateforme/année.
-Logo agrandi et incliné ; boîte et support plus grands, décalés sous le fond de 108 px. Support droit,
+Logo agrandi et incliné ; boîte et support plus grands, décalés sous le fond de 148 px. Support droit,
 avec ombre elliptique de contact sous l’objet. Le titre n’est affiché que dans la scène (logo ou texte),
 sans répétition au-dessus des étoiles ; un titre masqué reste accessible aux lecteurs d’écran.
 Éditeur, année et deux genres occupent une ligne défilable si nécessaire.
 Trois cartes séparées partagent le même style : « Dans ma collection », « Joué » et « À découvrir ».
 Même hauteur, coins arrondis, icône à gauche et bordure discrète ; gris inactif, vert pour la possession,
-corail pour Joué et violet pour À découvrir. Les trois bascules restent indépendantes.
+corail pour Joué et violet pour À découvrir. Les états actifs ont un fond coloré opaque soutenu,
+une bordure nette et une coche à droite pour ne pas dépendre uniquement de la couleur.
+Les trois bascules restent indépendantes.
 Sur une sidebar large, les trois cartes sont alignées ; sous 540 px, la collection occupe une ligne
 et les cartes Joué / À découvrir restent côte à côte dessous.
 Joué reflète tout statut autre que non joué ; son clic bascule PLAYED/UNPLAYED. Les statuts détaillés

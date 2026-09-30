@@ -293,7 +293,7 @@
 }
 .dossier-compact .game-scene {
   aspect-ratio: 16 / 7;
-  margin-bottom: 128px;
+  margin-bottom: 168px;
   overflow: visible;
 }
 .dossier-compact .scene-shade {
@@ -322,7 +322,7 @@
 }
 .dossier-compact .scene-objects {
   position: absolute;
-  inset: auto 4% -108px;
+  inset: auto 4% -148px;
   height: 70%;
   margin: 0;
   gap: 0;
@@ -610,18 +610,21 @@
 }
 .sidebar-collection.is-owned {
   color: #72e2c0;
-  border-color: #36d6af70;
-  background: #19b68d0d;
+  border-color: #36d6af;
+  background: #103b34;
 }
 .sidebar-played[aria-pressed='true'] {
   color: #ffa59b;
-  border-color: #ff918170;
-  background: #ff81780d;
+  border-color: #ff9181;
+  background: #44252d;
 }
 .sidebar-discover[aria-pressed='true'] {
   color: #c5b4ff;
-  border-color: #9f7fff70;
-  background: #9f7fff0d;
+  border-color: #9f7fff;
+  background: #30254d;
+}
+.sidebar-collection-actions .sidebar-active-check {
+  margin-left: auto;
 }
 @container (max-width: 540px) {
   .sidebar-collection-actions {

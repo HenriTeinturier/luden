@@ -15,7 +15,9 @@ de la largeur du panneau. Espacements compacts pour garder les informations et a
 un écran 2560 × 1440, y compris avec une hauteur utile de navigateur réduite à 1280 px.
 
 Sidebar : navigation superposée au fond, sans bandeau opaque ni surtitre plateforme/année.
-Logo agrandi et incliné ; boîte et support plus grands, décalés sous le fond de 148 px. Support droit,
+Logo incliné, réduit à 34 % de la largeur du panneau et centré dans l’espace entre navigation
+et fermeture (réserves gauche 180 px / droite 68 px), positionné à 4 px du haut.
+Boîte et support plus grands, décalés sous le fond de 148 px. Support droit,
 boîte agrandie de 12 % en hauteur avec son bas ancré et décalée de 7 % de son cadre vers la gauche
 lorsqu’un support est présent, pour laisser davantage d’espace entre les deux objets.
 La cartouche garde sa position ; la boîte seule reste centrée.

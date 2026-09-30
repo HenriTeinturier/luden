@@ -9,6 +9,8 @@
 
 ## Consultation des jeux — 2026-09-30
 
+- Sidebar : logo titre légèrement réduit (38 → 34 % du panneau), centré dans l’espace libre entre navigation gauche et fermeture droite, remonté de 6 px. Largeur limitée à cet espace sur petit panneau ; titre texte de repli également centré. Boîte et cartouche inchangées.
+
 - Sidebar : boîte décalée nettement vers la gauche (translation de −7 % de son cadre, soit environ 40 px plus à gauche que précédemment sur grand écran). Cartouche fixe, espace accru entre les deux ; taille, hauteur et centrage de la boîte seule conservés. Vérification CSS/formatage.
 
 - Sidebar : espace boîte/cartouche augmenté en ramenant le décalage horizontal de la boîte de 5 % à 1 % de son cadre (environ 20 px d’écart supplémentaires sur le grand écran). Taille et position verticale conservées. Vérification CSS/formatage.

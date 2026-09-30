@@ -3,6 +3,8 @@ import { Link, useRouter } from '@tanstack/react-router'
 import {
   ArrowLeft,
   ArrowUpRight,
+  ArrowRight,
+  NotebookPen,
   ChevronLeft,
   ChevronRight,
   ChevronDown,
@@ -462,6 +464,28 @@ function QuickExperience({
 function Screenshots({ game, compact }: { game: Game; compact: boolean }) {
   const images = game.media.filter((m) => m.category === 'SCREENSHOT')
   const [selected, setSelected] = useState<number | null>(null)
+  const [overview, setOverview] = useState(false)
+  const [active, setActive] = useState(0)
+  const strip = useRef<HTMLDivElement>(null)
+  function highlight(index: number) {
+    setActive(index)
+    const container = strip.current
+    const target = container?.children[index] as HTMLElement | undefined
+    if (container && target) {
+      const bounds = container.getBoundingClientRect()
+      const itemBounds = target.getBoundingClientRect()
+      if (itemBounds.left < bounds.left || itemBounds.right > bounds.right) {
+        container.scrollTo({
+          left: container.scrollLeft + itemBounds.left - bounds.left - 5,
+          behavior: 'instant',
+        })
+      }
+    }
+  }
+  function openImage(index: number) {
+    highlight(index)
+    setSelected(index)
+  }
   if (!images.length) return null
   const item = selected === null ? null : images[selected]
   return (
@@ -471,32 +495,90 @@ function Screenshots({ game, compact }: { game: Game; compact: boolean }) {
           <Images size={16} />
           Captures d’écran
         </h2>
-        <span>{images.length}</span>
+        <div className="screenshot-heading-actions">
+          <span>{images.length}</span>
+          {compact && (
+            <button type="button" className="text-link" onClick={() => setOverview(true)}>
+              Voir tout <ArrowRight size={15} />
+            </button>
+          )}
+        </div>
       </div>
-      <div className={`screenshot-strip ${compact ? 'is-compact' : ''}`}>
-        {images.map((image, index) => (
-          <button
-            type="button"
-            key={image.id}
-            aria-label={`Agrandir la capture ${index + 1}`}
-            onClick={() => setSelected(index)}
-          >
-            <img
-              src={`/media/${image.mediaId}`}
-              alt={image.caption || `Capture ${index + 1} de ${game.title}`}
-              loading="lazy"
-            />
-          </button>
-        ))}
+      <div className="screenshot-carousel">
+        <div ref={strip} className={`screenshot-strip ${compact ? 'is-compact' : ''}`}>
+          {images.map((image, index) => (
+            <button
+              type="button"
+              key={image.id}
+              aria-label={`Agrandir la capture ${index + 1}`}
+              aria-current={compact && active === index ? 'true' : undefined}
+              onFocus={() => compact && highlight(index)}
+              onClick={() => openImage(index)}
+            >
+              <img
+                src={`/media/${image.mediaId}`}
+                alt={image.caption || `Capture ${index + 1} de ${game.title}`}
+                loading="lazy"
+              />
+            </button>
+          ))}
+        </div>
+        {compact && images.length > 1 && (
+          <>
+            <button
+              type="button"
+              className="screenshot-arrow is-previous"
+              aria-label="Capture précédente"
+              disabled={active === 0}
+              onClick={() => highlight(active - 1)}
+            >
+              <ChevronLeft size={18} />
+            </button>
+            <button
+              type="button"
+              className="screenshot-arrow is-next"
+              aria-label="Capture suivante"
+              disabled={active >= images.length - 1}
+              onClick={() => highlight(active + 1)}
+            >
+              <ChevronRight size={18} />
+            </button>
+          </>
+        )}
       </div>
       <Modal
-        open={item !== null}
+        open={overview || item !== null}
         onOpenChange={(open) => {
-          if (!open) setSelected(null)
+          if (!open) {
+            setSelected(null)
+            setOverview(false)
+          }
         }}
-        title={item?.caption || game.title}
-        description={`Capture ${(selected ?? 0) + 1} sur ${images.length}`}
+        title={item ? item.caption || game.title : 'Captures d’écran'}
+        description={
+          item
+            ? `Capture ${(selected ?? 0) + 1} sur ${images.length}`
+            : `${game.title} · ${images.length} captures`
+        }
       >
+        {overview && !item && (
+          <div className="screenshot-overview">
+            {images.map((image, index) => (
+              <button
+                type="button"
+                key={image.id}
+                aria-label={`Agrandir la capture ${index + 1}`}
+                onClick={() => openImage(index)}
+              >
+                <img
+                  src={`/media/${image.mediaId}`}
+                  alt={image.caption || `Capture ${index + 1} de ${game.title}`}
+                  loading="lazy"
+                />
+              </button>
+            ))}
+          </div>
+        )}
         {item && (
           <img
             className="media-lightbox"
@@ -504,24 +586,31 @@ function Screenshots({ game, compact }: { game: Game; compact: boolean }) {
             alt={item.caption || `Capture de ${game.title}`}
           />
         )}
-        <div className="dialog-actions">
-          <button
-            type="button"
-            className="button secondary"
-            disabled={selected === 0}
-            onClick={() => setSelected((selected ?? 0) - 1)}
-          >
-            Précédente
-          </button>
-          <button
-            type="button"
-            className="button secondary"
-            disabled={selected === images.length - 1}
-            onClick={() => setSelected((selected ?? 0) + 1)}
-          >
-            Suivante
-          </button>
-        </div>
+        {item && (
+          <div className="dialog-actions">
+            {overview && (
+              <button type="button" className="text-link" onClick={() => setSelected(null)}>
+                Toutes les captures
+              </button>
+            )}
+            <button
+              type="button"
+              className="button secondary"
+              disabled={selected === 0}
+              onClick={() => openImage((selected ?? 0) - 1)}
+            >
+              Précédente
+            </button>
+            <button
+              type="button"
+              className="button secondary"
+              disabled={selected === images.length - 1}
+              onClick={() => openImage((selected ?? 0) + 1)}
+            >
+              Suivante
+            </button>
+          </div>
+        )}
       </Modal>
     </section>
   )
@@ -584,11 +673,19 @@ export function GameDetails({
         {compact && <QuickExperience game={game} onBusyChange={busyChange} compact />}
         <div className="dossier-personal">
           {!compact && <QuickExperience game={game} onBusyChange={busyChange} />}
-          {(!compact || game.experience?.memory) && (
+          {
             <section className="dossier-memory">
               <div className="detail-section-heading">
-                <h2>Mes souvenirs</h2>
-                {game.experience?.period && <span>{game.experience.period}</span>}
+                <h2>{compact && <NotebookPen size={16} />}Mes souvenirs</h2>
+                <div className="memory-heading-actions">
+                  {game.experience?.period && <span>{game.experience.period}</span>}
+                  {compact && (
+                    <button type="button" className="text-link" disabled={busy} onClick={onEdit}>
+                      <Pencil size={14} />
+                      {game.experience?.memory ? 'Modifier' : 'Écrire'}
+                    </button>
+                  )}
+                </div>
               </div>
               {game.experience?.memory ? (
                 <p className={compact ? 'memory-excerpt' : 'full-memory'}>
@@ -604,7 +701,7 @@ export function GameDetails({
                 </button>
               )}
             </section>
-          )}
+          }
         </div>
         <Screenshots game={game} compact={compact} />
         {compact ? (

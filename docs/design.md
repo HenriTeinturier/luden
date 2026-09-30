@@ -32,6 +32,11 @@ Même hauteur, coins arrondis, icône à gauche et bordure discrète ; gris inac
 corail pour Joué et violet pour À découvrir. Les états actifs ont un fond coloré opaque soutenu,
 une bordure nette et une coche à droite pour ne pas dépendre uniquement de la couleur.
 Les trois bascules restent indépendantes.
+Dans la sidebar, « Mes souvenirs » associe une icône carnet à un lien « Modifier » (ou « Écrire » si vide).
+Les captures sont regroupées dans un cadre sombre bleu, avec compteur et lien « Voir tout ».
+Le carrousel montre quatre vignettes, trois sous 460 px, une sélection au contour bleu/violet lumineux
+et des flèches latérales désactivées aux extrémités. « Voir tout » ouvre la grille des captures ;
+une vignette ouvre l’image agrandie avec navigation et retour possible à la grille.
 Sur une sidebar large, les trois cartes sont alignées ; sous 540 px, la collection occupe une ligne
 et les cartes Joué / À découvrir restent côte à côte dessous.
 Joué reflète tout statut autre que non joué ; son clic bascule PLAYED/UNPLAYED. Les statuts détaillés

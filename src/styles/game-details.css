@@ -849,6 +849,36 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+.sidebar-memory-editor textarea {
+  display: block;
+  width: 100%;
+  min-height: 110px;
+  max-height: 320px;
+  resize: vertical;
+  padding: 12px 14px;
+  border: 1px solid #6375ad70;
+  border-radius: 9px;
+  background: #111a2e;
+  color: var(--text-soft);
+  font: inherit;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.sidebar-memory-editor textarea:focus-visible {
+  outline: 2px solid #7fbfff;
+  outline-offset: 2px;
+}
+.memory-editor-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 10px;
+}
+.memory-editor-actions .button {
+  min-height: 34px;
+  padding: 7px 12px;
+  font-size: 12px;
+}
 .dossier-ownership {
   display: flex;
   align-items: center;

@@ -637,9 +637,51 @@ export function GameDetails({
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
   const inCollections = collections.filter((c) => game.entries.some((e) => e.collectionId === c.id))
+  const [editingMemory, setEditingMemory] = useState(false)
+  const [memoryDraft, setMemoryDraft] = useState('')
+  const [memoryError, setMemoryError] = useState('')
+  const memoryEditing = useRef(false)
+  const memorySaving = useRef(false)
+  const memoryTrigger = useRef<HTMLButtonElement>(null)
+  const memoryInput = useRef<HTMLTextAreaElement>(null)
+  useEffect(() => {
+    if (editingMemory) memoryInput.current?.focus({ preventScroll: true })
+  }, [editingMemory])
   function busyChange(value: boolean) {
     setBusy(value)
-    onBusyChange(value)
+    onBusyChange(value || memoryEditing.current)
+  }
+  function startMemoryEdit() {
+    setMemoryDraft(game.experience?.memory ?? '')
+    setMemoryError('')
+    memoryEditing.current = true
+    setEditingMemory(true)
+    onBusyChange(true)
+  }
+  function closeMemoryEdit() {
+    memoryEditing.current = false
+    setEditingMemory(false)
+    setMemoryError('')
+    onBusyChange(busy)
+    requestAnimationFrame(() => memoryTrigger.current?.focus({ preventScroll: true }))
+  }
+  async function saveMemory() {
+    if (memorySaving.current || busy) return
+    memorySaving.current = true
+    busyChange(true)
+    setMemoryError('')
+    try {
+      const result = await quickUpdateGameFn({ data: { id: game.id, memory: memoryDraft } })
+      if (!result.ok) throw new Error(result.error)
+      await router.invalidate({ sync: true })
+      closeMemoryEdit()
+      notify('Souvenir enregistré')
+    } catch (err) {
+      setMemoryError(err instanceof Error ? err.message : 'Enregistrement impossible. Réessayez.')
+    } finally {
+      memorySaving.current = false
+      busyChange(false)
+    }
   }
   return (
     <article
@@ -679,15 +721,62 @@ export function GameDetails({
                 <h2>{compact && <NotebookPen size={16} />}Mes souvenirs</h2>
                 <div className="memory-heading-actions">
                   {game.experience?.period && <span>{game.experience.period}</span>}
-                  {compact && (
-                    <button type="button" className="text-link" disabled={busy} onClick={onEdit}>
+                  {compact && !editingMemory && (
+                    <button
+                      ref={memoryTrigger}
+                      type="button"
+                      className="text-link"
+                      disabled={busy}
+                      onClick={startMemoryEdit}
+                    >
                       <Pencil size={14} />
                       {game.experience?.memory ? 'Modifier' : 'Écrire'}
                     </button>
                   )}
                 </div>
               </div>
-              {game.experience?.memory ? (
+              {compact && editingMemory ? (
+                <form
+                  className="sidebar-memory-editor"
+                  onSubmit={(event) => {
+                    event.preventDefault()
+                    void saveMemory()
+                  }}
+                >
+                  <label className="sr-only" htmlFor={`memory-${game.id}`}>
+                    Mon souvenir
+                  </label>
+                  <textarea
+                    id={`memory-${game.id}`}
+                    ref={memoryInput}
+                    value={memoryDraft}
+                    onChange={(event) => setMemoryDraft(event.target.value)}
+                    rows={4}
+                    maxLength={20000}
+                    disabled={busy}
+                    placeholder="Une aventure, une époque, un souvenir à raconter…"
+                  />
+                  {memoryError && (
+                    <p className="form-error" role="alert">
+                      {memoryError}
+                    </p>
+                  )}
+                  <div className="memory-editor-actions">
+                    <button
+                      type="button"
+                      className="button secondary"
+                      disabled={busy}
+                      onClick={closeMemoryEdit}
+                    >
+                      Annuler
+                    </button>
+                    <button type="submit" className="button" disabled={busy}>
+                      {busy ? <LoaderCircle size={14} className="spin" /> : <Check size={14} />}
+                      {busy ? 'Enregistrement…' : 'Enregistrer'}
+                    </button>
+                  </div>
+                </form>
+              ) : game.experience?.memory ? (
                 <p className={compact ? 'memory-excerpt' : 'full-memory'}>
                   {game.experience.memory}
                 </p>
@@ -706,13 +795,13 @@ export function GameDetails({
         <Screenshots game={game} compact={compact} />
         {compact ? (
           <div className="dossier-actions">
-            <button className="button" disabled={busy} onClick={onExpand}>
+            <button className="button" disabled={busy || editingMemory} onClick={onExpand}>
               Voir la fiche complète
               <ArrowUpRight size={17} />
             </button>
             <button
               className="button secondary"
-              disabled={busy}
+              disabled={busy || editingMemory}
               onClick={onEdit}
               title="Modifier la fiche"
             >

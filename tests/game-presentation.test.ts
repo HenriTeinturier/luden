@@ -53,5 +53,7 @@ test('Les actions rapides acceptent les demi-notes et refusent les champs de fic
   })
   assert.equal(quickGameSchema.safeParse({ id: 'game', rating: 4.5 }).success, true)
   assert.equal(quickGameSchema.safeParse({ id: 'game', rating: 4.2 }).success, false)
-  assert.equal(quickGameSchema.safeParse({ id: 'game', memory: '' }).success, false)
+  assert.deepEqual(quickGameSchema.parse({ id: 'game', memory: '' }), { id: 'game', memory: '' })
+  assert.equal(quickGameSchema.safeParse({ id: 'game', memory: 'a'.repeat(20001) }).success, false)
+  assert.equal(quickGameSchema.safeParse({ id: 'game', title: 'Autre titre' }).success, false)
 })

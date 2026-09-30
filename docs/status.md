@@ -9,6 +9,8 @@
 
 ## Consultation des jeux — 2026-09-30
 
+- Sidebar : édition des souvenirs sur place via « Modifier » / « Écrire », champ multiligne, enregistrer/annuler, erreur avec brouillon conservé. Action partielle `memory` (20 000 caractères) sans toucher aux autres données ; navigation suspendue pendant l’édition. Bouton de modification complet conservé en bas. Vérifié : parcours navigateur, création/modification/effacement sur jeu temporaire avec note/statut/période préservés, TypeScript, lint et 19 tests.
+
 - Sidebar : souvenirs avec icône et accès « Modifier » / « Écrire » ; galerie sur fond sombre encadré, quatre vignettes (trois sur panneau étroit), sélection lumineuse et flèches. « Voir tout » ouvre une grille puis l’agrandissement avec navigation et retour à la grille. Parcours vérifié dans le navigateur, TypeScript et lint validés. Spécificité du style du sélecteur de note corrigée pour préserver son étoile et ses espacements.
 
 - Sidebar : sélecteur de note compact avec étoile dorée, valeur seule sans « / 5 », chevron et bordure dorée discrète ; menu sombre, focus clavier visible, tiret pour une note absente. Modification rapide par demi-point conservée.

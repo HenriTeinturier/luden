@@ -183,7 +183,7 @@ export async function saveGame(input: unknown) {
 }
 
 export async function quickUpdateGame(input: unknown) {
-  const { id, status, rating, owned, ...fields } = quickGameSchema.parse(input)
+  const { id, status, rating, memory, owned, ...fields } = quickGameSchema.parse(input)
   return db.$transaction(async (tx) => {
     await tx.game.findFirstOrThrow({ where: { id, ownerId } })
     // Updating the parent first also serializes quick ownership changes for this game.
@@ -192,14 +192,15 @@ export async function quickUpdateGame(input: unknown) {
       data: {
         ...fields,
         ...(owned !== undefined ? { updatedAt: new Date() } : {}),
-        ...(status !== undefined || rating !== undefined
+        ...(status !== undefined || rating !== undefined || memory !== undefined
           ? {
               experience: {
                 upsert: {
-                  create: { status: status ?? 'UNPLAYED', rating },
+                  create: { status: status ?? 'UNPLAYED', rating, memory },
                   update: {
                     ...(status !== undefined ? { status } : {}),
                     ...(rating !== undefined ? { rating } : {}),
+                    ...(memory !== undefined ? { memory } : {}),
                   },
                 },
               },

@@ -33,6 +33,10 @@ corail pour Joué et violet pour À découvrir. Les états actifs ont un fond co
 une bordure nette et une coche à droite pour ne pas dépendre uniquement de la couleur.
 Les trois bascules restent indépendantes.
 Dans la sidebar, « Mes souvenirs » associe une icône carnet à un lien « Modifier » (ou « Écrire » si vide).
+Ce lien ouvre un champ multiligne sur place avec « Enregistrer » et « Annuler ». La sauvegarde partielle
+ne modifie que le souvenir, conserve le brouillon en cas d’erreur et accepte un texte vide.
+La navigation entre jeux et vers la fiche est suspendue pendant l’édition pour conserver le brouillon.
+Le bouton « Modifier » du pied de sidebar continue d’ouvrir le formulaire complet.
 Les captures sont regroupées dans un cadre sombre bleu, avec compteur et lien « Voir tout ».
 Le carrousel montre quatre vignettes, trois sous 460 px, une sélection au contour bleu/violet lumineux
 et des flèches latérales désactivées aux extrémités. « Voir tout » ouvre la grille des captures ;

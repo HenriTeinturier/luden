@@ -289,6 +289,7 @@
   min-height: 190px;
 }
 .dossier-compact {
+  --dossier-gutter: 24px;
   container-type: inline-size;
 }
 .dossier-compact .game-scene {
@@ -350,7 +351,10 @@
 .dossier-compact .has-support .scene-box {
   max-width: 65%;
   flex-basis: 65%;
-  transform: translateX(-7%);
+  transform: translateX(calc(var(--dossier-gutter) - 4cqw));
+}
+.dossier-compact .has-support .scene-box > img {
+  object-position: left bottom;
 }
 .dossier-compact .scene-support-stand {
   position: relative;
@@ -380,7 +384,7 @@
   filter: drop-shadow(0 9px 6px #0007);
 }
 .dossier-compact .dossier-body {
-  padding: 0 24px 18px;
+  padding: 0 var(--dossier-gutter) 18px;
   position: relative;
 }
 .dossier-heading {
@@ -1323,8 +1327,8 @@ kbd {
   .visual-slots {
     grid-template-columns: 1fr;
   }
-  .dossier-compact .dossier-body {
-    padding-inline: 18px;
+  .dossier-compact {
+    --dossier-gutter: 18px;
   }
   .dossier-actions .button.secondary span {
     display: none;

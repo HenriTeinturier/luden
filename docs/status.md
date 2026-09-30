@@ -9,6 +9,8 @@
 
 ## Consultation des jeux — 2026-09-30
 
+- Sidebar : boîte avec cartouche alignée à gauche sur la marge des étoiles (24 px, 18 px sur petit mobile) : suppression du centrage interne de son image et position calculée depuis la marge commune. Taille/hauteur et position de la cartouche conservées ; boîte seule centrée. Vérification CSS/formatage.
+
 - Sidebar : logo titre et texte de repli désormais droits, sans rotation ni perspective. Taille, centrage et hauteur conservés. Vérification CSS/formatage.
 
 - Sidebar : logo titre légèrement réduit (38 → 34 % du panneau), centré dans l’espace libre entre navigation gauche et fermeture droite, remonté de 6 px. Largeur limitée à cet espace sur petit panneau ; titre texte de repli également centré. Boîte et cartouche inchangées.

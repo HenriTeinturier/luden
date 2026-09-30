@@ -114,14 +114,19 @@ jaquette comme pour SNES. Les informations détaillées restent dans la fiche.
 Carte d’entrée : logo et console transparents fournis par Henri dans `public/platforms/snes/`.
 Composition large sur deux colonnes, fond CSS Aurora, textes HTML ; originaux conservés hors repo.
 
-Premier univers dédié : bandeau compact, console PAL illustrée, gris violacé et quatre accents
-de manette sur fond bleu nuit. Styles isolés sous `.platform-snes` dans `src/styles/platforms.css`.
+Premier univers dédié : présentation textuelle « Super Nintendo », accroche et description,
+repères Nintendo / 1990 / 16-bits / genres, puis quatre cartes de statistiques colorées.
+Compteurs issus de tous les jeux SNES : bibliothèque, joués, coups de cœur et jeux possédés
+actuellement (au moins une possession CURRENT, chaque jeu compté une seule fois). Pourcentages
+rapportés au total SNES, indépendants des filtres. Quatre colonnes, puis deux si la place manque.
+L’ancien bandeau compact avec logo, console PAL et accents de manette reste dans le composant
+avec `hidden` et une règle CSS explicite : il est conservé pour réutilisation, sans double titre visible.
+Styles isolés dans `src/styles/platforms.css`. Les autres plateformes conservent leur bandeau.
 Galerie de faces avant à plat, horizontales, sans recadrage. Titre et étoiles sont prioritaires ;
 plateforme, année, statut et icônes de possession sont masqués sur les cartes SNES pour les alléger.
 En grille SNES, une bande de 32 px accueille le titre à gauche et les étoiles à droite, sans chiffre répété. Le titre est tronqué si nécessaire, avec son nom complet au survol ; aucune note ne recouvre la jaquette.
-Sur desktop, bandeau, filtres et galerie sont alignés sur toute la largeur disponible, avec les
-marges habituelles. Bandeau d’environ 120 px : logo ou nom, compteurs à côté et matériel à droite,
-sans surtitre ni phrase décorative. Espacement réduit avant les jeux ; adaptation sur mobile.
+Sur desktop, présentation, filtres et galerie utilisent toute la largeur disponible avec les
+marges habituelles. La barre de filtres compacte reste placée sous les statistiques.
 le souvenir complet reste dans la fiche. Les images choisies par l’utilisateur restent nécessaires :
 aucune conversion automatique d’une jaquette IGDB en boîte PAL.
 

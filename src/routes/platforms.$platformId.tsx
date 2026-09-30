@@ -3,6 +3,7 @@ import { PlatformArt, useLibrary } from '../components/ui'
 import { Gallery } from '../components/gallery'
 import { gallerySearch, hasPlayed } from '../lib/gallery'
 import type { CSSProperties } from 'react'
+import { Gamepad2, CirclePlay, Star, ShieldCheck } from 'lucide-react'
 export const Route = createFileRoute('/platforms/$platformId')({
   validateSearch: (input) => gallerySearch.parse(input),
   component: PlatformPage,
@@ -23,12 +24,73 @@ function PlatformPage() {
   const isSnes = platformId === 'snes'
   const isAmiga = platformId === 'amiga'
   const isAmstrad = platformId === 'amstrad'
+  const playedCount = chosen.filter(hasPlayed).length
+  const favoriteCount = chosen.filter((g) => g.favorite).length
+  const ownedCount = chosen.filter((g) => g.possessions.some((p) => p.state === 'CURRENT')).length
   return (
     <div
       className={`page platform-page ${isSnes || isAmiga || isAmstrad ? `platform-${platformId}` : ''}`}
     >
+      {isSnes && (
+        <section className="snes-overview" aria-labelledby="snes-overview-title">
+          <h1 id="snes-overview-title">{platform.name}</h1>
+          <p className="snes-overview-lead">Des mondes inoubliables, une génération de légende.</p>
+          <p className="snes-overview-description">
+            La Super Nintendo a marqué toute une génération avec ses jeux cultes, son univers unique
+            et des franchises devenues légendaires.
+            <br />
+            Plus qu’une console, une madeleine de Proust pour des millions de joueurs.
+          </p>
+          <div className="snes-overview-tags" aria-label="Repères de la plateforme">
+            <span className="snes-maker">{platform.family}</span>
+            <span className="snes-era">{platform.era}</span>
+            <span>16-bits</span>
+            <span>RPG</span>
+            <span>Plateforme</span>
+            <span>Action</span>
+            <span>Aventure</span>
+          </div>
+          <dl className="snes-overview-stats">
+            {[
+              {
+                label: 'jeux dans ma bibliothèque',
+                count: chosen.length,
+                icon: Gamepad2,
+                tone: 'library',
+              },
+              { label: 'jeux joués', count: playedCount, icon: CirclePlay, tone: 'played' },
+              { label: 'coups de cœur', count: favoriteCount, icon: Star, tone: 'favorites' },
+              { label: 'jeux possédés', count: ownedCount, icon: ShieldCheck, tone: 'owned' },
+            ].map(({ label, count, icon: Icon, tone }) => (
+              <div key={tone} className={`snes-overview-stat stat-${tone}`}>
+                <Icon
+                  size={29}
+                  aria-hidden="true"
+                  fill={tone === 'favorites' ? 'currentColor' : 'none'}
+                />
+                <div>
+                  <dt>{label}</dt>
+                  <dd>
+                    <strong>{count}</strong>
+                    {tone !== 'library' && (
+                      <span
+                        className="snes-stat-percent"
+                        aria-label={`${chosen.length ? Math.round((count / chosen.length) * 100) : 0} % de ma bibliothèque Super Nintendo`}
+                      >
+                        {chosen.length ? Math.round((count / chosen.length) * 100) : 0}%
+                      </span>
+                    )}
+                  </dd>
+                </div>
+              </div>
+            ))}
+          </dl>
+        </section>
+      )}
+      {/* Original banner kept available for future reuse. */}
       <section
         className="platform-hero"
+        hidden={isSnes}
         style={{ '--platform-color': platform.color } as CSSProperties}
       >
         {isAmstrad && (
@@ -59,8 +121,8 @@ function PlatformPage() {
             )}
           </h1>
           <div className="platform-hero-tags">
-            <span>{chosen.filter(hasPlayed).length} joués</span>
-            <span>{chosen.filter((g) => g.favorite).length} coups de cœur</span>
+            <span>{playedCount} joués</span>
+            <span>{favoriteCount} coups de cœur</span>
           </div>
         </div>
         {isSnes ? (

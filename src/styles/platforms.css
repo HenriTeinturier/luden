@@ -436,6 +436,144 @@
   }
 }
 
+.platform-snes .platform-hero[hidden] {
+  display: none;
+}
+.snes-overview {
+  container-type: inline-size;
+  margin: 6px 0 18px;
+  padding: 0 12px;
+}
+.snes-overview h1 {
+  margin: 0 0 7px;
+  color: var(--ink);
+  font-size: clamp(28px, 2.4vw, 38px);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.2;
+}
+.snes-overview-lead {
+  margin: 0 0 8px;
+  color: #e2e4f2;
+  font-size: 16px;
+}
+.snes-overview-description {
+  margin: 0;
+  color: #aeb5cf;
+  font-size: 13px;
+  line-height: 1.65;
+}
+.snes-overview-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0 16px;
+}
+.snes-overview-tags span {
+  padding: 4px 12px;
+  border: 1px solid #52618c55;
+  border-radius: 99px;
+  background: #171e3280;
+  color: #cbd0e1;
+  font-size: 12px;
+  line-height: 18px;
+}
+.snes-overview-tags .snes-maker {
+  border-color: #ff82794d;
+  color: #ff9689;
+}
+.snes-overview-tags .snes-era {
+  color: #e9cd83;
+}
+.snes-overview-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0;
+}
+.snes-overview-stat {
+  --stat-color: #a57bff;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+  min-height: 88px;
+  padding: 16px 18px;
+  border: 1px solid #57649440;
+  border-radius: 9px;
+  background: linear-gradient(120deg, #1d253b99, #151b2d99);
+  box-shadow: inset 0 1px 0 #c4ceff04;
+}
+.snes-overview-stat.stat-played {
+  --stat-color: #68df8b;
+}
+.snes-overview-stat.stat-favorites {
+  --stat-color: #ffd166;
+}
+.snes-overview-stat.stat-owned {
+  --stat-color: #63dcc4;
+}
+.snes-overview-stat > svg {
+  flex-shrink: 0;
+  color: var(--stat-color);
+}
+.snes-overview-stat > div {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+.snes-overview-stat dt {
+  color: #a7aec8;
+  font-size: 12px;
+  line-height: 1.4;
+}
+.snes-overview-stat dd {
+  order: -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0 0 3px;
+}
+.snes-overview-stat strong {
+  color: #f3f5ff;
+  font-size: 25px;
+  font-weight: 650;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+.snes-stat-percent {
+  padding: 2px 5px;
+  border: 1px solid color-mix(in srgb, var(--stat-color) 30%, transparent);
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--stat-color) 8%, transparent);
+  color: var(--stat-color);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+@container (max-width: 720px) {
+  .snes-overview-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .snes-overview-stat {
+    padding: 12px;
+    gap: 10px;
+  }
+}
+@media (max-width: 500px) {
+  .snes-overview {
+    padding: 0;
+  }
+  .snes-overview-lead {
+    font-size: 14px;
+  }
+  .snes-overview-stat > svg {
+    width: 23px;
+  }
+}
+
 /* Compact platform identity, aligned with the gallery rather than centered separately. */
 .page.platform-page {
   padding-top: 20px;

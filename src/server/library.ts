@@ -183,13 +183,15 @@ export async function saveGame(input: unknown) {
 }
 
 export async function quickUpdateGame(input: unknown) {
-  const { id, status, rating, ...fields } = quickGameSchema.parse(input)
+  const { id, status, rating, owned, ...fields } = quickGameSchema.parse(input)
   return db.$transaction(async (tx) => {
     await tx.game.findFirstOrThrow({ where: { id, ownerId } })
-    return tx.game.update({
+    // Updating the parent first also serializes quick ownership changes for this game.
+    const result = await tx.game.update({
       where: { id },
       data: {
         ...fields,
+        ...(owned !== undefined ? { updatedAt: new Date() } : {}),
         ...(status !== undefined || rating !== undefined
           ? {
               experience: {
@@ -206,6 +208,28 @@ export async function quickUpdateGame(input: unknown) {
       },
       select: { id: true },
     })
+    if (owned === false) {
+      await tx.possession.updateMany({
+        where: { gameId: id, state: 'CURRENT' },
+        data: { state: 'PAST' },
+      })
+    } else if (owned === true) {
+      const current = await tx.possession.findFirst({ where: { gameId: id, state: 'CURRENT' } })
+      if (!current) {
+        const previous = await tx.possession.findFirst({
+          where: { gameId: id, state: 'PAST' },
+          orderBy: { id: 'asc' },
+        })
+        if (previous) {
+          await tx.possession.update({ where: { id: previous.id }, data: { state: 'CURRENT' } })
+        } else {
+          await tx.possession.create({
+            data: { gameId: id, format: 'PHYSICAL', state: 'CURRENT' },
+          })
+        }
+      }
+    }
+    return result
   })
 }
 

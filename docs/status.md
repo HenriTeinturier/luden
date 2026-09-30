@@ -9,6 +9,9 @@
 
 ## Consultation des jeux — 2026-09-30
 
+- Badges sidebar : « Dans ma collection » bascule désormais la possession actuelle sur place, sans ouvrir le formulaire ; « À découvrir / rejouer » conserve sa bascule directe. États accessibles `aria-pressed`, commandes bloquées pendant la sauvegarde. Désactivation vers possessions anciennes ; réactivation d’une ancienne ou création physique par défaut, sans supprimer historique, médias ni collections nommées.
+- Vérifié : TypeScript/lint et 18 tests réussis ; contrôle DB sur fiche temporaire des deux bascules, activations concurrentes sans doublon, conservation des identifiants, formats, boutique, médias, collection et expérience. Données de contrôle nettoyées.
+
 - Identité Megastar actualisée : sceau WebP transparent fourni intégré aux jaquettes à la place du cœur, débordant en haut à droite sans rognage ; variante réduite en liste et coins de cartes conservés. Sidebar et filtre partagent trophée, séparateur vertical et palette violet/bleu électrique de la maquette, halo actif et lavande inactif. Les données de favoris restent identiques.
 - Vérifié : TypeScript/lint, contrôle navigateur du sceau chargé et débordant, filtre actif (8 jeux), états actifs/inactifs et alignement compact de la sidebar.
 

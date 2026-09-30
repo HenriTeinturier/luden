@@ -207,12 +207,10 @@ function QuickExperience({
   game,
   onBusyChange,
   compact = false,
-  onEdit,
 }: {
   game: Game
   onBusyChange: (busy: boolean) => void
   compact?: boolean
-  onEdit?: () => void
 }) {
   const router = useRouter()
   const [busy, setBusy] = useState(false)
@@ -302,9 +300,10 @@ function QuickExperience({
             <button
               type="button"
               className={`sidebar-collection ${owned ? 'is-owned' : ''}`}
-              onClick={onEdit}
-              title="Modifier mes possessions et collections"
-              aria-label={`Dans ma collection : ${owned ? 'oui' : 'non'}. Modifier mes possessions et collections`}
+              onClick={() => void update({ owned: !owned })}
+              title={owned ? 'Ne plus marquer comme possédé' : 'Marquer comme possédé'}
+              aria-label="Dans ma collection"
+              aria-pressed={owned}
             >
               <ShieldCheck size={23} />
               <span>
@@ -567,9 +566,7 @@ export function GameDetails({
             </button>
           )}
         </div>
-        {compact && (
-          <QuickExperience game={game} onBusyChange={busyChange} compact onEdit={onEdit} />
-        )}
+        {compact && <QuickExperience game={game} onBusyChange={busyChange} compact />}
         <div className="dossier-personal">
           {!compact && <QuickExperience game={game} onBusyChange={busyChange} />}
           {(!compact || game.experience?.memory) && (

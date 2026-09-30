@@ -18,8 +18,10 @@ Sidebar : navigation superposée au fond, sans bandeau opaque ni surtitre platef
 Logo agrandi et incliné ; boîte et support plus grands, décalés sous le fond de 108 px. Support droit,
 avec ombre elliptique de contact sous l’objet. Les étoiles et leur édition suivent directement le titre. Éditeur, année,
 deux genres et parcours occupent une ligne défilable si nécessaire. Boutons persistants
-« Dans ma collection » (vert si possession actuelle, sinon gris ; ouvre l’édition) et
-« À découvrir / rejouer » avec texte visible. Le favori est un trophée étoilé « Megastar · Jeu culte »
+« Dans ma collection » (vert si possession actuelle, sinon gris) et
+« À découvrir / rejouer » avec texte visible : les deux sont des bascules immédiates,
+sans ouvrir l’édition. Le bouton « Modifier » conserve l’accès au formulaire détaillé.
+Le favori est un trophée étoilé « Megastar · Jeu culte »
 sur la ligne de notation : dessin SVG dédié, violet/bleu électrique si actif et lavande discret sinon ; même booléen favori que
 les étiquettes de jaquettes et le filtre Megastar, aucun nouvel indicateur indépendant.
 La barre commune réutilise le même trophée via `MegastarTrophy` et la même palette : violet `#7C5CFF`,

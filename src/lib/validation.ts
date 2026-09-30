@@ -42,12 +42,14 @@ export const gameSchema = z.object({
 })
 
 export type GameInput = z.infer<typeof gameSchema>
-// Partial updates never overwrite memories, media, possessions or collection memberships.
+// Partial updates preserve memories, media and collection memberships.
+// Only the explicit owned action changes possession states, retaining their identities.
 export const quickGameSchema = z
   .object({
     id: z.string().min(1),
     favorite: z.boolean().optional(),
     discover: z.boolean().optional(),
+    owned: z.boolean().optional(),
     desire: score(5).optional(),
     status: gameSchema.shape.experience.shape.status.optional(),
     rating: score(5).optional(),

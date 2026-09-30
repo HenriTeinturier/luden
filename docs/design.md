@@ -15,11 +15,13 @@ de la largeur du panneau. Espacements compacts pour garder les informations et a
 un écran 2560 × 1440, y compris avec une hauteur utile de navigateur réduite à 1280 px.
 
 Sidebar : navigation superposée au fond, sans bandeau opaque ni surtitre plateforme/année.
-Logo agrandi et incliné ; boîte et support plus grands, décalés sous le fond de 62 px, support en
-perspective CSS. Les étoiles et leur édition suivent directement le titre. Éditeur, année,
+Logo agrandi et incliné ; boîte et support plus grands, décalés sous le fond de 108 px. Support droit,
+avec ombre elliptique de contact sous l’objet. Les étoiles et leur édition suivent directement le titre. Éditeur, année,
 deux genres et parcours occupent une ligne défilable si nécessaire. Boutons persistants
 « Dans ma collection » (vert si possession actuelle, sinon gris ; ouvre l’édition) et
-« En favori » (rose si actif, sinon gris ; bascule rapide), raccourci découverte/rejeu à côté.
+« À découvrir / rejouer » avec texte visible. Le favori est un trophée étoilé « Megastar · Jeu culte »
+sur la ligne de notation : dessin SVG dédié, doré si actif et gris sinon ; même booléen favori que
+les étiquettes de jaquettes et le filtre Megastar, aucun nouvel indicateur indépendant.
 La fiche complète conserve sa composition et ses contrôles précédents.
 
 La sidebar présente les visuels, le titre, les informations courtes, l’expérience modifiable,

@@ -180,13 +180,23 @@ function GameScene({ game, compact }: { game: Game; compact: boolean }) {
       </div>
       <div className={`scene-objects ${support && support !== box ? 'has-support' : ''}`}>
         <Cover game={{ ...game, coverUrl: box ? `/media/${box}` : null }} className="scene-box" />
-        {support && support !== box && (
-          <img
-            className="scene-support"
-            src={`/media/${support}`}
-            alt={`Support de ${game.title}`}
-          />
-        )}
+        {support &&
+          support !== box &&
+          (compact ? (
+            <span className="scene-support-stand">
+              <img
+                className="scene-support"
+                src={`/media/${support}`}
+                alt={`Support de ${game.title}`}
+              />
+            </span>
+          ) : (
+            <img
+              className="scene-support"
+              src={`/media/${support}`}
+              alt={`Support de ${game.title}`}
+            />
+          ))}
       </div>
     </div>
   )
@@ -235,6 +245,43 @@ function QuickExperience({
         <fieldset disabled={busy}>
           <div className="sidebar-rating">
             <Stars value={game.experience?.rating} />
+            <button
+              type="button"
+              className={`sidebar-megastar ${game.favorite ? 'is-favorite' : ''}`}
+              aria-label="Megastar — jeu culte, favori"
+              aria-pressed={game.favorite}
+              onClick={() => void update({ favorite: !game.favorite })}
+            >
+              <svg className="megastar-trophy" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+                <path
+                  d="M11 8H5v5c0 6 4 9 10 9M29 8h6v5c0 6-4 9-10 9"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                />
+                <path
+                  d="M10 5h20v10c0 7-4 12-10 12s-10-5-10-12V5Z"
+                  fill="currentColor"
+                  fillOpacity=".2"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                />
+                <path
+                  d="m20 8 2.1 4.3 4.7.7-3.4 3.3.8 4.7-4.2-2.2-4.2 2.2.8-4.7-3.4-3.3 4.7-.7L20 8Z"
+                  fill="currentColor"
+                />
+                <path
+                  d="M20 27v6m-7 2h14"
+                  stroke="currentColor"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                />
+                <path d="m33 1 1 2 2 1-2 1-1 2-1-2-2-1 2-1 1-2Z" fill="currentColor" />
+              </svg>
+              <span>
+                <strong>Megastar</strong>
+                <small>Jeu culte</small>
+              </span>
+            </button>
             <select
               aria-label="Ma note sur 5"
               value={game.experience?.rating ?? ''}
@@ -296,14 +343,6 @@ function QuickExperience({
             </button>
             <button
               type="button"
-              className={`sidebar-favorite ${game.favorite ? 'is-favorite' : ''}`}
-              aria-pressed={game.favorite}
-              onClick={() => void update({ favorite: !game.favorite })}
-            >
-              <Heart size={23} fill={game.favorite ? 'currentColor' : 'none'} /> En favori
-            </button>
-            <button
-              type="button"
               className={`sidebar-discover ${game.discover ? 'is-discover' : ''}`}
               title="À découvrir / rejouer"
               aria-label="À découvrir / rejouer"
@@ -311,6 +350,7 @@ function QuickExperience({
               onClick={() => void update({ discover: !game.discover })}
             >
               <Sparkles size={19} />
+              <span>À découvrir / rejouer</span>
             </button>
           </div>
         </fieldset>

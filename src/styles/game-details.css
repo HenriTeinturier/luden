@@ -245,9 +245,12 @@
   color: var(--text-soft);
   min-height: 190px;
 }
+.dossier-compact {
+  container-type: inline-size;
+}
 .dossier-compact .game-scene {
   aspect-ratio: 16 / 7;
-  margin-bottom: 82px;
+  margin-bottom: 128px;
   overflow: visible;
 }
 .dossier-compact .scene-shade {
@@ -276,7 +279,7 @@
 }
 .dossier-compact .scene-objects {
   position: absolute;
-  inset: auto 4% -62px;
+  inset: auto 4% -108px;
   height: 70%;
   margin: 0;
   gap: 0;
@@ -301,13 +304,32 @@
   max-width: 65%;
   flex-basis: 65%;
 }
-.dossier-compact .scene-support {
-  width: 49%;
-  max-height: 90%;
+.dossier-compact .scene-support-stand {
+  position: relative;
+  isolation: isolate;
+  flex: 0 0 49%;
+  height: 90%;
   margin-left: -12%;
-  transform: rotateY(-20deg) rotateZ(4deg) translateY(8px);
-  transform-origin: center bottom;
-  filter: drop-shadow(12px 18px 14px #000a);
+  transform: translateY(8px);
+}
+.dossier-compact .scene-support-stand::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: auto 10% -9px;
+  height: 22px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, #000d 0%, #0009 38%, transparent 72%);
+  filter: blur(5px);
+}
+.dossier-compact .scene-support {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  transform: none;
+  filter: drop-shadow(0 9px 6px #0007);
 }
 .dossier-compact .dossier-body {
   padding: 0 24px 18px;
@@ -375,6 +397,80 @@
   margin-left: auto;
   font-size: 11px;
   padding: 4px 7px;
+  flex-shrink: 0;
+}
+.sidebar-rating > .stars,
+.sidebar-rating > .unrated {
+  flex-shrink: 0;
+}
+.sidebar-megastar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  padding: 5px 12px 5px 7px;
+  border: 1px solid #ffffff25;
+  border-radius: 9px;
+  background: #ffffff04;
+  color: var(--muted);
+  text-align: left;
+  flex-shrink: 0;
+}
+.sidebar-megastar .megastar-trophy {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+}
+.sidebar-megastar strong {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+.sidebar-megastar small {
+  display: block;
+  font-size: 9px;
+  opacity: 0.8;
+}
+.sidebar-megastar.is-favorite {
+  color: #ffda82;
+  border-color: #eabd5f85;
+  background: linear-gradient(125deg, #be791825, #f8cf7320 48%, #86561912);
+  box-shadow:
+    inset 0 1px #ffe6a820,
+    0 0 16px #efb74d0d;
+}
+.sidebar-megastar.is-favorite .megastar-trophy {
+  filter: drop-shadow(0 2px 5px #ffc34d40);
+}
+.sidebar-megastar:hover {
+  filter: brightness(1.2);
+}
+.sidebar-rating .sidebar-megastar + select {
+  margin-left: 0;
+}
+@container (max-width: 460px) {
+  .sidebar-rating {
+    gap: 6px;
+  }
+  .sidebar-rating .stars {
+    gap: 1px;
+  }
+  .sidebar-rating .stars .star svg {
+    width: 16px;
+    height: 16px;
+  }
+  .sidebar-rating .sidebar-megastar {
+    gap: 5px;
+    padding-inline: 5px 8px;
+  }
+  .sidebar-megastar .megastar-trophy {
+    width: 26px;
+    height: 26px;
+  }
+  .sidebar-rating select {
+    max-width: 86px;
+    padding-inline: 5px;
+  }
 }
 .sidebar-rating .star svg {
   width: 22px;
@@ -412,7 +508,7 @@
 }
 .sidebar-collection-actions {
   display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) 38px;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
   gap: 10px;
   margin-top: 14px;
 }
@@ -451,11 +547,6 @@
   color: #72e2c0;
   border-color: #36d6af70;
   background: #19b68d0d;
-}
-.sidebar-favorite.is-favorite {
-  color: #ff688c;
-  border-color: #fa4f7e88;
-  background: #ed336510;
 }
 .sidebar-discover.is-discover {
   color: #c5b4ff;

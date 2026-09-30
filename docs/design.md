@@ -114,8 +114,8 @@ jaquette comme pour SNES. Les informations détaillées restent dans la fiche.
 Carte d’entrée : logo et console transparents fournis par Henri dans `public/platforms/snes/`.
 Composition large sur deux colonnes, fond CSS Aurora, textes HTML ; originaux conservés hors repo.
 
-Premier univers dédié : présentation textuelle « Super Nintendo », accroche et description,
-repères Nintendo / 1990 / 16-bits / genres, puis quatre cartes de statistiques colorées.
+Premier univers dédié : uniquement quatre cartes de statistiques colorées au-dessus des filtres.
+Titre visuellement masqué pour l’accessibilité ; aucun texte de présentation ni tag de plateforme.
 Compteurs issus de tous les jeux SNES : bibliothèque, joués, coups de cœur et jeux possédés
 actuellement (au moins une possession CURRENT, chaque jeu compté une seule fois). Pourcentages
 rapportés au total SNES, indépendants des filtres. Quatre colonnes, puis deux si la place manque.

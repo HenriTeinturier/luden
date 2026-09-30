@@ -9,7 +9,7 @@
 
 ## Consultation des jeux — 2026-09-30
 
-- Page SNES : nouvel en-tête inspiré de la maquette (titre, textes, repères, quatre cartes bibliothèque/joués/coups de cœur/possédés). Comptage dynamique des jeux distincts possédés actuellement et pourcentages sur le total SNES, sans tenir compte des filtres. Ancien bandeau conservé et masqué avec `hidden` + CSS explicite ; autres plateformes inchangées. Vérification navigateur : 33 / 30 / 7 / 4 ; présentation responsive sur quatre puis deux colonnes.
+- Page SNES : en-tête limité aux quatre cartes bibliothèque/joués/coups de cœur/possédés ; titre visuellement masqué, textes et tags retirés. Comptage dynamique des jeux distincts possédés actuellement et pourcentages sur le total SNES, sans tenir compte des filtres. Ancien bandeau conservé et masqué avec `hidden` + CSS explicite ; autres plateformes inchangées. Présentation responsive sur quatre puis deux colonnes.
 
 - Barre de galerie : filtres, recherche, tri/regroupement, vue et densité regroupés sur une seule ligne à la largeur desktop cible. Compteur/réinitialisation déplacés en dessous, sur une ligne de 18 px ; barre de 89 px avec sidebar à 2560 px, contrôlée dans le navigateur. Repli conservé si la place manque.
 

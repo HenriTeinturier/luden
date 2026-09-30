@@ -33,23 +33,9 @@ function PlatformPage() {
     >
       {isSnes && (
         <section className="snes-overview" aria-labelledby="snes-overview-title">
-          <h1 id="snes-overview-title">{platform.name}</h1>
-          <p className="snes-overview-lead">Des mondes inoubliables, une génération de légende.</p>
-          <p className="snes-overview-description">
-            La Super Nintendo a marqué toute une génération avec ses jeux cultes, son univers unique
-            et des franchises devenues légendaires.
-            <br />
-            Plus qu’une console, une madeleine de Proust pour des millions de joueurs.
-          </p>
-          <div className="snes-overview-tags" aria-label="Repères de la plateforme">
-            <span className="snes-maker">{platform.family}</span>
-            <span className="snes-era">{platform.era}</span>
-            <span>16-bits</span>
-            <span>RPG</span>
-            <span>Plateforme</span>
-            <span>Action</span>
-            <span>Aventure</span>
-          </div>
+          <h1 id="snes-overview-title" className="sr-only">
+            {platform.name}
+          </h1>
           <dl className="snes-overview-stats">
             {[
               {

@@ -85,6 +85,34 @@
 .header-menu-toggle {
   display: none;
 }
+.universe-shortcuts {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.universe-shortcut {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 10px;
+  border-radius: 7px;
+  color: var(--text-soft);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.universe-shortcut:hover {
+  background: var(--elevated);
+  color: var(--ink);
+}
+.universe-shortcut.active {
+  background: var(--active-background);
+  color: var(--blue);
+}
+.universe-shortcut .color-dot {
+  flex-shrink: 0;
+}
 .horizontal-shell .footer {
   flex-wrap: wrap;
   gap: 16px;
@@ -96,7 +124,7 @@
   left: 16px;
   z-index: 30;
 }
-@media (max-width: 1650px) {
+@media (max-width: 1900px) {
   .header-primary {
     flex-wrap: wrap;
     gap: 12px;
@@ -136,6 +164,14 @@
   .site-header .topbar-actions {
     flex-basis: 100%;
     flex-wrap: wrap;
+  }
+  .universe-shortcuts {
+    order: 3;
+    width: 100%;
+  }
+  .universe-shortcut {
+    flex: 1;
+    justify-content: center;
   }
   .site-header .global-search {
     flex: 1 1 140px;
@@ -192,7 +228,7 @@
   background: var(--elevated);
   color: var(--ink);
 }
-@media (max-width: 1650px) {
+@media (max-width: 1900px) {
   .universe-links {
     position: static;
     margin-top: 6px;

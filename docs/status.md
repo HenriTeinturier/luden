@@ -1,5 +1,7 @@
 # État courant
 
+- Navigation : accès directs Amiga, SNES et Amstrad dans le header pour les univers ayant des jeux. Ils restent visibles quand le menu principal est replié ; « Mes univers » est conservé. Univers actif indiqué dans la barre.
+
 - Vignettes Amiga et Amstrad agrandies : colonnes de 210 px minimum au-dessus de 700 px, contre 175 px auparavant. Ratio des jaquettes conservé ; grille mobile et vue liste inchangées.
 
 - Cartes Amstrad : images au ratio 3:4, sans padding autour du visuel et sans recadrage. Titre sur une ligne avec ellipse, étoiles sans note chiffrée ; métadonnées et statut masqués, marque-page des coups de cœur conservé.

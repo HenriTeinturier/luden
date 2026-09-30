@@ -41,6 +41,9 @@ export function Shell({ children, library }: { children: ReactNode; library: Lib
     library?.platforms
       .filter((p) => library.games.some((g) => g.platformId === p.id))
       .slice(0, 6) ?? []
+  const quickUniverses = ['amiga', 'snes', 'amstrad']
+    .map((id) => favorites.find((platform) => platform.id === id))
+    .filter((platform) => platform !== undefined)
   return (
     <FormActionContext.Provider value={setFormAction}>
       <div className="app-shell horizontal-shell">
@@ -137,6 +140,23 @@ export function Shell({ children, library }: { children: ReactNode; library: Lib
                 </div>
               </div>
             </div>
+            {quickUniverses.length > 0 && (
+              <nav className="universe-shortcuts" aria-label="Accès direct aux univers">
+                {quickUniverses.map((platform) => (
+                  <Link
+                    key={platform.id}
+                    to="/platforms/$platformId"
+                    params={{ platformId: platform.id }}
+                    className={`universe-shortcut ${currentPlatform?.id === platform.id ? 'active' : ''}`}
+                    aria-current={currentPlatform?.id === platform.id ? 'page' : undefined}
+                    title={platform.name}
+                  >
+                    <span className="color-dot" style={{ background: platform.color }} />
+                    {platform.shortName}
+                  </Link>
+                ))}
+              </nav>
+            )}
             <div className="topbar-actions">
               <form
                 className="global-search"

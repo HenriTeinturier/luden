@@ -446,11 +446,57 @@
   gap: 12px;
   margin-top: 6px;
 }
-.sidebar-rating select {
-  margin-left: auto;
-  font-size: 11px;
-  padding: 4px 7px;
-  flex-shrink: 0;
+.sidebar-rating-editor {
+  position: relative;
+  flex: 0 0 96px;
+  color: #ffd166;
+}
+.sidebar-rating-editor select {
+  appearance: none;
+  width: 100%;
+  height: 40px;
+  padding: 0 24px 0 33px;
+  border: 1px solid #ffd16645;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #2a2634, #171c30);
+  color: #ffe4a0;
+  color-scheme: dark;
+  font-size: 13px;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+.sidebar-rating-editor select:hover:not(:disabled) {
+  border-color: #ffd166a0;
+  box-shadow: 0 0 12px #ffd16615;
+}
+.sidebar-rating-editor select:focus-visible {
+  outline: 2px solid #ffd166;
+  outline-offset: 3px;
+}
+.sidebar-rating-editor select:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+.sidebar-rating-editor option {
+  background: #171c30;
+  color: #f3f5ff;
+}
+.sidebar-rating-editor > svg {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.rating-editor-star {
+  left: 11px;
+}
+.rating-editor-chevron {
+  right: 8px;
+  color: #c5bfd1;
 }
 .sidebar-rating > .stars > small {
   display: none;
@@ -527,9 +573,6 @@
   outline: 2px solid #37c8ff;
   outline-offset: 3px;
 }
-.sidebar-rating .sidebar-megastar + select {
-  margin-left: 0;
-}
 @container (max-width: 460px) {
   .sidebar-rating {
     gap: 6px;
@@ -549,9 +592,8 @@
     width: 26px;
     height: 26px;
   }
-  .sidebar-rating select {
-    max-width: 86px;
-    padding-inline: 5px;
+  .sidebar-rating-editor {
+    flex-basis: 86px;
   }
 }
 .sidebar-rating .star svg {

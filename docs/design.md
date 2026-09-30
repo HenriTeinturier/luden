@@ -26,6 +26,7 @@ Ombre elliptique de contact sous le support. Le titre n’est affiché que dans 
 sans répétition au-dessus des étoiles ; un titre masqué reste accessible aux lecteurs d’écran.
 Éditeur, année et tous les genres occupent une ligne défilable si nécessaire.
 Dans la sidebar, les étoiles n’affichent pas de note chiffrée à côté ; le sélecteur de note reste disponible.
+Ce sélecteur compact associe une étoile dorée, la valeur seule (sans « / 5 ») et un chevron sur fond sombre légèrement doré ; focus visible et options sombres. Le tiret représente l’absence de note.
 Trois cartes séparées partagent le même style : « Dans ma collection », « Joué » et « À découvrir ».
 Même hauteur, coins arrondis, icône à gauche et bordure discrète ; gris inactif, vert pour la possession,
 corail pour Joué et violet pour À découvrir. Les états actifs ont un fond coloré opaque soutenu,

@@ -5,6 +5,8 @@ import {
   ArrowUpRight,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
+  Star,
   X,
   Pencil,
   Heart,
@@ -260,20 +262,31 @@ function QuickExperience({
                 <small>Jeu culte</small>
               </span>
             </button>
-            <select
-              aria-label="Ma note sur 5"
-              value={game.experience?.rating ?? ''}
-              onChange={(e) =>
-                void update({ rating: e.target.value === '' ? null : Number(e.target.value) })
-              }
-            >
-              <option value="">Sans note</option>
-              {Array.from({ length: 11 }, (_, i) => i / 2).map((n) => (
-                <option key={n} value={n}>
-                  {n.toLocaleString('fr-FR')} / 5
+            <label className="sidebar-rating-editor" title="Modifier ma note sur 5">
+              <Star
+                className="rating-editor-star"
+                size={15}
+                fill="currentColor"
+                aria-hidden="true"
+              />
+              <select
+                aria-label="Ma note sur 5"
+                value={game.experience?.rating ?? ''}
+                onChange={(e) =>
+                  void update({ rating: e.target.value === '' ? null : Number(e.target.value) })
+                }
+              >
+                <option value="" aria-label="Sans note">
+                  —
                 </option>
-              ))}
-            </select>
+                {Array.from({ length: 11 }, (_, i) => i / 2).map((n) => (
+                  <option key={n} value={n}>
+                    {n.toLocaleString('fr-FR')}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="rating-editor-chevron" size={14} aria-hidden="true" />
+            </label>
           </div>
           <div className="sidebar-facts" aria-label="Informations du jeu">
             {(game.publisher || game.developer) && (

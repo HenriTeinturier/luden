@@ -27,6 +27,24 @@
   align-items: center;
   gap: 9px;
 }
+.sidebar-reopen {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 7px;
+  min-height: 40px;
+  padding: 0 11px;
+  border: 1px solid #55608f;
+  border-radius: 6px;
+  background: #1d2440;
+  color: #f3f5ff;
+  font-size: 12px;
+}
+.sidebar-reopen:hover,
+.sidebar-reopen:focus-visible {
+  border-color: #37c8ff;
+  background: #243252;
+}
 .gallery-controls select,
 .advanced-filters select {
   border: 1px solid #e1e3d8;

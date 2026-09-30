@@ -60,7 +60,11 @@ export function GameExplorer({
     if (busy) return
     if (!game && showUniverse) {
       setUniverseVisit({ pathname: location.pathname, hidden: true })
-      requestAnimationFrame(() => document.getElementById('main')?.focus({ preventScroll: true }))
+      requestAnimationFrame(() =>
+        (document.getElementById('reopen-sidebar') ?? document.getElementById('main'))?.focus({
+          preventScroll: true,
+        }),
+      )
     } else if (mode === 'full') {
       setMode('sidebar')
       restoreLibrary()
@@ -103,6 +107,15 @@ export function GameExplorer({
       value={{
         selectedId: game?.id ?? null,
         sidebarVisible: Boolean(game) || showUniverse,
+        reopenSidebar:
+          universe && !game && !showUniverse
+            ? () => {
+                setUniverseVisit({ pathname: location.pathname, hidden: false })
+                requestAnimationFrame(() =>
+                  document.getElementById('universe-sidebar')?.focus({ preventScroll: true }),
+                )
+              }
+            : undefined,
         open: (id, sequence, element) => {
           if (busy) return
           trigger.current = element

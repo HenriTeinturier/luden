@@ -1,6 +1,14 @@
 import { coverFormat } from '../lib/presentation'
 import { useLocation, useNavigate, useSearch } from '@tanstack/react-router'
-import { Search, LayoutGrid, List, SlidersHorizontal, Columns3, X } from 'lucide-react'
+import {
+  Search,
+  LayoutGrid,
+  List,
+  SlidersHorizontal,
+  Columns3,
+  PanelRightOpen,
+  X,
+} from 'lucide-react'
 import { MegastarTrophy } from './megastar-trophy'
 import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties } from 'react'
 import { useGameSelection } from './game-selection'
@@ -259,6 +267,19 @@ export function Gallery({
               ))}
             </select>
           </label>
+          {selection?.reopenSidebar && (
+            <button
+              id="reopen-sidebar"
+              type="button"
+              className="sidebar-reopen"
+              aria-label="Afficher la sidebar de l’univers"
+              title="Afficher la sidebar de l’univers"
+              onClick={selection.reopenSidebar}
+            >
+              <PanelRightOpen size={17} aria-hidden="true" />
+              Sidebar
+            </button>
+          )}
         </div>
         <div className="gallery-results">
           <span aria-live="polite" aria-atomic="true">

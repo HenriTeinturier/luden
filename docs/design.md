@@ -8,7 +8,9 @@ Dans les univers plateforme, ce tiers est déjà occupé à l’entrée par une 
 SNES utilise l’image personnelle fournie ; les autres plateformes affichent leur identité en repli.
 Un jeu remplace cet accueil. Croix/Échap revient du jeu à l’accueil, puis masque le panneau au
 second appui. Une nouvelle entrée dans l’univers réaffiche l’accueil ; changer les filtres seul
-ne réouvre pas un accueil masqué. Sur mobile, l’accueil est un bloc de 280 px au-dessus de la
+ne réouvre pas un accueil masqué. Dans ce cas, le bouton « Sidebar » avec icône de panneau,
+à côté du réglage des colonnes, permet de réafficher l’accueil et rétablit la densité avec sidebar.
+Sur mobile, l’accueil est un bloc de 280 px au-dessus de la
 galerie pour conserver l’accès aux jeux ; une fiche ouverte garde le comportement mobile habituel.
 La carte consultée porte un contour bleu clair de 3 px autour de son périmètre complet, un halo
 et un fond bleu/violet plus marqué sous le titre. Le repère est porté par la carte pour éviter

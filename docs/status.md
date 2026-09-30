@@ -9,6 +9,8 @@
 
 ## Consultation des jeux — 2026-09-30
 
+- Sidebar masquée : bouton « Sidebar » avec icône de panneau dans les réglages de galerie pour réafficher l’accueil de l’univers. Focus clavier restauré et nombre de colonnes réajusté automatiquement à l’ouverture. Vérifié dans le navigateur : fermeture → 9 colonnes, bouton → accueil et 7 colonnes, Échap → bouton avec focus. TypeScript, lint ciblé et formatage passent.
+
 - Carte de statistiques SNES « Megastar » : remplace « coups de cœur », avec le trophée partagé par la sidebar et le filtre, fond violet et bordure violet/bleu électrique. Compteur et pourcentage des favoris conservés.
 
 - Colonnes desktop : +2 quand la sidebar est masquée, retour à la référence lorsqu’elle revient (accueil ou jeu). Préférence stockée stable, sélecteur ajusté 4–10 / 6–12 ; Auto mesure la grille ouverte puis ajoute deux colonnes à la fermeture. Vérification navigateur à 2560 px : 7 → 9 → 7, Auto 7 → 9, sélection 12 sans sidebar → 10 avec. TypeScript, lint et 20 tests passent.

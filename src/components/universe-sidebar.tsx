@@ -13,6 +13,8 @@ export function UniverseSidebar({
 }) {
   return (
     <aside
+      id="universe-sidebar"
+      tabIndex={-1}
       className="game-sidebar universe-sidebar"
       aria-label={`Accueil de l’univers ${platform.name}`}
     >

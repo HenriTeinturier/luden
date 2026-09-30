@@ -42,6 +42,19 @@ export function VisualFields({
         </div>
         <span className="tag">Sidebar & fiche complète</span>
       </div>
+      <div className="visual-background-guide">
+        <ImageIcon size={22} aria-hidden="true" />
+        <div>
+          <p>Fond du jeu · dimensions conseillées</p>
+          <strong>
+            2 560 × 1 440 px <span>(16:9)</span>
+          </strong>
+          <p>
+            Une image sans texte, avec le sujet à distance des bords. Le cadrage pour la sidebar se
+            règle après le choix du fond.
+          </p>
+        </div>
+      </div>
       <div className="visual-slots">
         {(Object.entries(visualRoles) as [VisualRole, string][]).map(([role, label]) => {
           const automatic =
@@ -98,6 +111,12 @@ export function VisualFields({
                   }}
                 />
               </label>
+              {role === 'box' && (
+                <small>
+                  En automatique : une image classée « Boîte », sinon l’image principale de la
+                  bibliothèque (votre jaquette).
+                </small>
+              )}
               {role === 'logo' && (
                 <small>
                   PNG ou WebP transparent conseillé. Sinon, le titre reste affiché en texte.
@@ -105,10 +124,6 @@ export function VisualFields({
               )}
               {role === 'background' && (
                 <>
-                  <small>
-                    Format conseillé : <strong>2 560 × 1 440 px</strong> (16:9), sans texte. Gardez
-                    le sujet à distance des bords.
-                  </small>
                   {visuals.background && (
                     <button
                       type="button"

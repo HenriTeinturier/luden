@@ -16,7 +16,9 @@ le fond centré avec zoom 1. Replis : BOX puis coverId pour la boîte, MEDIA pou
 le titre, fond sobre. PNG/WebP transparents conseillés pour logo et objets.
 
 Nouveaux imports : bornés à 2560 × 2560 px, sans agrandissement, WebP qualité 88. Fond conseillé
-2560 × 1440 px, rappel dans le formulaire. Les fichiers déjà présents ne sont pas retraités.
+2560 × 1440 px (16:9), rappel dans un encadré visible au-dessus des rôles dans le formulaire.
+Le champ boîte explique aussi son choix automatique : BOX puis image principale de bibliothèque.
+Les fichiers déjà présents ne sont pas retraités.
 Export JSON **version 4** : ajoute la présentation à chaque jeu ; binaires toujours hors export.
 Contrôle DB ciblé facultatif : `npx tsx scripts/check-game-presentation.ts`, ses seules fixtures
 et images temporaires sont nettoyées. Tests unitaires de références, géométrie et mutation partielle.

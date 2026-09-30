@@ -9,6 +9,9 @@
 
 ## Consultation des jeux — 2026-09-30
 
+- Densité de galerie : commande compacte icône + `Auto` / 4–10 à côté du choix grille/liste, mémorisée par galerie et dans l’URL. Chaque carte occupe une colonne en mode manuel ; réduction sur espace étroit pour une largeur minimale de 150 px. Réglage sans fermer la sidebar, désactivé en liste.
+- Vérifié : TypeScript/lint et 19 tests ; contrôle navigateur de quatre colonnes avec sidebar maintenue, préférence restaurée à la réouverture, état désactivé en liste et commande de 92 px de large.
+
 - Badges sidebar : « Dans ma collection » bascule désormais la possession actuelle sur place, sans ouvrir le formulaire ; « À découvrir / rejouer » conserve sa bascule directe. États accessibles `aria-pressed`, commandes bloquées pendant la sauvegarde. Désactivation vers possessions anciennes ; réactivation d’une ancienne ou création physique par défaut, sans supprimer historique, médias ni collections nommées.
 - Vérifié : TypeScript/lint et 18 tests réussis ; contrôle DB sur fiche temporaire des deux bascules, activations concurrentes sans doublon, conservation des identifiants, formats, boutique, médias, collection et expérience. Données de contrôle nettoyées.
 

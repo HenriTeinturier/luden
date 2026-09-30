@@ -25,7 +25,10 @@ export function GameExplorer({
   const mobileLibraryScroll = useRef(0)
   const trigger = useRef<HTMLElement | null>(null)
   const panel = useRef<HTMLElement>(null)
-  const locationKey = location.pathname + location.searchStr
+  // Changing card density keeps the current game and its navigation sequence open.
+  const locationKey =
+    location.pathname +
+    JSON.stringify(Object.entries(location.search).filter(([key]) => key !== 'columns'))
   const active = selection?.location === locationKey
   const game = active ? library?.games.find((g) => g.id === selection.id) : undefined
   const ids = selection?.ids.filter((id) => library?.games.some((g) => g.id === id)) ?? []

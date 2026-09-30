@@ -25,6 +25,41 @@
 .with-game-sidebar .platform-page .game-grid {
   grid-template-columns: repeat(auto-fill, minmax(205px, 1fr));
 }
+/* Honor the chosen count, reducing it only when cards would become unreadable. */
+.game-workspace .gallery-category .game-grid.has-columns {
+  gap: 24px;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(
+      min(
+        100%,
+        max(150px, calc((100% - (var(--gallery-columns) - 1) * 24px) / var(--gallery-columns)))
+      ),
+      1fr
+    )
+  );
+}
+.game-grid.has-columns .wide-cover {
+  grid-column: auto;
+}
+.gallery-density {
+  display: inline-flex;
+  align-items: center;
+  padding-left: 10px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--elevated);
+  color: var(--text-soft);
+}
+.gallery-controls .gallery-density select {
+  width: 64px;
+  padding-left: 6px;
+  border: 0;
+  background: transparent;
+}
+.gallery-density:has(select:disabled) {
+  opacity: 0.45;
+}
 .game-card {
   scroll-margin-top: calc(var(--header-height, 79px) + 18px);
   scroll-margin-bottom: 18px;

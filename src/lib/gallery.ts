@@ -9,6 +9,10 @@ export const gallerySearch = z.object({
   scope: z.enum(['all', 'played', 'discover', 'owned']).optional(),
   sort: z.enum(['recent', 'title', 'rating', 'year', 'desire']).optional(),
   view: z.enum(['grid', 'list']).optional(),
+  columns: z
+    .union([z.literal('auto'), z.number().int().min(4).max(10)])
+    .optional()
+    .catch(undefined),
   group: z.enum(['none', 'category']).optional(),
   owned: z.enum(['all', 'current', 'past', 'none']).optional(),
   favorite: z.boolean().optional(),

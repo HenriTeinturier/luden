@@ -107,6 +107,13 @@ collections partent sur Tous mes jeux ; Découverte sur À découvrir, avec poss
 de vue. Dans une collection, les boutons filtrent uniquement ses jeux. Les préférences navigateur
 restent propres à chaque galerie. La barre se replie sur plusieurs lignes si la largeur manque.
 
+À côté du choix grille/liste, une icône de colonnes et un sélecteur compact (92 px) règlent
+le nombre de jaquettes par ligne : `Auto` ou 4 à 10. Choix mémorisé par galerie et conservé
+dans l’URL, y compris au retour de fiche. La sidebar reste ouverte lors du réglage.
+En mode manuel, chaque carte occupe une colonne, même dans une galerie mélangeant les formats.
+La grille réduit le nombre de colonnes si nécessaire pour garder au moins 150 px par carte ;
+le mode Auto conserve les règles adaptées à chaque plateforme. Le sélecteur est désactivé en liste.
+
 ## Thème commun
 
 Direction actuelle : bleu nuit / Aurora. Fonds sobres bleut�s, navigation et interactions bleues,

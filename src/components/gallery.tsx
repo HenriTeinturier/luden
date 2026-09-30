@@ -1,8 +1,8 @@
 import { coverFormat } from '../lib/presentation'
 import { useLocation, useNavigate, useSearch } from '@tanstack/react-router'
-import { Search, LayoutGrid, List, SlidersHorizontal, X } from 'lucide-react'
+import { Search, LayoutGrid, List, SlidersHorizontal, Columns3, X } from 'lucide-react'
 import { MegastarTrophy } from './megastar-trophy'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { filterGames, type GallerySearch } from '../lib/gallery'
 import type { Game } from '../lib/types'
 import { playStatuses } from '../lib/platforms'
@@ -50,7 +50,7 @@ export function Gallery({
   }, [pathname, search, navigate])
   const [advanced, setAdvanced] = useState(false)
   const update = (patch: Partial<GallerySearch>) => {
-    const next = { ...filters, ...patch }
+    const next = { ...search, ...patch }
     saveGalleryPreferences(pathname, next)
     void navigate({ to: '.', search: next, replace: true, resetScroll: false })
   }
@@ -209,6 +209,27 @@ export function Gallery({
               <List size={17} />
             </button>
           </div>
+          <label
+            className="gallery-density"
+            title="Jaquettes par ligne : automatique ou de 4 à 10, selon la place disponible"
+          >
+            <Columns3 size={16} aria-hidden="true" />
+            <select
+              aria-label="Jaquettes par ligne"
+              value={filters.columns ?? 'auto'}
+              disabled={filters.view === 'list'}
+              onChange={(e) =>
+                update({ columns: e.target.value === 'auto' ? 'auto' : Number(e.target.value) })
+              }
+            >
+              <option value="auto">Auto</option>
+              {Array.from({ length: 7 }, (_, i) => i + 4).map((count) => (
+                <option key={count} value={count}>
+                  {count}
+                </option>
+              ))}
+            </select>
+          </label>
         </div>
       </div>
       {advanced && (
@@ -261,7 +282,12 @@ export function Gallery({
                 className={
                   filters.view === 'list'
                     ? 'game-list'
-                    : `game-grid ${group.games.every((g) => coverFormat(g.platformId).wide) ? 'wide-grid' : 'mixed-grid'}`
+                    : `game-grid ${group.games.every((g) => coverFormat(g.platformId).wide) ? 'wide-grid' : 'mixed-grid'} ${typeof filters.columns === 'number' ? 'has-columns' : ''}`
+                }
+                style={
+                  typeof filters.columns === 'number'
+                    ? ({ '--gallery-columns': filters.columns } as CSSProperties)
+                    : undefined
                 }
               >
                 {group.games.map((game) => (

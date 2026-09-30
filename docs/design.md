@@ -16,11 +16,16 @@ un écran 2560 × 1440, y compris avec une hauteur utile de navigateur réduite 
 
 Sidebar : navigation superposée au fond, sans bandeau opaque ni surtitre plateforme/année.
 Logo agrandi et incliné ; boîte et support plus grands, décalés sous le fond de 108 px. Support droit,
-avec ombre elliptique de contact sous l’objet. Les étoiles et leur édition suivent directement le titre. Éditeur, année,
-deux genres et parcours occupent une ligne défilable si nécessaire. Boutons persistants
-« Dans ma collection » (vert si possession actuelle, sinon gris) et
-« À découvrir / rejouer » avec texte visible : les deux sont des bascules immédiates,
-sans ouvrir l’édition. Le bouton « Modifier » conserve l’accès au formulaire détaillé.
+avec ombre elliptique de contact sous l’objet. Le titre n’est affiché que dans la scène (logo ou texte),
+sans répétition au-dessus des étoiles ; un titre masqué reste accessible aux lecteurs d’écran.
+Éditeur, année et deux genres occupent une ligne défilable si nécessaire.
+« Dans ma collection » (vert si possession actuelle, sinon gris) côtoie un contrôle arrondi
+« Joué / À découvrir », sur la même ligne ou dessous si la sidebar est étroite. Deux bascules
+indépendantes : Joué actif en corail avec manette, À découvrir actif en violet avec étincelles.
+Joué reflète tout statut autre que non joué ; son clic bascule PLAYED/UNPLAYED. Les statuts détaillés
+restent dans la fiche complète et le formulaire, sans conversion lors de la simple consultation.
+Toutes ces actions enregistrent immédiatement sans ouvrir l’édition. Le bouton « Modifier »
+conserve l’accès au formulaire détaillé.
 Le favori est un trophée étoilé « Megastar · Jeu culte »
 sur la ligne de notation : dessin SVG dédié, violet/bleu électrique si actif et lavande discret sinon ; même booléen favori que
 les étiquettes de jaquettes et le filtre Megastar, aucun nouvel indicateur indépendant.

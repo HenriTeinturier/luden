@@ -9,6 +9,9 @@
 
 ## Consultation des jeux — 2026-09-30
 
+- Sidebar : menu de parcours remplacé par une capsule à deux boutons « Joué » (corail) / « À découvrir » (violet), à côté de « Dans ma collection » ou dessous si la largeur manque. Bascules indépendantes, statuts détaillés conservés dans la fiche complète et l’édition. Libellé découverte raccourci ; titre répété au-dessus des étoiles masqué visuellement, conservé pour l’accessibilité.
+- Vérifié : TypeScript/lint ; rendu compact à 1280 px et alignement sur une ligne à 2560 × 1280 sans défilement interne, état Joué actif et disparition du menu de parcours dans la sidebar.
+
 - Densité de galerie : commande compacte icône + `Auto` / 4–10 à côté du choix grille/liste, mémorisée par galerie et dans l’URL. Chaque carte occupe une colonne en mode manuel ; réduction sur espace étroit pour une largeur minimale de 150 px. Réglage sans fermer la sidebar, désactivé en liste.
 - Menu de densité : fond opaque sombre, texte clair et `color-scheme: dark` explicites sur le sélecteur/options pour éviter la liste native blanche illisible sous Windows.
 - Libellé `Auto` : espace de texte élargi, padding droit réduit et compression flex désactivée ; commande de 104 px pour conserver le mot entier à côté de la flèche native.

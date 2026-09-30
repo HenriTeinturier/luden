@@ -16,12 +16,14 @@ import {
   Check,
   LoaderCircle,
   ShieldCheck,
+  Gamepad2,
 } from 'lucide-react'
 import type { z } from 'zod'
 import type { Game } from '../lib/types'
 import type { quickGameSchema } from '../lib/validation'
 import { readPresentation } from '../lib/game-visuals'
 import { playStatuses } from '../lib/platforms'
+import { hasPlayed } from '../lib/gallery'
 import { coverFormat } from '../lib/presentation'
 import { quickUpdateGameFn, deleteGameFn } from '../server/functions'
 import { GameBackground } from './game-background'
@@ -239,6 +241,7 @@ function QuickExperience({
   }
   if (compact) {
     const owned = game.possessions.some((p) => p.state === 'CURRENT')
+    const played = hasPlayed(game)
     return (
       <section className="sidebar-experience" aria-label="Mon expérience">
         <fieldset disabled={busy}>
@@ -282,19 +285,6 @@ function QuickExperience({
             {game.genres.slice(0, 2).map((genre) => (
               <span key={genre}>{genre}</span>
             ))}
-            <select
-              aria-label="Mon parcours"
-              value={game.experience?.status ?? 'UNPLAYED'}
-              onChange={(e) =>
-                void update({ status: e.target.value as NonNullable<Game['experience']>['status'] })
-              }
-            >
-              {Object.entries(playStatuses).map(([value, label]) => (
-                <option key={value} value={value}>
-                  {label}
-                </option>
-              ))}
-            </select>
           </div>
           <div className="sidebar-collection-actions">
             <button
@@ -317,17 +307,26 @@ function QuickExperience({
                 </small>
               </span>
             </button>
-            <button
-              type="button"
-              className={`sidebar-discover ${game.discover ? 'is-discover' : ''}`}
-              title="À découvrir / rejouer"
-              aria-label="À découvrir / rejouer"
-              aria-pressed={game.discover}
-              onClick={() => void update({ discover: !game.discover })}
-            >
-              <Sparkles size={19} />
-              <span>À découvrir / rejouer</span>
-            </button>
+            <div className="sidebar-play-options" role="group" aria-label="Joué et à découvrir">
+              <button
+                type="button"
+                className="sidebar-played"
+                aria-pressed={played}
+                onClick={() => void update({ status: played ? 'UNPLAYED' : 'PLAYED' })}
+              >
+                <Gamepad2 size={17} />
+                <span>Joué</span>
+              </button>
+              <button
+                type="button"
+                className="sidebar-discover"
+                aria-pressed={game.discover}
+                onClick={() => void update({ discover: !game.discover })}
+              >
+                <Sparkles size={17} />
+                <span>À découvrir</span>
+              </button>
+            </div>
           </div>
         </fieldset>
         <span className="sr-only" role="status">
@@ -544,7 +543,7 @@ export function GameDetails({
     >
       <GameScene game={game} compact={compact} />
       <div className="dossier-body">
-        <div className="dossier-heading">
+        <div className={compact ? 'sr-only' : 'dossier-heading'}>
           <div>
             {compact ? (
               <h2>{game.title}</h2>

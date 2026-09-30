@@ -21,6 +21,10 @@ et édition. Aucun bouton de lancement, aucune note communautaire inventée, ré
 La fiche complète utilise une scène large (fond, logo ou titre, boîte et support), puis expérience,
 souvenirs, captures, informations, possessions, collections et médias. Le fond sobre et le titre
 texte permettent de consulter immédiatement les anciennes fiches. Styles dans `styles/game-details.css`.
+Sur desktop, le bandeau complet suit la hauteur disponible (280–340 px), avec objets de 260 px
+maximum et composition centrée sur la largeur du contenu. Titre/logo et espacements sont réduits ;
+captures de 96–140 px de haut pour voir l’expérience, les souvenirs et les captures dès le premier
+écran. Les informations longues et les médias supplémentaires restent accessibles en défilant.
 
 Gauche/droite parcourent l’ordre visible au moment de l’ouverture, regroupement compris, sans boucle.
 Échap remonte d’un niveau et conserve le jeu courant. Les raccourcis ignorent les champs et modales.

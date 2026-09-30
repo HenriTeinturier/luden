@@ -2,6 +2,7 @@
 
 ## Consultation des jeux — 2026-09-30
 
+- Fiche complète desktop compactée : bandeau de 280–340 px selon la hauteur de fenêtre (auparavant jusqu’à 590 px), visuels limités à 260 px et titre/logo réduits. Composition alignée sur le contenu, expérience et captures rapprochées ; captures de 96–140 px. Contrôle ciblé Super Punch-Out!! à 2560 × 1280 : bandeau 333 px, expérience/souvenirs et captures entièrement visibles, informations détaillées dès 936 px.
 - Sidebar compactée pour les grands écrans : scène au ratio paysage 16:7 sur desktop, captures limitées à 80–112 px selon la hauteur disponible, espacements réduits entre sections. Aperçu de cadrage aligné sur ce nouveau ratio ; format mobile conservé. Contrôle ciblé à 2560 × 1280 : Super Mario World tient sans défilement interne, captures et actions comprises.
 - Carte sélectionnée renforcée : contour bleu clair de 3 px autour de toute la carte, halo et fond contrasté sous le titre. L’ancien contour sur l’image était rogné par les cartes avec débordement masqué. Toutes plateformes et vue liste ; dimensions conservées. Vérification ciblée CSS/formatage, validation visuelle par Henri.
 - Parcours commun à toutes les plateformes : clic → sidebar à droite (environ un tiers), puis fiche complète immersive. La grille se réduit ; sous 800 px, la sidebar occupe la largeur disponible.

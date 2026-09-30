@@ -546,29 +546,29 @@ kbd {
   color: var(--text-soft);
 }
 .dossier-full .game-scene {
-  min-height: 400px;
-  height: clamp(400px, 36vw, 590px);
+  min-height: 280px;
+  height: clamp(280px, 26dvh, 340px);
   display: grid;
   grid-template-columns: 1fr 1.2fr;
   align-items: center;
-  padding: 35px clamp(30px, 5vw, 100px) 60px;
-  gap: 6%;
+  padding: 20px max(30px, calc((100% - 1500px) / 2 + 72px)) 28px;
+  gap: 4%;
 }
 .dossier-full .scene-identity h1 {
   font-family: 'Chakra Petch', 'DM Sans Variable', sans-serif;
-  font-size: clamp(36px, 4.5vw, 76px);
+  font-size: clamp(32px, 3vw, 52px);
   line-height: 1.06;
   letter-spacing: -0.05em;
-  margin: 24px 0;
+  margin: 14px 0;
   text-wrap: balance;
   overflow-wrap: anywhere;
   text-shadow: 0 3px 30px #0006;
 }
 .dossier-full .scene-logo {
   width: 100%;
-  max-width: 480px;
-  max-height: 235px;
-  margin: 25px 0;
+  max-width: 380px;
+  max-height: 140px;
+  margin: 14px 0;
 }
 .scene-genres {
   display: flex;
@@ -590,7 +590,7 @@ kbd {
 }
 .dossier-full .scene-objects {
   height: 100%;
-  max-height: 385px;
+  max-height: 260px;
 }
 .dossier-full .scene-box {
   height: 100%;
@@ -614,8 +614,9 @@ kbd {
 .dossier-full .dossier-personal {
   display: grid;
   grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.2fr);
-  gap: 30px;
-  padding: 24px;
+  gap: 24px;
+  margin-top: 16px;
+  padding: 18px;
   border: 1px solid #ffffff16;
   border-radius: 14px;
   background: linear-gradient(115deg, #1a233d90, #151c3050);
@@ -623,12 +624,20 @@ kbd {
 .dossier-full .dossier-memory {
   border: 0;
   border-left: 1px solid #ffffff13;
-  padding: 0 0 0 30px;
+  padding: 0 0 0 24px;
   margin: 0;
 }
 .dossier-full .dossier-memory .text-link {
   margin-top: 16px;
   font-size: 12px;
+}
+.dossier-full .detail-screenshots {
+  margin-top: 18px;
+}
+.dossier-full .screenshot-strip button {
+  height: clamp(96px, 11dvh, 140px);
+  flex-basis: auto;
+  flex-shrink: 0;
 }
 .dossier-information {
   display: grid;

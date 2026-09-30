@@ -68,6 +68,7 @@ export function Gallery({
     filters.favorite ||
     (filters.owned && filters.owned !== 'all'),
   )
+  const sequence = groups.flatMap((group) => group.games.map((game) => game.id))
   return (
     <>
       <div className="gallery-toolbar gallery-toolbar-scoped">
@@ -263,7 +264,12 @@ export function Gallery({
                 }
               >
                 {group.games.map((game) => (
-                  <GameCard key={game.id} game={game} compact={filters.view === 'list'} />
+                  <GameCard
+                    key={game.id}
+                    game={game}
+                    compact={filters.view === 'list'}
+                    sequence={sequence}
+                  />
                 ))}
               </div>
             </section>

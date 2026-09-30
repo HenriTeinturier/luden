@@ -16,9 +16,10 @@ import {
   ChevronDown,
   X,
 } from 'lucide-react'
-import { useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import type { Library } from '../lib/types'
 import { FormActionContext, type FormAction } from './form-action'
+import { GameExplorer } from './game-explorer'
 
 const navigation = [
   { to: '/', label: 'Vue d’ensemble', icon: Home },
@@ -29,6 +30,18 @@ const navigation = [
 ] as const
 
 export function Shell({ children, library }: { children: ReactNode; library: Library | null }) {
+  const header = useRef<HTMLElement>(null)
+  useEffect(() => {
+    if (!header.current) return
+    const observer = new ResizeObserver(([entry]) => {
+      document.documentElement.style.setProperty(
+        '--header-height',
+        `${entry.borderBoxSize[0]?.blockSize ?? entry.contentRect.height}px`,
+      )
+    })
+    observer.observe(header.current)
+    return () => observer.disconnect()
+  }, [])
   const pathname = useLocation({ select: (l) => l.pathname })
   const navigate = useNavigate()
   const [search, setSearch] = useState('')
@@ -50,7 +63,7 @@ export function Shell({ children, library }: { children: ReactNode; library: Lib
         <a className="skip-link" href="#main">
           Aller au contenu
         </a>
-        <header className="site-header">
+        <header className="site-header" ref={header}>
           <div className="header-primary">
             <Link to="/" className="brand" aria-label="Luden, accueil">
               <img src="/luden-logo.svg" alt="" width="150" height="32" />
@@ -209,7 +222,7 @@ export function Shell({ children, library }: { children: ReactNode; library: Lib
         </header>
         <div className="workspace">
           <main id="main" tabIndex={-1}>
-            {children}
+            <GameExplorer library={library}>{children}</GameExplorer>
           </main>
           <footer className="footer">
             <div className="local-note">

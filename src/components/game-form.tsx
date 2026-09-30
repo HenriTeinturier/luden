@@ -1,4 +1,5 @@
 import { MediaFields } from './game-form/media-fields'
+import { readPresentation, retainVisuals } from '../lib/game-visuals'
 import { useNotification } from './notifications'
 import { IdentityFields } from './game-form/identity-fields'
 import { ExperienceFields } from './game-form/experience-fields'
@@ -42,6 +43,7 @@ export function GameForm({
           summary: game.summary,
           igdbId: game.igdbId,
           coverId: game.coverId,
+          presentation: readPresentation(game.presentation),
           media: game.media.map(({ mediaId, category, position, caption, isPrimary }) => ({
             mediaId,
             category,
@@ -106,9 +108,14 @@ export function GameForm({
   const change = <K extends keyof GameInput>(key: K, value: GameInput[K]) =>
     setData((d) => {
       const next = { ...d, [key]: value }
-      if (key === 'media')
+      if (key === 'media') {
         next.coverId =
           (value as NonNullable<GameInput['media']>).find((m) => m.isPrimary)?.mediaId ?? null
+        next.presentation = retainVisuals(
+          d.presentation,
+          (value as NonNullable<GameInput['media']>).map((m) => m.mediaId),
+        )
+      }
       if (key === 'platformId' && selectedResult) {
         const igdbPlatform = library.platforms.find((p) => p.id === value)?.igdbId
         next.releaseYear =
@@ -172,9 +179,9 @@ export function GameForm({
         // Finish refreshing loader data before navigating to the saved game/library.
         await router.invalidate({ sync: true })
         onSaved?.()
-        if (game) {
+        if (game && !onSaved) {
           await navigate({ to: '/games/$gameId', params: { gameId: result.data.id }, search: true })
-        } else {
+        } else if (!game) {
           await navigate({
             to: '/platforms/$platformId',
             params: { platformId: parsed.data.platformId },
@@ -370,9 +377,15 @@ export function GameForm({
             </p>
           )}
           <span>Vos données restent dans votre bibliothèque.</span>
-          <Link to="/library" className="button secondary">
-            Annuler
-          </Link>
+          {onCancel ? (
+            <button type="button" className="button secondary" onClick={onCancel}>
+              Annuler
+            </button>
+          ) : (
+            <Link to="/library" className="button secondary">
+              Annuler
+            </Link>
+          )}
           <button type="submit" className="button" disabled={busy || uploading}>
             {busy ? <LoaderCircle className="spin" size={17} /> : <Check size={17} />}
             {busy

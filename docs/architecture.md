@@ -16,6 +16,12 @@ Prisma 6 + PostgreSQL 17 Docker. Le navigateur n'accède ni à Prisma ni aux sec
 Fonctions serveur TanStack pour les opérations applicatives ; chargement des routes et invalidation suffisent en V1.
 Pas de Query ajouté sans besoin, de repository abstrait, de DI ou de microservices.
 
+Consultation : `GameExplorer` dans le shell conserve la galerie montée et gère sélection/ordre,
+sidebar, fiche et édition. `GameDetails` est partagé avec la route de jeu directe.
+`quickUpdateGameFn` → `library.quickUpdateGame` → transaction Prisma applique seulement les champs
+rapides explicitement envoyés ; aucune réécriture du reste de la fiche. Invalidation synchrone avant
+confirmation. `Game.presentation` est validé par Zod et limité aux médias attachés à la fiche.
+
 ## Stockage
 
 `LUDEN_DATA_DIR` absolu fourni par l'utilisateur. Médias sous `media/`, DB avec chemins relatifs.

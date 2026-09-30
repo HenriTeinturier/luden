@@ -4,13 +4,20 @@ import type { Game } from '../lib/types'
 import { mediaCategories, linkTypes } from '../lib/media'
 import { Modal } from './ui'
 
-export function GameMedia({ game }: { game: Game }) {
+export function GameMedia({
+  game,
+  hideScreenshots = false,
+}: {
+  game: Game
+  hideScreenshots?: boolean
+}) {
   const [selected, setSelected] = useState<Game['media'][number] | null>(null)
   if (!game.media.length && !game.links.length) return null
   return (
     <section className="game-media game-about">
       <h2>Médias & liens</h2>
       {Object.entries(mediaCategories).map(([category, label]) => {
+        if (hideScreenshots && category === 'SCREENSHOT') return null
         const images = game.media.filter((m) => m.category === category)
         if (!images.length) return null
         return (

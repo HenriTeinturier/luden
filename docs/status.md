@@ -1,5 +1,19 @@
 # État courant
 
+## Consultation des jeux — 2026-09-30
+
+- Parcours commun à toutes les plateformes : clic → sidebar à droite (environ un tiers), puis fiche complète immersive. La grille se réduit ; sous 800 px, la sidebar occupe la largeur disponible.
+- Gauche/droite suivent les jeux filtrés, triés et regroupés au moment de l’ouverture, sans boucler. Échap revient de la fiche complète à la sidebar du jeu courant, puis ferme celle-ci. Les champs de saisie et modales gardent leur clavier.
+- La bibliothèque reste montée pendant la consultation : filtres et position conservés. L’ordre de consultation reste stable pendant les modifications rapides ; un changement de filtre ferme le panneau. Ouverture directe `/games/:id` toujours disponible, avec le même composant de fiche.
+- Note personnelle, statut, coup de cœur, découverte/rejeu et envie modifiables à la volée. Mutation partielle dédiée : souvenirs, possessions, médias et collections préservés. Captures agrandissables dans les deux vues ; pas d’action de lancement.
+- Formulaire : quatre rôles facultatifs (boîte/jaquette, support, logo transparent, fond), import direct dans chaque rôle ou sélection d’un média existant. Vignette de bibliothèque indépendante. Replis : boîte/jaquette existante, titre texte, fond sobre, support absent.
+- Choisir/importer un fond ouvre le cadrage sidebar : glisser, zoom, réglages clavier, recentrage. Géométrie partagée entre aperçu et affichage ; cadrage enregistré sans découper l’image. Fond général conseillé : **2 560 × 1 440 px (16:9)**, rappel dans le formulaire.
+- Migration additive `20260930120000_game_presentation` appliquée ; Prisma régénéré, serveur Vite relancé sur 3000. Export JSON v4, imports optimisés jusqu’à 2560 px par côté ; médias existants conservés.
+- Vérifié : TypeScript, lint, 16 tests, compilation ; contrôle DB temporaire des mises à jour partielles, cadrages et retrait des références ; contrôle navigateur ponctuel SNES (sidebar, fiche, flèches/Échap, formulaire/cadrage et petit écran). Aucun média ni paramètre personnel changé lors du contrôle.
+- À affiner avec Henri : rendu des compositions lorsque ses assets boîte/cartouche/logo/fond seront fournis. La structure est opérationnelle avec les images existantes.
+
+## Évolutions précédentes
+
 - Navigation : accès directs Amiga, SNES et Amstrad dans le header pour les univers ayant des jeux. Ils restent visibles quand le menu principal est replié ; « Mes univers » est conservé. Univers actif indiqué dans la barre.
 
 - Vignettes Amiga et Amstrad agrandies : colonnes de 210 px minimum au-dessus de 700 px, contre 175 px auparavant. Ratio des jaquettes conservé ; grille mobile et vue liste inchangées.

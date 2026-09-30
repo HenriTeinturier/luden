@@ -9,6 +9,12 @@
 - Détails d'éditions et migration Excel exclus V1.
 - Tests techniques minimaux ; validation visuelle surtout par l'utilisateur.
 - Documentation fragmentée, index AGENTS/CLAUDE courts.
+- 2026-09-30 : parcours de consultation commun à toutes les plateformes, sidebar occupant environ
+  un tiers puis fiche complète ; différences uniquement visuelles. Captures et édition rapide dans
+  la sidebar, pas de lancement du jeu. Échap remonte d’un niveau, gauche/droite parcourent les jeux.
+- Quatre rôles visuels facultatifs par fiche (boîte, support, logo transparent, fond), réutilisant les
+  médias existants ; titre texte si aucun logo. Cadrage sidebar demandé au choix du fond, source
+  conservée entière pour la fiche. Les maquettes fournies restent des inspirations non contractuelles.
 
 ## Choix d'implémentation
 

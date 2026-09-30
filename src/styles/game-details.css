@@ -1,0 +1,946 @@
+/* Shared consultation flow. Platform variations change composition, never behavior. */
+.game-workspace {
+  min-width: 0;
+}
+.game-workspace.with-game-sidebar {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(355px, 1fr);
+  align-items: start;
+}
+.library-content {
+  min-width: 0;
+}
+.library-content[hidden] {
+  display: none;
+}
+.with-game-sidebar .library-content .page {
+  padding-inline: clamp(16px, 2vw, 32px);
+}
+.with-game-sidebar .game-grid {
+  grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+}
+.with-game-sidebar .wide-grid {
+  grid-template-columns: repeat(auto-fill, minmax(205px, 1fr));
+}
+.with-game-sidebar .platform-page .game-grid {
+  grid-template-columns: repeat(auto-fill, minmax(205px, 1fr));
+}
+.game-card {
+  scroll-margin-top: calc(var(--header-height, 79px) + 18px);
+  scroll-margin-bottom: 18px;
+}
+.direct-game-preview {
+  max-width: 560px;
+  margin-inline: auto;
+}
+.with-game-sidebar .platform-hero {
+  overflow: hidden;
+}
+.with-game-sidebar .platform-hero .amstrad-crocodile {
+  display: none;
+}
+.with-game-sidebar .gallery-toolbar,
+.with-game-sidebar .gallery-controls,
+.with-game-sidebar .advanced-filters {
+  flex-wrap: wrap;
+}
+.game-card[aria-current='true'] .cover-frame {
+  border-radius: 9px;
+  outline: 2px solid var(--purple);
+  outline-offset: 5px;
+  box-shadow: 0 0 28px #9468ff32;
+}
+.game-card[aria-current='true'] h3 {
+  color: var(--ink);
+}
+.game-sidebar {
+  position: sticky;
+  top: var(--header-height, 79px);
+  height: calc(100dvh - var(--header-height, 79px));
+  overflow: auto;
+  overscroll-behavior: contain;
+  border-left: 1px solid var(--line);
+  background: #0c1121;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+.game-sidebar:focus,
+.game-full-view:focus {
+  outline: none;
+}
+.game-full-view {
+  min-width: 0;
+  background: #0c1121;
+}
+.game-navigation {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 22px;
+  min-height: 58px;
+  background: #0c1121ee;
+  border-bottom: 1px solid #ffffff0d;
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  backdrop-filter: blur(18px);
+}
+.game-full-view > .game-navigation {
+  top: var(--header-height, 79px);
+}
+.game-navigation .icon-button {
+  border: 1px solid #ffffff16;
+  border-radius: 9px;
+  width: 34px;
+  height: 34px;
+  background: #141c31;
+}
+.game-navigation button:disabled {
+  cursor: default;
+  opacity: 0.3;
+}
+.game-navigation-arrows {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+}
+.game-navigation-arrows > span {
+  min-width: 48px;
+  text-align: center;
+}
+.game-navigation-arrows > span > span {
+  color: var(--muted);
+}
+.game-close {
+  margin-left: auto;
+}
+.game-return {
+  margin-right: auto;
+  font-size: 13px;
+}
+.game-full-view .game-close {
+  margin-left: 0;
+}
+.game-scene {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      ellipse at 75% 25%,
+      color-mix(in srgb, var(--game-accent) 24%, transparent),
+      transparent 65%
+    ),
+    radial-gradient(ellipse at 10% 10%, #7962bb27, transparent 70%), #121a30;
+}
+.game-background {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.game-background > img {
+  position: absolute;
+  max-width: none;
+  max-height: none;
+  object-fit: fill;
+}
+.scene-shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(0deg, #0c1121 0%, #0c112170 18%, #0c112100 55%),
+    linear-gradient(90deg, #0c1121c0, #0c112110 70%);
+  pointer-events: none;
+}
+.scene-identity {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+.scene-platform {
+  display: block;
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: #e2e6ff;
+  font-weight: 650;
+}
+.scene-logo {
+  object-fit: contain;
+  object-position: left center;
+  filter: drop-shadow(0 4px 16px #0008);
+}
+.scene-wordmark {
+  font-family: 'Chakra Petch', sans-serif;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: clamp(25px, 2.5vw, 40px);
+  font-weight: 600;
+  color: #ece6ffcc;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+}
+.scene-objects {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  min-width: 0;
+}
+.game-scene .scene-box {
+  background: none;
+  border: 0;
+  border-radius: 0;
+  overflow: visible;
+  aspect-ratio: auto;
+  box-shadow: none;
+  flex: 1;
+  min-width: 0;
+  filter: drop-shadow(0 18px 16px #0009);
+}
+.game-scene .scene-box > img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+}
+.scene-support {
+  width: 39%;
+  max-height: 190px;
+  object-fit: contain;
+  object-position: bottom;
+  margin-left: -9%;
+  transform: translateY(10px);
+  filter: drop-shadow(0 14px 12px #0009);
+}
+.scene-box .cover-placeholder {
+  border: 1px solid #ffffff20;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #303954, #171e34);
+  color: var(--text-soft);
+  min-height: 190px;
+}
+.dossier-compact .game-scene {
+  aspect-ratio: 6 / 5;
+}
+.dossier-compact .scene-identity {
+  padding: 22px 26px 0;
+  height: 37%;
+}
+.dossier-compact .scene-platform {
+  margin-bottom: 12px;
+  font-size: 9px;
+}
+.dossier-compact .scene-logo {
+  max-width: 75%;
+  width: 270px;
+  height: calc(100% - 24px);
+}
+.dossier-compact .scene-objects {
+  height: 57%;
+  margin: 0 26px;
+}
+.dossier-compact .scene-box {
+  height: 100%;
+  max-width: 65%;
+}
+.dossier-compact .scene-wide-box .scene-box {
+  max-width: 100%;
+}
+.dossier-compact .scene-wide-box .has-support .scene-box {
+  max-width: 76%;
+}
+.dossier-compact .scene-support {
+  max-height: 78%;
+}
+.dossier-compact .dossier-body {
+  padding: 0 24px 18px;
+  position: relative;
+}
+.dossier-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: center;
+}
+.dossier-heading h2 {
+  margin: 0 0 6px;
+  font-size: clamp(22px, 1.8vw, 30px);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+.dossier-title {
+  margin: 0 0 6px;
+  font-size: 28px;
+}
+.dossier-byline {
+  font-size: 12px;
+  color: var(--muted);
+}
+.dossier-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 14px;
+}
+.dossier-tags .tag {
+  font-size: 10px;
+  padding: 4px 9px;
+}
+.dossier-personal {
+  margin-top: 24px;
+}
+.detail-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 13px;
+}
+.detail-section-heading h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0;
+}
+.detail-section-heading > span {
+  font-size: 10px;
+  color: var(--muted);
+  text-align: right;
+}
+.quick-save-state {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.quick-experience fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+.quick-rating {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 0 0 12px;
+}
+.quick-rating .stars {
+  gap: 3px;
+}
+.quick-rating .star svg {
+  width: 21px;
+  height: 21px;
+}
+.quick-rating .stars small {
+  font-size: 12px;
+}
+.game-dossier select {
+  border: 1px solid #ffffff1d;
+  border-radius: 7px;
+  background: #151d32;
+  padding: 7px 9px;
+  font-size: 12px;
+  color: var(--ink);
+}
+.quick-rating select {
+  max-width: 115px;
+}
+.quick-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 10px;
+}
+.quick-status select {
+  min-width: 140px;
+}
+.quick-toggles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 13px;
+}
+.quick-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  min-height: 36px;
+  padding: 8px 10px;
+  border: 1px solid #ffffff20;
+  border-radius: 8px;
+  background: #ffffff04;
+}
+.quick-toggle:hover {
+  background: #ffffff0a;
+}
+.quick-toggle.is-favorite {
+  color: #ffc680;
+  border-color: #f4b34c60;
+  background: #dd923c12;
+}
+.quick-toggle.is-discover {
+  color: #c5b4ff;
+  border-color: #9f7fff66;
+  background: #9167ff12;
+}
+.dossier-memory {
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid #ffffff10;
+}
+.dossier-memory p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text-soft);
+  white-space: pre-wrap;
+  margin-bottom: 0;
+  overflow-wrap: anywhere;
+}
+.dossier-memory .memory-empty {
+  font-style: italic;
+  color: var(--muted);
+}
+.memory-excerpt {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.dossier-ownership {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid #ffffff14;
+  border-radius: 9px;
+  padding: 12px;
+  margin-top: 20px;
+  color: var(--muted);
+  background: #ffffff03;
+}
+.dossier-ownership.is-owned {
+  border-color: #55ded238;
+  background: #55ded20a;
+  color: #89e1d6;
+}
+.dossier-ownership strong {
+  font-size: 12px;
+  font-weight: 550;
+  display: block;
+}
+.dossier-ownership small {
+  font-size: 10px;
+  display: block;
+  margin-top: 4px;
+}
+.detail-screenshots {
+  margin-top: 25px;
+  min-width: 0;
+}
+.screenshot-strip {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 2px 2px 10px;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+.screenshot-strip button {
+  flex: 0 0 clamp(190px, 22%, 300px);
+  aspect-ratio: 4 / 3;
+  padding: 0;
+  background: #070b15;
+  border: 1px solid #ffffff1e;
+  border-radius: 9px;
+  overflow: hidden;
+  scroll-snap-align: start;
+}
+.screenshot-strip img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.screenshot-strip button:hover {
+  border-color: var(--purple);
+}
+.screenshot-strip.is-compact {
+  gap: 8px;
+}
+.screenshot-strip.is-compact button {
+  flex-basis: 42%;
+  border-radius: 6px;
+}
+.dossier-actions {
+  position: sticky;
+  bottom: -18px;
+  display: flex;
+  gap: 9px;
+  padding: 18px 0;
+  margin-top: 8px;
+  background: linear-gradient(0deg, #0c1121 85%, #0c112100);
+  z-index: 2;
+}
+.dossier-actions .button {
+  padding: 11px 12px;
+  font-size: 12px;
+  flex: 1;
+  justify-content: center;
+  white-space: nowrap;
+}
+.dossier-actions .button.secondary {
+  flex: 0;
+}
+.dossier-keyboard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  font-size: 10px;
+  color: var(--muted);
+  margin: 12px 0 0;
+}
+.dossier-keyboard > span {
+  margin-inline: 5px;
+}
+kbd {
+  border: 1px solid #ffffff20;
+  border-radius: 4px;
+  padding: 1px 5px;
+  font: inherit;
+  color: var(--text-soft);
+}
+.dossier-full .game-scene {
+  min-height: 400px;
+  height: clamp(400px, 36vw, 590px);
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  align-items: center;
+  padding: 35px clamp(30px, 5vw, 100px) 60px;
+  gap: 6%;
+}
+.dossier-full .scene-identity h1 {
+  font-family: 'Chakra Petch', 'DM Sans Variable', sans-serif;
+  font-size: clamp(36px, 4.5vw, 76px);
+  line-height: 1.06;
+  letter-spacing: -0.05em;
+  margin: 24px 0;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+  text-shadow: 0 3px 30px #0006;
+}
+.dossier-full .scene-logo {
+  width: 100%;
+  max-width: 480px;
+  max-height: 235px;
+  margin: 25px 0;
+}
+.scene-genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.scene-genres > span {
+  padding: 6px 11px;
+  font-size: 11px;
+  border: 1px solid #ffffff28;
+  border-radius: 20px;
+  background: #0c11217a;
+}
+.scene-caption {
+  display: block;
+  margin-top: 22px;
+  font-size: 12px;
+  color: #e2e6ff99;
+}
+.dossier-full .scene-objects {
+  height: 100%;
+  max-height: 385px;
+}
+.dossier-full .scene-box {
+  height: 100%;
+  max-width: 65%;
+}
+.dossier-full .scene-wide-box .scene-box {
+  max-width: 100%;
+}
+.dossier-full .scene-wide-box .has-support .scene-box {
+  max-width: 78%;
+}
+.dossier-full .scene-support {
+  max-height: 65%;
+}
+.dossier-full .dossier-body {
+  max-width: 1500px;
+  margin: -12px auto 0;
+  padding: 0 clamp(24px, 4vw, 72px) 36px;
+  position: relative;
+}
+.dossier-full .dossier-personal {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.2fr);
+  gap: 30px;
+  padding: 24px;
+  border: 1px solid #ffffff16;
+  border-radius: 14px;
+  background: linear-gradient(115deg, #1a233d90, #151c3050);
+}
+.dossier-full .dossier-memory {
+  border: 0;
+  border-left: 1px solid #ffffff13;
+  padding: 0 0 0 30px;
+  margin: 0;
+}
+.dossier-full .dossier-memory .text-link {
+  margin-top: 16px;
+  font-size: 12px;
+}
+.dossier-information {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 22px;
+  margin-top: 24px;
+}
+.dossier-info-card {
+  border: 1px solid #ffffff14;
+  border-radius: 12px;
+  padding: 26px;
+  background: #151c3050;
+  min-width: 0;
+}
+.dossier-info-card .eyebrow {
+  color: var(--muted);
+  font-size: 9px;
+}
+.dossier-info-card h2 {
+  margin: 9px 0 18px;
+  font-size: 22px;
+  letter-spacing: -0.025em;
+}
+.dossier-info-card p {
+  font-size: 13px;
+  color: var(--text-soft);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.dossier-facts {
+  display: grid;
+  gap: 12px;
+  margin: 24px 0 0;
+}
+.dossier-facts > div {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: 15px;
+  font-size: 12px;
+}
+.dossier-facts dt {
+  color: var(--muted);
+}
+.dossier-facts dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.dossier-possession {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-bottom: 1px solid #ffffff10;
+  padding: 14px 0;
+}
+.dossier-possession strong {
+  font-size: 13px;
+  font-weight: 550;
+}
+.dossier-possession small,
+.dossier-collections small {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--muted);
+}
+.dossier-collections {
+  margin: 20px 0;
+}
+.dossier-collections .collection-detail {
+  font-size: 13px;
+  background: #ffffff03;
+  padding: 10px;
+  border-radius: 8px;
+}
+.dossier-info-card > .text-link {
+  font-size: 12px;
+}
+.dossier-full .game-media {
+  margin-top: 32px;
+}
+.visual-fields {
+  background: #11192a;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  margin-bottom: 28px;
+}
+.visual-fields-heading {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.visual-fields-heading h3 {
+  font-size: 17px;
+  margin-bottom: 5px;
+}
+.visual-fields-heading p {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 0;
+}
+.visual-fields-heading .tag {
+  align-self: flex-start;
+  font-size: 9px;
+}
+.visual-slots {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.visual-slot {
+  border: 1px solid #ffffff12;
+  border-radius: 9px;
+  background: #ffffff03;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+.visual-slot-preview {
+  height: 105px;
+  display: grid;
+  place-items: center;
+  border-radius: 5px;
+  background: repeating-conic-gradient(#ffffff04 0% 25%, #ffffff08 0% 50%) 0 / 16px 16px;
+  overflow: hidden;
+  color: var(--muted);
+}
+.visual-slot-preview img {
+  width: 100%;
+  height: 105px;
+  object-fit: contain;
+}
+.visual-slot label {
+  font-size: 12px;
+}
+.visual-slot select {
+  width: 100%;
+}
+.visual-slot small {
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.visual-slot .button {
+  min-height: 32px;
+  justify-content: center;
+  font-size: 11px;
+  padding: 7px;
+}
+.visual-slot .text-link {
+  font-size: 11px;
+  margin-top: auto;
+}
+.visual-fields > .field-hint {
+  margin-bottom: 0;
+}
+.crop-preview {
+  position: relative;
+  aspect-ratio: 6 / 5;
+  max-width: 390px;
+  margin: 20px auto;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid #ffffff30;
+  background: #0c1121;
+}
+.game-background.is-draggable {
+  touch-action: none;
+  cursor: grab;
+}
+.game-background.is-draggable:active {
+  cursor: grabbing;
+}
+.crop-preview-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, #0c1121, transparent 55%);
+  pointer-events: none;
+}
+.crop-preview-caption {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  font-size: 12px;
+  pointer-events: none;
+}
+.crop-controls {
+  display: grid;
+  gap: 12px;
+}
+.crop-controls label {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 12px;
+}
+.crop-controls input {
+  flex: 1;
+  width: auto;
+  padding: 0;
+}
+.crop-controls output {
+  min-width: 40px;
+  color: var(--muted);
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+@media (min-width: 1500px) {
+  .visual-slots {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+@media (max-width: 1100px) {
+  .game-workspace.with-game-sidebar {
+    grid-template-columns: minmax(0, 1fr) 365px;
+  }
+  .with-game-sidebar .snes-console,
+  .with-game-sidebar .amiga-hero-hardware,
+  .with-game-sidebar .amstrad-hero-hardware {
+    display: none;
+  }
+  .dossier-full .game-scene {
+    gap: 25px;
+    padding-inline: 30px;
+  }
+  .dossier-full .scene-caption {
+    display: none;
+  }
+}
+@media (max-width: 800px) {
+  .game-workspace.with-game-sidebar {
+    display: block;
+  }
+  .with-game-sidebar > .library-content {
+    display: none;
+  }
+  .game-sidebar {
+    position: relative;
+    top: auto;
+    height: auto;
+    min-height: calc(100dvh - var(--header-height, 79px));
+    border: 0;
+    overflow: visible;
+  }
+  .game-sidebar > .game-navigation {
+    top: var(--header-height, 79px);
+  }
+  .dossier-compact .game-scene {
+    max-height: none;
+    aspect-ratio: 6 / 5;
+  }
+  .dossier-compact .scene-identity {
+    padding-inline: 26px;
+  }
+  .dossier-compact .scene-objects {
+    max-width: 500px;
+    margin-inline: auto;
+    padding-inline: 26px;
+  }
+  .dossier-compact .dossier-body {
+    max-width: 650px;
+    margin: auto;
+  }
+  .dossier-full .game-scene {
+    height: auto;
+    grid-template-columns: 1fr;
+    min-height: 0;
+    padding: 28px 24px 40px;
+    gap: 24px;
+  }
+  .dossier-full .scene-identity h1 {
+    font-size: 36px;
+  }
+  .dossier-full .scene-logo {
+    max-height: 140px;
+    width: 75%;
+  }
+  .dossier-full .scene-objects {
+    height: 260px;
+  }
+  .dossier-full .dossier-personal,
+  .dossier-information {
+    grid-template-columns: 1fr;
+  }
+  .dossier-full .dossier-memory {
+    padding: 20px 0 0;
+    border: 0;
+    border-top: 1px solid #ffffff13;
+  }
+  .dossier-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .game-navigation {
+    padding-inline: 16px;
+  }
+  .game-return {
+    font-size: 11px;
+  }
+  .game-navigation-arrows {
+    gap: 6px;
+  }
+  .dossier-actions {
+    bottom: 0;
+  }
+}
+@media (max-width: 420px) {
+  .visual-slots {
+    grid-template-columns: 1fr;
+  }
+  .dossier-compact .dossier-body {
+    padding-inline: 18px;
+  }
+  .dossier-actions .button.secondary span {
+    display: none;
+  }
+  .game-return {
+    max-width: 125px;
+  }
+}

@@ -10,6 +10,8 @@ import {
 import { useLibrary } from '../ui'
 import { LinkFields } from './link-fields'
 import type { GameFieldsProps } from './field-types'
+import { VisualFields } from './visual-fields'
+import { defaultPresentation, readPresentation, type VisualRole } from '../../lib/game-visuals'
 
 type Asset = Extract<Awaited<ReturnType<typeof igdbImagesFn>>, { ok: true }>['data'][number]
 const groups = [
@@ -69,7 +71,7 @@ export function MediaFields({
       }
     }
   }
-  function added(id: string, kind = category) {
+  function added(id: string, kind = category, role?: VisualRole) {
     if (!mounted.current) {
       void discardImageFn({ data: id }).catch(() => undefined)
       return
@@ -85,6 +87,12 @@ export function MediaFields({
         isPrimary: items.length === 0,
       },
     ])
+    if (role)
+      change('presentation', {
+        ...readPresentation(data.presentation),
+        [role]: id,
+        ...(role === 'background' ? { sidebarCrop: defaultPresentation().sidebarCrop } : {}),
+      })
   }
   function remove(id: string) {
     update(items.filter((m) => m.mediaId !== id))
@@ -112,6 +120,30 @@ export function MediaFields({
         bibliothèque.
       </p>
       <fieldset disabled={busy}>
+        <VisualFields
+          data={data}
+          change={change}
+          disabled={busy || !config.mediaConfigured || items.length >= 100}
+          upload={async (file, role) => {
+            let success = false
+            await run(async () => {
+              if (items.length >= 100) throw new Error('100 images maximum par fiche.')
+              if (file.size > 12 * 1024 * 1024) throw new Error('12 Mo maximum par image.')
+              const body = new FormData()
+              body.append('image', file)
+              const response = await fetch('/api/media', { method: 'POST', body })
+              const result = (await response.json()) as { id?: string; error?: string }
+              if (!response.ok || !result.id) throw new Error(result.error ?? 'Import impossible.')
+              added(
+                result.id,
+                role === 'box' ? 'BOX' : role === 'support' ? 'MEDIA' : 'OTHER',
+                role,
+              )
+              success = true
+            })
+            return success
+          }}
+        />
         <div className="media-import-toolbar">
           <label>
             Ranger la nouvelle image dans

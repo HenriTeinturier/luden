@@ -60,6 +60,7 @@ model Game {
   discover    Boolean           @default(false)
   desire      Float?
   favorite    Boolean           @default(false)
+  presentation Json             @default("{}")
   coverId     String?
   cover       Media?            @relation(fields: [coverId], references: [id], onDelete: SetNull)
   experience  Experience?

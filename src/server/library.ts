@@ -1,5 +1,11 @@
 import { db, LOCAL_PROFILE_ID as ownerId } from './db'
-import { assertRealCollection, collectionSchema, gameSchema } from '../lib/validation'
+import {
+  assertRealCollection,
+  collectionSchema,
+  gameSchema,
+  quickGameSchema,
+} from '../lib/validation'
+import { retainVisuals } from '../lib/game-visuals'
 import { removeUnusedImages } from './media'
 
 export async function loadLibrary() {
@@ -52,7 +58,7 @@ export async function loadLibrary() {
 
 export async function saveGame(input: unknown) {
   const data = gameSchema.parse(input)
-  const { id, experience, possessions, collectionIds, media, links, ...fields } = data
+  const { id, experience, possessions, collectionIds, media, links, presentation, ...fields } = data
   const unused: string[] = []
   const result = await db.$transaction(async (tx) => {
     const existing = id
@@ -77,6 +83,10 @@ export async function saveGame(input: unknown) {
           ]
         : [])
     fields.coverId = images.find((m) => m.isPrimary)?.mediaId ?? null
+    const visuals = retainVisuals(
+      presentation ?? existing?.presentation,
+      images.map((m) => m.mediaId),
+    )
     if (
       (await tx.media.count({ where: { id: { in: images.map((m) => m.mediaId) }, ownerId } })) !==
       images.length
@@ -123,6 +133,7 @@ export async function saveGame(input: unknown) {
         where: { id },
         data: {
           ...fields,
+          presentation: visuals,
           experience: { upsert: { create: experience, update: experience } },
           possessions: { create: possessions.filter((p) => !p.id) },
           media: {
@@ -145,6 +156,7 @@ export async function saveGame(input: unknown) {
     return tx.game.create({
       data: {
         ...fields,
+        presentation: visuals,
         ownerId,
         experience: { create: experience },
         possessions: { create: possessions },
@@ -157,6 +169,33 @@ export async function saveGame(input: unknown) {
   })
   await removeUnusedImages(unused)
   return result
+}
+
+export async function quickUpdateGame(input: unknown) {
+  const { id, status, rating, ...fields } = quickGameSchema.parse(input)
+  return db.$transaction(async (tx) => {
+    await tx.game.findFirstOrThrow({ where: { id, ownerId } })
+    return tx.game.update({
+      where: { id },
+      data: {
+        ...fields,
+        ...(status !== undefined || rating !== undefined
+          ? {
+              experience: {
+                upsert: {
+                  create: { status: status ?? 'UNPLAYED', rating },
+                  update: {
+                    ...(status !== undefined ? { status } : {}),
+                    ...(rating !== undefined ? { rating } : {}),
+                  },
+                },
+              },
+            }
+          : {}),
+      },
+      select: { id: true },
+    })
+  })
 }
 
 export async function deleteGame(id: string) {
@@ -215,7 +254,7 @@ export async function exportLibrary() {
   ])
   return {
     format: 'luden',
-    version: 3,
+    version: 4,
     exportedAt: new Date().toISOString(),
     profile,
     games,

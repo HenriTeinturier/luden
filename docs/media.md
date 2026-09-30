@@ -2,6 +2,25 @@
 
 Lire ce document uniquement pour modifier l'import, la galerie ou les liens.
 
+## Présentation des fiches
+
+Migration `20260930120000_game_presentation` : `Game.presentation` JSONB, défaut `{}`, sans modifier
+les médias existants. `src/lib/game-visuals.ts` valide les quatre rôles et le cadrage (x/y 0–100,
+zoom 1–3). Les références doivent rester parmi les MediaAttachments du jeu ; elles sont effacées
+automatiquement au retrait. Les catégories de classement et l’image principale restent indépendantes.
+
+`game-form/visual-fields.tsx` : sélection de médias existants, imports dédiés et cadrage automatiquement
+proposé pour un fond. L’import passe toujours par le service habituel ; aucune découpe de fichier.
+`game-background.tsx` utilise la même géométrie dans l’éditeur et la sidebar. La fiche complète utilise
+le fond centré avec zoom 1. Replis : BOX puis coverId pour la boîte, MEDIA pour le support, texte pour
+le titre, fond sobre. PNG/WebP transparents conseillés pour logo et objets.
+
+Nouveaux imports : bornés à 2560 × 2560 px, sans agrandissement, WebP qualité 88. Fond conseillé
+2560 × 1440 px, rappel dans le formulaire. Les fichiers déjà présents ne sont pas retraités.
+Export JSON **version 4** : ajoute la présentation à chaque jeu ; binaires toujours hors export.
+Contrôle DB ciblé facultatif : `npx tsx scripts/check-game-presentation.ts`, ses seules fixtures
+et images temporaires sont nettoyées. Tests unitaires de références, géométrie et mutation partielle.
+
 Catégorie `ADVERTISEMENT` / « Publicités » : annonces de magazines et visuels promotionnels,
 groupe dédié dans l’éditeur et la fiche. Migration additive `20260927180000_advertisement_media`
 sur l’enum PostgreSQL `MediaCategory` ; fichiers et catégories existants conservés.
@@ -25,7 +44,7 @@ Le formulaire envoie toute la galerie et les liens ; omission conserve l'existan
 La principale peut être de n'importe quelle catégorie. Les cartes utilisent toujours Game.coverId.
 100 images/liens maximum par fiche ; 12 Mo par import. GIF : première image uniquement.
 Les fichiers sont optimisés en WebP, pas archivés dans leur format original ; ratio conservé.
-Les vidéos/sites ne sont jamais téléchargés, seulement liés. Export JSON version 2 inclut les associations.
+Les vidéos/sites ne sont jamais téléchargés, seulement liés. Export JSON version 4 inclut les associations et les choix de présentation (associations depuis v2).
 
 Vérifications : `npm run check` (7 tests ciblés) ; `npx tsx scripts/check-media.ts` pour le parcours DB
 optionnel, avec médias temporaires et nettoyage de ses propres fiches uniquement.

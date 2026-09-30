@@ -20,7 +20,7 @@ export async function saveImage(bytes: Buffer, sourceUrl?: string, source: Media
       throw new Error('format')
     result = await image
       .rotate()
-      .resize({ width: 1600, height: 2000, fit: 'inside', withoutEnlargement: true })
+      .resize({ width: 2560, height: 2560, fit: 'inside', withoutEnlargement: true })
       .webp({ quality: 88 })
       .toBuffer({ resolveWithObject: true })
   } catch {

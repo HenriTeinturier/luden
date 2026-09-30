@@ -1,9 +1,11 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { ArrowUpRight, Plus, ArrowRight, Heart, BookOpen, Compass, Layers3 } from 'lucide-react'
 import { SectionHeading, PlatformCard, GameCard, useLibrary } from '../components/ui'
+import { useGameSelection } from '../components/game-selection'
 
 export const Route = createFileRoute('/')({ component: Home })
 function Home() {
+  const selection = useGameSelection()
   const { games, platforms, collections } = useLibrary()
   const playing = games.filter((g) => g.experience?.status === 'PLAYING')
   const memories = games.filter((g) => g.experience?.memory)
@@ -109,7 +111,11 @@ function Home() {
           />
           <div className="game-grid home-games">
             {(playing.length ? playing : games).slice(0, 5).map((g) => (
-              <GameCard key={g.id} game={g} />
+              <GameCard
+                key={g.id}
+                game={g}
+                sequence={(playing.length ? playing : games).slice(0, 5).map((item) => item.id)}
+              />
             ))}
           </div>
         </>
@@ -137,7 +143,28 @@ function Home() {
             « {memories[0].experience!.memory.slice(0, 280)}
             {memories[0].experience!.memory.length > 280 ? '…' : ''} »
           </blockquote>
-          <Link to="/games/$gameId" params={{ gameId: memories[0].id }}>
+          <Link
+            to="/games/$gameId"
+            params={{ gameId: memories[0].id }}
+            data-game-id={memories[0].id}
+            onClick={(event) => {
+              if (
+                !selection ||
+                event.button !== 0 ||
+                event.ctrlKey ||
+                event.metaKey ||
+                event.shiftKey ||
+                event.altKey
+              )
+                return
+              event.preventDefault()
+              selection.open(
+                memories[0].id,
+                memories.map((game) => game.id),
+                event.currentTarget,
+              )
+            }}
+          >
             {memories[0].title} <ArrowRight size={16} />
           </Link>
         </section>

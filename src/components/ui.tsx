@@ -8,6 +8,7 @@ import { playStatuses } from '../lib/platforms'
 import { Stars } from './rating'
 import { coverFormat } from '../lib/presentation'
 import { gallerySearch } from '../lib/gallery'
+import { useGameSelection } from './game-selection'
 
 export function useLibrary() {
   const { library } = useLoaderData({ from: '__root__' })
@@ -183,13 +184,37 @@ export function Cover({
     </div>
   )
 }
-export function GameCard({ game, compact = false }: { game: Game; compact?: boolean }) {
+export function GameCard({
+  game,
+  compact = false,
+  sequence,
+}: {
+  game: Game
+  compact?: boolean
+  sequence?: string[]
+}) {
+  const selection = useGameSelection()
   const rating = game.experience?.rating
   const { platformId, collectionId } = useParams({ strict: false })
   const location = useLocation()
   return (
     <Link
       to="/games/$gameId"
+      data-game-id={game.id}
+      aria-current={selection?.selectedId === game.id ? 'true' : undefined}
+      onClick={(event) => {
+        if (
+          !selection ||
+          event.button !== 0 ||
+          event.ctrlKey ||
+          event.metaKey ||
+          event.shiftKey ||
+          event.altKey
+        )
+          return
+        event.preventDefault()
+        selection.open(game.id, sequence ?? [game.id], event.currentTarget)
+      }}
       params={{ gameId: game.id }}
       search={{
         from: platformId

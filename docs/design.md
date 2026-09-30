@@ -1,5 +1,31 @@
 # Direction graphique actuelle
 
+## Consultation commune : sidebar et fiche complète
+
+Toutes les plateformes partagent le même parcours, dans `game-explorer.tsx` et `game-details.tsx`.
+Le clic sur une carte ouvre un panneau occupant environ un tiers à droite et réduit la galerie.
+Sur écran étroit (800 px et moins), seul le panneau est visible. Les proportions des visuels
+suivent la plateforme ; les différences futures sont uniquement de présentation.
+
+La sidebar présente les visuels, le titre, les informations courtes, l’expérience modifiable,
+un extrait de souvenir, la possession et les captures agrandissables. Deux actions : fiche complète
+et édition. Aucun bouton de lancement, aucune note communautaire inventée, résumé réservé à la fiche.
+
+La fiche complète utilise une scène large (fond, logo ou titre, boîte et support), puis expérience,
+souvenirs, captures, informations, possessions, collections et médias. Le fond sobre et le titre
+texte permettent de consulter immédiatement les anciennes fiches. Styles dans `styles/game-details.css`.
+
+Gauche/droite parcourent l’ordre visible au moment de l’ouverture, regroupement compris, sans boucle.
+Échap remonte d’un niveau et conserve le jeu courant. Les raccourcis ignorent les champs et modales.
+Filtres et défilement sont conservés ; modifier les filtres referme la sélection. Le parcours intégré
+reste sur l’URL de la galerie ; les URLs de jeu servent toujours à l’ouverture directe/nouvel onglet.
+L’ordre capturé évite qu’une action rapide fasse sauter un jeu pendant la consultation.
+
+Boîte/jaquette, support, logo transparent et fond sont quatre rôles facultatifs, indépendants de
+la vignette principale. Import par rôle et réutilisation d’images existantes. Le fond ouvre un outil
+de cadrage sidebar (déplacement, zoom, trois curseurs accessibles), modifiable ensuite. L’image
+reste entière pour la scène large. Format de création conseillé : 2560 × 1440 px, 16:9, sans texte.
+
 ## Navigation horizontale (essai)
 
 La sidebar est remplacée par un header sticky : logo, navigation existante, paramètres,
@@ -63,7 +89,7 @@ Logo et illustration pixel art locale (`public/arcade-room.svg`) harmonis�s vi
 Cette passe conserve structure, dimensions, espacements et composants. Variante Console 90
 pr�c�dente conserv�e dans Git (`761bdca`).
 
-Consultation : fiches synthétiques (image, note sur 5, statut, avis), détails dépliables.
+Consultation : sidebar synthétique puis fiche complète immersive, décrites ci-dessus.
 Édition : formulaires structurés ; priorité à la saisie plutôt qu'à l'immersion.
 Galeries : `src/lib/presentation.ts` définit les formats indicatifs par plateforme ; les boîtes SNES PAL
 sont horizontales, Wii U verticales, sans crop. Les futures variantes/visuels personnalisés pourront

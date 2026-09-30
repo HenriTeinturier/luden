@@ -1,6 +1,6 @@
 import { createServerFn } from '@tanstack/react-start'
 import { z } from 'zod'
-import { gameSchema, collectionSchema } from '../lib/validation'
+import { gameSchema, collectionSchema, quickGameSchema } from '../lib/validation'
 import { webUrlSchema } from '../lib/media'
 import { categoriesSchema } from '../lib/categories'
 
@@ -32,6 +32,13 @@ export const saveGameFn = createServerFn({ method: 'POST' })
     const { mutation } = await import('./request')
     const { saveGame } = await import('./library')
     return mutation(() => saveGame(data))
+  })
+export const quickUpdateGameFn = createServerFn({ method: 'POST' })
+  .validator(quickGameSchema)
+  .handler(async ({ data }) => {
+    const { mutation } = await import('./request')
+    const { quickUpdateGame } = await import('./library')
+    return mutation(() => quickUpdateGame(data))
   })
 export const deleteGameFn = createServerFn({ method: 'POST' })
   .validator(z.string())

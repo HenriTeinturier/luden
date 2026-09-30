@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { attachmentsSchema, gameLinkSchema } from './media'
+import { presentationSchema } from './game-visuals'
 
 const score = (max: number) => z.number().min(0).max(max).multipleOf(0.5).nullable()
 export const possessionSchema = z
@@ -25,6 +26,7 @@ export const gameSchema = z.object({
   igdbId: z.number().int().positive().nullable().default(null),
   coverId: z.string().nullable().default(null),
   media: attachmentsSchema.optional(),
+  presentation: presentationSchema.optional(),
   links: z.array(gameLinkSchema).max(100).optional(),
   discover: z.boolean().default(false),
   desire: score(5).default(null),
@@ -40,6 +42,17 @@ export const gameSchema = z.object({
 })
 
 export type GameInput = z.infer<typeof gameSchema>
+// Partial updates never overwrite memories, media, possessions or collection memberships.
+export const quickGameSchema = z
+  .object({
+    id: z.string().min(1),
+    favorite: z.boolean().optional(),
+    discover: z.boolean().optional(),
+    desire: score(5).optional(),
+    status: gameSchema.shape.experience.shape.status.optional(),
+    rating: score(5).optional(),
+  })
+  .strict()
 export const collectionSchema = z.object({
   id: z.string().optional(),
   name: z.string().trim().min(1).max(100),

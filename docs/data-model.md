@@ -4,6 +4,9 @@
 - Platform : Switch, PS5, PC, Amiga… pas de périodes pour les consoles/anciens ordinateurs.
 - Machine : PC personnel nommé ; rattachement facultatif d'une fiche PC.
 - Game : fiche personnelle sur UNE plateforme, toutes métadonnées indépendantes. Aucun Game universel imposé.
+  `presentation` JSON contient les rôles boîte/support/logo/fond (identifiants de médias déjà attachés
+  à cette fiche) et `sidebarCrop` (x/y en %, zoom 1–3). Schéma Zod ; références retirées quand le média
+  quitte la fiche. Omettre ce champ lors d’une sauvegarde conserve les choix existants encore valides.
 - Experience : une par Game, statut, note, souvenir, période approximative libre.
 - Possession : Game + physique/digital + actuelle/ancienne + boutique digitale facultative.
 - Collection : réelle/rêvée, nom et propriétaire ; visibilité PRIVATE en V1.

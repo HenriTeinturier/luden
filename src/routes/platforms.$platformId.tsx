@@ -1,9 +1,10 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { PlatformArt, useLibrary } from '../components/ui'
 import { Gallery } from '../components/gallery'
+import { MegastarTrophy } from '../components/megastar-trophy'
 import { gallerySearch, hasPlayed } from '../lib/gallery'
 import type { CSSProperties } from 'react'
-import { Gamepad2, CirclePlay, Star, ShieldCheck } from 'lucide-react'
+import { Gamepad2, CirclePlay, ShieldCheck } from 'lucide-react'
 export const Route = createFileRoute('/platforms/$platformId')({
   validateSearch: (input) => gallerySearch.parse(input),
   component: PlatformPage,
@@ -45,15 +46,11 @@ function PlatformPage() {
                 tone: 'library',
               },
               { label: 'jeux joués', count: playedCount, icon: CirclePlay, tone: 'played' },
-              { label: 'coups de cœur', count: favoriteCount, icon: Star, tone: 'favorites' },
+              { label: 'Megastar', count: favoriteCount, icon: MegastarTrophy, tone: 'favorites' },
               { label: 'jeux possédés', count: ownedCount, icon: ShieldCheck, tone: 'owned' },
             ].map(({ label, count, icon: Icon, tone }) => (
               <div key={tone} className={`snes-overview-stat stat-${tone}`}>
-                <Icon
-                  size={29}
-                  aria-hidden="true"
-                  fill={tone === 'favorites' ? 'currentColor' : 'none'}
-                />
+                <Icon size={29} aria-hidden="true" />
                 <div>
                   <dt>{label}</dt>
                   <dd>

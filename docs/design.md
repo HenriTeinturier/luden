@@ -122,9 +122,11 @@ Composition large sur deux colonnes, fond CSS Aurora, textes HTML ; originaux co
 
 Premier univers dédié : uniquement quatre cartes de statistiques colorées au-dessus des filtres.
 Titre visuellement masqué pour l’accessibilité ; aucun texte de présentation ni tag de plateforme.
-Compteurs issus de tous les jeux SNES : bibliothèque, joués, coups de cœur et jeux possédés
+Compteurs issus de tous les jeux SNES : bibliothèque, joués, Megastar et jeux possédés
 actuellement (au moins une possession CURRENT, chaque jeu compté une seule fois). Pourcentages
 rapportés au total SNES, indépendants des filtres. Quatre colonnes, puis deux si la place manque.
+La carte Megastar reprend le trophée de la sidebar et du filtre, avec fond violet, bordure
+violet/bleu électrique et texte lavande ; elle compte les jeux favoris.
 L’ancien bandeau compact avec logo, console PAL et accents de manette reste dans le composant
 avec `hidden` et une règle CSS explicite : il est conservé pour réutilisation, sans double titre visible.
 Styles isolés dans `src/styles/platforms.css`. Les autres plateformes conservent leur bandeau.

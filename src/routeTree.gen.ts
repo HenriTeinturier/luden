@@ -22,6 +22,7 @@ import { Route as GamesNewRouteImport } from './routes/games.new'
 import { Route as MediaMediaIdRouteImport } from './routes/media.$mediaId'
 import { Route as PlatformsIndexRouteImport } from './routes/platforms.index'
 import { Route as PlatformsPlatformIdRouteImport } from './routes/platforms.$platformId'
+import { Route as UniverseMediaPlatformIdRouteImport } from './routes/universe-media.$platformId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -88,6 +89,11 @@ const PlatformsPlatformIdRoute = PlatformsPlatformIdRouteImport.update({
   path: '/platforms/$platformId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UniverseMediaPlatformIdRoute = UniverseMediaPlatformIdRouteImport.update({
+  id: '/universe-media/$platformId',
+  path: '/universe-media/$platformId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -101,6 +107,7 @@ export interface FileRoutesByFullPath {
   '/games/new': typeof GamesNewRoute
   '/media/$mediaId': typeof MediaMediaIdRoute
   '/platforms/$platformId': typeof PlatformsPlatformIdRoute
+  '/universe-media/$platformId': typeof UniverseMediaPlatformIdRoute
   '/collections/': typeof CollectionsIndexRoute
   '/platforms/': typeof PlatformsIndexRoute
 }
@@ -116,6 +123,7 @@ export interface FileRoutesByTo {
   '/games/new': typeof GamesNewRoute
   '/media/$mediaId': typeof MediaMediaIdRoute
   '/platforms/$platformId': typeof PlatformsPlatformIdRoute
+  '/universe-media/$platformId': typeof UniverseMediaPlatformIdRoute
   '/collections': typeof CollectionsIndexRoute
   '/platforms': typeof PlatformsIndexRoute
 }
@@ -132,6 +140,7 @@ export interface FileRoutesById {
   '/games/new': typeof GamesNewRoute
   '/media/$mediaId': typeof MediaMediaIdRoute
   '/platforms/$platformId': typeof PlatformsPlatformIdRoute
+  '/universe-media/$platformId': typeof UniverseMediaPlatformIdRoute
   '/collections/': typeof CollectionsIndexRoute
   '/platforms/': typeof PlatformsIndexRoute
 }
@@ -149,6 +158,7 @@ export interface FileRouteTypes {
     | '/games/new'
     | '/media/$mediaId'
     | '/platforms/$platformId'
+    | '/universe-media/$platformId'
     | '/collections/'
     | '/platforms/'
   fileRoutesByTo: FileRoutesByTo
@@ -164,6 +174,7 @@ export interface FileRouteTypes {
     | '/games/new'
     | '/media/$mediaId'
     | '/platforms/$platformId'
+    | '/universe-media/$platformId'
     | '/collections'
     | '/platforms'
   id:
@@ -179,6 +190,7 @@ export interface FileRouteTypes {
     | '/games/new'
     | '/media/$mediaId'
     | '/platforms/$platformId'
+    | '/universe-media/$platformId'
     | '/collections/'
     | '/platforms/'
   fileRoutesById: FileRoutesById
@@ -195,6 +207,7 @@ export interface RootRouteChildren {
   GamesNewRoute: typeof GamesNewRoute
   MediaMediaIdRoute: typeof MediaMediaIdRoute
   PlatformsPlatformIdRoute: typeof PlatformsPlatformIdRoute
+  UniverseMediaPlatformIdRoute: typeof UniverseMediaPlatformIdRoute
   CollectionsIndexRoute: typeof CollectionsIndexRoute
   PlatformsIndexRoute: typeof PlatformsIndexRoute
 }
@@ -292,6 +305,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlatformsPlatformIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/universe-media/$platformId': {
+      id: '/universe-media/$platformId'
+      path: '/universe-media/$platformId'
+      fullPath: '/universe-media/$platformId'
+      preLoaderRoute: typeof UniverseMediaPlatformIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -307,6 +327,7 @@ const rootRouteChildren: RootRouteChildren = {
   GamesNewRoute: GamesNewRoute,
   MediaMediaIdRoute: MediaMediaIdRoute,
   PlatformsPlatformIdRoute: PlatformsPlatformIdRoute,
+  UniverseMediaPlatformIdRoute: UniverseMediaPlatformIdRoute,
   CollectionsIndexRoute: CollectionsIndexRoute,
   PlatformsIndexRoute: PlatformsIndexRoute,
 }

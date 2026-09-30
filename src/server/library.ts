@@ -8,6 +8,7 @@ import {
 import { retainVisuals } from '../lib/game-visuals'
 import { removeUnusedImages } from './media'
 import { organizeGameImages } from './media-organization'
+import { universeSidebarImages } from './universe-media'
 
 export async function loadLibrary() {
   const [profile, platforms, machines, games, collections, categories] = await Promise.all([
@@ -41,6 +42,7 @@ export async function loadLibrary() {
   return {
     profile,
     platforms,
+    universeSidebarImages: await universeSidebarImages(platforms.map((p) => p.id)),
     machines,
     categories,
     games: games.map((g) => ({

@@ -165,6 +165,54 @@
 .game-full-view:focus {
   outline: none;
 }
+.universe-sidebar {
+  overflow: hidden;
+}
+.universe-sidebar-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.universe-sidebar .universe-sidebar-close {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #ffffff33;
+  border-radius: 9px;
+  color: #fff;
+  background: #0c1121cc;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 14px #0003;
+}
+.universe-sidebar-close:focus-visible {
+  outline: 2px solid #85cbff;
+  outline-offset: 3px;
+}
+.universe-sidebar-fallback {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  text-align: center;
+  background: radial-gradient(ellipse at 50% 35%, #51488360, transparent 70%), #0c1121;
+}
+.universe-sidebar-fallback .platform-art {
+  flex: 0 0 200px;
+  width: 100%;
+  max-width: 340px;
+}
+.universe-sidebar-fallback h2 {
+  margin: 24px 0 8px;
+}
+.universe-sidebar-fallback p {
+  color: var(--muted);
+}
 .game-full-view {
   min-width: 0;
   background: #0c1121;
@@ -1481,6 +1529,21 @@ kbd {
   }
 }
 @media (max-width: 800px) {
+  .game-workspace.with-game-sidebar.with-universe-sidebar {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .game-workspace.with-universe-sidebar > .library-content {
+    display: block;
+  }
+  .with-universe-sidebar .universe-sidebar {
+    min-height: 0;
+    height: 280px;
+    flex: 0 0 280px;
+  }
+  .universe-sidebar-image {
+    object-position: center 42%;
+  }
   .game-workspace.with-game-sidebar {
     display: block;
   }

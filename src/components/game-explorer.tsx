@@ -4,6 +4,7 @@ import type { Library } from '../lib/types'
 import { GameSelectionContext } from './game-selection'
 import { GameDetails, GameNavigation, useGameKeys } from './game-details'
 import { GameForm } from './game-form'
+import { UniverseSidebar } from './universe-sidebar'
 
 export function GameExplorer({
   children,
@@ -25,6 +26,16 @@ export function GameExplorer({
   const mobileLibraryScroll = useRef(0)
   const trigger = useRef<HTMLElement | null>(null)
   const panel = useRef<HTMLElement>(null)
+  const [universeVisit, setUniverseVisit] = useState({ pathname: location.pathname, hidden: false })
+  if (universeVisit.pathname !== location.pathname) {
+    setUniverseVisit({ pathname: location.pathname, hidden: false })
+    setSelection(null)
+    setMode('sidebar')
+    setBusy(false)
+  }
+  const universe = library?.platforms.find(
+    (p) => location.pathname.replace(/\/$/, '') === `/platforms/${p.id}`,
+  )
   // Changing card density keeps the current game and its navigation sequence open.
   const locationKey =
     location.pathname +
@@ -33,6 +44,7 @@ export function GameExplorer({
   const game = active ? library?.games.find((g) => g.id === selection.id) : undefined
   const ids = selection?.ids.filter((id) => library?.games.some((g) => g.id === id)) ?? []
   const index = game ? ids.indexOf(game.id) : -1
+  const showUniverse = Boolean(universe && !game && !universeVisit.hidden)
 
   function restoreLibrary(focusCard = false) {
     requestAnimationFrame(() => {
@@ -46,12 +58,16 @@ export function GameExplorer({
   }
   function close() {
     if (busy) return
-    if (mode === 'full') {
+    if (!game && showUniverse) {
+      setUniverseVisit({ pathname: location.pathname, hidden: true })
+      requestAnimationFrame(() => document.getElementById('main')?.focus({ preventScroll: true }))
+    } else if (mode === 'full') {
       setMode('sidebar')
       restoreLibrary()
     } else {
       scroll.current = window.innerWidth > 800 ? window.scrollY : mobileLibraryScroll.current
       setSelection(null)
+      if (universe) setUniverseVisit({ pathname: location.pathname, hidden: false })
       restoreLibrary(true)
     }
   }
@@ -67,7 +83,13 @@ export function GameExplorer({
         })
     }
   }
-  useGameKeys({ enabled: Boolean(game) && mode !== 'edit' && !busy, close, move })
+  useGameKeys({
+    enabled: (Boolean(game) || showUniverse) && mode !== 'edit' && !busy,
+    close,
+    move: (delta) => {
+      if (game) move(delta)
+    },
+  })
   useEffect(() => {
     if (!game || mode === 'edit') return
     panel.current?.scrollTo({ top: 0 })
@@ -90,10 +112,19 @@ export function GameExplorer({
         },
       }}
     >
-      <div className={`game-workspace ${game && mode === 'sidebar' ? 'with-game-sidebar' : ''}`}>
+      <div
+        className={`game-workspace ${(game && mode === 'sidebar') || showUniverse ? 'with-game-sidebar' : ''} ${showUniverse ? 'with-universe-sidebar' : ''}`}
+      >
         <div className="library-content" hidden={Boolean(game) && mode !== 'sidebar'}>
           {children}
         </div>
+        {showUniverse && universe && (
+          <UniverseSidebar
+            platform={universe}
+            image={library?.universeSidebarImages[universe.id]}
+            onClose={close}
+          />
+        )}
         {game && mode === 'edit' ? (
           <GameForm
             key={game.id}

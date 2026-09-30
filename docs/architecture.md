@@ -18,6 +18,8 @@ Pas de Query ajouté sans besoin, de repository abstrait, de DI ou de microservi
 
 Consultation : `GameExplorer` dans le shell conserve la galerie montée et gère sélection/ordre,
 sidebar, fiche et édition. `GameDetails` est partagé avec la route de jeu directe.
+Dans une route plateforme, `UniverseSidebar` fournit l’état d’accueil par défaut ; `GameExplorer`
+gère accueil → jeu → accueil → masqué et réinitialise cet état lors d’une nouvelle visite.
 `quickUpdateGameFn` → `library.quickUpdateGame` → transaction Prisma applique seulement les champs
 rapides explicitement envoyés ; aucune réécriture du reste de la fiche. Invalidation synchrone avant
 confirmation. `Game.presentation` est validé par Zod et limité aux médias attachés à la fiche.
@@ -36,6 +38,10 @@ Les retraits sont appliqués à l'enregistrement ; seuls les fichiers sans réf�
 Les imports provisoires sont nettoyés au retrait/quand le formulaire est démonté, au mieux.
 Un onglet fermé brutalement ou un échec disque peut laisser un fichier orphelin ; aucune purge globale.
 Voir `docs/media.md` pour les points d'entrée et la migration.
+Les illustrations d’accueil des univers sont des fichiers personnels conventionnés
+`media/plateformes/<id>/sidebar.webp`, hors Git et indépendants des médias de jeux en base.
+`loadLibrary` signale celles disponibles ; la route locale `/universe-media/<id>` les sert avec
+validation stricte de l’identifiant et chemin borné au dossier configuré.
 Pas de copie de la base vivante dans OneDrive ; volume Docker dédié.
 
 ## Futur

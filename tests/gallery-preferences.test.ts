@@ -1,6 +1,10 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { galleryPreferenceKey, restoreGalleryPreferences } from '../src/lib/gallery-preferences'
+import {
+  galleryPreferenceKey,
+  restoreGalleryPreferences,
+  saveGalleryPreferences,
+} from '../src/lib/gallery-preferences'
 
 test('Préférences distinctes par bibliothèque, URL prioritaire et recherche non mémorisée', () => {
   assert.notEqual(galleryPreferenceKey('/platforms/snes'), galleryPreferenceKey('/platforms/amiga'))
@@ -28,6 +32,30 @@ test('La densité reste mémorisée, mais un choix automatique explicite reste p
     columns: undefined,
     sort: 'rating',
   })
+})
+
+test('Le nombre de colonnes est enregistré et restauré après une nouvelle visite', (t) => {
+  const storage = new Map<string, string>()
+  const previous = Object.getOwnPropertyDescriptor(globalThis, 'localStorage')
+  Object.defineProperty(globalThis, 'localStorage', {
+    configurable: true,
+    value: {
+      setItem: (key: string, value: string) => storage.set(key, value),
+    },
+  })
+  t.after(() => {
+    if (previous) Object.defineProperty(globalThis, 'localStorage', previous)
+    else Reflect.deleteProperty(globalThis, 'localStorage')
+  })
+  for (const columns of [4, 7, 10, 'auto'] as const) {
+    saveGalleryPreferences('/platforms/snes', { columns, q: 'Mario' })
+    const restored = restoreGalleryPreferences(
+      storage.get(galleryPreferenceKey('/platforms/snes'))!,
+      {},
+    )
+    assert.equal(restored.columns, columns)
+    assert.equal(restored.q, undefined)
+  }
 })
 
 test('Stockage absent ou invalide : conserver les choix URL sans imposer de regroupement', () => {

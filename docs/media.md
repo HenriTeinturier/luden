@@ -4,6 +4,14 @@ Lire ce document uniquement pour modifier l'import, la galerie ou les liens.
 
 ## Rangement sur disque
 
+Les images d’accueil des univers sont conservées à part :
+`LUDEN_DATA_DIR/media/plateformes/<id-plateforme>/sidebar.webp`.
+L’image SNES fournie est copiée sans conversion (1024 × 1536, empreinte vérifiée).
+Ces images ne sont pas des pièces jointes de jeu ni des imports provisoires : elles ne participent
+pas à la migration des lignes `Media` et ne sont pas supprimées avec un jeu. Elles sont détectées
+au chargement de la bibliothèque et servies par `/universe-media/<id>` ; absence d’image = identité
+visuelle de la plateforme. Elles restent hors Git et doivent être incluses dans la sauvegarde du dossier média.
+
 Tous les imports (fichier, URL, IGDB) vont d’abord dans `media/_imports/`. À l’enregistrement de
 la fiche, `media-organization.ts` les range sous
 `media/jeux/<plateforme>/<titre-normalisé>--<id-jeu>/<catégorie>-<id-média>.webp`.

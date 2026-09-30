@@ -51,6 +51,7 @@ export function useGameKeys({
     function handle(event: KeyboardEvent) {
       if (
         event.defaultPrevented ||
+        event.repeat ||
         event.ctrlKey ||
         event.metaKey ||
         event.altKey ||

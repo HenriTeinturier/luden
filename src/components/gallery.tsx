@@ -2,7 +2,8 @@ import { coverFormat } from '../lib/presentation'
 import { useLocation, useNavigate, useSearch } from '@tanstack/react-router'
 import { Search, LayoutGrid, List, SlidersHorizontal, Columns3, X } from 'lucide-react'
 import { MegastarTrophy } from './megastar-trophy'
-import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties } from 'react'
+import { useGameSelection } from './game-selection'
 import { filterGames, type GallerySearch } from '../lib/gallery'
 import type { Game } from '../lib/types'
 import { playStatuses } from '../lib/platforms'
@@ -13,6 +14,14 @@ import {
   restoreGalleryPreferences,
   saveGalleryPreferences,
 } from '../lib/gallery-preferences'
+
+function subscribeDesktop(onChange: () => void) {
+  const query = window.matchMedia('(min-width: 801px)')
+  query.addEventListener('change', onChange)
+  return () => query.removeEventListener('change', onChange)
+}
+const isDesktop = () => window.matchMedia('(min-width: 801px)').matches
+const serverDesktop = () => false
 
 export function Gallery({
   games,
@@ -26,8 +35,50 @@ export function Gallery({
   const library = useLibrary()
   const search = useSearch({ strict: false }) as GallerySearch
   const filters = { ...search, scope: search.scope ?? defaultScope }
+  const visible = filterGames(games, filters)
   const navigate = useNavigate()
   const pathname = useLocation({ select: (location) => location.pathname })
+  const selection = useGameSelection()
+  const desktop = useSyncExternalStore(subscribeDesktop, isDesktop, serverDesktop)
+  const columnBonus = desktop && selection?.sidebarVisible === false ? 2 : 0
+  const gallery = useRef<HTMLDivElement>(null)
+  const [autoColumns, setAutoColumns] = useState<{ pathname: string; count: number } | null>(null)
+  const measuredAuto = autoColumns?.pathname === pathname ? autoColumns.count : undefined
+  const displayedColumns =
+    typeof filters.columns === 'number' ? filters.columns + columnBonus : 'auto'
+  const gridColumns =
+    displayedColumns === 'auto'
+      ? columnBonus && measuredAuto
+        ? measuredAuto + columnBonus
+        : undefined
+      : displayedColumns
+  useEffect(() => {
+    if (
+      !desktop ||
+      !selection?.sidebarVisible ||
+      typeof filters.columns === 'number' ||
+      filters.view === 'list'
+    )
+      return
+    const container = gallery.current
+    if (!container) return
+    const measure = () => {
+      const grid = container.querySelector('.game-grid')
+      if (!grid || !grid.getBoundingClientRect().width) return
+      const tracks = getComputedStyle(grid).gridTemplateColumns
+      if (!tracks || tracks === 'none') return
+      const count = tracks.split(' ').length
+      setAutoColumns((previous) =>
+        previous?.pathname === pathname && previous.count === count
+          ? previous
+          : { pathname, count },
+      )
+    }
+    const observer = new ResizeObserver(measure)
+    observer.observe(container)
+    measure()
+    return () => observer.disconnect()
+  }, [desktop, selection?.sidebarVisible, filters.columns, filters.view, pathname, visible.length])
   const restoredPath = useRef<string | null>(null)
   useEffect(() => {
     if (restoredPath.current === pathname) return
@@ -54,7 +105,6 @@ export function Gallery({
     saveGalleryPreferences(pathname, next)
     void navigate({ to: '.', search: next, replace: true, resetScroll: false })
   }
-  const visible = filterGames(games, filters)
   const grouping = filters.group ?? 'none'
   const groups =
     grouping === 'category'
@@ -187,19 +237,22 @@ export function Gallery({
           </div>
           <label
             className="gallery-density"
-            title="Jaquettes par ligne : automatique ou de 4 à 10, selon la place disponible"
+            title="Jaquettes par ligne : 4 à 10 avec la sidebar, 2 de plus sans elle, selon la place disponible"
           >
             <Columns3 size={16} aria-hidden="true" />
             <select
               aria-label="Jaquettes par ligne"
-              value={filters.columns ?? 'auto'}
+              value={displayedColumns}
               disabled={filters.view === 'list'}
               onChange={(e) =>
-                update({ columns: e.target.value === 'auto' ? 'auto' : Number(e.target.value) })
+                update({
+                  columns:
+                    e.target.value === 'auto' ? 'auto' : Number(e.target.value) - columnBonus,
+                })
               }
             >
               <option value="auto">Auto</option>
-              {Array.from({ length: 7 }, (_, i) => i + 4).map((count) => (
+              {Array.from({ length: 7 }, (_, i) => i + 4 + columnBonus).map((count) => (
                 <option key={count} value={count}>
                   {count}
                 </option>
@@ -267,7 +320,7 @@ export function Gallery({
         </div>
       )}
       {visible.length ? (
-        <div className="gallery-groups">
+        <div className="gallery-groups" ref={gallery}>
           {groups.map((group) => (
             <section key={group.id} className="gallery-category" aria-label={group.name || 'Jeux'}>
               {grouping === 'category' && (
@@ -282,11 +335,11 @@ export function Gallery({
                 className={
                   filters.view === 'list'
                     ? 'game-list'
-                    : `game-grid ${group.games.every((g) => coverFormat(g.platformId).wide) ? 'wide-grid' : 'mixed-grid'} ${typeof filters.columns === 'number' ? 'has-columns' : ''}`
+                    : `game-grid ${group.games.every((g) => coverFormat(g.platformId).wide) ? 'wide-grid' : 'mixed-grid'} ${typeof gridColumns === 'number' ? 'has-columns' : ''}`
                 }
                 style={
-                  typeof filters.columns === 'number'
-                    ? ({ '--gallery-columns': filters.columns } as CSSProperties)
+                  typeof gridColumns === 'number'
+                    ? ({ '--gallery-columns': gridColumns } as CSSProperties)
                     : undefined
                 }
               >

@@ -9,6 +9,8 @@
 
 ## Consultation des jeux — 2026-09-30
 
+- Colonnes desktop : +2 quand la sidebar est masquée, retour à la référence lorsqu’elle revient (accueil ou jeu). Préférence stockée stable, sélecteur ajusté 4–10 / 6–12 ; Auto mesure la grille ouverte puis ajoute deux colonnes à la fermeture. Vérification navigateur à 2560 px : 7 → 9 → 7, Auto 7 → 9, sélection 12 sans sidebar → 10 avec. TypeScript, lint et 20 tests passent.
+
 - Sidebar d’accueil affichée par défaut dans chaque univers, remplacée par la fiche au clic. Croix/Échap : jeu → accueil → masqué ; retour dans un univers = accueil réaffiché. Image SNES fournie rangée dans `media/plateformes/snes/sidebar.webp`, sans conversion ni inclusion dans Git ; autres plateformes avec identité de repli. Mobile : accueil court au-dessus de la galerie. Parcours souris/clavier, image et mobile vérifiés. Colonnes déjà persistées par galerie dans localStorage : restauration à 7 vérifiée après visite sans paramètres URL, test de sauvegarde ajouté. TypeScript, lint et 20 tests passent.
 
 - Page SNES : en-tête limité aux quatre cartes bibliothèque/joués/coups de cœur/possédés ; titre visuellement masqué, textes et tags retirés. Comptage dynamique des jeux distincts possédés actuellement et pourcentages sur le total SNES, sans tenir compte des filtres. Ancien bandeau conservé et masqué avec `hidden` + CSS explicite ; autres plateformes inchangées. Présentation responsive sur quatre puis deux colonnes.

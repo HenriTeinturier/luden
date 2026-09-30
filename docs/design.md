@@ -150,6 +150,11 @@ se replient sur plusieurs lignes si la largeur manque.
 À côté du choix grille/liste, une icône de colonnes et un sélecteur compact (104 px) règlent
 le nombre de jaquettes par ligne : `Auto` ou 4 à 10. Choix mémorisé par galerie et conservé
 dans l’URL, y compris au retour de fiche. La sidebar reste ouverte lors du réglage.
+Sur desktop, le choix mémorisé est la référence avec sidebar. Sans sidebar, la grille et le
+sélecteur affichent deux colonnes supplémentaires (6 à 12) ; la réouverture retrouve la référence.
+Choisir une valeur sans sidebar enregistre la référence correspondante (valeur − 2), sans dérive
+au fil des bascules. En Auto, le nombre mesuré avec sidebar sert de référence pour ajouter deux
+colonnes à sa fermeture. Sur mobile et en liste, aucun bonus de colonnes n’est appliqué à la grille.
 En mode manuel, chaque carte occupe une colonne, même dans une galerie mélangeant les formats.
 La grille réduit le nombre de colonnes si nécessaire pour garder au moins 150 px par carte ;
 le mode Auto conserve les règles adaptées à chaque plateforme. Le sélecteur est désactivé en liste.

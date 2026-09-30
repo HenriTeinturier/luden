@@ -102,6 +102,7 @@ export function GameExplorer({
     <GameSelectionContext.Provider
       value={{
         selectedId: game?.id ?? null,
+        sidebarVisible: Boolean(game) || showUniverse,
         open: (id, sequence, element) => {
           if (busy) return
           trigger.current = element

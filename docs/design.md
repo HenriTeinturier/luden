@@ -135,8 +135,8 @@ Titre visuellement masqué pour l’accessibilité ; aucun texte de présentatio
 Compteurs issus de tous les jeux SNES : bibliothèque, joués, Megastar et jeux possédés
 actuellement (au moins une possession CURRENT, chaque jeu compté une seule fois). Pourcentages
 rapportés au total SNES, indépendants des filtres. Quatre colonnes, puis deux si la place manque.
-La carte Megastar reprend le trophée de la sidebar et du filtre, avec fond violet, bordure
-violet/bleu électrique et texte lavande ; elle compte les jeux favoris.
+La carte Megastar reprend le trophée de la sidebar et du filtre, avec des accents lavande ; elle
+compte les jeux favoris. Son fond et sa bordure sont identiques aux autres statistiques, sans halo.
 Les quatre cartes sont masquées avec la sidebar pour donner plus de place aux jeux. Elles
 réapparaissent à son ouverture, via le bouton « Sidebar » ou le choix d’un jeu. Le titre accessible
 de la plateforme reste présent dans les deux états.

@@ -468,11 +468,6 @@
 }
 .snes-overview-stat.stat-favorites {
   --stat-color: #d6b6ff;
-  border-color: transparent;
-  background:
-    linear-gradient(115deg, #4324b7, #19134a 65%, #101d48) padding-box,
-    linear-gradient(110deg, #cb8aff, #7c5cff 50%, #37c8ff) border-box;
-  box-shadow: inset 0 0 12px #7c5cff35;
 }
 .snes-overview-stat.stat-favorites dt {
   color: #d6b6ff;
@@ -480,7 +475,6 @@
 .snes-overview-stat > .megastar-trophy {
   width: 32px;
   height: 32px;
-  filter: drop-shadow(0 0 4px #7c5cff);
 }
 .snes-overview-stat.stat-owned {
   --stat-color: #63dcc4;

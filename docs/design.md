@@ -22,6 +22,8 @@ deux genres et parcours occupent une ligne défilable si nécessaire. Boutons pe
 « À découvrir / rejouer » avec texte visible. Le favori est un trophée étoilé « Megastar · Jeu culte »
 sur la ligne de notation : dessin SVG dédié, doré si actif et gris sinon ; même booléen favori que
 les étiquettes de jaquettes et le filtre Megastar, aucun nouvel indicateur indépendant.
+La barre commune réutilise le même trophée via `MegastarTrophy` et les mêmes couleurs gris/doré
+pour le filtre Megastar ; son libellé reste compact sur une ligne.
 La fiche complète conserve sa composition et ses contrôles précédents.
 
 La sidebar présente les visuels, le titre, les informations courtes, l’expérience modifiable,

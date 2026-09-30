@@ -188,10 +188,14 @@
   display: inline-flex;
   align-items: center;
   gap: 7px;
+  color: var(--muted);
+  border-color: #ffffff25;
+  background: #ffffff04;
 }
-.platform-scope .favorites-filter[aria-pressed='true'] {
-  color: var(--yellow);
-  border-color: var(--yellow);
+.favorites-filter .megastar-trophy {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
 }
 .platform-scope button[aria-pressed='true'] {
   background: var(--active-background);

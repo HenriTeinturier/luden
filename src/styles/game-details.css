@@ -431,7 +431,8 @@
   font-size: 9px;
   opacity: 0.8;
 }
-.sidebar-megastar.is-favorite {
+.sidebar-megastar.is-favorite,
+.platform-scope .favorites-filter[aria-pressed='true'] {
   color: #ffda82;
   border-color: #eabd5f85;
   background: linear-gradient(125deg, #be791825, #f8cf7320 48%, #86561912);
@@ -439,7 +440,8 @@
     inset 0 1px #ffe6a820,
     0 0 16px #efb74d0d;
 }
-.sidebar-megastar.is-favorite .megastar-trophy {
+.sidebar-megastar.is-favorite .megastar-trophy,
+.favorites-filter[aria-pressed='true'] .megastar-trophy {
   filter: drop-shadow(0 2px 5px #ffc34d40);
 }
 .sidebar-megastar:hover {

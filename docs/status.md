@@ -9,6 +9,7 @@
 
 ## Consultation des jeux — 2026-09-30
 
+- Filtre Megastar de la barre commune harmonisé avec la sidebar : même trophée étoilé (composant partagé), aspect grisé au repos et doré quand le filtre est actif. Fonctionnement du filtre favori conservé dans toutes les galeries.
 - Ajustement sidebar : cartouche droite avec ombre de contact elliptique ; boîte/support abaissés de 46 px supplémentaires (débordement 108 px). Découverte/rejeu affiche désormais son texte. Favori remplacé dans la sidebar par un trophée SVG étoilé « Megastar · Jeu culte » à côté de la note : doré actif/gris inactif, conserve les favoris existants et leur bascule. Aucun champ d’appréciation ajouté.
 - Vérifié : TypeScript/lint, contrôle ciblé Super Metroid (2560 × 1280 sans scroll interne, support sans rotation, débordement 108 px), trophée actif sur Super Mario World et ligne de notation sans débordement à 1280 px. Serveur Vite relancé sur 3000.
 - Sidebar rapprochée de la maquette : fond derrière les flèches/fermeture, retrait du surtitre plateforme/année, logo agrandi/incliné, boîte et cartouche agrandies et débordant sous le fond ; perspective CSS du support. Étoiles sous le titre, métadonnées/parcours sur une ligne, boutons collection et favori toujours visibles avec états gris/vert/rose. Collection ouvre l’édition des possessions ; favori et découverte restent des mutations rapides. Présentation de la fiche complète conservée.

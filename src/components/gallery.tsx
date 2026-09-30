@@ -1,6 +1,7 @@
 import { coverFormat } from '../lib/presentation'
 import { useLocation, useNavigate, useSearch } from '@tanstack/react-router'
-import { Search, LayoutGrid, List, SlidersHorizontal, X, Heart } from 'lucide-react'
+import { Search, LayoutGrid, List, SlidersHorizontal, X } from 'lucide-react'
+import { MegastarTrophy } from './megastar-trophy'
 import { useEffect, useRef, useState } from 'react'
 import { filterGames, type GallerySearch } from '../lib/gallery'
 import type { Game } from '../lib/types'
@@ -95,12 +96,12 @@ export function Gallery({
           <button
             type="button"
             className="favorites-filter"
-            aria-label="Mes coups de cœur"
-            title="Mes coups de cœur"
+            aria-label="Megastar — filtrer mes jeux cultes favoris"
+            title="Afficher uniquement mes jeux Megastar (favoris)"
             aria-pressed={filters.favorite ?? false}
             onClick={() => update({ favorite: !filters.favorite })}
           >
-            <Heart size={15} fill={filters.favorite ? 'currentColor' : 'none'} />
+            <MegastarTrophy />
             Megastar
           </button>
         </div>

@@ -123,30 +123,6 @@ export function Gallery({
             </button>
           )}
         </div>
-        <div className="gallery-results">
-          <span aria-live="polite" aria-atomic="true">
-            {visible.length} jeu{visible.length !== 1 ? 'x' : ''}
-            {filtered && ` sur ${games.length}`}
-          </span>
-          {filtered && (
-            <button
-              className="text-link"
-              onClick={() =>
-                update({
-                  q: '',
-                  platform: '',
-                  status: '',
-                  machine: '',
-                  favorite: false,
-                  owned: 'all',
-                  scope: 'all',
-                })
-              }
-            >
-              Réinitialiser les filtres <X size={13} />
-            </button>
-          )}
-        </div>
         <div className="gallery-controls">
           <select
             aria-label="Regrouper les jeux"
@@ -230,6 +206,30 @@ export function Gallery({
               ))}
             </select>
           </label>
+        </div>
+        <div className="gallery-results">
+          <span aria-live="polite" aria-atomic="true">
+            {visible.length} jeu{visible.length !== 1 ? 'x' : ''}
+            {filtered && ` sur ${games.length}`}
+          </span>
+          {filtered && (
+            <button
+              className="text-link"
+              onClick={() =>
+                update({
+                  q: '',
+                  platform: '',
+                  status: '',
+                  machine: '',
+                  favorite: false,
+                  owned: 'all',
+                  scope: 'all',
+                })
+              }
+            >
+              Réinitialiser les filtres <X size={13} />
+            </button>
+          )}
         </div>
       </div>
       {advanced && (

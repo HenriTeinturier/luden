@@ -131,7 +131,10 @@ un accès sans préférence mémorisée repart sur Joués, pour toutes les plate
 La même barre est utilisée dans toutes les galeries, collections comprises. Bibliothèque et
 collections partent sur Tous mes jeux ; Découverte sur À découvrir, avec possibilité de changer
 de vue. Dans une collection, les boutons filtrent uniquement ses jeux. Les préférences navigateur
-restent propres à chaque galerie. La barre se replie sur plusieurs lignes si la largeur manque.
+restent propres à chaque galerie. Filtres de portée, Megastar, recherche et réglages occupent une
+ligne compacte sur grand écran, y compris avec la sidebar ouverte à 2560 px. Le compteur et la
+réinitialisation sont regroupés sur une fine ligne en dessous, alignée à droite. Les contrôles
+se replient sur plusieurs lignes si la largeur manque.
 
 À côté du choix grille/liste, une icône de colonnes et un sélecteur compact (104 px) règlent
 le nombre de jaquettes par ligne : `Auto` ou 4 à 10. Choix mémorisé par galerie et conservé

@@ -307,26 +307,24 @@ function QuickExperience({
                 </small>
               </span>
             </button>
-            <div className="sidebar-play-options" role="group" aria-label="Joué et à découvrir">
-              <button
-                type="button"
-                className="sidebar-played"
-                aria-pressed={played}
-                onClick={() => void update({ status: played ? 'UNPLAYED' : 'PLAYED' })}
-              >
-                <Gamepad2 size={17} />
-                <span>Joué</span>
-              </button>
-              <button
-                type="button"
-                className="sidebar-discover"
-                aria-pressed={game.discover}
-                onClick={() => void update({ discover: !game.discover })}
-              >
-                <Sparkles size={17} />
-                <span>À découvrir</span>
-              </button>
-            </div>
+            <button
+              type="button"
+              className="sidebar-played"
+              aria-pressed={played}
+              onClick={() => void update({ status: played ? 'UNPLAYED' : 'PLAYED' })}
+            >
+              <Gamepad2 size={23} />
+              <strong>Joué</strong>
+            </button>
+            <button
+              type="button"
+              className="sidebar-discover"
+              aria-pressed={game.discover}
+              onClick={() => void update({ discover: !game.discover })}
+            >
+              <Sparkles size={23} />
+              <strong>À découvrir</strong>
+            </button>
           </div>
         </fieldset>
         <span className="sr-only" role="status">

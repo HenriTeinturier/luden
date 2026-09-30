@@ -19,9 +19,11 @@ Logo agrandi et incliné ; boîte et support plus grands, décalés sous le fond
 avec ombre elliptique de contact sous l’objet. Le titre n’est affiché que dans la scène (logo ou texte),
 sans répétition au-dessus des étoiles ; un titre masqué reste accessible aux lecteurs d’écran.
 Éditeur, année et deux genres occupent une ligne défilable si nécessaire.
-« Dans ma collection » (vert si possession actuelle, sinon gris) côtoie un contrôle arrondi
-« Joué / À découvrir », sur la même ligne ou dessous si la sidebar est étroite. Deux bascules
-indépendantes : Joué actif en corail avec manette, À découvrir actif en violet avec étincelles.
+Trois cartes séparées partagent le même style : « Dans ma collection », « Joué » et « À découvrir ».
+Même hauteur, coins arrondis, icône à gauche et bordure discrète ; gris inactif, vert pour la possession,
+corail pour Joué et violet pour À découvrir. Les trois bascules restent indépendantes.
+Sur une sidebar large, les trois cartes sont alignées ; sous 540 px, la collection occupe une ligne
+et les cartes Joué / À découvrir restent côte à côte dessous.
 Joué reflète tout statut autre que non joué ; son clic bascule PLAYED/UNPLAYED. Les statuts détaillés
 restent dans la fiche complète et le formulaire, sans conversion lors de la simple consultation.
 Toutes ces actions enregistrent immédiatement sans ouvrir l’édition. Le bouton « Modifier »

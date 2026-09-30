@@ -9,6 +9,8 @@
 
 ## Consultation des jeux — 2026-09-30
 
+- Sidebar : capsule remplacée par deux cartes distinctes « Joué » et « À découvrir », de même style que « Dans ma collection ». Trois bascules indépendantes, même hauteur et bordure ; états actifs vert/corail/violet, inactifs gris. Trois cartes sur une ligne en largeur suffisante ; collection au-dessus des deux autres sous 540 px.
+
 - Sidebar : menu de parcours remplacé par une capsule à deux boutons « Joué » (corail) / « À découvrir » (violet), à côté de « Dans ma collection » ou dessous si la largeur manque. Bascules indépendantes, statuts détaillés conservés dans la fiche complète et l’édition. Libellé découverte raccourci ; titre répété au-dessus des étoiles masqué visuellement, conservé pour l’accessibilité.
 - Vérifié : TypeScript/lint ; rendu compact à 1280 px et alignement sur une ligne à 2560 × 1280 sans défilement interne, état Joué actif et disparition du menu de parcours dans la sidebar.
 

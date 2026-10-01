@@ -188,6 +188,9 @@
   color: var(--muted);
   font-size: 11px;
 }
+.platform-visual-delete {
+  margin-top: 12px;
+}
 .platform-upload {
   display: flex;
   align-items: center;

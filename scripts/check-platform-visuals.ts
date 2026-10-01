@@ -1,7 +1,7 @@
 // Isolated DB/filesystem fixtures; no personal platform or file is modified.
 import 'dotenv/config'
 import assert from 'node:assert/strict'
-import { mkdtemp, unlink, rmdir } from 'node:fs/promises'
+import { mkdtemp, unlink, rmdir, access } from 'node:fs/promises'
 import os from 'node:os'
 import path from 'node:path'
 import sharp from 'sharp'
@@ -10,6 +10,7 @@ import {
   savePlatformImage,
   savePlatformVisuals,
   readPlatformImage,
+  deletePlatformVisual,
 } from '../src/server/platform-visuals'
 import { resolveMediaPath } from '../src/server/media-path'
 import { exportLibrary } from '../src/server/library'
@@ -69,8 +70,27 @@ try {
   const exported = await exportLibrary()
   assert.equal(exported.version, 5)
   assert.equal(exported.platformVisuals.filter((v) => v.platformId === platformId).length, 3)
+  await savePlatformVisuals({ platformId, visuals: visuals.map((v) => ({ ...v, active: true })) })
+  const posterRecord = await db.platformVisual.findUniqueOrThrow({ where: { id: poster.id } })
+  await assert.rejects(deletePlatformVisual({ platformId: 'snes', id: poster.id }))
+  assert.ok(await readPlatformImage(poster.id))
+  assert.equal((await deletePlatformVisual({ platformId, id: poster.id })).warning, null)
+  assert.equal(await readPlatformImage(poster.id), null)
+  await assert.rejects(access(resolveMediaPath(root, posterRecord.path)))
+  assert.equal(
+    (await db.platformVisual.findUniqueOrThrow({ where: { id: inactive.id } })).isDefault,
+    true,
+  )
+  assert.equal(
+    (await db.platformVisual.findUniqueOrThrow({ where: { id: banner.id } })).isDefault,
+    true,
+  )
+  await deletePlatformVisual({ platformId, id: inactive.id })
+  assert.equal(await db.platformVisual.count({ where: { platformId, kind: 'POSTER' } }), 0)
+  await deletePlatformVisual({ platformId, id: banner.id })
+  assert.equal(await db.platformVisual.count({ where: { platformId } }), 0)
   console.log(
-    'Plateforme : imports, defaults, validation, désactivation sans suppression, lecture et export vérifiés.',
+    'Plateforme : imports, défauts, validation, inactifs, export et suppressions DB/fichiers vérifiés.',
   )
 } finally {
   const records = await db.platformVisual.findMany({ where: { platformId, ownerId } })

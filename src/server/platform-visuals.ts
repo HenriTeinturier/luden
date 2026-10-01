@@ -8,6 +8,7 @@ import {
   platformIdSchema,
   platformVisualKind,
   platformVisualsSchema,
+  deletePlatformVisualSchema,
 } from '../lib/platform-visuals'
 
 export async function savePlatformImage(
@@ -94,4 +95,35 @@ export async function readPlatformImage(id: string) {
   const visual = await db.platformVisual.findFirst({ where: { id, ownerId } })
   if (!visual) return null
   return readFile(resolveMediaPath(process.env.LUDEN_DATA_DIR ?? '', visual.path))
+}
+
+export async function deletePlatformVisual(input: unknown) {
+  const { platformId, id } = deletePlatformVisualSchema.parse(input)
+  const absolute = await db.$transaction(async (tx) => {
+    await tx.$queryRaw`SELECT "id" FROM "Platform" WHERE "id" = ${platformId} FOR UPDATE`
+    const visual = await tx.platformVisual.findFirstOrThrow({ where: { id, platformId, ownerId } })
+    const file = resolveMediaPath(process.env.LUDEN_DATA_DIR ?? '', visual.path)
+    await tx.platformVisual.delete({ where: { id } })
+    if (visual.isDefault) {
+      const next = await tx.platformVisual.findFirst({
+        where: { platformId, ownerId, kind: visual.kind, active: true },
+        orderBy: [{ position: 'asc' }, { id: 'asc' }],
+      })
+      if (next)
+        await tx.platformVisual.update({ where: { id: next.id }, data: { isDefault: true } })
+    }
+    return file
+  })
+  // The DB commit comes first: a failed transaction must never lose its file.
+  try {
+    await unlink(absolute)
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== 'ENOENT')
+      return {
+        id,
+        warning:
+          'Image retirée de la plateforme, mais son fichier n’a pas pu être supprimé du disque.',
+      }
+  }
+  return { id, warning: null }
 }

@@ -1,9 +1,14 @@
 import { useState } from 'react'
 import { Link, useRouter } from '@tanstack/react-router'
-import { ArrowLeft, ArrowUp, ArrowDown, ImagePlus, Check } from 'lucide-react'
+import { ArrowLeft, ArrowUp, ArrowDown, ImagePlus, Check, Trash2 } from 'lucide-react'
 import type { Platform } from '../lib/types'
-import { platformVisualsSchema, type PlatformVisual } from '../lib/platform-visuals'
-import { savePlatformVisualsFn } from '../server/functions'
+import {
+  platformVisualsSchema,
+  withoutPlatformVisual,
+  type PlatformVisual,
+} from '../lib/platform-visuals'
+import { savePlatformVisualsFn, deletePlatformVisualFn } from '../server/functions'
+import { Confirm } from './ui'
 
 export function PlatformVisualForm({
   platform,
@@ -17,6 +22,27 @@ export function PlatformVisualForm({
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
   const router = useRouter()
+  async function remove(item: PlatformVisual) {
+    if (busy) return
+    setBusy(true)
+    setError('')
+    setMessage('')
+    try {
+      const result = await deletePlatformVisualFn({
+        data: { platformId: platform.id, id: item.id },
+      })
+      if (!result.ok) throw new Error(result.error)
+      setItems((previous) => withoutPlatformVisual(previous, item.id))
+      setMessage(
+        result.data.warning ?? 'Image supprimée. Vos autres modifications restent à enregistrer.',
+      )
+      await router.invalidate({ sync: true })
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Suppression impossible. Réessayez.')
+    } finally {
+      setBusy(false)
+    }
+  }
   function toggle(item: PlatformVisual) {
     setItems((previous) => {
       const next = previous.map((v) =>
@@ -206,6 +232,20 @@ export function PlatformVisualForm({
                             <ArrowDown size={16} />
                           </button>
                         </div>
+                        <Confirm
+                          title={`Supprimer ${kind === 'BANNER' ? 'ce bandeau' : 'cette affiche'} ?`}
+                          description="L’image sera immédiatement supprimée de cette plateforme et du stockage Luden. Si elle est celle par défaut, la première image active restante la remplacera. Le fichier source importé reste intact."
+                          confirmLabel="Supprimer l’image"
+                          onConfirm={() => void remove(item)}
+                        >
+                          <button
+                            type="button"
+                            className="text-link danger-text platform-visual-delete"
+                            disabled={busy}
+                          >
+                            <Trash2 size={15} /> Supprimer
+                          </button>
+                        </Confirm>
                       </div>
                     </article>
                   ))}

@@ -14,6 +14,8 @@ automatique. Le défaut ouvre chaque nouvelle visite ; le bandeau ne défile jam
 L’éditeur sépare bandeaux/affiches : imports multiples, nom, activation, défaut et ordre. Images
 inactives atténuées mais conservées. Choisir un défaut l’active ; désactiver le défaut sélectionne
 la première image encore active, ou l’identité de repli s’il n’en reste aucune.
+Chaque visuel propose aussi « Supprimer », avec confirmation : retrait immédiat de Luden,
+remplacement du défaut par une autre image active et conservation des autres changements en cours.
 Un jeu remplace cet accueil. Croix/Échap revient du jeu à l’accueil, puis masque le panneau au
 second appui. Une nouvelle entrée dans l’univers réaffiche l’accueil ; changer les filtres seul
 ne réouvre pas un accueil masqué. Dans ce cas, le bouton « Sidebar » avec icône de panneau,

@@ -11,6 +11,11 @@ Le formulaire `/platforms/<id>/edit` permet les imports multiples, noms, ordre, 
 choix d’un défaut pour chaque type. Le bouton « Modifier » de la sidebar y conduit.
 Un import est immédiatement conservé mais inactif en base ; « Enregistrer la présentation »
 applique les choix du formulaire. Désactiver ne supprime ni la ligne ni le fichier.
+« Supprimer » demande confirmation puis retire immédiatement l’entrée et son fichier Luden,
+sans toucher au fichier source. Le défaut supprimé est remplacé par la première image active du
+même type, sinon l’identité de remplacement est affichée. Les autres modifications du formulaire
+restent en brouillon. Transaction avec verrou de plateforme ; retrait disque après commit seulement,
+avec message si le fichier n’a pas pu être nettoyé. Contrôle du propriétaire et de la plateforme.
 Les limites/décodage sont ceux des jeux : 12 Mo, WebP 2560 px maximum, ratio conservé, sans crop.
 Ces images ne sont pas des pièces jointes de jeu : le rangement/nettoyage des jeux les ignore.
 Lecture locale `/platform-media/<id>` avec contrôle du propriétaire et chemin borné ; absence

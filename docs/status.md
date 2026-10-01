@@ -2,6 +2,9 @@
 
 ## Visuels des plateformes — 2026-10-01
 
+- Suppression de bandeaux/affiches depuis chaque carte de l’éditeur, avec confirmation. Retrait immédiat de la ligne et du fichier Luden, source importée intacte ; remplacement du défaut par la première image active du même type, sinon repli. Autres modifications du formulaire conservées. Contrôle propriétaire/plateforme et transaction verrouillée ; avertissement en cas de nettoyage disque impossible.
+- Vérifié pour la suppression : TypeScript, lint et 25 tests ; contrôle DB/fichiers sur médias temporaires (mauvaise plateforme refusée, remplacement du défaut, retrait de la dernière image). Confirmation et annulation vérifiées dans le navigateur sans supprimer de média personnel.
+
 - Sidebar d’accueil en deux parties : bandeau fixe entier et affiche en dessous, navigation manuelle par flèches/compteur dès deux affiches actives. « Modifier » ouvre `/platforms/<id>/edit` : imports multiples, nom, ordre, images actives et défaut par type. Les inactives restent en base et sur disque. Aucun défilement automatique.
 - `PlatformVisual` et migration additive appliquée : propriétaire, plateforme, type, chemin, dimensions, état et défaut unique actif. Stockage `media/plateformes/<id>/bandeaux|affiches/<uuid>.webp`, lecture locale `/platform-media/<id>`, export JSON v5. Aucune image personnelle dans Git/public. Imports immédiatement persistés inactifs ; activation après enregistrement.
 - SNES : bandeau corrigé 2168 × 340 et nouvelle affiche 1024 × 1536 importés et définis par défaut ; premier bandeau 1400 × 467 conservé inactif dans le formulaire. Ancien `sidebar.webp` supprimé à la demande et ancien service conventionné retiré. Originaux fournis laissés à leur emplacement source.

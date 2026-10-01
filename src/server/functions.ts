@@ -3,7 +3,15 @@ import { z } from 'zod'
 import { gameSchema, collectionSchema, quickGameSchema } from '../lib/validation'
 import { webUrlSchema } from '../lib/media'
 import { categoriesSchema } from '../lib/categories'
-import { platformVisualsSchema } from '../lib/platform-visuals'
+import { platformVisualsSchema, deletePlatformVisualSchema } from '../lib/platform-visuals'
+
+export const deletePlatformVisualFn = createServerFn({ method: 'POST' })
+  .validator(deletePlatformVisualSchema)
+  .handler(async ({ data }) => {
+    const { mutation } = await import('./request')
+    const { deletePlatformVisual } = await import('./platform-visuals')
+    return mutation(() => deletePlatformVisual(data))
+  })
 
 export const savePlatformVisualsFn = createServerFn({ method: 'POST' })
   .validator(platformVisualsSchema)

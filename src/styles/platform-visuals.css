@@ -38,8 +38,26 @@
 }
 .universe-banner {
   flex: 0 0 auto;
-  background: #090d18;
-  border-bottom: 1px solid var(--line);
+}
+/* Reversible visual join: the gallery sits behind the fading edge of the original banner. */
+.universe-sidebar:has(.universe-banner > img):has(.universe-poster-images) {
+  --universe-banner-overlap: 24px;
+}
+.universe-sidebar:has(.universe-poster-images) .universe-banner:has(> img) {
+  position: relative;
+  z-index: 1;
+  pointer-events: none;
+  mask-image: linear-gradient(
+    to bottom,
+    #000 calc(100% - var(--universe-banner-overlap)),
+    transparent 100%
+  );
+}
+.universe-sidebar:has(.universe-banner > img) .universe-poster:has(.universe-poster-images) {
+  margin-top: calc(-1 * var(--universe-banner-overlap));
+}
+.universe-sidebar .universe-sidebar-close {
+  z-index: 3;
 }
 .universe-platform-navigation {
   position: absolute;
@@ -365,6 +383,9 @@
   opacity: 0.65;
 }
 @media (max-width: 800px) {
+  .universe-sidebar:has(.universe-banner > img):has(.universe-poster-images) {
+    --universe-banner-overlap: 12px;
+  }
   .universe-banner > img {
     max-height: 84px;
   }

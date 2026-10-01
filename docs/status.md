@@ -2,6 +2,8 @@
 
 ## Navigation clavier sans sidebar — 2026-10-01
 
+- Arrivée dans une plateforme : focus sur la première jaquette, puis navigation aux flèches sans ouverture de jeu, même si l’accueil de la plateforme est affiché. Entrée ouvre la sidebar du jeu ciblé. Le focus initial ne se répète pas à la fermeture d’un jeu ni au changement de filtre sur la même page.
+- Vérifié pour l’arrivée : TypeScript, lint ciblé et formatage ; navigateur Amiga → Amstrad : première jaquette ciblée, droite déplace le focus en conservant l’accueil, Entrée ouvre Daley Thompson’s Decathlon dans la sidebar.
 - Sidebar masquée : les quatre flèches déplacent le focus entre les jaquettes visibles, à partir du dernier jeu consulté (premier résultat si absent). Aucun panneau ne s’ouvre avant Entrée sur la jaquette ; une deuxième Entrée dans la sidebar ouvre ensuite le détail. Ordre filtré/regroupé et rangées réelles respectés, sans boucle ni contour de sélection conservé à la fermeture.
 - Alt + gauche/droite change d’univers avec la même boucle et le même ordre que les flèches du bandeau, sidebar visible ou masquée. Ces touches remplacent l’historique navigateur uniquement sur une page de plateforme, hors champs, édition, modales et fermeture animée. Tab conserve son usage habituel.
 - Vérifié : TypeScript, lint ciblé, formatage et trois tests de navigation ; navigateur : double Échap → droite/bas sans panneau ni jeu sélectionné → Entrée sur Rick Dangerous 2 ouvre sa sidebar → Entrée ouvre le détail ; Alt + droite/gauche : Amiga → Amstrad → Amiga.

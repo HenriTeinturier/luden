@@ -56,15 +56,27 @@ export function Gallery({
   const desktop = useSyncExternalStore(subscribeDesktop, isDesktop, serverDesktop)
   const columnBonus = desktop && selection?.sidebarVisible === false ? 2 : 0
   const gallery = useRef<HTMLDivElement>(null)
-  const navigateWithoutSidebar = selection?.sidebarVisible === false
+  const browseGames = selection?.selectedId === null
   const lastGame = useRef<{ pathname: string; id: string } | null>(null)
+  const focusedPlatform = useRef<string | null>(null)
+  useEffect(() => {
+    if (!platformLocked || !browseGames || focusedPlatform.current === pathname) return
+    const frame = requestAnimationFrame(() => {
+      const first = gallery.current?.querySelector<HTMLElement>('[data-game-id]')
+      if (!first?.dataset.gameId) return
+      focusedPlatform.current = pathname
+      lastGame.current = { pathname, id: first.dataset.gameId }
+      first.focus({ preventScroll: true })
+    })
+    return () => cancelAnimationFrame(frame)
+  }, [platformLocked, browseGames, pathname, visible.length])
   useEffect(() => {
     if (selection?.selectedId) lastGame.current = { pathname, id: selection.selectedId }
   }, [selection?.selectedId, pathname])
   useEffect(() => {
     const container = gallery.current
-    if (!container || !navigateWithoutSidebar) return
-    function moveWithoutSidebar(event: KeyboardEvent) {
+    if (!container || !browseGames) return
+    function moveGalleryFocus(event: KeyboardEvent) {
       if (
         event.defaultPrevented ||
         event.repeat ||
@@ -107,9 +119,9 @@ export function Gallery({
       next.scrollIntoView({ block: 'nearest', behavior: 'instant' })
       // Enter retains the card link's native activation, which opens the sidebar.
     }
-    document.addEventListener('keydown', moveWithoutSidebar)
-    return () => document.removeEventListener('keydown', moveWithoutSidebar)
-  }, [navigateWithoutSidebar, pathname, visible.length])
+    document.addEventListener('keydown', moveGalleryFocus)
+    return () => document.removeEventListener('keydown', moveGalleryFocus)
+  }, [browseGames, pathname, visible.length])
   const lastWheel = useRef(-Infinity)
   const [autoColumns, setAutoColumns] = useState<{ pathname: string; count: number } | null>(null)
   const measuredAuto = autoColumns?.pathname === pathname ? autoColumns.count : undefined

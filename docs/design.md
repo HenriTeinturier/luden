@@ -117,7 +117,9 @@ captures de 96–140 px de haut pour voir l’expérience, les souvenirs et les 
 écran. Les informations longues et les médias supplémentaires restent accessibles en défilant.
 
 Gauche/droite parcourent l’ordre visible au moment de l’ouverture, regroupement compris, sans boucle.
-Sidebar masquée, les quatre flèches déplacent uniquement le focus entre les jaquettes visibles :
+À l’arrivée dans une plateforme, le focus rejoint la première jaquette sans ouvrir de fiche.
+Tant qu’aucun jeu n’est ouvert (accueil de plateforme visible ou sidebar masquée), les quatre
+flèches déplacent uniquement le focus entre les jaquettes visibles :
 reprise depuis le dernier jeu consulté, ou premier résultat si ce jeu n’est plus affiché. Entrée
 sur la jaquette ouvre sa sidebar ; aucune ouverture pendant le déplacement. Les rangées sont
 recalculées sur la grille élargie, catégories comprises. Champs, contrôles et modales protégés.

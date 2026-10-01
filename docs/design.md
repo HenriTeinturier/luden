@@ -119,6 +119,8 @@ La sidebar est remplacée par un header sticky : logo, navigation existante, par
 profil, recherche et action Ajouter/Enregistrer. Fil d’Ariane supprimé ; Mes univers est un menu
 compact dans la navigation principale, sans seconde ligne permanente.
 Sous 1650 px, le bouton Menu déplie navigation et profil ; recherche et action restent visibles.
+Le champ de recherche globale se vide au changement de page et à la soumission ; la requête
+soumise reste appliquée à la galerie de résultats de la bibliothèque.
 Les informations d’espace personnel sont conservées dans le footer. Aucun changement de routes
 ou d’options. Styles isolés dans `src/styles/header.css`, importé en dernier, ancien CSS conservé
 pour cette phase d’essai. Version avant essai : `21d7f4e`.

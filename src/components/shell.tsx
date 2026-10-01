@@ -45,6 +45,9 @@ export function Shell({ children, library }: { children: ReactNode; library: Lib
   const pathname = useLocation({ select: (l) => l.pathname })
   const navigate = useNavigate()
   const [search, setSearch] = useState('')
+  useEffect(() => {
+    setSearch('')
+  }, [pathname])
   const [menuOpen, setMenuOpen] = useState(false)
   const [formAction, setFormAction] = useState<FormAction | null>(null)
   const currentPlatform = library?.platforms.find(
@@ -176,6 +179,7 @@ export function Shell({ children, library }: { children: ReactNode; library: Lib
                 onSubmit={(e) => {
                   e.preventDefault()
                   void navigate({ to: '/library', search: { q: search } })
+                  setSearch('')
                 }}
               >
                 <Search size={17} />

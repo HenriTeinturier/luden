@@ -120,7 +120,10 @@ export function PlatformVisualForm({
             const result = await savePlatformVisualsFn({ data: parsed.data })
             if (!result.ok) throw new Error(result.error)
             await router.invalidate({ sync: true })
-            setMessage('Présentation de la plateforme enregistrée.')
+            await router.navigate({
+              to: '/platforms/$platformId',
+              params: { platformId: platform.id },
+            })
           } catch (err) {
             setError(err instanceof Error ? err.message : 'Enregistrement impossible.')
           } finally {

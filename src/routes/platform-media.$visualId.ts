@@ -1,18 +1,19 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { assertLocalRequest } from '../server/request'
-import { readUniverseSidebar } from '../server/universe-media'
+import { readPlatformImage } from '../server/platform-visuals'
 
-export const Route = createFileRoute('/universe-media/$platformId')({
+export const Route = createFileRoute('/platform-media/$visualId')({
   server: {
     handlers: {
       GET: async ({ request, params }) => {
         try {
           assertLocalRequest(request)
-          const bytes = await readUniverseSidebar(params.platformId)
+          const bytes = await readPlatformImage(params.visualId)
+          if (!bytes) return new Response('Image indisponible', { status: 404 })
           return new Response(new Uint8Array(bytes), {
             headers: {
               'Content-Type': 'image/webp',
-              'Cache-Control': 'private, max-age=0, must-revalidate',
+              'Cache-Control': 'private, max-age=86400',
               'X-Content-Type-Options': 'nosniff',
             },
           })

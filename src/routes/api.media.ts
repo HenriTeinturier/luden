@@ -39,7 +39,19 @@ export const Route = createFileRoute('/api/media')({
             )
           )
             return Response.json({ error: 'Format d’image non accepté.' }, { status: 400 })
-          return Response.json(await saveImage(Buffer.from(await file.arrayBuffer())))
+          const bytes = Buffer.from(await file.arrayBuffer())
+          if (form.has('platformId')) {
+            const { savePlatformImage } = await import('../server/platform-visuals')
+            return Response.json(
+              await savePlatformImage(
+                form.get('platformId'),
+                form.get('kind'),
+                bytes,
+                file.name.replace(/\.[^.]+$/, ''),
+              ),
+            )
+          }
+          return Response.json(await saveImage(bytes))
         } catch (error) {
           return Response.json(
             {

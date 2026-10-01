@@ -4,13 +4,23 @@ Lire ce document uniquement pour modifier l'import, la galerie ou les liens.
 
 ## Rangement sur disque
 
-Les images d’accueil des univers sont conservées à part :
-`LUDEN_DATA_DIR/media/plateformes/<id-plateforme>/sidebar.webp`.
-L’image SNES fournie est copiée sans conversion (1024 × 1536, empreinte vérifiée).
-Ces images ne sont pas des pièces jointes de jeu ni des imports provisoires : elles ne participent
-pas à la migration des lignes `Media` et ne sont pas supprimées avec un jeu. Elles sont détectées
-au chargement de la bibliothèque et servies par `/universe-media/<id>` ; absence d’image = identité
-visuelle de la plateforme. Elles restent hors Git et doivent être incluses dans la sauvegarde du dossier média.
+Les visuels d’accueil des univers sont conservés à part dans `PlatformVisual` :
+`LUDEN_DATA_DIR/media/plateformes/<id>/bandeaux/<uuid>.webp` ou `affiches/<uuid>.webp`.
+Les fichiers fournis par le joueur, y compris les défauts, restent hors Git et hors `public`.
+Le formulaire `/platforms/<id>/edit` permet les imports multiples, noms, ordre, activation et
+choix d’un défaut pour chaque type. Le bouton « Modifier » de la sidebar y conduit.
+Un import est immédiatement conservé mais inactif en base ; « Enregistrer la présentation »
+applique les choix du formulaire. Désactiver ne supprime ni la ligne ni le fichier.
+Les limites/décodage sont ceux des jeux : 12 Mo, WebP 2560 px maximum, ratio conservé, sans crop.
+Ces images ne sont pas des pièces jointes de jeu : le rangement/nettoyage des jeux les ignore.
+Lecture locale `/platform-media/<id>` avec contrôle du propriétaire et chemin borné ; absence
+de visuel actif = identité de remplacement. Inclure ces dossiers dans les sauvegardes média.
+Migration additive `20261001090000_platform_visuals`, contraintes défaut actif/unique et ordre positif.
+Le bandeau SNES corrigé (2168 × 340) et l’affiche (1024 × 1536) sont en base et définis par défaut.
+L’ancien bandeau 1400 × 467 reste en base, inactif et sélectionnable dans le formulaire.
+L’ancien fichier SNES `sidebar.webp` et son ancienne route conventionnée ont été retirés.
+Import local explicite : `npx tsx scripts/import-platform-visual.ts <plateforme> <BANNER|POSTER> <fichier> <nom>`
+(ajoute et choisit le nouveau défaut). Contrôle isolé : `npx tsx scripts/check-platform-visuals.ts`.
 
 Tous les imports (fichier, URL, IGDB) vont d’abord dans `media/_imports/`. À l’enregistrement de
 la fiche, `media-organization.ts` les range sous
@@ -64,7 +74,7 @@ Nouveaux imports : bornés à 2560 × 2560 px, sans agrandissement, WebP qualit�
 2560 × 1440 px (16:9), rappel dans un encadré visible au-dessus des rôles dans le formulaire.
 Le champ boîte explique aussi son choix automatique : BOX puis image principale de bibliothèque.
 Les fichiers déjà présents ne sont pas retraités.
-Export JSON **version 4** : ajoute la présentation à chaque jeu ; binaires toujours hors export.
+Export JSON **version 5** : ajoute `platformVisuals` (chemins et choix inclus) et conserve la présentation des jeux introduite en v4 ; binaires toujours hors export.
 Contrôle DB ciblé facultatif : `npx tsx scripts/check-game-presentation.ts`, ses seules fixtures
 et images temporaires sont nettoyées. Tests unitaires de références, géométrie et mutation partielle.
 
@@ -92,7 +102,7 @@ Le formulaire envoie toute la galerie et les liens ; omission conserve l'existan
 La principale peut être de n'importe quelle catégorie. Les cartes utilisent toujours Game.coverId.
 100 images/liens maximum par fiche ; 12 Mo par import. GIF : première image uniquement.
 Les fichiers sont optimisés en WebP, pas archivés dans leur format original ; ratio conservé.
-Les vidéos/sites ne sont jamais téléchargés, seulement liés. Export JSON version 4 inclut les associations et les choix de présentation (associations depuis v2).
+Les vidéos/sites ne sont jamais téléchargés, seulement liés. Export JSON version 5 inclut les associations, les choix de présentation et les visuels des plateformes (associations depuis v2).
 
 Vérifications : `npm run check` (7 tests ciblés) ; `npx tsx scripts/check-media.ts` pour le parcours DB
 optionnel, avec médias temporaires et nettoyage de ses propres fiches uniquement.

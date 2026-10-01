@@ -8,41 +8,59 @@ import {
 import { retainVisuals } from '../lib/game-visuals'
 import { removeUnusedImages } from './media'
 import { organizeGameImages } from './media-organization'
-import { universeSidebarImages } from './universe-media'
 
 export async function loadLibrary() {
-  const [profile, platforms, machines, games, collections, categories] = await Promise.all([
-    db.profile.findUniqueOrThrow({ where: { id: ownerId }, select: { name: true } }),
-    db.platform.findMany({ orderBy: { name: 'asc' } }),
-    db.machine.findMany({ where: { ownerId }, orderBy: { name: 'asc' } }),
-    db.game.findMany({
-      where: { ownerId },
-      orderBy: { updatedAt: 'desc' },
-      include: {
-        platform: true,
-        machine: true,
-        cover: { select: { id: true, width: true, height: true } },
-        experience: true,
-        possessions: true,
-        media: {
-          orderBy: { position: 'asc' },
-          include: { media: { select: { width: true, height: true, source: true } } },
+  const [profile, platforms, machines, games, collections, categories, platformVisuals] =
+    await Promise.all([
+      db.profile.findUniqueOrThrow({ where: { id: ownerId }, select: { name: true } }),
+      db.platform.findMany({ orderBy: { name: 'asc' } }),
+      db.machine.findMany({ where: { ownerId }, orderBy: { name: 'asc' } }),
+      db.game.findMany({
+        where: { ownerId },
+        orderBy: { updatedAt: 'desc' },
+        include: {
+          platform: true,
+          machine: true,
+          cover: { select: { id: true, width: true, height: true } },
+          experience: true,
+          possessions: true,
+          media: {
+            orderBy: { position: 'asc' },
+            include: { media: { select: { width: true, height: true, source: true } } },
+          },
+          links: { orderBy: { position: 'asc' } },
+          entries: { select: { collectionId: true } },
         },
-        links: { orderBy: { position: 'asc' } },
-        entries: { select: { collectionId: true } },
-      },
-    }),
-    db.collection.findMany({
-      where: { ownerId },
-      orderBy: { createdAt: 'asc' },
-      include: { _count: { select: { entries: true } } },
-    }),
-    db.gameCategory.findMany({ where: { ownerId }, orderBy: [{ position: 'asc' }, { id: 'asc' }] }),
-  ])
+      }),
+      db.collection.findMany({
+        where: { ownerId },
+        orderBy: { createdAt: 'asc' },
+        include: { _count: { select: { entries: true } } },
+      }),
+      db.gameCategory.findMany({
+        where: { ownerId },
+        orderBy: [{ position: 'asc' }, { id: 'asc' }],
+      }),
+      db.platformVisual.findMany({
+        where: { ownerId },
+        orderBy: [{ position: 'asc' }, { id: 'asc' }],
+        select: {
+          id: true,
+          platformId: true,
+          kind: true,
+          caption: true,
+          active: true,
+          isDefault: true,
+          position: true,
+          width: true,
+          height: true,
+        },
+      }),
+    ])
   return {
     profile,
     platforms,
-    universeSidebarImages: await universeSidebarImages(platforms.map((p) => p.id)),
+    platformVisuals: platformVisuals.map((v) => ({ ...v, url: `/platform-media/${v.id}` })),
     machines,
     categories,
     games: games.map((g) => ({
@@ -273,26 +291,28 @@ export async function deleteCollection(id: string) {
 }
 
 export async function exportLibrary() {
-  const [profile, games, machines, collections, media, categories] = await Promise.all([
-    db.profile.findUnique({ where: { id: ownerId } }),
-    db.game.findMany({
-      where: { ownerId },
-      include: {
-        platform: true,
-        experience: true,
-        possessions: { include: { media: true } },
-        media: true,
-        links: true,
-      },
-    }),
-    db.machine.findMany({ where: { ownerId } }),
-    db.collection.findMany({ where: { ownerId }, include: { entries: true } }),
-    db.media.findMany({ where: { ownerId } }),
-    db.gameCategory.findMany({ where: { ownerId }, orderBy: { position: 'asc' } }),
-  ])
+  const [profile, games, machines, collections, media, categories, platformVisuals] =
+    await Promise.all([
+      db.profile.findUnique({ where: { id: ownerId } }),
+      db.game.findMany({
+        where: { ownerId },
+        include: {
+          platform: true,
+          experience: true,
+          possessions: { include: { media: true } },
+          media: true,
+          links: true,
+        },
+      }),
+      db.machine.findMany({ where: { ownerId } }),
+      db.collection.findMany({ where: { ownerId }, include: { entries: true } }),
+      db.media.findMany({ where: { ownerId } }),
+      db.gameCategory.findMany({ where: { ownerId }, orderBy: { position: 'asc' } }),
+      db.platformVisual.findMany({ where: { ownerId }, orderBy: { position: 'asc' } }),
+    ])
   return {
     format: 'luden',
-    version: 4,
+    version: 5,
     exportedAt: new Date().toISOString(),
     profile,
     games,
@@ -300,5 +320,6 @@ export async function exportLibrary() {
     collections,
     media,
     categories,
+    platformVisuals,
   }
 }

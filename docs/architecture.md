@@ -38,10 +38,15 @@ Les retraits sont appliqués à l'enregistrement ; seuls les fichiers sans réf�
 Les imports provisoires sont nettoyés au retrait/quand le formulaire est démonté, au mieux.
 Un onglet fermé brutalement ou un échec disque peut laisser un fichier orphelin ; aucune purge globale.
 Voir `docs/media.md` pour les points d'entrée et la migration.
-Les illustrations d’accueil des univers sont des fichiers personnels conventionnés
-`media/plateformes/<id>/sidebar.webp`, hors Git et indépendants des médias de jeux en base.
-`loadLibrary` signale celles disponibles ; la route locale `/universe-media/<id>` les sert avec
-validation stricte de l’identifiant et chemin borné au dossier configuré.
+Les illustrations d’accueil des univers sont référencées dans `PlatformVisual`, avec propriétaire,
+plateforme, type BANNER/POSTER, ordre, activation et défaut unique par type. Les fichiers restent
+hors Git sous `media/plateformes/<id>/bandeaux|affiches/<uuid>.webp` ; aucune image personnelle dans
+`public`. `/platform-media/<id>` vérifie le profil local et sert le fichier via un chemin borné.
+`/platforms/<id>/edit` → fonctions serveur → `platform-visuals.ts` → Prisma gère les choix.
+L’import utilise le même décodage WebP borné que les jeux, mais une table indépendante : aucun
+nettoyage ou rangement de médias de jeux ne peut supprimer une affiche inactive de plateforme.
+Imports persistés inactifs immédiatement ; activation et défauts appliqués à l’enregistrement.
+Transaction avec verrou de plateforme et contraintes SQL pour éviter deux défauts concurrents.
 Pas de copie de la base vivante dans OneDrive ; volume Docker dédié.
 
 ## Futur

@@ -2,6 +2,11 @@
 
 - Profile : propriétaire local explicite, futur point d'entrée d'authentification.
 - Platform : Switch, PS5, PC, Amiga… pas de périodes pour les consoles/anciens ordinateurs.
+- PlatformVisual : fichier personnel lié à un propriétaire et une plateforme, type BANNER/POSTER,
+  chemin relatif, dimensions, légende, ordre, activation et défaut. Un défaut actif au maximum par
+  type (contrainte SQL), exactement un si des images sont actives (validation serveur). Une image
+  inactive reste en base et sur disque. Le bandeau par défaut est fixe ; les affiches actives sont
+  parcourables manuellement, défaut en premier. Ces fichiers sont indépendants des médias de jeux.
 - Machine : PC personnel nommé ; rattachement facultatif d'une fiche PC.
 - Game : fiche personnelle sur UNE plateforme, toutes métadonnées indépendantes. Aucun Game universel imposé.
   `presentation` JSON contient les rôles boîte/support/logo/fond (identifiants de médias déjà attachés

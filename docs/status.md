@@ -1,5 +1,12 @@
 # État courant
 
+## Visuels des plateformes — 2026-10-01
+
+- Sidebar d’accueil en deux parties : bandeau fixe entier et affiche en dessous, navigation manuelle par flèches/compteur dès deux affiches actives. « Modifier » ouvre `/platforms/<id>/edit` : imports multiples, nom, ordre, images actives et défaut par type. Les inactives restent en base et sur disque. Aucun défilement automatique.
+- `PlatformVisual` et migration additive appliquée : propriétaire, plateforme, type, chemin, dimensions, état et défaut unique actif. Stockage `media/plateformes/<id>/bandeaux|affiches/<uuid>.webp`, lecture locale `/platform-media/<id>`, export JSON v5. Aucune image personnelle dans Git/public. Imports immédiatement persistés inactifs ; activation après enregistrement.
+- SNES : bandeau corrigé 2168 × 340 et nouvelle affiche 1024 × 1536 importés et définis par défaut ; premier bandeau 1400 × 467 conservé inactif dans le formulaire. Ancien `sidebar.webp` supprimé à la demande et ancien service conventionné retiré. Originaux fournis laissés à leur emplacement source.
+- Vérifié : TypeScript, lint, 24 tests et compilation ; contrôle DB isolé (imports, défauts, validation, conservation des inactives, lecture, export). Navigateur : images chargées sur mobile/desktop, formulaire et sauvegarde confirmée. Rangement des médias de jeux exclut explicitement `plateformes/`, y compris les images inactives.
+
 ## Rangement des médias — 2026-09-30
 
 - Imports provisoires dans `media/_imports/`, puis classement automatique à l’enregistrement sous `media/jeux/<plateforme>/<titre>--<id-jeu>/<catégorie>-<id-média>.webp`. Renommage et changement de plateforme/catégorie suivis ; médias des exemplaires inclus, fichiers partagés préservés. Avertissement si rangement différé après sauvegarde.

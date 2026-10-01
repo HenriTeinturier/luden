@@ -1,0 +1,222 @@
+.universe-sidebar {
+  display: flex;
+  flex-direction: column;
+}
+.universe-banner {
+  flex: 0 0 auto;
+  background: #090d18;
+  border-bottom: 1px solid var(--line);
+}
+.universe-banner > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 25dvh;
+  object-fit: contain;
+}
+.universe-banner-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 90px;
+  padding: 20px 65px 20px 20px;
+}
+.universe-banner-fallback img {
+  max-width: 85%;
+  max-height: 70px;
+  object-fit: contain;
+}
+.universe-banner-fallback h2 {
+  margin: 0;
+}
+.universe-poster {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+.universe-gallery-arrow,
+.universe-edit,
+.universe-gallery-count {
+  position: absolute;
+  z-index: 1;
+  color: #f3f5ff;
+  background: #0c1121d9;
+  border: 1px solid #ffffff33;
+  border-radius: 10px;
+  backdrop-filter: blur(8px);
+}
+.universe-gallery-arrow {
+  top: 50%;
+  transform: translateY(-50%);
+  width: 38px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+}
+.universe-gallery-arrow.previous {
+  left: 12px;
+}
+.universe-gallery-arrow.next {
+  right: 12px;
+}
+.universe-edit {
+  bottom: 18px;
+  left: 18px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 13px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.universe-gallery-count {
+  bottom: 18px;
+  right: 18px;
+  padding: 8px 11px;
+  font-size: 12px;
+}
+.universe-gallery-arrow:hover,
+.universe-edit:hover {
+  background: #263255;
+  border-color: #85cbff;
+}
+.universe-gallery-arrow:focus-visible,
+.universe-edit:focus-visible {
+  outline: 2px solid #85cbff;
+  outline-offset: 3px;
+}
+.platform-visual-page {
+  max-width: 1240px;
+}
+.platform-visual-page h1 {
+  margin-bottom: 8px;
+}
+.platform-visual-fields {
+  padding: 0;
+  margin: 28px 0;
+  border: 0;
+  min-width: 0;
+}
+.platform-visual-section {
+  padding: 22px;
+  margin-bottom: 24px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #12192a;
+}
+.platform-visual-heading {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+.platform-visual-heading h2 {
+  margin: 0;
+  font-size: 20px;
+}
+.platform-visual-heading span,
+.platform-visual-section > p {
+  color: var(--muted);
+  font-size: 13px;
+}
+.platform-visual-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+  margin: 20px 0;
+}
+.platform-visual-item {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  overflow: hidden;
+  background: #0b1020;
+}
+.platform-visual-item > img {
+  display: block;
+  width: 100%;
+  height: 240px;
+  object-fit: contain;
+  background: #080c17;
+}
+.is-banners .platform-visual-item > img {
+  height: 110px;
+}
+.platform-visual-item.is-inactive > img {
+  opacity: 0.45;
+}
+.platform-visual-item-controls {
+  padding: 14px;
+}
+.platform-visual-item-controls > label {
+  display: grid;
+  gap: 7px;
+  font-size: 12px;
+}
+.platform-visual-item-controls input:not([type='checkbox']):not([type='radio']) {
+  min-width: 0;
+  width: 100%;
+  padding: 9px;
+  color: var(--ink);
+  background: #192139;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+}
+.platform-visual-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin: 14px 0;
+}
+.platform-visual-choices label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+}
+.platform-visual-choices input {
+  accent-color: #7c5cff;
+}
+.platform-visual-order {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.platform-visual-order span {
+  margin-right: auto;
+  color: var(--muted);
+  font-size: 11px;
+}
+.platform-upload {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 14px;
+  border: 1px dashed #55608f;
+  border-radius: 8px;
+  color: #c5b6ff;
+}
+.platform-upload input {
+  max-width: 100%;
+  font-size: 12px;
+}
+.platform-visual-fields:disabled {
+  opacity: 0.65;
+}
+@media (max-width: 800px) {
+  .universe-banner > img {
+    max-height: 84px;
+  }
+  .universe-banner-fallback {
+    min-height: 64px;
+    padding-block: 12px;
+  }
+  .universe-banner-fallback img {
+    max-height: 38px;
+  }
+  .platform-visual-section {
+    padding: 14px;
+  }
+}

@@ -8,10 +8,7 @@ import { resolveMediaPath } from './media-path'
 import { pruneEmptyMediaDirectories, withMediaStorageLock } from './media-storage'
 
 export const MAX_IMAGE_BYTES = 12 * 1024 * 1024
-export async function saveImage(bytes: Buffer, sourceUrl?: string, source: MediaSource = 'UPLOAD') {
-  const root = process.env.LUDEN_DATA_DIR?.trim() ?? ''
-  const relative = `_imports/${randomUUID()}.webp`
-  const absolute = resolveMediaPath(root, relative)
+export async function prepareImage(bytes: Buffer) {
   if (bytes.length > MAX_IMAGE_BYTES) throw new Error('Image trop volumineuse : 12 Mo maximum.')
   let result: { data: Buffer; info: OutputInfo }
   try {
@@ -27,6 +24,14 @@ export async function saveImage(bytes: Buffer, sourceUrl?: string, source: Media
   } catch {
     throw new Error('Image non reconnue. Utilise un fichier JPG, PNG, WebP, GIF ou AVIF valide.')
   }
+  return result
+}
+
+export async function saveImage(bytes: Buffer, sourceUrl?: string, source: MediaSource = 'UPLOAD') {
+  const root = process.env.LUDEN_DATA_DIR?.trim() ?? ''
+  const relative = `_imports/${randomUUID()}.webp`
+  const absolute = resolveMediaPath(root, relative)
+  const result = await prepareImage(bytes)
   await mkdir(path.dirname(absolute), { recursive: true })
   await writeFile(absolute, result.data, { flag: 'wx' })
   try {

@@ -20,9 +20,10 @@ import { Route as CollectionsCollectionIdRouteImport } from './routes/collection
 import { Route as GamesGameIdRouteImport } from './routes/games.$gameId'
 import { Route as GamesNewRouteImport } from './routes/games.new'
 import { Route as MediaMediaIdRouteImport } from './routes/media.$mediaId'
+import { Route as PlatformMediaVisualIdRouteImport } from './routes/platform-media.$visualId'
 import { Route as PlatformsIndexRouteImport } from './routes/platforms.index'
 import { Route as PlatformsPlatformIdRouteImport } from './routes/platforms.$platformId'
-import { Route as UniverseMediaPlatformIdRouteImport } from './routes/universe-media.$platformId'
+import { Route as PlatformsPlatformIdEditRouteImport } from './routes/platforms.$platformId_.edit'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -79,6 +80,11 @@ const MediaMediaIdRoute = MediaMediaIdRouteImport.update({
   path: '/media/$mediaId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PlatformMediaVisualIdRoute = PlatformMediaVisualIdRouteImport.update({
+  id: '/platform-media/$visualId',
+  path: '/platform-media/$visualId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PlatformsIndexRoute = PlatformsIndexRouteImport.update({
   id: '/platforms/',
   path: '/platforms/',
@@ -89,9 +95,9 @@ const PlatformsPlatformIdRoute = PlatformsPlatformIdRouteImport.update({
   path: '/platforms/$platformId',
   getParentRoute: () => rootRouteImport,
 } as any)
-const UniverseMediaPlatformIdRoute = UniverseMediaPlatformIdRouteImport.update({
-  id: '/universe-media/$platformId',
-  path: '/universe-media/$platformId',
+const PlatformsPlatformIdEditRoute = PlatformsPlatformIdEditRouteImport.update({
+  id: '/platforms/$platformId_/edit',
+  path: '/platforms/$platformId/edit',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -106,10 +112,11 @@ export interface FileRoutesByFullPath {
   '/games/$gameId': typeof GamesGameIdRoute
   '/games/new': typeof GamesNewRoute
   '/media/$mediaId': typeof MediaMediaIdRoute
+  '/platform-media/$visualId': typeof PlatformMediaVisualIdRoute
   '/platforms/$platformId': typeof PlatformsPlatformIdRoute
-  '/universe-media/$platformId': typeof UniverseMediaPlatformIdRoute
   '/collections/': typeof CollectionsIndexRoute
   '/platforms/': typeof PlatformsIndexRoute
+  '/platforms/$platformId/edit': typeof PlatformsPlatformIdEditRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -122,10 +129,11 @@ export interface FileRoutesByTo {
   '/games/$gameId': typeof GamesGameIdRoute
   '/games/new': typeof GamesNewRoute
   '/media/$mediaId': typeof MediaMediaIdRoute
+  '/platform-media/$visualId': typeof PlatformMediaVisualIdRoute
   '/platforms/$platformId': typeof PlatformsPlatformIdRoute
-  '/universe-media/$platformId': typeof UniverseMediaPlatformIdRoute
   '/collections': typeof CollectionsIndexRoute
   '/platforms': typeof PlatformsIndexRoute
+  '/platforms/$platformId/edit': typeof PlatformsPlatformIdEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -139,10 +147,11 @@ export interface FileRoutesById {
   '/games/$gameId': typeof GamesGameIdRoute
   '/games/new': typeof GamesNewRoute
   '/media/$mediaId': typeof MediaMediaIdRoute
+  '/platform-media/$visualId': typeof PlatformMediaVisualIdRoute
   '/platforms/$platformId': typeof PlatformsPlatformIdRoute
-  '/universe-media/$platformId': typeof UniverseMediaPlatformIdRoute
   '/collections/': typeof CollectionsIndexRoute
   '/platforms/': typeof PlatformsIndexRoute
+  '/platforms/$platformId_/edit': typeof PlatformsPlatformIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -157,10 +166,11 @@ export interface FileRouteTypes {
     | '/games/$gameId'
     | '/games/new'
     | '/media/$mediaId'
+    | '/platform-media/$visualId'
     | '/platforms/$platformId'
-    | '/universe-media/$platformId'
     | '/collections/'
     | '/platforms/'
+    | '/platforms/$platformId/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -173,10 +183,11 @@ export interface FileRouteTypes {
     | '/games/$gameId'
     | '/games/new'
     | '/media/$mediaId'
+    | '/platform-media/$visualId'
     | '/platforms/$platformId'
-    | '/universe-media/$platformId'
     | '/collections'
     | '/platforms'
+    | '/platforms/$platformId/edit'
   id:
     | '__root__'
     | '/'
@@ -189,10 +200,11 @@ export interface FileRouteTypes {
     | '/games/$gameId'
     | '/games/new'
     | '/media/$mediaId'
+    | '/platform-media/$visualId'
     | '/platforms/$platformId'
-    | '/universe-media/$platformId'
     | '/collections/'
     | '/platforms/'
+    | '/platforms/$platformId_/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -206,10 +218,11 @@ export interface RootRouteChildren {
   GamesGameIdRoute: typeof GamesGameIdRoute
   GamesNewRoute: typeof GamesNewRoute
   MediaMediaIdRoute: typeof MediaMediaIdRoute
+  PlatformMediaVisualIdRoute: typeof PlatformMediaVisualIdRoute
   PlatformsPlatformIdRoute: typeof PlatformsPlatformIdRoute
-  UniverseMediaPlatformIdRoute: typeof UniverseMediaPlatformIdRoute
   CollectionsIndexRoute: typeof CollectionsIndexRoute
   PlatformsIndexRoute: typeof PlatformsIndexRoute
+  PlatformsPlatformIdEditRoute: typeof PlatformsPlatformIdEditRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -291,6 +304,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MediaMediaIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/platform-media/$visualId': {
+      id: '/platform-media/$visualId'
+      path: '/platform-media/$visualId'
+      fullPath: '/platform-media/$visualId'
+      preLoaderRoute: typeof PlatformMediaVisualIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/platforms/': {
       id: '/platforms/'
       path: '/platforms'
@@ -305,11 +325,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlatformsPlatformIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/universe-media/$platformId': {
-      id: '/universe-media/$platformId'
-      path: '/universe-media/$platformId'
-      fullPath: '/universe-media/$platformId'
-      preLoaderRoute: typeof UniverseMediaPlatformIdRouteImport
+    '/platforms/$platformId_/edit': {
+      id: '/platforms/$platformId_/edit'
+      path: '/platforms/$platformId/edit'
+      fullPath: '/platforms/$platformId/edit'
+      preLoaderRoute: typeof PlatformsPlatformIdEditRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -326,10 +346,11 @@ const rootRouteChildren: RootRouteChildren = {
   GamesGameIdRoute: GamesGameIdRoute,
   GamesNewRoute: GamesNewRoute,
   MediaMediaIdRoute: MediaMediaIdRoute,
+  PlatformMediaVisualIdRoute: PlatformMediaVisualIdRoute,
   PlatformsPlatformIdRoute: PlatformsPlatformIdRoute,
-  UniverseMediaPlatformIdRoute: UniverseMediaPlatformIdRoute,
   CollectionsIndexRoute: CollectionsIndexRoute,
   PlatformsIndexRoute: PlatformsIndexRoute,
+  PlatformsPlatformIdEditRoute: PlatformsPlatformIdEditRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

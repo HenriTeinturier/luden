@@ -60,6 +60,8 @@ async function plan(): Promise<Manifest> {
       targets.has(from) ||
       (from.endsWith('.pending') && targets.has(from.slice(0, -8))) ||
       from === '.organisation.lock' ||
+      // Platform visuals have their own table and lifecycle, including inactive imports.
+      from.startsWith('plateformes/') ||
       from.startsWith('_sans-reference/')
     )
       continue
@@ -135,6 +137,10 @@ function summary(manifest: Manifest) {
 }
 
 async function apply(manifest: Manifest, folder: string) {
+  if (manifest.moves.some((move) => move.from.startsWith('plateformes/')))
+    throw new Error(
+      'Ce journal ancien inclut des visuels de plateforme. Recalculez le rangement des jeux.',
+    )
   for (const [index, move] of manifest.moves.entries()) {
     await relocateImage(root, move, () => commitMediaMove(move))
     if ((index + 1) % 100 === 0)

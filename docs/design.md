@@ -5,7 +5,15 @@
 Toutes les plateformes partagent le même parcours, dans `game-explorer.tsx` et `game-details.tsx`.
 Le clic sur une carte ouvre un panneau occupant environ un tiers à droite et réduit la galerie.
 Dans les univers plateforme, ce tiers est déjà occupé à l’entrée par une sidebar d’accueil.
-SNES utilise l’image personnelle fournie ; les autres plateformes affichent leur identité en repli.
+L’accueil comporte un bandeau fixe en haut, affiché entier sans crop, puis une affiche occupant
+la hauteur restante. SNES utilise les deux fichiers personnels fournis ; les autres plateformes
+affichent leur identité en repli tant qu’aucun visuel n’est configuré. Le bouton « Modifier » en
+surimpression ouvre l’éditeur de plateforme. Les affiches actives se parcourent par flèches gauche/
+droite en surimpression avec compteur (masqués s’il n’y a qu’une affiche). Aucun défilement
+automatique. Le défaut ouvre chaque nouvelle visite ; le bandeau ne défile jamais.
+L’éditeur sépare bandeaux/affiches : imports multiples, nom, activation, défaut et ordre. Images
+inactives atténuées mais conservées. Choisir un défaut l’active ; désactiver le défaut sélectionne
+la première image encore active, ou l’identité de repli s’il n’en reste aucune.
 Un jeu remplace cet accueil. Croix/Échap revient du jeu à l’accueil, puis masque le panneau au
 second appui. Une nouvelle entrée dans l’univers réaffiche l’accueil ; changer les filtres seul
 ne réouvre pas un accueil masqué. Dans ce cas, le bouton « Sidebar » avec icône de panneau,

@@ -159,8 +159,9 @@ export function GameExplorer({
         </div>
         {showUniverse && universe && (
           <UniverseSidebar
+            key={universe.id}
             platform={universe}
-            image={library?.universeSidebarImages[universe.id]}
+            visuals={library?.platformVisuals.filter((v) => v.platformId === universe.id) ?? []}
             onClose={close}
           />
         )}

@@ -8,25 +8,51 @@ datasource db {
 }
 
 model Profile {
-  id          String         @id @default(cuid())
-  name        String         @default("Ma vie de joueur")
-  games       Game[]
-  machines    Machine[]
-  collections Collection[]
-  media       Media[]
-  categories  GameCategory[]
-  createdAt   DateTime       @default(now())
+  id              String           @id @default(cuid())
+  name            String           @default("Ma vie de joueur")
+  games           Game[]
+  machines        Machine[]
+  collections     Collection[]
+  media           Media[]
+  categories      GameCategory[]
+  platformVisuals PlatformVisual[]
+  createdAt       DateTime         @default(now())
 }
 
 model Platform {
-  id        String @id
+  id        String           @id
   name      String
   shortName String
   family    String
   color     String
   era       String
-  igdbId    Int?   @unique
+  igdbId    Int?             @unique
   games     Game[]
+  visuals   PlatformVisual[]
+}
+
+enum PlatformVisualKind {
+  BANNER
+  POSTER
+}
+
+model PlatformVisual {
+  id         String             @id @default(cuid())
+  ownerId    String
+  owner      Profile            @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  platformId String
+  platform   Platform           @relation(fields: [platformId], references: [id], onDelete: Cascade)
+  kind       PlatformVisualKind
+  path       String             @unique
+  width      Int
+  height     Int
+  caption    String             @default("")
+  active     Boolean            @default(false)
+  isDefault  Boolean            @default(false)
+  position   Int                @default(0)
+  createdAt  DateTime           @default(now())
+
+  @@index([ownerId, platformId, kind, position])
 }
 
 model Machine {
@@ -40,36 +66,36 @@ model Machine {
 }
 
 model Game {
-  id          String            @id @default(cuid())
-  ownerId     String
-  owner       Profile           @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  platformId  String
-  platform    Platform          @relation(fields: [platformId], references: [id])
-  machineId   String?
-  machine     Machine?          @relation(fields: [machineId], references: [id], onDelete: SetNull)
-  title       String
-  categoryId  String?
-  category    GameCategory?     @relation(fields: [categoryId], references: [id], onDelete: SetNull)
-  releaseYear Int?
-  developer   String            @default("")
-  publisher   String            @default("")
-  genres      String[]          @default([])
-  summary     String            @default("")
-  igdbId      Int?
-  sourceUrl   String?
-  discover    Boolean           @default(false)
-  desire      Float?
-  favorite    Boolean           @default(false)
-  presentation Json             @default("{}")
-  coverId     String?
-  cover       Media?            @relation(fields: [coverId], references: [id], onDelete: SetNull)
-  experience  Experience?
-  possessions Possession[]
-  media       MediaAttachment[]
-  links       GameLink[]
-  entries     CollectionEntry[]
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
+  id           String            @id @default(cuid())
+  ownerId      String
+  owner        Profile           @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  platformId   String
+  platform     Platform          @relation(fields: [platformId], references: [id])
+  machineId    String?
+  machine      Machine?          @relation(fields: [machineId], references: [id], onDelete: SetNull)
+  title        String
+  categoryId   String?
+  category     GameCategory?     @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  releaseYear  Int?
+  developer    String            @default("")
+  publisher    String            @default("")
+  genres       String[]          @default([])
+  summary      String            @default("")
+  igdbId       Int?
+  sourceUrl    String?
+  discover     Boolean           @default(false)
+  desire       Float?
+  favorite     Boolean           @default(false)
+  presentation Json              @default("{}")
+  coverId      String?
+  cover        Media?            @relation(fields: [coverId], references: [id], onDelete: SetNull)
+  experience   Experience?
+  possessions  Possession[]
+  media        MediaAttachment[]
+  links        GameLink[]
+  entries      CollectionEntry[]
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
 
   @@index([ownerId, platformId])
   @@index([categoryId])

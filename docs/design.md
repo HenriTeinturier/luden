@@ -31,7 +31,7 @@ inverse (depuis la droite avec fondu, 260 ms), y compris au retour depuis un jeu
 mêmes étapes ; animations désactivées si réduction des animations activée.
 Une nouvelle entrée dans l’univers réaffiche l’accueil ; changer les filtres seul
 ne réouvre pas un accueil masqué. Dans ce cas, le bouton « Sidebar » avec icône de panneau,
-à côté du réglage des colonnes, permet de réafficher l’accueil et rétablit la densité avec sidebar.
+à l’extrémité droite de la barre après la réinitialisation, permet de réafficher l’accueil et rétablit la densité avec sidebar.
 Sur mobile, l’accueil est un bloc de 280 px au-dessus de la
 galerie pour conserver l’accès aux jeux ; une fiche ouverte garde le comportement mobile habituel.
 La carte consultée porte un contour bleu clair de 3 px autour de son périmètre complet, un halo

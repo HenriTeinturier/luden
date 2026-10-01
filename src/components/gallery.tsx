@@ -308,19 +308,6 @@ export function Gallery({
               ))}
             </select>
           </label>
-          {selection?.reopenSidebar && (
-            <button
-              id="reopen-sidebar"
-              type="button"
-              className="sidebar-reopen"
-              aria-label="Afficher la sidebar de l’univers"
-              title="Afficher la sidebar de l’univers"
-              onClick={selection.reopenSidebar}
-            >
-              <PanelRightOpen size={17} aria-hidden="true" />
-              Sidebar
-            </button>
-          )}
         </div>
         <div className="gallery-results">
           <span
@@ -351,6 +338,19 @@ export function Gallery({
               }
             >
               <RotateCcw size={16} aria-hidden="true" />
+            </button>
+          )}
+          {selection?.reopenSidebar && (
+            <button
+              id="reopen-sidebar"
+              type="button"
+              className="sidebar-reopen"
+              aria-label="Afficher la sidebar de l’univers"
+              title="Afficher la sidebar de l’univers"
+              onClick={selection.reopenSidebar}
+            >
+              <PanelRightOpen size={17} aria-hidden="true" />
+              Sidebar
             </button>
           )}
         </div>

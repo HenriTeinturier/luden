@@ -231,6 +231,11 @@
 .platform-visual-delete {
   margin-top: 12px;
 }
+.platform-upload,
+.platform-upload input,
+.platform-upload input::file-selector-button {
+  cursor: pointer;
+}
 .platform-upload {
   display: flex;
   align-items: center;

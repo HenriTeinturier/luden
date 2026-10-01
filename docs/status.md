@@ -2,6 +2,7 @@
 
 ## Visuels des plateformes — 2026-10-01
 
+- Zones « Ajouter des bandeaux / affiches » : curseur main sur le libellé, le champ fichier et son bouton natif. Vérification CSS et formatage.
 - Dernière affiche mémorisée par plateforme dans localStorage, avec repli sur le défaut actif si l’image disparaît. Éditeur : défilement automatique facultatif et durée de 3 à 120 s (8 s initialement), enregistrés sur Platform. Pause/reprise sur la galerie, temporisateur suspendu en onglet caché et nettoyé au démontage ; bandeau fixe. Migration additive `20261001120000_platform_slideshow` appliquée ; export v6 inclut les plateformes et leurs réglages.
 - Vérifié : TypeScript, lint, 27 tests, compilation et contrôle DB isolé des réglages/export. Navigateur : sauvegarde de durée, défilement, pause et restauration de la dernière affiche après rechargement. SNES remise à défilement désactivé / 8 secondes après vérification.
 - Suppression de bandeaux/affiches depuis chaque carte de l’éditeur, avec confirmation. Retrait immédiat de la ligne et du fichier Luden, source importée intacte ; remplacement du défaut par la première image active du même type, sinon repli. Autres modifications du formulaire conservées. Contrôle propriétaire/plateforme et transaction verrouillée ; avertissement en cas de nettoyage disque impossible.

@@ -10,9 +10,9 @@ la hauteur restante. Raccord en essai : chevauchement de 24 px (12 px sous 800 p
 transparence progressif sur le bas du bandeau, sans bordure, fond de séparation ou flou. Les deux
 assets restent distincts et non déformés ; le même raccord couvre toutes les affiches. Sans
 bandeau ou affiche, le repli reste sans chevauchement.
-Un groupe « Univers » en haut à gauche du bandeau permet de passer à la
+Deux flèches sans texte visible, en haut à gauche du bandeau, permettent de passer à la
 plateforme précédente/suivante contenant des jeux (ordre alphabétique, boucle aux extrémités),
-avec destination en infobulle ; il change aussi la galerie. Il est absent s’il n’y a qu’un univers.
+avec destination en infobulle et libellé accessible ; elles changent aussi la galerie et sont absentes s’il n’y a qu’un univers.
 SNES utilise les deux fichiers personnels fournis ; les autres plateformes
 affichent leur identité en repli tant qu’aucun visuel n’est configuré. Le bouton « Modifier » en
 surimpression ouvre l’éditeur de plateforme. Les affiches actives se parcourent par flèches gauche/

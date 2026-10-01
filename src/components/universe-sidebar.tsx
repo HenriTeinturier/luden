@@ -120,7 +120,6 @@ export function UniverseSidebar({
           >
             <ChevronLeft size={20} aria-hidden="true" />
           </Link>
-          <span>Univers</span>
           <Link
             className="icon-button"
             to="/platforms/$platformId"

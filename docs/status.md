@@ -8,6 +8,7 @@
 
 ## Visuels des plateformes — 2026-10-01
 
+- Navigation entre univers allégée : texte « Univers » retiré, deux flèches conservées au même emplacement, avec destination en infobulle et libellé accessible. Style du texte devenu inutile supprimé.
 - Essai de raccord bandeau/galerie : point de retour créé avant modification `2f29c5e`. Bordure et fond de séparation retirés, affiche remontée derrière le bandeau de 24 px (12 px sur mobile), masque transparent progressif limité au bas du bandeau. Assets et proportions conservés, aucun flou ; raccord partagé par toutes les affiches et animations. Contrôlé dans le navigateur : chevauchements 24/12 px, ratio du bandeau conservé, absence de bordure/filtre et de débordement mobile. Retour possible en annulant le commit de cet essai.
 - Navigation « Univers » en haut à gauche de la sidebar : liens précédent/suivant entre plateformes contenant des jeux, dans l’ordre alphabétique de la bibliothèque, avec boucle aux extrémités et destination en infobulle. Galerie et sidebar changent ensemble ; choix de galerie et affiche mémorisée restaurés par plateforme. TypeScript/lint ciblé validés, parcours Amstrad → SNES → Amiga vérifié dans le navigateur.
 - Réapparition de l’accueil sidebar : animation inverse de la fermeture (arrivée depuis la droite et fondu, 260 ms), à la réouverture et au retour depuis un jeu. Réduction des animations respectée ; débordement horizontal masqué durant l’entrée comme la sortie.

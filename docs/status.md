@@ -2,6 +2,7 @@
 
 ## Visuels des plateformes — 2026-10-01
 
+- Affiches de sidebar : glissement horizontal de 450 ms, suivant vers la gauche / précédent vers la droite, automatique dans le sens suivant. Image sortante conservée pendant la transition, voisines préchargées, clics supplémentaires ignorés le temps du mouvement ; bandeau fixe et préférence de réduction des animations respectée. TypeScript/lint ciblé validés ; sens des transformations et bandeau immobile contrôlés dans le navigateur.
 - Enregistrer la présentation de la sidebar ramène à la collection de la plateforme après sauvegarde et actualisation des données. En cas d’erreur, le formulaire reste ouvert avec le brouillon.
 - En-tête de statistiques généralisé à toutes les plateformes : bibliothèque, joués, Megastar et possédés, même disposition/couleurs que SNES. Compteurs et libellés accessibles liés à la plateforme courante. Anciens bandeaux conservés masqués ; les quatre cartes disparaissent avec la sidebar pour tous les univers.
 - Vérifié : TypeScript, lint ciblé et formatage ; navigateur Amiga/Amstrad avec quatre compteurs propres à chaque plateforme et ancien bandeau en `display: none`.

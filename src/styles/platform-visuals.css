@@ -35,6 +35,56 @@
   min-height: 0;
   overflow: hidden;
 }
+.universe-poster-images,
+.universe-poster-images > img {
+  position: absolute;
+  inset: 0;
+}
+.universe-poster-images {
+  overflow: hidden;
+  pointer-events: none;
+}
+.universe-poster-images.slide-next {
+  --slide-offset: 100%;
+}
+.universe-poster-images.slide-previous {
+  --slide-offset: -100%;
+}
+.universe-poster-images .is-entering,
+.universe-poster-images .is-leaving {
+  animation-duration: 450ms;
+  animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+  animation-fill-mode: both;
+  will-change: transform;
+}
+.universe-poster-images .is-entering {
+  animation-name: universe-poster-enter;
+}
+.universe-poster-images .is-leaving {
+  animation-name: universe-poster-leave;
+}
+@keyframes universe-poster-enter {
+  from {
+    transform: translateX(var(--slide-offset));
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes universe-poster-leave {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-1 * var(--slide-offset)));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .universe-poster-images .is-entering,
+  .universe-poster-images .is-leaving {
+    animation-duration: 1ms;
+  }
+}
 .universe-gallery-arrow,
 .universe-edit,
 .universe-gallery-count {

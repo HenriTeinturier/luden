@@ -15,6 +15,9 @@ L’éditeur propose le défilement automatique (désactivé initialement), de 3
 image (8 par défaut). Au moins deux affiches actives sont nécessaires. Pause/reprise dans le
 compteur ; temporisateur suspendu si l’onglet est caché, remis à zéro après navigation manuelle.
 Le bandeau ne défile jamais.
+Les affiches glissent horizontalement en 450 ms : suivant vers la gauche, précédent vers la
+droite, automatique dans le sens suivant. Sortante et entrante sont animées ensemble ; les
+voisines sont préchargées et la préférence système de réduction des animations est respectée.
 Après un enregistrement réussi, retour à la collection de la plateforme avec les données actualisées ; une erreur conserve le formulaire et son brouillon.
 L’éditeur sépare bandeaux/affiches : imports multiples, nom, activation, défaut et ordre. Images
 inactives atténuées mais conservées. Choisir un défaut l’active ; désactiver le défaut sélectionne

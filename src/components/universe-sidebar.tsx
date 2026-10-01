@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Link } from '@tanstack/react-router'
 import { X, ChevronLeft, ChevronRight, Pencil, Pause, Play } from 'lucide-react'
 import type { Platform } from '../lib/types'
@@ -24,6 +24,10 @@ export function UniverseSidebar({
   const [selected, setSelected] = useState<string | null>(null)
   const [restored, setRestored] = useState(false)
   const [paused, setPaused] = useState(false)
+  const [transition, setTransition] = useState<{
+    from: PlatformVisual
+    direction: 'next' | 'previous'
+  } | null>(null)
   useEffect(() => {
     if (restored) return
     try {
@@ -39,8 +43,32 @@ export function UniverseSidebar({
   )
   const current = posters[index]
   const currentId = current?.id
-  const nextId = posters[(index + 1) % posters.length]?.id
+  const nextUrl = posters[(index + 1) % posters.length]?.url
+  const previousUrl = posters[(index - 1 + posters.length) % posters.length]?.url
   const playing = platform.slideshowEnabled && posters.length > 1 && !paused
+  const move = useCallback(
+    (delta: number) => {
+      if (!current || posters.length < 2 || transition) return
+      setTransition({ from: current, direction: delta > 0 ? 'next' : 'previous' })
+      setSelected(posters[(index + delta + posters.length) % posters.length].id)
+    },
+    [current, posters, index, transition],
+  )
+  useEffect(() => {
+    // Warm the neighboring images before either manual or automatic navigation.
+    for (const url of new Set([nextUrl, previousUrl])) {
+      if (url) {
+        const image = new Image()
+        image.src = url
+      }
+    }
+  }, [nextUrl, previousUrl])
+  useEffect(() => {
+    if (!transition) return
+    // Also release the transition if animationend is interrupted (e.g. a hidden tab).
+    const timer = setTimeout(() => setTransition(null), 550)
+    return () => clearTimeout(timer)
+  }, [transition])
   useEffect(() => {
     if (!restored) return
     try {
@@ -51,12 +79,11 @@ export function UniverseSidebar({
     }
   }, [currentId, platform.id, restored])
   useEffect(() => {
-    if (!restored || !playing || !nextId) return
+    if (!restored || !playing || transition) return
     let timer: ReturnType<typeof setTimeout> | undefined
     const schedule = () => {
       clearTimeout(timer)
-      if (!document.hidden)
-        timer = setTimeout(() => setSelected(nextId), platform.slideshowSeconds * 1000)
+      if (!document.hidden) timer = setTimeout(() => move(1), platform.slideshowSeconds * 1000)
     }
     schedule()
     document.addEventListener('visibilitychange', schedule)
@@ -64,10 +91,8 @@ export function UniverseSidebar({
       clearTimeout(timer)
       document.removeEventListener('visibilitychange', schedule)
     }
-  }, [restored, playing, nextId, currentId, platform.slideshowSeconds])
+  }, [restored, playing, transition, move, platform.slideshowSeconds])
   const posterUrl = current?.url
-  const move = (delta: number) =>
-    setSelected(posters[(index + delta + posters.length) % posters.length].id)
   return (
     <aside
       id="universe-sidebar"
@@ -100,11 +125,26 @@ export function UniverseSidebar({
         aria-roledescription="carrousel"
       >
         {posterUrl ? (
-          <img
-            className="universe-sidebar-image"
-            src={posterUrl}
-            alt={current?.caption || `Ambiance de l’univers ${platform.name}`}
-          />
+          <div
+            className={`universe-poster-images ${transition ? `slide-${transition.direction}` : ''}`}
+          >
+            {transition && (
+              <img
+                key={`out-${transition.from.id}`}
+                className="universe-sidebar-image is-leaving"
+                src={transition.from.url}
+                alt=""
+                aria-hidden="true"
+              />
+            )}
+            <img
+              key={currentId}
+              className={`universe-sidebar-image ${transition ? 'is-entering' : ''}`}
+              src={posterUrl}
+              alt={current?.caption || `Ambiance de l’univers ${platform.name}`}
+              onAnimationEnd={() => setTransition(null)}
+            />
+          </div>
         ) : (
           <div className="universe-sidebar-fallback">
             <PlatformArt platform={platform} />

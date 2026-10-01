@@ -7,6 +7,8 @@
 
 ## Visuels des plateformes — 2026-10-01
 
+- Réapparition de l’accueil sidebar : animation inverse de la fermeture (arrivée depuis la droite et fondu, 260 ms), à la réouverture et au retour depuis un jeu. Réduction des animations respectée ; débordement horizontal masqué durant l’entrée comme la sortie.
+- Vérifié : formatage/diff CSS, fermeture puis réouverture dans le navigateur avec animation `universe-sidebar-show` de 260 ms et sans débordement horizontal.
 - Navigation sidebar : icône de panneau à masquer sur l’accueil, flèche de retour et libellé contextualisé sur le jeu. Fermeture de l’accueil par glissement/fondu 260 ms, au clic comme avec Échap, puis réallocation de la galerie ; annulation du délai si navigation/changement de jeu, réduction des animations respectée. TypeScript/lint ciblé et navigateur validés : animation, panneau masqué, ouverture d’un jeu et retour à l’accueil.
 - Affiches de sidebar : glissement horizontal de 450 ms, suivant vers la gauche / précédent vers la droite, automatique dans le sens suivant. Image sortante conservée pendant la transition, voisines préchargées, clics supplémentaires ignorés le temps du mouvement ; bandeau fixe et préférence de réduction des animations respectée. TypeScript/lint ciblé validés ; sens des transformations et bandeau immobile contrôlés dans le navigateur.
 - Enregistrer la présentation de la sidebar ramène à la collection de la plateforme après sauvegarde et actualisation des données. En cas d’erreur, le formulaire reste ouvert avec le brouillon.

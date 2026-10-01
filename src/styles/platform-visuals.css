@@ -1,13 +1,24 @@
 .universe-sidebar {
   display: flex;
   flex-direction: column;
+  animation: universe-sidebar-show 260ms ease-out backwards;
 }
-.game-workspace:has(> .universe-sidebar.is-hiding) {
+.game-workspace:has(> .universe-sidebar) {
   overflow-x: clip;
 }
 .universe-sidebar.is-hiding {
   animation: universe-sidebar-hide 260ms ease-in both;
   pointer-events: none;
+}
+@keyframes universe-sidebar-show {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 @keyframes universe-sidebar-hide {
   from {
@@ -20,6 +31,7 @@
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .universe-sidebar,
   .universe-sidebar.is-hiding {
     animation: none;
   }

@@ -173,6 +173,10 @@ export function GameExplorer({
           <UniverseSidebar
             key={universe.id}
             platform={universe}
+            platforms={
+              library?.platforms.filter((p) => library.games.some((g) => g.platformId === p.id)) ??
+              []
+            }
             visuals={library?.platformVisuals.filter((v) => v.platformId === universe.id) ?? []}
             onClose={close}
             hiding={hidingUniverse}

@@ -6,7 +6,10 @@ Toutes les plateformes partagent le même parcours, dans `game-explorer.tsx` et 
 Le clic sur une carte ouvre un panneau occupant environ un tiers à droite et réduit la galerie.
 Dans les univers plateforme, ce tiers est déjà occupé à l’entrée par une sidebar d’accueil.
 L’accueil comporte un bandeau fixe en haut, affiché entier sans crop, puis une affiche occupant
-la hauteur restante. SNES utilise les deux fichiers personnels fournis ; les autres plateformes
+la hauteur restante. Un groupe « Univers » en haut à gauche du bandeau permet de passer à la
+plateforme précédente/suivante contenant des jeux (ordre alphabétique, boucle aux extrémités),
+avec destination en infobulle ; il change aussi la galerie. Il est absent s’il n’y a qu’un univers.
+SNES utilise les deux fichiers personnels fournis ; les autres plateformes
 affichent leur identité en repli tant qu’aucun visuel n’est configuré. Le bouton « Modifier » en
 surimpression ouvre l’éditeur de plateforme. Les affiches actives se parcourent par flèches gauche/
 droite en surimpression avec compteur (masqués s’il n’y a qu’une affiche). La dernière affiche

@@ -8,6 +8,7 @@
 
 ## Visuels des plateformes — 2026-10-01
 
+- Navigation « Univers » en haut à gauche de la sidebar : liens précédent/suivant entre plateformes contenant des jeux, dans l’ordre alphabétique de la bibliothèque, avec boucle aux extrémités et destination en infobulle. Galerie et sidebar changent ensemble ; choix de galerie et affiche mémorisée restaurés par plateforme. TypeScript/lint ciblé validés, parcours Amstrad → SNES → Amiga vérifié dans le navigateur.
 - Réapparition de l’accueil sidebar : animation inverse de la fermeture (arrivée depuis la droite et fondu, 260 ms), à la réouverture et au retour depuis un jeu. Réduction des animations respectée ; débordement horizontal masqué durant l’entrée comme la sortie.
 - Vérifié : formatage/diff CSS, fermeture puis réouverture dans le navigateur avec animation `universe-sidebar-show` de 260 ms et sans débordement horizontal.
 - Navigation sidebar : icône de panneau à masquer sur l’accueil, flèche de retour et libellé contextualisé sur le jeu. Fermeture de l’accueil par glissement/fondu 260 ms, au clic comme avec Échap, puis réallocation de la galerie ; annulation du délai si navigation/changement de jeu, réduction des animations respectée. TypeScript/lint ciblé et navigateur validés : animation, panneau masqué, ouverture d’un jeu et retour à l’accueil.

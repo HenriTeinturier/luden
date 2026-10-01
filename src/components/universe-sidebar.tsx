@@ -12,15 +12,20 @@ import { PlatformArt } from './ui'
 
 export function UniverseSidebar({
   platform,
+  platforms,
   visuals,
   onClose,
   hiding = false,
 }: {
   platform: Platform
+  platforms: Platform[]
   visuals: PlatformVisual[]
   onClose: () => void
   hiding?: boolean
 }) {
+  const platformIndex = platforms.findIndex((p) => p.id === platform.id)
+  const previousPlatform = platforms[(platformIndex - 1 + platforms.length) % platforms.length]
+  const nextPlatform = platforms[(platformIndex + 1) % platforms.length]
   const banners = activePlatformVisuals(visuals, 'BANNER')
   const posters = useMemo(() => activePlatformVisuals(visuals, 'POSTER'), [visuals])
   const [selected, setSelected] = useState<string | null>(null)
@@ -103,6 +108,31 @@ export function UniverseSidebar({
       inert={hiding}
       aria-label={`Accueil de l’univers ${platform.name}`}
     >
+      {platforms.length > 1 && platformIndex >= 0 && (
+        <nav className="universe-platform-navigation" aria-label="Changer d’univers">
+          <Link
+            className="icon-button"
+            to="/platforms/$platformId"
+            params={{ platformId: previousPlatform.id }}
+            search={{}}
+            aria-label={`Univers précédent : ${previousPlatform.name}`}
+            title={`Univers précédent : ${previousPlatform.name}`}
+          >
+            <ChevronLeft size={20} aria-hidden="true" />
+          </Link>
+          <span>Univers</span>
+          <Link
+            className="icon-button"
+            to="/platforms/$platformId"
+            params={{ platformId: nextPlatform.id }}
+            search={{}}
+            aria-label={`Univers suivant : ${nextPlatform.name}`}
+            title={`Univers suivant : ${nextPlatform.name}`}
+          >
+            <ChevronRight size={20} aria-hidden="true" />
+          </Link>
+        </nav>
+      )}
       <div className="universe-banner">
         {banners[0] ? (
           <img

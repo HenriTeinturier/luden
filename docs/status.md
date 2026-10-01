@@ -2,7 +2,7 @@
 
 ## Sidebar des jeux Amiga — 2026-10-01
 
-- Boîte agrandie de 15 % en hauteur par rapport à son cadre précédent (112 → 128,8 %), proportions conservées. Boîte et disquette recentrées dans deux demi-largeurs ; disquette abaissée de 8 px pour partager le même ancrage inférieur que la boîte. Réglages limités à la sidebar Amiga.
+- Boîte agrandie de 15 % en hauteur par rapport à son cadre précédent (112 → 128,8 %), proportions conservées. Recentrage horizontal annulé : positions et répartition précédentes restaurées. Disquette toujours abaissée de 8 px pour partager le même ancrage inférieur que la boîte. Réglages limités à la sidebar Amiga.
 - Vérifié : TypeScript, lint ciblé et formatage ; contrôle navigateur sur Another World, cadres de la boîte et du support alignés en bas.
 
 ## Désélection d’un jeu — 2026-10-01

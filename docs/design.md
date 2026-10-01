@@ -62,10 +62,10 @@ boîte agrandie de 12 % en hauteur avec son bas ancré et son image alignée à 
 des étoiles lorsqu’un support est présent (24 px, 18 px sur petit mobile), sans centrage interne du visuel.
 La boîte reçoit un décalage vertical supplémentaire de 16 px, indépendant du support.
 La cartouche garde sa position ; la boîte seule reste centrée horizontalement.
-Pour Amiga uniquement, la sidebar répartit boîte et disquette dans deux demi-largeurs centrées.
-La boîte est agrandie de 15 % supplémentaires (hauteur du cadre : 128,8 %) et la disquette abaissée
-de 8 px pour aligner leurs ancrages inférieurs à +16 px. Proportions conservées, taille contenue
-dans chaque demi-largeur sur petit écran ; la vue détaillée garde sa disposition.
+Pour Amiga uniquement, la boîte est agrandie de 15 % supplémentaires (hauteur du cadre : 128,8 %)
+et la disquette abaissée de 8 px pour aligner leurs ancrages inférieurs à +16 px. Positions
+horizontales et répartition communes conservées, sans recentrage spécifique ; proportions
+préservées et vue détaillée inchangée.
 Ombre elliptique de contact sous le support. Le titre n’est affiché que dans la scène (logo ou texte),
 sans répétition au-dessus des étoiles ; un titre masqué reste accessible aux lecteurs d’écran.
 Éditeur, année et tous les genres occupent une ligne défilable si nécessaire.

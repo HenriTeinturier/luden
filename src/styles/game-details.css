@@ -1167,6 +1167,40 @@ kbd {
   font: inherit;
   color: var(--text-soft);
 }
+.dossier-full {
+  position: relative;
+  isolation: isolate;
+}
+.dossier-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.dossier-backdrop > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  mask-image: linear-gradient(to bottom, #000 65%, transparent 100%);
+}
+.dossier-backdrop::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, #0c11212e, #0c112170 300px, #0c112199 650px);
+}
+.dossier-full.has-dossier-background .game-scene {
+  background: none;
+}
+.dossier-full.has-dossier-background .dossier-personal,
+.dossier-full.has-dossier-background .dossier-info-card {
+  background: #10172bea;
+}
+.dossier-full.has-dossier-background .dossier-heading,
+.dossier-full.has-dossier-background .detail-section-heading {
+  text-shadow: 0 2px 6px #000;
+}
 .dossier-full .game-scene {
   min-height: 280px;
   height: clamp(280px, 26dvh, 340px);

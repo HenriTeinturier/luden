@@ -157,13 +157,10 @@ function GameScene({ game, compact }: { game: Game; compact: boolean }) {
       className={`game-scene ${visuals.background ? 'has-background' : 'without-background'} ${coverFormat(game.platformId).wide ? 'scene-wide-box' : ''}`}
       data-platform={game.platformId}
     >
-      {visuals.background && (
-        <GameBackground
-          mediaId={visuals.background}
-          crop={compact ? visuals.sidebarCrop : { x: 50, y: 50, zoom: 1 }}
-        />
+      {compact && visuals.background && (
+        <GameBackground mediaId={visuals.background} crop={visuals.sidebarCrop} />
       )}
-      <div className="scene-shade" />
+      {(compact || !visuals.background) && <div className="scene-shade" />}
       <div className="scene-identity">
         {!compact && (
           <span className="scene-platform">
@@ -648,6 +645,7 @@ export function GameDetails({
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
   const inCollections = collections.filter((c) => game.entries.some((e) => e.collectionId === c.id))
+  const visuals = readPresentation(game.presentation)
   const [editingMemory, setEditingMemory] = useState(false)
   const [memoryDraft, setMemoryDraft] = useState('')
   const [memoryError, setMemoryError] = useState('')
@@ -696,16 +694,21 @@ export function GameDetails({
   }
   return (
     <article
-      className={`game-dossier ${compact ? 'dossier-compact' : 'dossier-full'} dossier-${game.platformId}`}
+      className={`game-dossier ${compact ? 'dossier-compact' : 'dossier-full'} ${!compact && visuals.background ? 'has-dossier-background' : ''} dossier-${game.platformId}`}
       style={{ '--game-accent': game.platform.color } as CSSProperties}
     >
+      {!compact && visuals.background && (
+        <div className="dossier-backdrop" aria-hidden="true">
+          <img src={`/media/${visuals.background}`} alt="" />
+        </div>
+      )}
       <GameScene game={game} compact={compact} />
       <div className="dossier-body">
         <div className={compact ? 'sr-only' : 'dossier-heading'}>
           <div>
             {compact ? (
               <h2>{game.title}</h2>
-            ) : readPresentation(game.presentation).logo ? (
+            ) : visuals.logo ? (
               <h1 className="dossier-title">{game.title}</h1>
             ) : null}
             {!compact && (

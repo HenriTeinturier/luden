@@ -104,7 +104,11 @@ La sidebar présente les visuels, le titre, les informations courtes, l’expér
 un extrait de souvenir, la possession et les captures agrandissables. Deux actions : fiche complète
 et édition. Aucun bouton de lancement, aucune note communautaire inventée, résumé réservé à la fiche.
 
-La fiche complète utilise une scène large (fond, logo ou titre, boîte et support), puis expérience,
+La fiche complète utilise un fond commun derrière l’en-tête et les informations, pour toutes les
+plateformes : image à pleine largeur et hauteur proportionnelle, sans zoom ni déformation, avec
+fondu progressif en bas et voile sombre. Les cartes sont plus opaques pour préserver leur lisibilité.
+Le cadrage personnalisé reste réservé à la sidebar. Sans fond, la présentation de repli est conservée.
+Le logo ou titre, la boîte et le support restent dans la scène en haut, puis expérience,
 souvenirs, captures, informations, possessions, collections et médias. Le fond sobre et le titre
 texte permettent de consulter immédiatement les anciennes fiches. Styles dans `styles/game-details.css`.
 Sur desktop, le bandeau complet suit la hauteur disponible (280–340 px), avec objets de 260 px

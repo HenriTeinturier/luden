@@ -1,5 +1,10 @@
 # État courant
 
+## Fond de la fiche complète — 2026-10-01
+
+- Toutes plateformes : fond sorti du bandeau supérieur pour passer derrière le contenu de la fiche complète, à pleine largeur et hauteur proportionnelle. Fondu au bas de l’image, voile sombre et cartes plus opaques pour la lisibilité. Logo, boîte et support gardent leur place en haut ; cadrage de sidebar et repli sans fond conservés.
+- Vérifié : TypeScript, lint ciblé et formatage ; contrôle navigateur sur Player Manager (fond haut de 712 px pour un en-tête de 280 px à 1280 px de largeur), cartes lisibles et cadrage de sidebar retrouvé au retour.
+
 ## Sidebar des jeux Amiga — 2026-10-01
 
 - Boîte agrandie de 15 % en hauteur par rapport à son cadre précédent (112 → 128,8 %), proportions conservées. Recentrage horizontal annulé : positions et répartition précédentes restaurées. Disquette toujours abaissée de 8 px pour partager le même ancrage inférieur que la boîte. Réglages limités à la sidebar Amiga.

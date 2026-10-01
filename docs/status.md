@@ -7,6 +7,7 @@
 
 ## Visuels des plateformes — 2026-10-01
 
+- Navigation sidebar : icône de panneau à masquer sur l’accueil, flèche de retour et libellé contextualisé sur le jeu. Fermeture de l’accueil par glissement/fondu 260 ms, au clic comme avec Échap, puis réallocation de la galerie ; annulation du délai si navigation/changement de jeu, réduction des animations respectée. TypeScript/lint ciblé et navigateur validés : animation, panneau masqué, ouverture d’un jeu et retour à l’accueil.
 - Affiches de sidebar : glissement horizontal de 450 ms, suivant vers la gauche / précédent vers la droite, automatique dans le sens suivant. Image sortante conservée pendant la transition, voisines préchargées, clics supplémentaires ignorés le temps du mouvement ; bandeau fixe et préférence de réduction des animations respectée. TypeScript/lint ciblé validés ; sens des transformations et bandeau immobile contrôlés dans le navigateur.
 - Enregistrer la présentation de la sidebar ramène à la collection de la plateforme après sauvegarde et actualisation des données. En cas d’erreur, le formulaire reste ouvert avec le brouillon.
 - En-tête de statistiques généralisé à toutes les plateformes : bibliothèque, joués, Megastar et possédés, même disposition/couleurs que SNES. Compteurs et libellés accessibles liés à la plateforme courante. Anciens bandeaux conservés masqués ; les quatre cartes disparaissent avec la sidebar pour tous les univers.

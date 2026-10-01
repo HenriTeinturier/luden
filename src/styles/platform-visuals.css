@@ -2,6 +2,28 @@
   display: flex;
   flex-direction: column;
 }
+.game-workspace:has(> .universe-sidebar.is-hiding) {
+  overflow-x: clip;
+}
+.universe-sidebar.is-hiding {
+  animation: universe-sidebar-hide 260ms ease-in both;
+  pointer-events: none;
+}
+@keyframes universe-sidebar-hide {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .universe-sidebar.is-hiding {
+    animation: none;
+  }
+}
 .universe-banner {
   flex: 0 0 auto;
   background: #090d18;

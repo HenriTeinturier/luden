@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Link } from '@tanstack/react-router'
-import { X, ChevronLeft, ChevronRight, Pencil, Pause, Play } from 'lucide-react'
+import { PanelRightClose, ChevronLeft, ChevronRight, Pencil, Pause, Play } from 'lucide-react'
 import type { Platform } from '../lib/types'
 import {
   activePlatformVisuals,
@@ -14,10 +14,12 @@ export function UniverseSidebar({
   platform,
   visuals,
   onClose,
+  hiding = false,
 }: {
   platform: Platform
   visuals: PlatformVisual[]
   onClose: () => void
+  hiding?: boolean
 }) {
   const banners = activePlatformVisuals(visuals, 'BANNER')
   const posters = useMemo(() => activePlatformVisuals(visuals, 'POSTER'), [visuals])
@@ -45,7 +47,7 @@ export function UniverseSidebar({
   const currentId = current?.id
   const nextUrl = posters[(index + 1) % posters.length]?.url
   const previousUrl = posters[(index - 1 + posters.length) % posters.length]?.url
-  const playing = platform.slideshowEnabled && posters.length > 1 && !paused
+  const playing = platform.slideshowEnabled && posters.length > 1 && !paused && !hiding
   const move = useCallback(
     (delta: number) => {
       if (!current || posters.length < 2 || transition) return
@@ -97,7 +99,8 @@ export function UniverseSidebar({
     <aside
       id="universe-sidebar"
       tabIndex={-1}
-      className="game-sidebar universe-sidebar"
+      className={`game-sidebar universe-sidebar ${hiding ? 'is-hiding' : ''}`}
+      inert={hiding}
       aria-label={`Accueil de l’univers ${platform.name}`}
     >
       <div className="universe-banner">
@@ -204,7 +207,7 @@ export function UniverseSidebar({
         title="Masquer la sidebar · Échap"
         onClick={onClose}
       >
-        <X size={20} />
+        <PanelRightClose size={20} />
       </button>
     </aside>
   )

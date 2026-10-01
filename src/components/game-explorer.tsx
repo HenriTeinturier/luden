@@ -22,6 +22,7 @@ export function GameExplorer({
   } | null>(null)
   const [mode, setMode] = useState<'sidebar' | 'full' | 'edit'>('sidebar')
   const [busy, setBusy] = useState(false)
+  const [hidingUniverse, setHidingUniverse] = useState(false)
   const previousMode = useRef<'sidebar' | 'full'>('sidebar')
   const scroll = useRef(0)
   const mobileLibraryScroll = useRef(0)
@@ -33,6 +34,7 @@ export function GameExplorer({
     setSelection(null)
     setMode('sidebar')
     setBusy(false)
+    setHidingUniverse(false)
   }
   const universe = library?.platforms.find(
     (p) => location.pathname.replace(/\/$/, '') === `/platforms/${p.id}`,
@@ -46,6 +48,20 @@ export function GameExplorer({
   const ids = selection?.ids.filter((id) => library?.games.some((g) => g.id === id)) ?? []
   const index = game ? ids.indexOf(game.id) : -1
   const showUniverse = Boolean(universe && !game && !universeVisit.hidden)
+  useEffect(() => {
+    if (!hidingUniverse || !showUniverse) return
+    const duration = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 280
+    const timer = setTimeout(() => {
+      setUniverseVisit({ pathname: location.pathname, hidden: true })
+      setHidingUniverse(false)
+      requestAnimationFrame(() =>
+        (document.getElementById('reopen-sidebar') ?? document.getElementById('main'))?.focus({
+          preventScroll: true,
+        }),
+      )
+    }, duration)
+    return () => clearTimeout(timer)
+  }, [hidingUniverse, showUniverse, location.pathname])
 
   function restoreLibrary(focusCard = false) {
     requestAnimationFrame(() => {
@@ -58,14 +74,9 @@ export function GameExplorer({
     })
   }
   function close() {
-    if (busy) return
+    if (busy || hidingUniverse) return
     if (!game && showUniverse) {
-      setUniverseVisit({ pathname: location.pathname, hidden: true })
-      requestAnimationFrame(() =>
-        (document.getElementById('reopen-sidebar') ?? document.getElementById('main'))?.focus({
-          preventScroll: true,
-        }),
-      )
+      setHidingUniverse(true)
     } else if (mode === 'full') {
       setMode('sidebar')
       restoreLibrary()
@@ -143,6 +154,7 @@ export function GameExplorer({
             : undefined,
         open: (id, sequence, element) => {
           if (busy) return
+          setHidingUniverse(false)
           trigger.current = element
           scroll.current = window.scrollY
           mobileLibraryScroll.current = window.scrollY
@@ -163,6 +175,7 @@ export function GameExplorer({
             platform={universe}
             visuals={library?.platformVisuals.filter((v) => v.platformId === universe.id) ?? []}
             onClose={close}
+            hiding={hidingUniverse}
           />
         )}
         {game && mode === 'edit' ? (
@@ -193,6 +206,11 @@ export function GameExplorer({
                 onMove={move}
                 onClose={close}
                 full={mode === 'full'}
+                closeLabel={
+                  mode === 'sidebar' && universe
+                    ? `Revenir à l’accueil ${universe.name}`
+                    : undefined
+                }
               />
               <GameDetails
                 key={game.id}

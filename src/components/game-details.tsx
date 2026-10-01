@@ -9,7 +9,7 @@ import {
   ChevronRight,
   ChevronDown,
   Star,
-  X,
+  Undo2,
   Pencil,
   Heart,
   Sparkles,
@@ -92,6 +92,7 @@ export function GameNavigation({
   onMove,
   onClose,
   full = false,
+  closeLabel,
 }: {
   index: number
   total: number
@@ -99,7 +100,9 @@ export function GameNavigation({
   onMove: (delta: number) => void
   onClose: () => void
   full?: boolean
+  closeLabel?: string
 }) {
+  const returnLabel = closeLabel ?? (full ? 'Revenir à la sidebar' : 'Revenir à la collection')
   return (
     <nav className="game-navigation" aria-label="Parcourir les jeux">
       {full && (
@@ -133,12 +136,12 @@ export function GameNavigation({
       </div>
       <button
         className="icon-button game-close"
-        aria-label={full ? 'Revenir à la sidebar' : 'Fermer la sidebar'}
-        title="Échap"
+        aria-label={returnLabel}
+        title={`${returnLabel} · Échap`}
         disabled={disabled}
         onClick={onClose}
       >
-        <X size={20} />
+        <Undo2 size={20} />
       </button>
     </nav>
   )

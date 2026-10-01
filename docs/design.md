@@ -24,8 +24,10 @@ inactives atténuées mais conservées. Choisir un défaut l’active ; désacti
 la première image encore active, ou l’identité de repli s’il n’en reste aucune.
 Chaque visuel propose aussi « Supprimer », avec confirmation : retrait immédiat de Luden,
 remplacement du défaut par une autre image active et conservation des autres changements en cours.
-Un jeu remplace cet accueil. Croix/Échap revient du jeu à l’accueil, puis masque le panneau au
-second appui. Une nouvelle entrée dans l’univers réaffiche l’accueil ; changer les filtres seul
+Un jeu remplace cet accueil. Une flèche de retour dans la fiche ramène à l’accueil de la plateforme
+(ou à la collection hors univers). L’accueil propose une icône de panneau à masquer : glissement
+vers la droite et fondu de 260 ms avant de libérer la place. Échap suit les mêmes étapes ; fermeture
+immédiate si réduction des animations activée. Une nouvelle entrée dans l’univers réaffiche l’accueil ; changer les filtres seul
 ne réouvre pas un accueil masqué. Dans ce cas, le bouton « Sidebar » avec icône de panneau,
 à côté du réglage des colonnes, permet de réafficher l’accueil et rétablit la densité avec sidebar.
 Sur mobile, l’accueil est un bloc de 280 px au-dessus de la

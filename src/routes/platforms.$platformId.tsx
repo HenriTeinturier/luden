@@ -34,14 +34,12 @@ function PlatformPage() {
     <div
       className={`page platform-page ${isSnes || isAmiga || isAmstrad ? `platform-${platformId}` : ''}`}
     >
-      {isSnes && (
-        <h1 id="snes-overview-title" className="sr-only">
-          {platform.name}
-        </h1>
-      )}
-      {isSnes && selection?.sidebarVisible !== false && (
-        <section className="snes-overview" aria-labelledby="snes-overview-title">
-          <dl className="snes-overview-stats">
+      <h1 id="platform-overview-title" className="sr-only">
+        {platform.name}
+      </h1>
+      {selection?.sidebarVisible !== false && (
+        <section className="platform-overview" aria-labelledby="platform-overview-title">
+          <dl className="platform-overview-stats">
             {[
               {
                 label: 'jeux dans ma bibliothèque',
@@ -53,7 +51,7 @@ function PlatformPage() {
               { label: 'Megastar', count: favoriteCount, icon: MegastarTrophy, tone: 'favorites' },
               { label: 'jeux possédés', count: ownedCount, icon: ShieldCheck, tone: 'owned' },
             ].map(({ label, count, icon: Icon, tone }) => (
-              <div key={tone} className={`snes-overview-stat stat-${tone}`}>
+              <div key={tone} className={`platform-overview-stat stat-${tone}`}>
                 <Icon size={29} aria-hidden="true" />
                 <div>
                   <dt>{label}</dt>
@@ -61,8 +59,8 @@ function PlatformPage() {
                     <strong>{count}</strong>
                     {tone !== 'library' && (
                       <span
-                        className="snes-stat-percent"
-                        aria-label={`${chosen.length ? Math.round((count / chosen.length) * 100) : 0} % de ma bibliothèque Super Nintendo`}
+                        className="platform-stat-percent"
+                        aria-label={`${chosen.length ? Math.round((count / chosen.length) * 100) : 0} % de ma bibliothèque ${platform.name}`}
                       >
                         {chosen.length ? Math.round((count / chosen.length) * 100) : 0}%
                       </span>
@@ -77,7 +75,7 @@ function PlatformPage() {
       {/* Original banner kept available for future reuse. */}
       <section
         className="platform-hero"
-        hidden={isSnes}
+        hidden
         style={{ '--platform-color': platform.color } as CSSProperties}
       >
         {isAmstrad && (

@@ -2,6 +2,8 @@
 
 ## Visuels des plateformes — 2026-10-01
 
+- En-tête de statistiques généralisé à toutes les plateformes : bibliothèque, joués, Megastar et possédés, même disposition/couleurs que SNES. Compteurs et libellés accessibles liés à la plateforme courante. Anciens bandeaux conservés masqués ; les quatre cartes disparaissent avec la sidebar pour tous les univers.
+- Vérifié : TypeScript, lint ciblé et formatage ; navigateur Amiga/Amstrad avec quatre compteurs propres à chaque plateforme et ancien bandeau en `display: none`.
 - Zones « Ajouter des bandeaux / affiches » : curseur main sur le libellé, le champ fichier et son bouton natif. Vérification CSS et formatage.
 - Dernière affiche mémorisée par plateforme dans localStorage, avec repli sur le défaut actif si l’image disparaît. Éditeur : défilement automatique facultatif et durée de 3 à 120 s (8 s initialement), enregistrés sur Platform. Pause/reprise sur la galerie, temporisateur suspendu en onglet caché et nettoyé au démontage ; bandeau fixe. Migration additive `20261001120000_platform_slideshow` appliquée ; export v6 inclut les plateformes et leurs réglages.
 - Vérifié : TypeScript, lint, 27 tests, compilation et contrôle DB isolé des réglages/export. Navigateur : sauvegarde de durée, défilement, pause et restauration de la dernière affiche après rechargement. SNES remise à défilement désactivé / 8 secondes après vérification.

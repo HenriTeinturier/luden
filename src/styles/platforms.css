@@ -436,21 +436,21 @@
   }
 }
 
-.platform-snes .platform-hero[hidden] {
+.platform-page .platform-hero[hidden] {
   display: none;
 }
-.snes-overview {
+.platform-overview {
   container-type: inline-size;
   margin: 6px 0 18px;
   padding: 0 12px;
 }
-.snes-overview-stats {
+.platform-overview-stats {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 14px;
   margin: 0;
 }
-.snes-overview-stat {
+.platform-overview-stat {
   --stat-color: #a57bff;
   display: flex;
   align-items: center;
@@ -463,38 +463,38 @@
   background: linear-gradient(120deg, #1d253b99, #151b2d99);
   box-shadow: inset 0 1px 0 #c4ceff04;
 }
-.snes-overview-stat.stat-played {
+.platform-overview-stat.stat-played {
   --stat-color: #68df8b;
 }
-.snes-overview-stat.stat-favorites {
+.platform-overview-stat.stat-favorites {
   --stat-color: #d6b6ff;
 }
-.snes-overview-stat.stat-favorites dt {
+.platform-overview-stat.stat-favorites dt {
   color: #d6b6ff;
 }
-.snes-overview-stat > .megastar-trophy {
+.platform-overview-stat > .megastar-trophy {
   width: 32px;
   height: 32px;
 }
-.snes-overview-stat.stat-owned {
+.platform-overview-stat.stat-owned {
   --stat-color: #63dcc4;
 }
-.snes-overview-stat > svg {
+.platform-overview-stat > svg {
   flex-shrink: 0;
   color: var(--stat-color);
 }
-.snes-overview-stat > div {
+.platform-overview-stat > div {
   display: flex;
   flex-direction: column;
   flex: 1;
   min-width: 0;
 }
-.snes-overview-stat dt {
+.platform-overview-stat dt {
   color: #a7aec8;
   font-size: 12px;
   line-height: 1.4;
 }
-.snes-overview-stat dd {
+.platform-overview-stat dd {
   order: -1;
   display: flex;
   align-items: center;
@@ -502,14 +502,14 @@
   gap: 8px;
   margin: 0 0 3px;
 }
-.snes-overview-stat strong {
+.platform-overview-stat strong {
   color: #f3f5ff;
   font-size: 25px;
   font-weight: 650;
   line-height: 1.1;
   font-variant-numeric: tabular-nums;
 }
-.snes-stat-percent {
+.platform-stat-percent {
   padding: 2px 5px;
   border: 1px solid color-mix(in srgb, var(--stat-color) 30%, transparent);
   border-radius: 5px;
@@ -519,20 +519,20 @@
   font-variant-numeric: tabular-nums;
 }
 @container (max-width: 720px) {
-  .snes-overview-stats {
+  .platform-overview-stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
   }
-  .snes-overview-stat {
+  .platform-overview-stat {
     padding: 12px;
     gap: 10px;
   }
 }
 @media (max-width: 500px) {
-  .snes-overview {
+  .platform-overview {
     padding: 0;
   }
-  .snes-overview-stat > svg {
+  .platform-overview-stat > svg {
     width: 23px;
   }
 }

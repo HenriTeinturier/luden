@@ -117,6 +117,9 @@ captures de 96–140 px de haut pour voir l’expérience, les souvenirs et les 
 écran. Les informations longues et les médias supplémentaires restent accessibles en défilant.
 
 Gauche/droite parcourent l’ordre visible au moment de l’ouverture, regroupement compris, sans boucle.
+Entrée ouvre la fiche complète du jeu sélectionné dans la sidebar (également depuis l’aperçu
+d’une URL directe). Raccourci inactif dans les champs, sur les contrôles/liens, pendant l’édition
+ou une modale ; les actions natives au clavier sont conservées. Rappel sous la fiche et en infobulle.
 Haut/bas passent à la rangée voisine, sur la jaquette la plus proche horizontalement, sans boucler
 aux extrémités. Le calcul suit les positions affichées, même avec des catégories ou une dernière
 rangée incomplète. En fiche complète ou sur mobile, haut/bas parcourent le jeu précédent/suivant.

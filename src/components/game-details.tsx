@@ -42,11 +42,13 @@ export function useGameKeys({
   close,
   move,
   moveVertical = move,
+  expand,
 }: {
   enabled: boolean
   close: () => void
   move?: (delta: number) => void
   moveVertical?: (delta: number) => void
+  expand?: () => void
 }) {
   useEffect(() => {
     if (!enabled) return
@@ -54,6 +56,7 @@ export function useGameKeys({
       if (
         event.defaultPrevented ||
         event.repeat ||
+        event.isComposing ||
         event.ctrlKey ||
         event.metaKey ||
         event.altKey ||
@@ -67,6 +70,16 @@ export function useGameKeys({
         target.closest('input, textarea, select, [contenteditable="true"], [role="slider"]')
       )
         return
+      if (event.key === 'Enter' && expand) {
+        // Keep native activation for focused controls and links.
+        if (
+          target instanceof HTMLElement &&
+          target.closest('button, a, summary, [role="button"], [role="link"], [role="checkbox"]')
+        )
+          return
+        event.preventDefault()
+        expand()
+      }
       if (event.key === 'Escape') {
         event.preventDefault()
         close()
@@ -82,7 +95,7 @@ export function useGameKeys({
     }
     document.addEventListener('keydown', handle)
     return () => document.removeEventListener('keydown', handle)
-  }, [enabled, close, move, moveVertical])
+  }, [enabled, close, move, moveVertical, expand])
 }
 
 export function GameNavigation({
@@ -809,7 +822,13 @@ export function GameDetails({
         <Screenshots game={game} compact={compact} />
         {compact ? (
           <div className="dossier-actions">
-            <button className="button" disabled={busy || editingMemory} onClick={onExpand}>
+            <button
+              className="button"
+              disabled={busy || editingMemory}
+              onClick={onExpand}
+              title="Voir la fiche complète · Entrée"
+              aria-keyshortcuts="Enter"
+            >
               Voir la fiche complète
               <ArrowUpRight size={17} />
             </button>
@@ -942,6 +961,11 @@ export function GameDetails({
           <kbd>→</kbd>
           <kbd>↑</kbd>
           <kbd>↓</kbd> parcourir les jeux <span>·</span>
+          {compact && (
+            <>
+              <kbd>Entrée</kbd> fiche complète <span>·</span>
+            </>
+          )}
           <kbd>Échap</kbd> {compact ? 'fermer' : 'revenir à l’aperçu'}
         </p>
       </div>

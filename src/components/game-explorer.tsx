@@ -124,11 +124,17 @@ export function GameExplorer({
     const nextId = verticalGameNeighbor(cards, game.id, direction)
     if (nextId) move(ids.indexOf(nextId) - index)
   }
+  function expand() {
+    if (!game || mode !== 'sidebar' || busy) return
+    scroll.current = window.scrollY
+    setMode('full')
+  }
   useGameKeys({
     enabled: (Boolean(game) || showUniverse) && mode !== 'edit' && !busy,
     close,
     move: game ? move : undefined,
     moveVertical: game ? moveVertical : undefined,
+    expand: game && mode === 'sidebar' ? expand : undefined,
   })
   useEffect(() => {
     if (!game || mode === 'edit') return
@@ -220,10 +226,7 @@ export function GameExplorer({
                 game={game}
                 compact={mode === 'sidebar'}
                 onBusyChange={setBusy}
-                onExpand={() => {
-                  scroll.current = window.scrollY
-                  setMode('full')
-                }}
+                onExpand={expand}
                 onEdit={() => {
                   previousMode.current = mode === 'full' ? 'full' : 'sidebar'
                   if (mode === 'sidebar') scroll.current = window.scrollY

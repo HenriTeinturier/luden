@@ -71,7 +71,12 @@ function GamePage() {
     if (id && !busy)
       void navigate({ to: '/games/$gameId', params: { gameId: id }, search: origin, replace: true })
   }
-  useGameKeys({ enabled: Boolean(game) && !editing && !busy, close, move })
+  useGameKeys({
+    enabled: Boolean(game) && !editing && !busy,
+    close,
+    move,
+    expand: compact ? () => setCompact(false) : undefined,
+  })
   if (!game)
     return (
       <div className="empty-state">

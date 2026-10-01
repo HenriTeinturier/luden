@@ -1,5 +1,10 @@
 # État courant
 
+## Raccourci vers la fiche complète — 2026-10-01
+
+- Entrée ouvre la vue détaillée du jeu sélectionné dans la sidebar, avec la même mémorisation du défilement que le bouton. Disponible aussi depuis l’aperçu d’une URL directe. Champs, contrôles/liens, édition, composition de texte et modales protégés ; rappel dans l’aide clavier et sur le bouton.
+- Vérifié : TypeScript, lint ciblé et formatage ; navigateur : Entrée sur Another World ouvre le détail, Échap revient à l’aperçu, Entrée sur « Jeu suivant » conserve l’action native et ouvre Hunter dans la sidebar.
+
 ## Fond de la fiche complète — 2026-10-01
 
 - Toutes plateformes : fond sorti du bandeau supérieur pour passer derrière le contenu de la fiche complète, à pleine largeur et hauteur proportionnelle. Fondu au bas de l’image, voile sombre et cartes plus opaques pour la lisibilité. Logo, boîte et support gardent leur place en haut ; cadrage de sidebar et repli sans fond conservés.

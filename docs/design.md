@@ -44,6 +44,9 @@ galerie pour conserver l’accès aux jeux ; une fiche ouverte garde le comporte
 La carte consultée porte un contour bleu clair de 3 px autour de son périmètre complet, un halo
 et un fond bleu/violet plus marqué sous le titre. Le repère est porté par la carte pour éviter
 le rognage par ses coins ; dimensions et sceau Megastar conservés, y compris en liste.
+À la désélection, y compris par Échap, le focus rejoint l’accueil sidebar ou le contenu principal,
+sans revenir sur la jaquette : aucun contour ne persiste sur le jeu fermé. Le focus clavier reste
+visible lorsqu’on parcourt normalement les jaquettes avec Tab.
 Sur écran étroit (800 px et moins), seul le panneau est visible. Les proportions des visuels
 suivent la plateforme ; les différences futures sont uniquement de présentation.
 La scène de la sidebar est au ratio paysage 16:7 sur desktop (6:5 sur mobile), avec le même ratio

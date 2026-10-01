@@ -26,7 +26,6 @@ export function GameExplorer({
   const previousMode = useRef<'sidebar' | 'full'>('sidebar')
   const scroll = useRef(0)
   const mobileLibraryScroll = useRef(0)
-  const trigger = useRef<HTMLElement | null>(null)
   const panel = useRef<HTMLElement>(null)
   const [universeVisit, setUniverseVisit] = useState({ pathname: location.pathname, hidden: false })
   if (universeVisit.pathname !== location.pathname) {
@@ -63,13 +62,14 @@ export function GameExplorer({
     return () => clearTimeout(timer)
   }, [hidingUniverse, showUniverse, location.pathname])
 
-  function restoreLibrary(focusCard = false) {
+  function restoreLibrary(focusCollection = false) {
     requestAnimationFrame(() => {
       window.scrollTo({ top: scroll.current, behavior: 'instant' })
-      if (focusCard) {
-        const card =
-          document.querySelector<HTMLElement>(`[data-game-id="${game?.id}"]`) ?? trigger.current
-        card?.focus({ preventScroll: true })
+      if (focusCollection) {
+        // Returning focus to the cover after Escape would draw a selection-like outline.
+        ;(document.getElementById('universe-sidebar') ?? document.getElementById('main'))?.focus({
+          preventScroll: true,
+        })
       } else panel.current?.focus({ preventScroll: true })
     })
   }
@@ -152,10 +152,9 @@ export function GameExplorer({
                 )
               }
             : undefined,
-        open: (id, sequence, element) => {
+        open: (id, sequence) => {
           if (busy) return
           setHidingUniverse(false)
-          trigger.current = element
           scroll.current = window.scrollY
           mobileLibraryScroll.current = window.scrollY
           setSelection({ id, ids: sequence.length ? sequence : [id], location: locationKey })

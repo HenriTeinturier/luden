@@ -1,5 +1,10 @@
 # État courant
 
+## Désélection d’un jeu — 2026-10-01
+
+- À la fermeture de la fiche par Échap ou le bouton retour, le focus rejoint l’accueil de la sidebar (ou le contenu principal hors univers), plutôt que la jaquette. Le contour de focus ne peut plus laisser croire que le jeu reste sélectionné. Le retour de la vue détaillée vers la fiche sidebar conserve sa sélection.
+- Vérifié : TypeScript, lint ciblé et formatage ; navigateur sur Another World : Échap et retour souris retirent la sélection, le contour et le halo, avec focus sur l’accueil de l’univers.
+
 ## Barre de filtres — 2026-10-01
 
 - Bouton de réouverture « Sidebar » placé à l’extrémité droite de la barre, après le compteur et la réinitialisation, du côté du panneau. Action et identifiant de focus conservés.

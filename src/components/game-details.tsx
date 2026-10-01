@@ -155,6 +155,7 @@ function GameScene({ game, compact }: { game: Game; compact: boolean }) {
   return (
     <div
       className={`game-scene ${visuals.background ? 'has-background' : 'without-background'} ${coverFormat(game.platformId).wide ? 'scene-wide-box' : ''}`}
+      data-platform={game.platformId}
     >
       {visuals.background && (
         <GameBackground

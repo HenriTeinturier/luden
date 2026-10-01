@@ -480,6 +480,22 @@
   transform: none;
   filter: drop-shadow(0 9px 6px #0007);
 }
+.dossier-compact .game-scene[data-platform='amiga'] .scene-box {
+  height: 128.8%;
+}
+.dossier-compact .game-scene[data-platform='amiga'] .has-support .scene-box {
+  max-width: 50%;
+  flex-basis: 50%;
+  transform: none;
+}
+.dossier-compact .game-scene[data-platform='amiga'] .has-support .scene-box > img {
+  object-position: center bottom;
+}
+.dossier-compact .game-scene[data-platform='amiga'] .scene-support-stand {
+  flex-basis: 50%;
+  margin-left: 0;
+  transform: translateY(16px);
+}
 .dossier-compact .dossier-body {
   padding: 0 var(--dossier-gutter) 18px;
   position: relative;

@@ -9,8 +9,12 @@ L’accueil comporte un bandeau fixe en haut, affiché entier sans crop, puis un
 la hauteur restante. SNES utilise les deux fichiers personnels fournis ; les autres plateformes
 affichent leur identité en repli tant qu’aucun visuel n’est configuré. Le bouton « Modifier » en
 surimpression ouvre l’éditeur de plateforme. Les affiches actives se parcourent par flèches gauche/
-droite en surimpression avec compteur (masqués s’il n’y a qu’une affiche). Aucun défilement
-automatique. Le défaut ouvre chaque nouvelle visite ; le bandeau ne défile jamais.
+droite en surimpression avec compteur (masqués s’il n’y a qu’une affiche). La dernière affiche
+est mémorisée par plateforme dans localStorage ; si elle est absente ou inactive, retour au défaut.
+L’éditeur propose le défilement automatique (désactivé initialement), de 3 à 120 secondes par
+image (8 par défaut). Au moins deux affiches actives sont nécessaires. Pause/reprise dans le
+compteur ; temporisateur suspendu si l’onglet est caché, remis à zéro après navigation manuelle.
+Le bandeau ne défile jamais.
 L’éditeur sépare bandeaux/affiches : imports multiples, nom, activation, défaut et ordre. Images
 inactives atténuées mais conservées. Choisir un défaut l’active ; désactiver le défaut sélectionne
 la première image encore active, ou l’identité de repli s’il n’en reste aucune.

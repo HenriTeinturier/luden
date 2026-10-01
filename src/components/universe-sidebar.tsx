@@ -1,8 +1,13 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from '@tanstack/react-router'
-import { X, ChevronLeft, ChevronRight, Pencil } from 'lucide-react'
+import { X, ChevronLeft, ChevronRight, Pencil, Pause, Play } from 'lucide-react'
 import type { Platform } from '../lib/types'
-import { activePlatformVisuals, type PlatformVisual } from '../lib/platform-visuals'
+import {
+  activePlatformVisuals,
+  platformPosterStorageKey,
+  restorePlatformPoster,
+  type PlatformVisual,
+} from '../lib/platform-visuals'
 import { PlatformArt } from './ui'
 
 export function UniverseSidebar({
@@ -15,13 +20,51 @@ export function UniverseSidebar({
   onClose: () => void
 }) {
   const banners = activePlatformVisuals(visuals, 'BANNER')
-  const posters = activePlatformVisuals(visuals, 'POSTER')
+  const posters = useMemo(() => activePlatformVisuals(visuals, 'POSTER'), [visuals])
   const [selected, setSelected] = useState<string | null>(null)
+  const [restored, setRestored] = useState(false)
+  const [paused, setPaused] = useState(false)
+  useEffect(() => {
+    if (restored) return
+    try {
+      setSelected(restorePlatformPoster(window.localStorage, platform.id, posters))
+    } catch {
+      /* Keep the default when access to localStorage is blocked. */
+    }
+    setRestored(true)
+  }, [platform.id, posters, restored])
   const index = Math.max(
     0,
     posters.findIndex((v) => v.id === selected),
   )
   const current = posters[index]
+  const currentId = current?.id
+  const nextId = posters[(index + 1) % posters.length]?.id
+  const playing = platform.slideshowEnabled && posters.length > 1 && !paused
+  useEffect(() => {
+    if (!restored) return
+    try {
+      if (currentId) window.localStorage.setItem(platformPosterStorageKey(platform.id), currentId)
+      else window.localStorage.removeItem(platformPosterStorageKey(platform.id))
+    } catch {
+      /* Navigation remains available without storage. */
+    }
+  }, [currentId, platform.id, restored])
+  useEffect(() => {
+    if (!restored || !playing || !nextId) return
+    let timer: ReturnType<typeof setTimeout> | undefined
+    const schedule = () => {
+      clearTimeout(timer)
+      if (!document.hidden)
+        timer = setTimeout(() => setSelected(nextId), platform.slideshowSeconds * 1000)
+    }
+    schedule()
+    document.addEventListener('visibilitychange', schedule)
+    return () => {
+      clearTimeout(timer)
+      document.removeEventListener('visibilitychange', schedule)
+    }
+  }, [restored, playing, nextId, currentId, platform.slideshowSeconds])
   const posterUrl = current?.url
   const move = (delta: number) =>
     setSelected(posters[(index + delta + posters.length) % posters.length].id)
@@ -87,7 +130,21 @@ export function UniverseSidebar({
             >
               <ChevronRight size={22} />
             </button>
-            <span className="universe-gallery-count" aria-live="polite" aria-atomic="true">
+            <span
+              className="universe-gallery-count"
+              aria-live={playing ? 'off' : 'polite'}
+              aria-atomic="true"
+            >
+              {platform.slideshowEnabled && (
+                <button
+                  type="button"
+                  className="universe-gallery-play"
+                  aria-label={paused ? 'Reprendre le défilement' : 'Mettre le défilement en pause'}
+                  onClick={() => setPaused(!paused)}
+                >
+                  {paused ? <Play size={15} /> : <Pause size={15} />}
+                </button>
+              )}
               {index + 1} / {posters.length}
             </span>
           </>

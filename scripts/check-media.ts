@@ -113,7 +113,7 @@ try {
   assert.equal(await db.mediaAttachment.count({ where: { gameId: created.id } }), 2)
   assert.equal(await db.gameLink.count({ where: { gameId: created.id } }), 1)
   const exported = await exportLibrary()
-  assert.equal(exported.version, 5)
+  assert.equal(exported.version, 6)
   assert.equal(exported.games.find((g) => g.id === created.id)?.links.length, 1)
   await saveGame({ ...changed, media: [], links: [] })
   assert.equal(await db.media.count({ where: { id: second.id } }), 0)

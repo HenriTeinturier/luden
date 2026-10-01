@@ -18,6 +18,8 @@ export function PlatformVisualForm({
   visuals: PlatformVisual[]
 }) {
   const [items, setItems] = useState(visuals)
+  const [slideshowEnabled, setSlideshowEnabled] = useState(platform.slideshowEnabled)
+  const [slideshowSeconds, setSlideshowSeconds] = useState(String(platform.slideshowSeconds))
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
@@ -107,6 +109,7 @@ export function PlatformVisualForm({
           const parsed = platformVisualsSchema.safeParse({
             platformId: platform.id,
             visuals: items,
+            slideshow: { enabled: slideshowEnabled, seconds: Number(slideshowSeconds) },
           })
           if (!parsed.success) {
             setError(parsed.error.issues[0].message)
@@ -139,7 +142,7 @@ export function PlatformVisualForm({
                 <p>
                   {kind === 'BANNER'
                     ? 'Seul le bandeau par défaut est affiché. Il reste fixe et conserve ses proportions.'
-                    : 'L’affiche par défaut ouvre la galerie. Les flèches parcourent uniquement les affiches actives, dans cet ordre. Aucun défilement automatique.'}
+                    : 'La dernière affiche consultée est mémorisée sur cet appareil. Sinon, la galerie s’ouvre sur l’affiche par défaut. Seules les affiches actives défilent.'}
                 </p>
                 {!group.length && (
                   <p className="field-hint">
@@ -268,6 +271,37 @@ export function PlatformVisualForm({
               </section>
             )
           })}
+          <section className="platform-visual-section">
+            <div className="platform-visual-heading">
+              <h2>Défilement des affiches</h2>
+            </div>
+            <div className="platform-slideshow-settings">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={slideshowEnabled}
+                  onChange={(event) => setSlideshowEnabled(event.target.checked)}
+                />
+                Défilement automatique
+              </label>
+              <label>
+                Durée par image (secondes)
+                <input
+                  type="number"
+                  min={3}
+                  max={120}
+                  step={1}
+                  required
+                  value={slideshowSeconds}
+                  onChange={(event) => setSlideshowSeconds(event.target.value)}
+                />
+              </label>
+            </div>
+            <p>
+              De 3 à 120 secondes. Le défilement commence avec au moins deux affiches actives. Le
+              bandeau reste fixe.
+            </p>
+          </section>
           <p className="field-hint">
             JPG, PNG, WebP, AVIF ou GIF · 12 Mo par image. Les imports sont conservés immédiatement.
             Enregistrez pour appliquer l’activation, l’ordre et les images par défaut. Désactiver

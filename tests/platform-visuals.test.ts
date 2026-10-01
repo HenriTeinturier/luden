@@ -4,6 +4,9 @@ import {
   platformVisualsSchema,
   activePlatformVisuals,
   withoutPlatformVisual,
+  restorePlatformPoster,
+  platformPosterStorageKey,
+  platformSlideshowSchema,
   type PlatformVisual,
 } from '../src/lib/platform-visuals'
 
@@ -18,6 +21,46 @@ const visual = (id: string, patch: Partial<PlatformVisual> = {}): PlatformVisual
   height: 20,
   url: `/platform-media/${id}`,
   ...patch,
+})
+
+test('Affiche mémorisée par plateforme, avec repli si supprimée, inactive ou stockage indisponible', () => {
+  const posters = activePlatformVisuals(
+    [
+      visual('default', { isDefault: true }),
+      visual('saved'),
+      visual('inactive', { active: false }),
+    ],
+    'POSTER',
+  )
+  const values = new Map([[platformPosterStorageKey('snes'), 'saved']])
+  const storage = { getItem: (key: string) => values.get(key) ?? null }
+  assert.equal(restorePlatformPoster(storage, 'snes', posters), 'saved')
+  assert.equal(restorePlatformPoster(storage, 'amiga', posters), 'default')
+  for (const id of ['deleted', 'inactive']) {
+    values.set(platformPosterStorageKey('snes'), id)
+    assert.equal(restorePlatformPoster(storage, 'snes', posters), 'default')
+  }
+  assert.equal(restorePlatformPoster(storage, 'snes', []), null)
+  assert.equal(
+    restorePlatformPoster(
+      {
+        getItem: () => {
+          throw new Error('blocked')
+        },
+      },
+      'snes',
+      posters,
+    ),
+    'default',
+  )
+})
+
+test('Défilement : durée entière de 3 à 120 secondes et activation explicite', () => {
+  for (const seconds of [3, 8, 120])
+    assert.equal(platformSlideshowSchema.safeParse({ enabled: true, seconds }).success, true)
+  for (const seconds of [0, 2, 121, 3.5, NaN])
+    assert.equal(platformSlideshowSchema.safeParse({ enabled: true, seconds }).success, false)
+  assert.equal(platformSlideshowSchema.safeParse({ enabled: false, seconds: 8 }).success, true)
 })
 
 test('Supprimer un visuel préserve le brouillon et remplace seulement un défaut manquant', () => {

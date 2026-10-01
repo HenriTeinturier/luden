@@ -47,6 +47,10 @@ L’import utilise le même décodage WebP borné que les jeux, mais une table i
 nettoyage ou rangement de médias de jeux ne peut supprimer une affiche inactive de plateforme.
 Imports persistés inactifs immédiatement ; activation et défauts appliqués à l’enregistrement.
 Transaction avec verrou de plateforme et contraintes SQL pour éviter deux défauts concurrents.
+Les réglages `Platform.slideshowEnabled/slideshowSeconds` sont sauvegardés dans cette même
+transaction. La sidebar restaure l’affiche depuis `luden:platform-poster:v1:<id>` (localStorage)
+après hydratation ; le timer ne tourne que pour deux affiches actives ou plus et un onglet visible.
+Export JSON v6 : plateformes et réglages inclus, en plus des visuels personnels (v5).
 Pas de copie de la base vivante dans OneDrive ; volume Docker dédié.
 
 ## Futur

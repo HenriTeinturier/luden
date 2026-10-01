@@ -2,6 +2,10 @@ import { z } from 'zod'
 
 export const platformIdSchema = z.string().regex(/^[a-z0-9][a-z0-9-]{0,79}$/)
 export const platformVisualKind = z.enum(['BANNER', 'POSTER'])
+export const platformSlideshowSchema = z.object({
+  enabled: z.boolean(),
+  seconds: z.number().int().min(3, '3 secondes minimum.').max(120, '120 secondes maximum.'),
+})
 export const deletePlatformVisualSchema = z.object({
   platformId: platformIdSchema,
   id: z.string().min(1).max(100),
@@ -9,6 +13,7 @@ export const deletePlatformVisualSchema = z.object({
 export const platformVisualsSchema = z
   .object({
     platformId: platformIdSchema,
+    slideshow: platformSlideshowSchema.optional(),
     visuals: z
       .array(
         z.object({
@@ -59,4 +64,21 @@ export function withoutPlatformVisual(visuals: PlatformVisual[], id: string) {
     if (active.length && !active.some((v) => v.isDefault)) active[0].isDefault = true
   }
   return remaining
+}
+
+export const platformPosterStorageKey = (platformId: string) =>
+  `luden:platform-poster:v1:${platformId}`
+
+export function restorePlatformPoster(
+  storage: Pick<Storage, 'getItem'>,
+  platformId: string,
+  posters: PlatformVisual[],
+) {
+  try {
+    const saved = storage.getItem(platformPosterStorageKey(platformId))
+    if (posters.some((v) => v.id === saved)) return saved
+  } catch {
+    /* Storage can be unavailable in private browsing. */
+  }
+  return posters[0]?.id ?? null
 }

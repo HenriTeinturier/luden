@@ -291,7 +291,7 @@ export async function deleteCollection(id: string) {
 }
 
 export async function exportLibrary() {
-  const [profile, games, machines, collections, media, categories, platformVisuals] =
+  const [profile, games, machines, collections, media, categories, platformVisuals, platforms] =
     await Promise.all([
       db.profile.findUnique({ where: { id: ownerId } }),
       db.game.findMany({
@@ -309,10 +309,11 @@ export async function exportLibrary() {
       db.media.findMany({ where: { ownerId } }),
       db.gameCategory.findMany({ where: { ownerId }, orderBy: { position: 'asc' } }),
       db.platformVisual.findMany({ where: { ownerId }, orderBy: { position: 'asc' } }),
+      db.platform.findMany({ orderBy: { id: 'asc' } }),
     ])
   return {
     format: 'luden',
-    version: 5,
+    version: 6,
     exportedAt: new Date().toISOString(),
     profile,
     games,
@@ -321,5 +322,6 @@ export async function exportLibrary() {
     media,
     categories,
     platformVisuals,
+    platforms,
   }
 }

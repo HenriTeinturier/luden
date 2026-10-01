@@ -61,10 +61,15 @@ export async function savePlatformImage(
 }
 
 export async function savePlatformVisuals(input: unknown) {
-  const { platformId, visuals } = platformVisualsSchema.parse(input)
+  const { platformId, visuals, slideshow } = platformVisualsSchema.parse(input)
   await db.$transaction(async (tx) => {
     await tx.platform.findUniqueOrThrow({ where: { id: platformId } })
     await tx.$queryRaw`SELECT "id" FROM "Platform" WHERE "id" = ${platformId} FOR UPDATE`
+    if (slideshow)
+      await tx.platform.update({
+        where: { id: platformId },
+        data: { slideshowEnabled: slideshow.enabled, slideshowSeconds: slideshow.seconds },
+      })
     const stored = await tx.platformVisual.findMany({ where: { ownerId, platformId } })
     if (
       stored.length !== visuals.length ||

@@ -20,15 +20,17 @@ model Profile {
 }
 
 model Platform {
-  id        String           @id
-  name      String
-  shortName String
-  family    String
-  color     String
-  era       String
-  igdbId    Int?             @unique
-  games     Game[]
-  visuals   PlatformVisual[]
+  id               String           @id
+  name             String
+  shortName        String
+  family           String
+  color            String
+  era              String
+  igdbId           Int?             @unique
+  games            Game[]
+  visuals          PlatformVisual[]
+  slideshowEnabled Boolean          @default(false)
+  slideshowSeconds Int              @default(8)
 }
 
 enum PlatformVisualKind {

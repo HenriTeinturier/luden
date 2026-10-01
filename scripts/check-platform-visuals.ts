@@ -43,7 +43,13 @@ try {
     active: v.id !== inactive.id,
     isDefault: v.id !== inactive.id,
   }))
-  await savePlatformVisuals({ platformId, visuals })
+  await savePlatformVisuals({ platformId, visuals, slideshow: { enabled: true, seconds: 12 } })
+  const configured = await db.platform.findUniqueOrThrow({ where: { id: platformId } })
+  assert.equal(configured.slideshowEnabled, true)
+  assert.equal(configured.slideshowSeconds, 12)
+  await assert.rejects(
+    savePlatformVisuals({ platformId, visuals, slideshow: { enabled: true, seconds: 0 } }),
+  )
   assert.ok(await readPlatformImage(poster.id))
   assert.equal(await readPlatformImage('missing'), null)
   assert.equal(
@@ -68,7 +74,8 @@ try {
   assert.equal(await db.platformVisual.count({ where: { platformId, ownerId } }), 3)
   assert.ok(await readPlatformImage(inactive.id))
   const exported = await exportLibrary()
-  assert.equal(exported.version, 5)
+  assert.equal(exported.version, 6)
+  assert.equal(exported.platforms.find((p) => p.id === platformId)?.slideshowSeconds, 12)
   assert.equal(exported.platformVisuals.filter((v) => v.platformId === platformId).length, 3)
   await savePlatformVisuals({ platformId, visuals: visuals.map((v) => ({ ...v, active: true })) })
   const posterRecord = await db.platformVisual.findUniqueOrThrow({ where: { id: poster.id } })

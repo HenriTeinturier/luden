@@ -1,5 +1,9 @@
 # État courant
 
+## Barre de filtres — 2026-10-01
+
+- Compteur compact « affichés / total » et icône de réinitialisation intégrés à la ligne principale, avec libellés accessibles et infobulles. Recherche de 200 px maximum et densité réduite à 88 px, `Auto` conservé. TypeScript/lint ciblé et formatage validés ; navigateur : une ligne et hauteur 66 px à 2560 px avec sidebar, repli sans débordement à 1280 px.
+
 ## Visuels des plateformes — 2026-10-01
 
 - Affiches de sidebar : glissement horizontal de 450 ms, suivant vers la gauche / précédent vers la droite, automatique dans le sens suivant. Image sortante conservée pendant la transition, voisines préchargées, clics supplémentaires ignorés le temps du mouvement ; bandeau fixe et préférence de réduction des animations respectée. TypeScript/lint ciblé validés ; sens des transformations et bandeau immobile contrôlés dans le navigateur.

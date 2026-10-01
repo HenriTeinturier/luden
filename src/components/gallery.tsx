@@ -7,6 +7,7 @@ import {
   SlidersHorizontal,
   Columns3,
   PanelRightOpen,
+  RotateCcw,
   X,
 } from 'lucide-react'
 import { MegastarTrophy } from './megastar-trophy'
@@ -206,7 +207,8 @@ export function Gallery({
           <Search size={17} />
           <input
             aria-label="Filtrer les jeux"
-            placeholder="Un titre, un souvenir, un genre…"
+            placeholder="Rechercher…"
+            title="Rechercher un titre, un souvenir ou un genre"
             value={filters.q ?? ''}
             onChange={(e) => update({ q: e.target.value })}
           />
@@ -321,13 +323,21 @@ export function Gallery({
           )}
         </div>
         <div className="gallery-results">
-          <span aria-live="polite" aria-atomic="true">
-            {visible.length} jeu{visible.length !== 1 ? 'x' : ''}
-            {filtered && ` sur ${games.length}`}
+          <span
+            aria-live="polite"
+            aria-atomic="true"
+            aria-label={`${visible.length} jeux affichés sur ${games.length}`}
+            title={`${visible.length} jeux affichés sur ${games.length}`}
+          >
+            {visible.length}
+            {filtered ? ` / ${games.length}` : ' jeux'}
           </span>
           {filtered && (
             <button
-              className="text-link"
+              type="button"
+              className="icon-button gallery-reset"
+              aria-label="Réinitialiser les filtres"
+              title="Réinitialiser les filtres"
               onClick={() =>
                 update({
                   q: '',
@@ -340,7 +350,7 @@ export function Gallery({
                 })
               }
             >
-              Réinitialiser les filtres <X size={13} />
+              <RotateCcw size={16} aria-hidden="true" />
             </button>
           )}
         </div>

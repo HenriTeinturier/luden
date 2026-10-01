@@ -46,16 +46,16 @@
   display: inline-flex;
   align-items: center;
   flex-shrink: 0;
-  padding-left: 10px;
+  padding-left: 8px;
   border: 1px solid var(--line);
   border-radius: 5px;
   background: var(--elevated);
   color: var(--text-soft);
 }
 .gallery-controls .gallery-density select {
-  width: 76px;
+  width: 62px;
   flex-shrink: 0;
-  padding-inline: 6px 8px;
+  padding-inline: 4px;
   border: 0;
   background: var(--elevated);
   color: var(--ink);
@@ -70,7 +70,8 @@
 }
 .gallery-toolbar.gallery-toolbar-scoped {
   gap: 8px 10px;
-  padding: 12px 15px 9px;
+  padding: 12px 15px;
+  flex-wrap: wrap;
 }
 .gallery-toolbar-scoped .platform-scope {
   gap: 6px;
@@ -81,8 +82,9 @@
   font-size: 13px;
 }
 .gallery-toolbar-scoped .filter-search {
-  flex: 1 1 180px;
-  min-width: 160px;
+  flex: 1 1 140px;
+  min-width: 120px;
+  max-width: 200px;
 }
 .gallery-toolbar-scoped .filter-search input {
   min-width: 0;
@@ -97,23 +99,21 @@
 }
 .gallery-toolbar-scoped .gallery-results {
   display: flex;
-  flex: 1 0 100%;
+  flex: 0 0 auto;
   align-items: center;
   justify-content: flex-end;
-  flex-wrap: wrap;
-  gap: 6px 12px;
-  margin: 0;
-  min-height: 18px;
-  font-size: 11px;
+  gap: 6px;
+  margin-left: auto;
+  min-height: 38px;
+  white-space: nowrap;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
   line-height: 18px;
   color: var(--muted);
 }
-.gallery-toolbar-scoped .gallery-results .text-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  line-height: 18px;
+.gallery-toolbar-scoped .gallery-reset {
+  width: 30px;
+  height: 34px;
   color: var(--text-soft);
 }
 .game-card {

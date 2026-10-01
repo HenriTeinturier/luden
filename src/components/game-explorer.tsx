@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
-import { useLocation } from '@tanstack/react-router'
+import { useLocation, useNavigate } from '@tanstack/react-router'
 import type { Library } from '../lib/types'
 import { GameSelectionContext } from './game-selection'
 import { GameDetails, GameNavigation, useGameKeys } from './game-details'
 import { GameForm } from './game-form'
 import { UniverseSidebar } from './universe-sidebar'
-import { verticalGameNeighbor } from '../lib/gallery-navigation'
+import { galleryCardPositions, verticalGameNeighbor } from '../lib/gallery-navigation'
 
 export function GameExplorer({
   children,
@@ -15,6 +15,7 @@ export function GameExplorer({
   library: Library | null
 }) {
   const location = useLocation()
+  const navigate = useNavigate()
   const [selection, setSelection] = useState<{
     id: string
     ids: string[]
@@ -47,6 +48,39 @@ export function GameExplorer({
   const ids = selection?.ids.filter((id) => library?.games.some((g) => g.id === id)) ?? []
   const index = game ? ids.indexOf(game.id) : -1
   const showUniverse = Boolean(universe && !game && !universeVisit.hidden)
+  const platforms =
+    library?.platforms.filter((p) => library.games.some((g) => g.platformId === p.id)) ?? []
+  useEffect(() => {
+    if (!universe || platforms.length < 2 || mode === 'edit' || busy || hidingUniverse) return
+    function changeUniverse(event: KeyboardEvent) {
+      if (
+        event.defaultPrevented ||
+        event.repeat ||
+        event.isComposing ||
+        !event.altKey ||
+        event.ctrlKey ||
+        event.metaKey ||
+        event.shiftKey ||
+        !['ArrowLeft', 'ArrowRight'].includes(event.key)
+      )
+        return
+      if (document.querySelector('[role="dialog"], [role="alertdialog"]')) return
+      if (
+        event.target instanceof HTMLElement &&
+        event.target.closest('input, textarea, select, [contenteditable="true"], [role="slider"]')
+      )
+        return
+      const index = platforms.findIndex((p) => p.id === universe!.id)
+      if (index < 0) return
+      const delta = event.key === 'ArrowLeft' ? -1 : 1
+      const next = platforms[(index + delta + platforms.length) % platforms.length]
+      // Replace browser history shortcuts only inside a platform collection.
+      event.preventDefault()
+      void navigate({ to: '/platforms/$platformId', params: { platformId: next.id }, search: {} })
+    }
+    document.addEventListener('keydown', changeUniverse)
+    return () => document.removeEventListener('keydown', changeUniverse)
+  }, [universe, platforms, mode, busy, hidingUniverse, navigate])
   useEffect(() => {
     if (!hidingUniverse || !showUniverse) return
     const duration = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 280
@@ -106,21 +140,11 @@ export function GameExplorer({
       return
     }
     const sequence = new Set(ids)
-    const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-game-id]'))
-      .filter((card) => sequence.has(card.dataset.gameId!))
-      .flatMap((card) => {
-        const rect = card.getBoundingClientRect()
-        // Layout offsets ignore the hover lift applied to a cover.
-        let top = 0
-        let element: HTMLElement | null = card
-        while (element) {
-          top += element.offsetTop
-          element = element.offsetParent as HTMLElement | null
-        }
-        return rect.width && rect.height
-          ? [{ id: card.dataset.gameId!, top, centerX: rect.left + rect.width / 2 }]
-          : []
-      })
+    const cards = galleryCardPositions(
+      Array.from(document.querySelectorAll<HTMLElement>('[data-game-id]')).filter((card) =>
+        sequence.has(card.dataset.gameId!),
+      ),
+    )
     const nextId = verticalGameNeighbor(cards, game.id, direction)
     if (nextId) move(ids.indexOf(nextId) - index)
   }
@@ -178,10 +202,7 @@ export function GameExplorer({
           <UniverseSidebar
             key={universe.id}
             platform={universe}
-            platforms={
-              library?.platforms.filter((p) => library.games.some((g) => g.platformId === p.id)) ??
-              []
-            }
+            platforms={platforms}
             visuals={library?.platformVisuals.filter((v) => v.platformId === universe.id) ?? []}
             onClose={close}
             hiding={hidingUniverse}

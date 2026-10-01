@@ -116,7 +116,8 @@ export function UniverseSidebar({
             params={{ platformId: previousPlatform.id }}
             search={{}}
             aria-label={`Univers précédent : ${previousPlatform.name}`}
-            title={`Univers précédent : ${previousPlatform.name}`}
+            title={`Univers précédent : ${previousPlatform.name} · Alt + ←`}
+            aria-keyshortcuts="Alt+ArrowLeft"
           >
             <ChevronLeft size={20} aria-hidden="true" />
           </Link>
@@ -126,7 +127,8 @@ export function UniverseSidebar({
             params={{ platformId: nextPlatform.id }}
             search={{}}
             aria-label={`Univers suivant : ${nextPlatform.name}`}
-            title={`Univers suivant : ${nextPlatform.name}`}
+            title={`Univers suivant : ${nextPlatform.name} · Alt + →`}
+            aria-keyshortcuts="Alt+ArrowRight"
           >
             <ChevronRight size={20} aria-hidden="true" />
           </Link>

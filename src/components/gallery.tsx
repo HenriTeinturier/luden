@@ -14,7 +14,11 @@ import { MegastarTrophy } from './megastar-trophy'
 import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties } from 'react'
 import { useGameSelection } from './game-selection'
 import { filterGames, type GallerySearch } from '../lib/gallery'
-import { stepGalleryColumns } from '../lib/gallery-navigation'
+import {
+  galleryCardPositions,
+  galleryKeyboardNeighbor,
+  stepGalleryColumns,
+} from '../lib/gallery-navigation'
 import type { Game } from '../lib/types'
 import { playStatuses } from '../lib/platforms'
 import { EmptyState, GameCard, useLibrary } from './ui'
@@ -52,6 +56,60 @@ export function Gallery({
   const desktop = useSyncExternalStore(subscribeDesktop, isDesktop, serverDesktop)
   const columnBonus = desktop && selection?.sidebarVisible === false ? 2 : 0
   const gallery = useRef<HTMLDivElement>(null)
+  const navigateWithoutSidebar = selection?.sidebarVisible === false
+  const lastGame = useRef<{ pathname: string; id: string } | null>(null)
+  useEffect(() => {
+    if (selection?.selectedId) lastGame.current = { pathname, id: selection.selectedId }
+  }, [selection?.selectedId, pathname])
+  useEffect(() => {
+    const container = gallery.current
+    if (!container || !navigateWithoutSidebar) return
+    function moveWithoutSidebar(event: KeyboardEvent) {
+      if (
+        event.defaultPrevented ||
+        event.repeat ||
+        event.isComposing ||
+        event.ctrlKey ||
+        event.altKey ||
+        event.metaKey ||
+        event.shiftKey ||
+        !['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)
+      )
+        return
+      if (
+        !container!.getBoundingClientRect().width ||
+        document.querySelector('[role="dialog"], [role="alertdialog"]')
+      )
+        return
+      const target = event.target instanceof HTMLElement ? event.target : null
+      if (
+        target?.closest(
+          'input, textarea, select, [contenteditable="true"], [role="slider"], summary',
+        )
+      )
+        return
+      if (target?.closest('button, [role="button"]') && target.id !== 'reopen-sidebar') return
+      if (target?.closest('a') && !target.closest('[data-game-id]')) return
+      const elements = Array.from(container!.querySelectorAll<HTMLElement>('[data-game-id]'))
+      const cards = galleryCardPositions(elements)
+      const focusedId = target?.closest<HTMLElement>('[data-game-id]')?.dataset.gameId
+      const currentId =
+        focusedId ?? (lastGame.current?.pathname === pathname ? lastGame.current.id : undefined)
+      const nextId = galleryKeyboardNeighbor(cards, currentId, event.key)
+      if (!cards.length) return
+      event.preventDefault()
+      // At an edge, retain the last game as a keyboard target without reopening it.
+      const id = nextId ?? (cards.some((card) => card.id === currentId) ? currentId : undefined)
+      const next = elements.find((card) => card.dataset.gameId === id)
+      if (!next || !id) return
+      lastGame.current = { pathname, id }
+      next.focus({ preventScroll: true })
+      next.scrollIntoView({ block: 'nearest', behavior: 'instant' })
+      // Enter retains the card link's native activation, which opens the sidebar.
+    }
+    document.addEventListener('keydown', moveWithoutSidebar)
+    return () => document.removeEventListener('keydown', moveWithoutSidebar)
+  }, [navigateWithoutSidebar, pathname, visible.length])
   const lastWheel = useRef(-Infinity)
   const [autoColumns, setAutoColumns] = useState<{ pathname: string; count: number } | null>(null)
   const measuredAuto = autoColumns?.pathname === pathname ? autoColumns.count : undefined
@@ -346,7 +404,7 @@ export function Gallery({
               type="button"
               className="sidebar-reopen"
               aria-label="Afficher la sidebar de l’univers"
-              title="Afficher la sidebar de l’univers"
+              title="Afficher la sidebar de l’univers · Flèches : parcourir les jeux · Entrée sur une jaquette : ouvrir sa fiche"
               onClick={selection.reopenSidebar}
             >
               <PanelRightOpen size={17} aria-hidden="true" />

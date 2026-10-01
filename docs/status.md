@@ -1,5 +1,11 @@
 # État courant
 
+## Navigation clavier sans sidebar — 2026-10-01
+
+- Sidebar masquée : les quatre flèches déplacent le focus entre les jaquettes visibles, à partir du dernier jeu consulté (premier résultat si absent). Aucun panneau ne s’ouvre avant Entrée sur la jaquette ; une deuxième Entrée dans la sidebar ouvre ensuite le détail. Ordre filtré/regroupé et rangées réelles respectés, sans boucle ni contour de sélection conservé à la fermeture.
+- Alt + gauche/droite change d’univers avec la même boucle et le même ordre que les flèches du bandeau, sidebar visible ou masquée. Ces touches remplacent l’historique navigateur uniquement sur une page de plateforme, hors champs, édition, modales et fermeture animée. Tab conserve son usage habituel.
+- Vérifié : TypeScript, lint ciblé, formatage et trois tests de navigation ; navigateur : double Échap → droite/bas sans panneau ni jeu sélectionné → Entrée sur Rick Dangerous 2 ouvre sa sidebar → Entrée ouvre le détail ; Alt + droite/gauche : Amiga → Amstrad → Amiga.
+
 ## Raccourci vers la fiche complète — 2026-10-01
 
 - Entrée ouvre la vue détaillée du jeu sélectionné dans la sidebar, avec la même mémorisation du défilement que le bouton. Disponible aussi depuis l’aperçu d’une URL directe. Champs, contrôles/liens, édition, composition de texte et modales protégés ; rappel dans l’aide clavier et sur le bouton.

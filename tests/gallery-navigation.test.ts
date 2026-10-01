@@ -1,6 +1,28 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { stepGalleryColumns, verticalGameNeighbor } from '../src/lib/gallery-navigation'
+import {
+  galleryKeyboardNeighbor,
+  stepGalleryColumns,
+  verticalGameNeighbor,
+} from '../src/lib/gallery-navigation'
+
+test('Sans sidebar, le clavier suit les jeux visibles sans boucle et retrouve une cible après filtrage', () => {
+  const cards = [
+    { id: 'a', top: 0, centerX: 50 },
+    { id: 'b', top: 0, centerX: 150 },
+    { id: 'c', top: 120, centerX: 50 },
+  ]
+  assert.equal(galleryKeyboardNeighbor(cards, undefined, 'ArrowRight'), 'a')
+  assert.equal(galleryKeyboardNeighbor(cards, 'jeu-filtré', 'ArrowDown'), 'a')
+  assert.equal(galleryKeyboardNeighbor(cards, 'a', 'ArrowRight'), 'b')
+  assert.equal(galleryKeyboardNeighbor(cards, 'b', 'ArrowLeft'), 'a')
+  assert.equal(galleryKeyboardNeighbor(cards, 'b', 'ArrowDown'), 'c')
+  assert.equal(galleryKeyboardNeighbor(cards, 'c', 'ArrowUp'), 'a')
+  assert.equal(galleryKeyboardNeighbor(cards, 'a', 'ArrowLeft'), undefined)
+  assert.equal(galleryKeyboardNeighbor(cards, 'c', 'ArrowRight'), undefined)
+  assert.equal(galleryKeyboardNeighbor([], undefined, 'ArrowRight'), undefined)
+  assert.equal(galleryKeyboardNeighbor(cards, 'a', 'Enter'), undefined)
+})
 
 test('La navigation verticale suit la rangée voisine et la colonne la plus proche', () => {
   const cards = [

@@ -117,6 +117,13 @@ captures de 96–140 px de haut pour voir l’expérience, les souvenirs et les 
 écran. Les informations longues et les médias supplémentaires restent accessibles en défilant.
 
 Gauche/droite parcourent l’ordre visible au moment de l’ouverture, regroupement compris, sans boucle.
+Sidebar masquée, les quatre flèches déplacent uniquement le focus entre les jaquettes visibles :
+reprise depuis le dernier jeu consulté, ou premier résultat si ce jeu n’est plus affiché. Entrée
+sur la jaquette ouvre sa sidebar ; aucune ouverture pendant le déplacement. Les rangées sont
+recalculées sur la grille élargie, catégories comprises. Champs, contrôles et modales protégés.
+Alt + gauche/droite change de plateforme dans le même ordre que les flèches du bandeau, avec
+boucle, sidebar ouverte ou masquée. L’historique natif du navigateur est remplacé uniquement
+dans les pages de plateforme hors champs/édition/modales ; Tab reste natif. Infobulles sur les flèches.
 Entrée ouvre la fiche complète du jeu sélectionné dans la sidebar (également depuis l’aperçu
 d’une URL directe). Raccourci inactif dans les champs, sur les contrôles/liens, pendant l’édition
 ou une modale ; les actions natives au clavier sont conservées. Rappel sous la fiche et en infobulle.

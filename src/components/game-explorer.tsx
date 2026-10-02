@@ -75,7 +75,7 @@ export function GameExplorer({
         !event.altKey ||
         event.ctrlKey ||
         event.metaKey ||
-        event.shiftKey ||
+        !event.shiftKey ||
         !['ArrowLeft', 'ArrowRight'].includes(event.key)
       )
         return
@@ -89,7 +89,7 @@ export function GameExplorer({
       if (index < 0) return
       const delta = event.key === 'ArrowLeft' ? -1 : 1
       const next = platforms[(index + delta + platforms.length) % platforms.length]
-      // Replace browser history shortcuts only inside a platform collection.
+      // Keep Alt+Left/Right available for browser history and mouse navigation.
       event.preventDefault()
       void navigate({ to: '/platforms/$platformId', params: { platformId: next.id }, search: {} })
     }

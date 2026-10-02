@@ -1,5 +1,10 @@
 # État courant
 
+## Raccourcis d’historique et plateformes — 2026-10-03
+
+- Changement de plateforme déplacé vers Alt + Maj + gauche/droite (infobulles et accessibilité mises à jour). Alt + gauche/droite n’est plus intercepté : les souris qui émettent ces raccourcis peuvent utiliser le retour/avance navigateur.
+- Vérifié dans le navigateur : Alt + gauche/droite ne change plus de plateforme ; retour natif depuis fiche et édition restaure le même jeu en sidebar, avance rouvre la fiche ; Alt + Maj + droite change de plateforme. Le matériel souris lui-même reste à valider par Henri. TypeScript, lint ciblé et formatage vérifiés.
+
 ## Survol de la scène — 2026-10-02
 
 - Sur toutes les plateformes, seul le curseur passe en main au survol de la scène supérieure : suppression du cadre, du voile et de l’étiquette. Clic vers la fiche complète et repère de focus clavier conservés.

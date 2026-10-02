@@ -1,5 +1,11 @@
 # État courant
 
+## Serveur compilé et navigation clavier — 2026-10-02
+
+- Le serveur sur le port 3000 utilisait encore la compilation du 1er octobre à 15 h 22, antérieure aux derniers raccourcis et corrections de focus. Serveur arrêté, compilation actuelle générée puis serveur redémarré sur l’interface locale. Aucune modification du code de navigation nécessaire pour les symptômes reproduits sur cette ancienne version.
+- Vérification avec des frappes sur le focus courant, sans clic ni focus forcé par le test : rechargement → Entrée ouvre le jeu ; deuxième Entrée ouvre la fiche complète ; Échap revient à la sidebar et droite change de jeu ; Échap revient à l’accueil et droite navigue dans les jaquettes ; sidebar masquée, droite puis Entrée rouvre le jeu. Alt + droite passe à Amstrad ; rechargement puis Entrée ouvre directement la première jaquette.
+- Compilation réussie. README précise la différence entre serveur compilé et développement ainsi que la procédure de mise à jour.
+
 ## Navigation clavier sans sidebar — 2026-10-01
 
 - Arrivée dans une plateforme : focus sur la première jaquette, puis navigation aux flèches sans ouverture de jeu, même si l’accueil de la plateforme est affiché. Entrée ouvre la sidebar du jeu ciblé. Le focus initial ne se répète pas à la fermeture d’un jeu ni au changement de filtre sur la même page.

@@ -39,6 +39,7 @@ Le sélecteur IGDB permet de choisir et classer plusieurs images, conservées lo
 ## Compilation et vérification
 
 - `npm run build`, puis `npm start` : serveur compilé local.
+- `npm start` utilise la dernière compilation, sans reprendre les modifications du code. Après une mise à jour : arrêter le serveur, relancer `npm run build`, puis `npm start` et rafraîchir le navigateur. Pour les modifications en cours, utiliser `npm run dev`.
 - Sous Windows, arrêter le serveur compilé avant de reconstruire : son moteur Prisma verrouille une DLL.
 - `npm run check` : TypeScript, lint, sept tests ciblés métier/médias/chemins.
 - Après ajout/suppression de routes, lancer dev/build pour générer `src/routeTree.gen.ts`.

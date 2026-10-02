@@ -32,7 +32,7 @@ la première image encore active, ou l’identité de repli s’il n’en reste 
 Chaque visuel propose aussi « Supprimer », avec confirmation : retrait immédiat de Luden,
 remplacement du défaut par une autre image active et conservation des autres changements en cours.
 Un jeu remplace cet accueil. Une flèche de retour dans la fiche ramène à l’accueil de la plateforme
-(ou à la collection hors univers). L’accueil propose une icône de panneau à masquer : glissement
+(ou à la collection hors univers). L’accueil propose un crayon discret pour modifier sa présentation (infobulle et libellé accessible), ainsi qu’une icône de panneau à masquer : glissement
 vers la droite et fondu de 260 ms avant de libérer la place. L’ouverture utilise le mouvement
 inverse (depuis la droite avec fondu, 260 ms), y compris au retour depuis un jeu. Échap suit les
 mêmes étapes ; animations désactivées si réduction des animations activée.
@@ -50,9 +50,12 @@ visible lorsqu’on parcourt normalement les jaquettes avec Tab.
 Sur écran étroit (800 px et moins), seul le panneau est visible. Les proportions des visuels
 suivent la plateforme ; les différences futures sont uniquement de présentation.
 La scène de la sidebar est au ratio paysage 16:7 sur desktop (6:5 sur mobile), avec le même ratio
-dans l’outil de cadrage. Les captures font 80–112 px de haut selon la hauteur de l’écran, indépendamment
-de la largeur du panneau. Espacements compacts pour garder les informations et actions visibles sur
-un écran 2560 × 1440, y compris avec une hauteur utile de navigateur réduite à 1280 px.
+dans l’outil de cadrage. Sur desktop, le panneau occupe la hauteur disponible sous le header, sans défilement vertical.
+La scène garde ses dimensions et placements ; seul le contenu inférieur s’adapte. Les captures
+font 48–120 px de haut suivant la place disponible, et le souvenir conserve jusqu’à six lignes
+entières. Sur une fenêtre moins haute, les métadonnées secondaires et l’aide clavier sont
+masquées au profit du souvenir ; ces informations restent dans la fiche complète. Le parcours
+mobile conserve le défilement de page habituel.
 
 Sidebar : navigation superposée au fond, sans bandeau opaque ni surtitre plateforme/année.
 Logo droit, sans rotation ni perspective, réduit à 34 % de la largeur du panneau et centré dans l’espace entre navigation
@@ -69,28 +72,36 @@ préservées et vue détaillée inchangée.
 Ombre elliptique de contact sous le support. Le titre n’est affiché que dans la scène (logo ou texte),
 sans répétition au-dessus des étoiles ; un titre masqué reste accessible aux lecteurs d’écran.
 Éditeur, année et tous les genres occupent une ligne défilable si nécessaire.
-Dans la sidebar, les étoiles n’affichent pas de note chiffrée à côté ; le sélecteur de note reste disponible.
-Ce sélecteur compact associe une étoile dorée, la valeur seule (sans « / 5 ») et un chevron sur fond sombre légèrement doré ; focus visible et options sombres. Le tiret représente l’absence de note.
-Trois cartes séparées partagent le même style : « Dans ma collection », « Joué » et « À découvrir ».
-Même hauteur, coins arrondis, icône à gauche et bordure discrète ; gris inactif, vert pour la possession,
-corail pour Joué et violet pour À découvrir. Les états actifs ont un fond coloré opaque soutenu,
-une bordure nette et une coche à droite pour ne pas dépendre uniquement de la couleur.
-Les trois bascules restent indépendantes.
-Dans la sidebar, « Mes souvenirs » associe une icône carnet à un lien « Modifier » (ou « Écrire » si vide).
-Ce lien ouvre un champ multiligne sur place avec « Enregistrer » et « Annuler ». La sauvegarde partielle
-ne modifie que le souvenir, conserve le brouillon en cas d’erreur et accepte un texte vide.
-La navigation entre jeux et vers la fiche est suspendue pendant l’édition pour conserver le brouillon.
-Le bouton « Modifier » du pied de sidebar continue d’ouvrir le formulaire complet.
-Les captures sont regroupées dans un cadre sombre bleu, avec compteur et lien « Voir tout ».
-Le carrousel montre quatre vignettes, trois sous 460 px, une sélection au contour bleu/violet lumineux
-et des flèches latérales désactivées aux extrémités. « Voir tout » ouvre la grille des captures ;
-une vignette ouvre l’image agrandie avec navigation et retour possible à la grille.
-Sur une sidebar large, les trois cartes sont alignées ; sous 540 px, la collection occupe une ligne
-et les cartes Joué / À découvrir restent côte à côte dessous.
-Joué reflète tout statut autre que non joué ; son clic bascule PLAYED/UNPLAYED. Les statuts détaillés
-restent dans la fiche complète et le formulaire, sans conversion lors de la simple consultation.
-Toutes ces actions enregistrent immédiatement sans ouvrir l’édition. Le bouton « Modifier »
-conserve l’accès au formulaire détaillé.
+Dans la sidebar, la note est représentée par de grandes étoiles seules, sans chiffre ni
+sélecteur en doublon. Survol et clic par demi-étoiles, clavier par pas de 0,5 (Début : 0,
+Fin : 5), croix ou Suppr pour effacer. Chaque proposition ouvre une confirmation avec la note
+actuelle et la valeur proposée ; seul « Valider la note » enregistre. Annuler ou fermer conserve
+la valeur actuelle. Megastar est distinct, avec un crayon discret à sa droite pour éditer la fiche.
+
+Les états « Joué / Non joué », possession actuelle/ancienne/absente et découverte sont des
+contrôles textuels compacts, avec icônes et coches. La possession précise physique, numérique
+ou les deux ; elle ne représente pas l’appartenance à une collection. Une ligne séparée montre
+les collections nommées et leur type réelle/rêvée ; leur clic ouvre l’éditeur. L’absence de collection
+propose « Ajouter à une collection ». Les trois bascules restent indépendantes et enregistrent
+immédiatement. Joué reflète tout statut autre que non joué et bascule PLAYED/UNPLAYED ; les
+statuts détaillés restent conservés à la simple consultation.
+
+« Mes souvenirs » devient un bloc à bordure dorée, fond chaud discret et texte plus lisible.
+L’extrait s’adapte à la hauteur restante, jusqu’à six lignes. « Lire la suite » ouvre le texte entier
+dans une fenêtre, sans allonger la sidebar. Écrire/Modifier ouvre aussi une fenêtre avec
+Enregistrer et Annuler. La sauvegarde partielle ne change que le souvenir et conserve le
+brouillon en cas d’erreur ; les déplacements entre jeux sont suspendus pendant l’édition.
+
+Les captures forment une bande sans cadre extérieur, trois vignettes (deux dans un panneau
+étroit), proportions conservées. Flèches discrètes, compteur et accès « Voir tout » à la grille ;
+chaque vignette ouvre l’image agrandie. Pas de halo permanent sur la première capture.
+
+Toute la scène supérieure est cliquable, fond, boîte et support compris : indication au survol
+ou au focus puis ouverture de la fiche complète. Aucun asset, placement ou ratio n’est modifié,
+y compris les ajustements Amiga. Les flèches/retour gardent leur propre action. La scène et
+le lien sobre « Ouvrir la fiche complète » sont désactivés pendant l’édition ou l’enregistrement.
+Entrée et Échap conservent leur comportement. Le grand bouton de pied de panneau est supprimé.
+
 Le favori est un trophée étoilé « Megastar · Jeu culte »
 sur la ligne de notation : dessin SVG dédié, violet/bleu électrique si actif et lavande discret sinon ; même booléen favori que
 les étiquettes de jaquettes et le filtre Megastar, aucun nouvel indicateur indépendant.
@@ -236,6 +247,7 @@ le mode Auto conserve les règles adaptées à chaque plateforme. Le sélecteur 
 
 Direction actuelle : bleu nuit / Aurora. Fonds sobres bleut�s, navigation et interactions bleues,
 identit� violet/mauve, CTA corail, souvenirs et �toiles jaunes, cyan ponctuel.
+Le bouton « Ajouter un jeu » du header et la confirmation de note utilisent un violet proche du logo.
 `src/styles/palette.css` centralise les couleurs et gradients ; `src/styles/theme.css` les applique.
 Logo et illustration pixel art locale (`public/arcade-room.svg`) harmonis�s via leurs couleurs SVG.
 Cette passe conserve structure, dimensions, espacements et composants. Variante Console 90

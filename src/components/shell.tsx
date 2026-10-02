@@ -215,7 +215,7 @@ export function Shell({ children, library }: { children: ReactNode; library: Lib
                 <Link
                   to="/games/new"
                   search={{ platform: currentPlatform?.id }}
-                  className="button button-sm"
+                  className="button button-sm header-add-game"
                 >
                   <Plus size={17} />
                   Ajouter un jeu

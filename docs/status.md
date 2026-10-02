@@ -1,5 +1,13 @@
 # État courant
 
+## Refonte de la sidebar — 2026-10-02
+
+- Présentation commune à toutes les plateformes : note en grandes étoiles, Megastar distinct, crayon d’édition discret ; souvenirs dans un bloc chaud doré, trois captures sans cadre imbriqué (deux en panneau étroit), lien sobre vers la fiche. « Ajouter un jeu » passe au violet ; édition de l’accueil plateforme réduite à un crayon.
+- Haut strictement conservé : dimensions, logos, boîtes et supports, ajustements Amiga compris. Zone cliquable transparente couvrant la scène et ses objets, avec indication au survol/focus ; flèches et retour indépendants, raccourcis conservés.
+- Desktop sans défilement vertical de sidebar : hauteur inférieure flexible, extrait jusqu’à six lignes entières et captures adaptés à l’espace. Métadonnées secondaires/aide clavier masquées lorsque la place manque. Souvenir complet et édition dans une fenêtre ; mobile garde son défilement de page.
+- Demi-étoiles à la souris et au clavier : aucune note enregistrée avant confirmation explicite, suppression comprise. Annulation conserve l’ancienne note. États compacts joué/possession/découverte indépendants ; collections nommées réelles/rêvées affichées séparément, sans modifier les règles métier.
+- Vérifications : TypeScript, lint, 29 tests et compilation réussis. Navigateur : confirmation 5 → 4,5 annulée (5 conservé), clic scène, flèches/Entrée/Échap, lecture complète et édition annulée ; Amiga/SNES/Amstrad sans débordement vertical aux formats contrôlés. Aucune donnée personnelle modifiée. Validation esthétique finale par Henri.
+
 ## Navigation circulaire des jeux — 2026-10-02
 
 - Gauche sur le premier jeu rejoint le dernier ; droite sur le dernier revient au premier. Ordre filtré/regroupé conservé dans la galerie, la sidebar et la fiche complète, y compris les URLs directes. Boutons précédent/suivant actifs aux extrémités, désactivés pour un seul jeu. Haut/bas dans la grille restent liés aux rangées, sans boucle.

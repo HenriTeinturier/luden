@@ -79,6 +79,16 @@
 .site-header .global-search {
   display: flex;
 }
+.site-header .header-add-game {
+  background: #8060d8;
+  color: #fff;
+  border-color: #ae91fb;
+  box-shadow: 0 2px 0 #493177;
+}
+.site-header .header-add-game:hover {
+  background: #9170e7;
+  color: #fff;
+}
 .site-header .global-search input {
   width: 145px;
 }

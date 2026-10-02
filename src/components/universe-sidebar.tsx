@@ -227,8 +227,10 @@ export function UniverseSidebar({
           className="universe-edit"
           to="/platforms/$platformId/edit"
           params={{ platformId: platform.id }}
+          aria-label="Modifier la présentation de la plateforme"
+          title="Modifier la présentation de la plateforme"
         >
-          <Pencil size={15} /> Modifier
+          <Pencil size={16} />
         </Link>
       </div>
       <button

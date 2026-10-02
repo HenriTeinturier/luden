@@ -26,11 +26,12 @@
 - GameLink : URL HTTP(S), titre facultatif, type et ordre. Aucun contenu distant téléchargé.
 - Chaque Possession conserve son identifiant à l'édition : futur exemplaire physique ou licence digitale.
   Les photos d'exemplaires sont possibles dans le modèle ; interface et détails d'achat reportés.
-- Bascule rapide « Dans ma collection » : reflète la présence d’au moins une possession actuelle.
+- Bascule rapide de possession (« Possédé », anciennement « Dans ma collection ») : reflète la présence d’au moins une possession actuelle.
   Désactiver passe les possessions actuelles en anciennes sans effacer leurs identifiants, boutiques
   ni médias. Activer conserve une possession actuelle, sinon réactive une ancienne (premier identifiant),
   ou crée une possession physique par défaut s’il n’en existe aucune ; format ajustable via « Modifier ».
   Les appartenances aux collections nommées restent indépendantes et ne changent pas.
+  La sidebar les affiche séparément avec leur type réelle/rêvée et indique le format des possessions actuelles.
 
 Découverte/envie sont sur Game, indépendantes de Experience. Pas encore joué ≠ à découvrir.
 La collection réelle exige à l'ajout une possession actuelle/ancienne, physique/digitale au choix.

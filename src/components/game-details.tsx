@@ -7,8 +7,7 @@ import {
   NotebookPen,
   ChevronLeft,
   ChevronRight,
-  ChevronDown,
-  Star,
+  Layers,
   Undo2,
   Pencil,
   Heart,
@@ -33,7 +32,7 @@ import { quickUpdateGameFn, deleteGameFn } from '../server/functions'
 import { GameBackground } from './game-background'
 import { Cover, Confirm, Modal, useLibrary } from './ui'
 import { GameMedia } from './game-media'
-import { Stars } from './rating'
+import { EditableStars, Stars } from './rating'
 import { MegastarTrophy } from './megastar-trophy'
 import { useNotification } from './notifications'
 
@@ -160,7 +159,17 @@ export function GameNavigation({
   )
 }
 
-function GameScene({ game, compact }: { game: Game; compact: boolean }) {
+function GameScene({
+  game,
+  compact,
+  onExpand,
+  disabled,
+}: {
+  game: Game
+  compact: boolean
+  onExpand?: () => void
+  disabled: boolean
+}) {
   const visuals = readPresentation(game.presentation)
   const box = visuals.box ?? game.media.find((m) => m.category === 'BOX')?.mediaId ?? game.coverId
   const support = visuals.support ?? game.media.find((m) => m.category === 'MEDIA')?.mediaId
@@ -226,6 +235,20 @@ function GameScene({ game, compact }: { game: Game; compact: boolean }) {
             />
           ))}
       </div>
+      {compact && onExpand && (
+        <button
+          type="button"
+          className="scene-open"
+          disabled={disabled}
+          onClick={onExpand}
+          aria-label={`Ouvrir la fiche complète de ${game.title}`}
+          title="Ouvrir la fiche complète · Entrée"
+        >
+          <span>
+            Ouvrir la fiche <ArrowUpRight size={16} />
+          </span>
+        </button>
+      )}
     </div>
   )
 }
@@ -234,16 +257,22 @@ function QuickExperience({
   game,
   onBusyChange,
   compact = false,
+  onEdit,
+  disabled = false,
 }: {
   game: Game
   onBusyChange: (busy: boolean) => void
   compact?: boolean
+  onEdit?: () => void
+  disabled?: boolean
 }) {
   const router = useRouter()
+  const { collections } = useLibrary()
   const [busy, setBusy] = useState(false)
   const saving = useRef(false)
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
+  const [proposedRating, setProposedRating] = useState<number | null | undefined>(undefined)
   async function update(patch: Omit<z.infer<typeof quickGameSchema>, 'id'>) {
     if (saving.current) return
     saving.current = true
@@ -256,8 +285,10 @@ function QuickExperience({
       if (!result.ok) throw new Error(result.error)
       await router.invalidate({ sync: true })
       setMessage('Enregistré')
+      return true
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Enregistrement impossible. Réessayez.')
+      return false
     } finally {
       saving.current = false
       setBusy(false)
@@ -267,11 +298,25 @@ function QuickExperience({
   if (compact) {
     const owned = game.possessions.some((p) => p.state === 'CURRENT')
     const played = hasPlayed(game)
+    const physical = game.possessions.some((p) => p.state === 'CURRENT' && p.format === 'PHYSICAL')
+    const digital = game.possessions.some((p) => p.state === 'CURRENT' && p.format === 'DIGITAL')
+    const possessionLabel = owned
+      ? `Possédé · ${physical && digital ? 'physique et numérique' : physical ? 'physique' : 'numérique'}`
+      : game.possessions.length
+        ? 'Possédé autrefois'
+        : 'Non possédé'
+    const inCollections = collections.filter((c) =>
+      game.entries.some((e) => e.collectionId === c.id),
+    )
     return (
       <section className="sidebar-experience" aria-label="Mon expérience">
-        <fieldset disabled={busy}>
+        <fieldset disabled={busy || disabled}>
           <div className="sidebar-rating">
-            <Stars value={game.experience?.rating} />
+            <EditableStars
+              value={game.experience?.rating ?? null}
+              disabled={busy || disabled}
+              onChange={setProposedRating}
+            />
             <button
               type="button"
               className={`sidebar-megastar ${game.favorite ? 'is-favorite' : ''}`}
@@ -285,31 +330,15 @@ function QuickExperience({
                 <small>Jeu culte</small>
               </span>
             </button>
-            <label className="sidebar-rating-editor" title="Modifier ma note sur 5">
-              <Star
-                className="rating-editor-star"
-                size={15}
-                fill="currentColor"
-                aria-hidden="true"
-              />
-              <select
-                aria-label="Ma note sur 5"
-                value={game.experience?.rating ?? ''}
-                onChange={(e) =>
-                  void update({ rating: e.target.value === '' ? null : Number(e.target.value) })
-                }
-              >
-                <option value="" aria-label="Sans note">
-                  —
-                </option>
-                {Array.from({ length: 11 }, (_, i) => i / 2).map((n) => (
-                  <option key={n} value={n}>
-                    {n.toLocaleString('fr-FR')}
-                  </option>
-                ))}
-              </select>
-              <ChevronDown className="rating-editor-chevron" size={14} aria-hidden="true" />
-            </label>
+            <button
+              type="button"
+              className="sidebar-edit icon-button"
+              onClick={onEdit}
+              title="Modifier la fiche"
+              aria-label="Modifier la fiche"
+            >
+              <Pencil size={17} />
+            </button>
           </div>
           <div className="sidebar-facts" aria-label="Informations du jeu">
             {(game.publisher || game.developer) && (
@@ -325,49 +354,105 @@ function QuickExperience({
           <div className="sidebar-collection-actions">
             <button
               type="button"
-              className={`sidebar-collection ${owned ? 'is-owned' : ''}`}
-              onClick={() => void update({ owned: !owned })}
-              title={owned ? 'Ne plus marquer comme possédé' : 'Marquer comme possédé'}
-              aria-label="Dans ma collection"
-              aria-pressed={owned}
+              className="sidebar-played"
+              aria-pressed={played}
+              title={played ? 'Marquer comme non joué' : 'Marquer comme joué'}
+              onClick={() => void update({ status: played ? 'UNPLAYED' : 'PLAYED' })}
             >
-              <ShieldCheck size={23} />
-              <span>
-                <strong>Dans ma collection</strong>
-                <small>
-                  {owned
-                    ? 'Possédé actuellement'
-                    : game.possessions.length
-                      ? 'Possédé autrefois'
-                      : 'Non possédé'}
-                </small>
-              </span>
-              {owned && <Check size={16} className="sidebar-active-check" aria-hidden="true" />}
+              <Gamepad2 size={16} />
+              <span>{played ? 'Joué' : 'Non joué'}</span>
+              {played && <Check size={12} aria-hidden="true" />}
             </button>
             <button
               type="button"
-              className="sidebar-played"
-              aria-pressed={played}
-              onClick={() => void update({ status: played ? 'UNPLAYED' : 'PLAYED' })}
+              className={`sidebar-collection ${owned ? 'is-owned' : ''}`}
+              onClick={() => void update({ owned: !owned })}
+              title={owned ? 'Ne plus marquer comme possédé' : 'Marquer comme possédé'}
+              aria-label={possessionLabel}
+              aria-pressed={owned}
             >
-              <Gamepad2 size={23} />
-              <strong>Joué</strong>
-              {played && <Check size={16} className="sidebar-active-check" aria-hidden="true" />}
+              <ShieldCheck size={16} />
+              <span>{possessionLabel}</span>
+              {owned && <Check size={12} aria-hidden="true" />}
             </button>
             <button
               type="button"
               className="sidebar-discover"
               aria-pressed={game.discover}
+              title={
+                game.discover ? 'Retirer des jeux à découvrir' : 'Ajouter aux jeux à découvrir'
+              }
               onClick={() => void update({ discover: !game.discover })}
             >
-              <Sparkles size={23} />
-              <strong>À découvrir</strong>
-              {game.discover && (
-                <Check size={16} className="sidebar-active-check" aria-hidden="true" />
-              )}
+              <Sparkles size={16} />
+              <span>{game.discover ? 'À découvrir' : 'Envie de découvrir'}</span>
+              {game.discover && <Check size={12} aria-hidden="true" />}
             </button>
           </div>
+          <div className="sidebar-memberships" aria-label="Mes collections">
+            <Layers size={14} aria-hidden="true" />
+            <span>Collections</span>
+            {inCollections.map((collection) => (
+              <button
+                type="button"
+                key={collection.id}
+                onClick={onEdit}
+                title={`Modifier mes collections · ${collection.name}`}
+              >
+                {collection.name} <small>{collection.kind === 'DREAM' ? 'rêvée' : 'réelle'}</small>
+              </button>
+            ))}
+            {!inCollections.length && (
+              <button type="button" onClick={onEdit}>
+                Ajouter à une collection
+              </button>
+            )}
+          </div>
         </fieldset>
+        <Modal
+          open={proposedRating !== undefined}
+          onOpenChange={(open) => {
+            if (!open && !busy) setProposedRating(undefined)
+          }}
+          title={proposedRating === null ? 'Effacer ma note ?' : 'Valider cette note ?'}
+          description={`Note actuelle : ${game.experience?.rating == null ? 'sans note' : `${game.experience.rating.toLocaleString('fr-FR')} / 5`}. ${proposedRating == null ? 'Le jeu ne sera plus noté.' : `Nouvelle note : ${proposedRating.toLocaleString('fr-FR')} / 5.`}`}
+        >
+          <div className="rating-confirm-preview">
+            <Stars value={proposedRating} />
+          </div>
+          {error && (
+            <p className="form-error" role="alert">
+              {error}
+            </p>
+          )}
+          <div className="dialog-actions">
+            <button
+              type="button"
+              className="button secondary"
+              disabled={busy}
+              onClick={() => setProposedRating(undefined)}
+            >
+              Annuler
+            </button>
+            <button
+              type="button"
+              className="button sidebar-confirm"
+              disabled={busy}
+              onClick={() => {
+                if (proposedRating !== undefined)
+                  void update({ rating: proposedRating }).then((saved) => {
+                    if (saved) setProposedRating(undefined)
+                  })
+              }}
+            >
+              {busy
+                ? 'Enregistrement…'
+                : proposedRating === null
+                  ? 'Effacer la note'
+                  : 'Valider la note'}
+            </button>
+          </div>
+        </Modal>
         <span className="sr-only" role="status">
           {busy ? 'Enregistrement…' : message}
         </span>
@@ -637,6 +722,59 @@ function Screenshots({ game, compact }: { game: Game; compact: boolean }) {
   )
 }
 
+function MemoryExcerpt({ memory }: { memory: string }) {
+  const [expanded, setExpanded] = useState(false)
+  const [truncated, setTruncated] = useState(false)
+  const [lines, setLines] = useState(6)
+  const preview = useRef<HTMLDivElement>(null)
+  const paragraph = useRef<HTMLParagraphElement>(null)
+  useEffect(() => {
+    const frame = preview.current
+    const element = paragraph.current
+    if (!frame || !element) return
+    const observer = new ResizeObserver(() => {
+      const lineHeight = parseFloat(getComputedStyle(element).lineHeight)
+      const visibleLines = Math.max(
+        1,
+        Math.min(6, Math.floor((frame.clientHeight + 1) / lineHeight)),
+      )
+      setLines(visibleLines)
+      setTruncated(
+        element.scrollHeight > Math.min(frame.clientHeight, visibleLines * lineHeight) + 1,
+      )
+    })
+    observer.observe(frame)
+    return () => observer.disconnect()
+  }, [memory])
+  return (
+    <>
+      <div ref={preview} className="memory-preview">
+        <p ref={paragraph} className="memory-excerpt" style={{ WebkitLineClamp: lines }}>
+          {memory}
+        </p>
+      </div>
+      {truncated && (
+        <button
+          type="button"
+          className="text-link memory-read-more"
+          aria-haspopup="dialog"
+          onClick={() => setExpanded(true)}
+        >
+          Lire la suite
+        </button>
+      )}
+      <Modal
+        open={expanded}
+        onOpenChange={setExpanded}
+        title="Mes souvenirs"
+        description="Le souvenir complet de ce jeu."
+      >
+        <p className="memory-reader">{memory}</p>
+      </Modal>
+    </>
+  )
+}
+
 export function GameDetails({
   game,
   compact = false,
@@ -715,7 +853,12 @@ export function GameDetails({
           <img src={`/media/${visuals.background}`} alt="" />
         </div>
       )}
-      <GameScene game={game} compact={compact} />
+      <GameScene
+        game={game}
+        compact={compact}
+        onExpand={onExpand}
+        disabled={busy || editingMemory}
+      />
       <div className="dossier-body">
         <div className={compact ? 'sr-only' : 'dossier-heading'}>
           <div>
@@ -739,7 +882,15 @@ export function GameDetails({
             </button>
           )}
         </div>
-        {compact && <QuickExperience game={game} onBusyChange={busyChange} compact />}
+        {compact && (
+          <QuickExperience
+            game={game}
+            onBusyChange={busyChange}
+            onEdit={onEdit}
+            disabled={busy || editingMemory}
+            compact
+          />
+        )}
         <div className="dossier-personal">
           {!compact && <QuickExperience game={game} onBusyChange={busyChange} />}
           {
@@ -762,51 +913,63 @@ export function GameDetails({
                   )}
                 </div>
               </div>
-              {compact && editingMemory ? (
-                <form
-                  className="sidebar-memory-editor"
-                  onSubmit={(event) => {
-                    event.preventDefault()
-                    void saveMemory()
+              {compact && (
+                <Modal
+                  open={editingMemory}
+                  onOpenChange={(open) => {
+                    if (!open && !busy) closeMemoryEdit()
                   }}
+                  title="Écrire mon souvenir"
+                  description={game.title}
                 >
-                  <label className="sr-only" htmlFor={`memory-${game.id}`}>
-                    Mon souvenir
-                  </label>
-                  <textarea
-                    id={`memory-${game.id}`}
-                    ref={memoryInput}
-                    value={memoryDraft}
-                    onChange={(event) => setMemoryDraft(event.target.value)}
-                    rows={4}
-                    maxLength={20000}
-                    disabled={busy}
-                    placeholder="Une aventure, une époque, un souvenir à raconter…"
-                  />
-                  {memoryError && (
-                    <p className="form-error" role="alert">
-                      {memoryError}
-                    </p>
-                  )}
-                  <div className="memory-editor-actions">
-                    <button
-                      type="button"
-                      className="button secondary"
+                  <form
+                    className="sidebar-memory-editor"
+                    onSubmit={(event) => {
+                      event.preventDefault()
+                      void saveMemory()
+                    }}
+                  >
+                    <label className="sr-only" htmlFor={`memory-${game.id}`}>
+                      Mon souvenir
+                    </label>
+                    <textarea
+                      id={`memory-${game.id}`}
+                      ref={memoryInput}
+                      value={memoryDraft}
+                      onChange={(event) => setMemoryDraft(event.target.value)}
+                      rows={4}
+                      maxLength={20000}
                       disabled={busy}
-                      onClick={closeMemoryEdit}
-                    >
-                      Annuler
-                    </button>
-                    <button type="submit" className="button" disabled={busy}>
-                      {busy ? <LoaderCircle size={14} className="spin" /> : <Check size={14} />}
-                      {busy ? 'Enregistrement…' : 'Enregistrer'}
-                    </button>
-                  </div>
-                </form>
-              ) : game.experience?.memory ? (
-                <p className={compact ? 'memory-excerpt' : 'full-memory'}>
-                  {game.experience.memory}
-                </p>
+                      placeholder="Une aventure, une époque, un souvenir à raconter…"
+                    />
+                    {memoryError && (
+                      <p className="form-error" role="alert">
+                        {memoryError}
+                      </p>
+                    )}
+                    <div className="memory-editor-actions">
+                      <button
+                        type="button"
+                        className="button secondary"
+                        disabled={busy}
+                        onClick={closeMemoryEdit}
+                      >
+                        Annuler
+                      </button>
+                      <button type="submit" className="button" disabled={busy}>
+                        {busy ? <LoaderCircle size={14} className="spin" /> : <Check size={14} />}
+                        {busy ? 'Enregistrement…' : 'Enregistrer'}
+                      </button>
+                    </div>
+                  </form>
+                </Modal>
+              )}
+              {game.experience?.memory ? (
+                compact ? (
+                  <MemoryExcerpt memory={game.experience.memory} />
+                ) : (
+                  <p className="full-memory">{game.experience.memory}</p>
+                )
               ) : (
                 <p className="memory-empty">Une aventure, une époque, un souvenir à raconter.</p>
               )}
@@ -823,23 +986,14 @@ export function GameDetails({
         {compact ? (
           <div className="dossier-actions">
             <button
-              className="button"
+              className="text-link sidebar-open-full"
               disabled={busy || editingMemory}
               onClick={onExpand}
               title="Voir la fiche complète · Entrée"
               aria-keyshortcuts="Enter"
             >
-              Voir la fiche complète
+              Ouvrir la fiche complète
               <ArrowUpRight size={17} />
-            </button>
-            <button
-              className="button secondary"
-              disabled={busy || editingMemory}
-              onClick={onEdit}
-              title="Modifier la fiche"
-            >
-              <Pencil size={16} />
-              <span>Modifier</span>
             </button>
           </div>
         ) : (

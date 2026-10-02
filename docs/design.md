@@ -98,7 +98,8 @@ Les captures forment une bande sans cadre extérieur, trois vignettes (deux dans
 étroit), proportions conservées. Flèches discrètes, compteur et accès « Voir tout » à la grille ;
 chaque vignette ouvre l’image agrandie. Pas de halo permanent sur la première capture.
 Dans la sidebar, la bande avance d’une vignette toutes les 2 secondes avec une transition
-douce, puis revient au début. Pause au survol, au focus clavier, pendant une fenêtre modale
+douce en boucle continue : la première suit la dernière, sans retour animé vers la gauche.
+Les flèches parcourent aussi la boucle dans les deux sens. Pause au survol, au focus clavier, pendant une fenêtre modale
 ou lorsque l’onglet est masqué ; un bouton discret permet aussi une pause durable.
 Pas de défilement si toutes les captures tiennent dans la bande, ni d’automatisme si la
 préférence système demande de réduire les animations. La fiche complète reste manuelle.

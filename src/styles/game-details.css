@@ -1107,6 +1107,9 @@
 .screenshot-strip.is-compact::-webkit-scrollbar {
   display: none;
 }
+.screenshot-strip.is-looping {
+  scroll-snap-type: none;
+}
 .screenshot-strip.is-compact button {
   height: auto;
   flex-basis: calc((100% - 24px) / 3);

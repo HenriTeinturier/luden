@@ -622,7 +622,25 @@ function Screenshots({ game, compact }: { game: Game; compact: boolean }) {
   const [hovered, setHovered] = useState(false)
   const [focused, setFocused] = useState(false)
   const [reducedMotion, setReducedMotion] = useState(false)
+  const [looping, setLooping] = useState(false)
   const strip = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const container = strip.current
+    if (!compact || !container || images.length < 2) {
+      setLooping(false)
+      return
+    }
+    const measure = () => {
+      const first = container.children[0] as HTMLElement
+      const gap = parseFloat(getComputedStyle(container).columnGap) || 0
+      const width = first.getBoundingClientRect().width
+      setLooping(images.length * (width + gap) - gap > container.clientWidth - 6 + 1)
+    }
+    const observer = new ResizeObserver(measure)
+    observer.observe(container)
+    measure()
+    return () => observer.disconnect()
+  }, [compact, images.length])
   useEffect(() => {
     const preference = window.matchMedia('(prefers-reduced-motion: reduce)')
     const sync = () => setReducedMotion(preference.matches)
@@ -633,6 +651,7 @@ function Screenshots({ game, compact }: { game: Game; compact: boolean }) {
   useEffect(() => {
     if (
       !compact ||
+      !looping ||
       images.length < 2 ||
       paused ||
       hovered ||
@@ -650,27 +669,23 @@ function Screenshots({ game, compact }: { game: Game; compact: boolean }) {
         document.querySelector('[role="dialog"], [role="alertdialog"]')
       )
         return
-      const maximum = container.scrollWidth - container.clientWidth
-      if (maximum <= 4) return
-      const bounds = container.getBoundingClientRect()
-      const items = Array.from(container.children) as HTMLElement[]
-      // Advance by one thumbnail; return to the beginning after the last group.
-      const next =
-        container.scrollLeft >= maximum - 4
-          ? 0
-          : items.findIndex((item) => item.getBoundingClientRect().left > bounds.left + 6)
-      if (next < 0) return
-      const left =
-        next === 0
-          ? 0
-          : container.scrollLeft + items[next].getBoundingClientRect().left - bounds.left - 3
-      setActive(next)
-      container.scrollTo({ left: Math.min(left, maximum), behavior: 'smooth' })
+      const first = container.children[0] as HTMLElement
+      const second = container.children[1] as HTMLElement
+      const step = second.getBoundingClientRect().left - first.getBoundingClientRect().left
+      let position = Math.round(container.scrollLeft / step)
+      if (position >= images.length) {
+        // Rebase identical copies before starting the next slide, never during it.
+        position %= images.length
+        container.scrollTo({ left: position * step, behavior: 'instant' })
+      }
+      const next = position + 1
+      setActive(next % images.length)
+      container.scrollTo({ left: next * step, behavior: 'smooth' })
     }, 2000)
     return () => window.clearInterval(timer)
-  }, [compact, images.length, paused, hovered, focused, reducedMotion, overview, selected])
+  }, [compact, looping, images.length, paused, hovered, focused, reducedMotion, overview, selected])
   function highlight(index: number) {
-    setActive(index)
+    setActive(index % images.length)
     const container = strip.current
     const target = container?.children[index] as HTMLElement | undefined
     if (container && target) {
@@ -685,8 +700,29 @@ function Screenshots({ game, compact }: { game: Game; compact: boolean }) {
     }
   }
   function openImage(index: number) {
-    highlight(index)
     setSelected(index)
+  }
+  function moveCapture(delta: number) {
+    const container = strip.current
+    if (!looping || !container) {
+      highlight(Math.max(0, Math.min(images.length - 1, active + delta)))
+      return
+    }
+    const first = container.children[0] as HTMLElement
+    const second = container.children[1] as HTMLElement
+    const step = second.getBoundingClientRect().left - first.getBoundingClientRect().left
+    let position = Math.round(container.scrollLeft / step)
+    if (position >= images.length) {
+      position %= images.length
+      container.scrollTo({ left: position * step, behavior: 'instant' })
+    }
+    if (position === 0 && delta < 0) {
+      position = images.length
+      container.scrollTo({ left: position * step, behavior: 'instant' })
+    }
+    const next = position + delta
+    setActive((next + images.length) % images.length)
+    container.scrollTo({ left: next * step, behavior: reducedMotion ? 'instant' : 'smooth' })
   }
   if (!images.length) return null
   const item = selected === null ? null : images[selected]
@@ -707,7 +743,7 @@ function Screenshots({ game, compact }: { game: Game; compact: boolean }) {
         </h2>
         <div className="screenshot-heading-actions">
           <span>{images.length}</span>
-          {compact && images.length > 1 && !reducedMotion && (
+          {compact && looping && !reducedMotion && (
             <button
               type="button"
               className="screenshot-autoplay"
@@ -734,19 +770,23 @@ function Screenshots({ game, compact }: { game: Game; compact: boolean }) {
         </div>
       </div>
       <div className="screenshot-carousel">
-        <div ref={strip} className={`screenshot-strip ${compact ? 'is-compact' : ''}`}>
-          {images.map((image, index) => (
+        <div
+          ref={strip}
+          className={`screenshot-strip ${compact ? 'is-compact' : ''} ${looping ? 'is-looping' : ''}`}
+        >
+          {(looping ? [...images, ...images] : images).map((image, index) => (
             <button
               type="button"
-              key={image.id}
-              aria-label={`Agrandir la capture ${index + 1}`}
-              aria-current={compact && active === index ? 'true' : undefined}
+              key={`${image.id}-${index}`}
+              tabIndex={index >= images.length ? -1 : undefined}
+              aria-label={`Agrandir la capture ${(index % images.length) + 1}`}
+              aria-current={compact && active === index % images.length ? 'true' : undefined}
               onFocus={() => compact && highlight(index)}
-              onClick={() => openImage(index)}
+              onClick={() => openImage(index % images.length)}
             >
               <img
                 src={`/media/${image.mediaId}`}
-                alt={image.caption || `Capture ${index + 1} de ${game.title}`}
+                alt={image.caption || `Capture ${(index % images.length) + 1} de ${game.title}`}
                 loading="lazy"
               />
             </button>
@@ -758,8 +798,8 @@ function Screenshots({ game, compact }: { game: Game; compact: boolean }) {
               type="button"
               className="screenshot-arrow is-previous"
               aria-label="Capture précédente"
-              disabled={active === 0}
-              onClick={() => highlight(active - 1)}
+              disabled={!looping && active === 0}
+              onClick={() => moveCapture(-1)}
             >
               <ChevronLeft size={18} />
             </button>
@@ -767,8 +807,8 @@ function Screenshots({ game, compact }: { game: Game; compact: boolean }) {
               type="button"
               className="screenshot-arrow is-next"
               aria-label="Capture suivante"
-              disabled={active >= images.length - 1}
-              onClick={() => highlight(active + 1)}
+              disabled={!looping && active >= images.length - 1}
+              onClick={() => moveCapture(1)}
             >
               <ChevronRight size={18} />
             </button>

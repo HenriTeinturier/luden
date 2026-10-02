@@ -1,5 +1,11 @@
 # État courant
 
+## Boucle continue des captures — 2026-10-03
+
+- La première capture suit désormais la dernière dans la bande, sans retour animé vers la gauche. Copies visuelles et repositionnement invisible avant le pas suivant ; flèches circulaires dans les deux sens. Largeurs fractionnaires prises en compte pour éviter une dérive du raccord.
+- Rythme de 2 secondes, plusieurs vignettes visibles, pause et agrandissement conservés. La boucle se désactive si toutes les images tiennent dans le panneau ; adaptation à sa largeur par ResizeObserver.
+- Vérifié : TypeScript, lint ciblé, formatage ; navigateur sur Bruce Lee : fin de bande affichant 5 puis 1, suite vers 2/3, flèche précédente et ouverture de la capture répétée comme capture 1 sur 5. Aucune donnée personnelle modifiée.
+
 ## Confirmation Megastar — 2026-10-03
 
 - Dans la sidebar de toutes les plateformes, activer ou retirer Megastar ouvre une confirmation nommant le jeu et l’action. Aucune sauvegarde avant validation ; annulation/fermeture sans modification. Boutons bloqués pendant l’enregistrement, erreur affichée dans la fenêtre pour réessayer.

@@ -1726,33 +1726,6 @@ kbd {
   padding: 0;
   cursor: pointer;
 }
-.scene-open > span {
-  position: absolute;
-  left: 50%;
-  top: 58px;
-  transform: translateX(-50%);
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  white-space: nowrap;
-  padding: 8px 12px;
-  border: 1px solid #c1adff65;
-  border-radius: 20px;
-  color: var(--ink);
-  background: #12182be8;
-  font-size: 12px;
-  opacity: 0;
-  transition: opacity 160ms ease;
-}
-.scene-open:hover:not(:disabled),
-.scene-open:focus-visible {
-  box-shadow: inset 0 0 0 2px #bba0ff60;
-  background: linear-gradient(180deg, #a68cff08, transparent 55%);
-}
-.scene-open:hover:not(:disabled) > span,
-.scene-open:focus-visible > span {
-  opacity: 1;
-}
 .scene-open:focus-visible {
   outline: 2px solid var(--purple);
   outline-offset: -3px;
@@ -1792,12 +1765,6 @@ kbd {
 .sidebar-open-full:hover:not(:disabled) {
   color: var(--ink);
 }
-@media (prefers-reduced-motion: reduce) {
-  .scene-open > span {
-    transition: none;
-  }
-}
-
 .memory-reader {
   white-space: pre-wrap;
   overflow-wrap: anywhere;

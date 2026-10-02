@@ -96,8 +96,9 @@ Les captures forment une bande sans cadre extérieur, trois vignettes (deux dans
 étroit), proportions conservées. Flèches discrètes, compteur et accès « Voir tout » à la grille ;
 chaque vignette ouvre l’image agrandie. Pas de halo permanent sur la première capture.
 
-Toute la scène supérieure est cliquable, fond, boîte et support compris : indication au survol
-ou au focus puis ouverture de la fiche complète. Aucun asset, placement ou ratio n’est modifié,
+Toute la scène supérieure est cliquable, fond, boîte et support compris : seul le curseur passe
+en main au survol, sans cadre ni étiquette ; le focus clavier reste visible. Le clic ouvre
+la fiche complète. Aucun asset, placement ou ratio n’est modifié,
 y compris les ajustements Amiga. Les flèches/retour gardent leur propre action. La scène et
 le lien sobre « Ouvrir la fiche complète » sont désactivés pendant l’édition ou l’enregistrement.
 Entrée et Échap conservent leur comportement. Le grand bouton de pied de panneau est supprimé.

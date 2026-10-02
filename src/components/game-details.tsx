@@ -242,12 +242,7 @@ function GameScene({
           disabled={disabled}
           onClick={onExpand}
           aria-label={`Ouvrir la fiche complète de ${game.title}`}
-          title="Ouvrir la fiche complète · Entrée"
-        >
-          <span>
-            Ouvrir la fiche <ArrowUpRight size={16} />
-          </span>
-        </button>
+        />
       )}
     </div>
   )

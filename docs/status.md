@@ -1,5 +1,10 @@
 # État courant
 
+## Survol de la scène — 2026-10-02
+
+- Sur toutes les plateformes, seul le curseur passe en main au survol de la scène supérieure : suppression du cadre, du voile et de l’étiquette. Clic vers la fiche complète et repère de focus clavier conservés.
+- Vérifié : TypeScript, lint ciblé et formatage.
+
 ## Retour souris depuis une fiche — 2026-10-02
 
 - Dans l’explorateur des galeries, l’ouverture de la fiche complète ou de l’édition ajoute une étape à l’historique du navigateur sans changer l’URL. Détail → édition remplace cette étape : Retour souris/navigateur rejoint directement la galerie avec le jeu courant en sidebar, filtres et défilement conservés.

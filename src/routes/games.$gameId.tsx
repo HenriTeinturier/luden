@@ -5,6 +5,7 @@ import { GameForm } from '../components/game-form'
 import { GameDetails, GameNavigation, useGameKeys } from '../components/game-details'
 import { filterGames, gameReturnSearch } from '../lib/gallery'
 import { groupByCategory } from '../lib/categories'
+import { wrapGameIndex } from '../lib/gallery-navigation'
 
 export const Route = createFileRoute('/games/$gameId')({
   validateSearch: (input) => gameReturnSearch.parse(input),
@@ -67,7 +68,7 @@ function GamePage() {
     else returnToLibrary()
   }
   function move(delta: number) {
-    const id = remaining[index + delta]
+    const id = remaining[wrapGameIndex(index, remaining.length, delta)]
     if (id && !busy)
       void navigate({ to: '/games/$gameId', params: { gameId: id }, search: origin, replace: true })
   }

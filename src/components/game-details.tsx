@@ -129,7 +129,7 @@ export function GameNavigation({
           className="icon-button"
           aria-label="Jeu précédent"
           title="Jeu précédent (←)"
-          disabled={disabled || index <= 0}
+          disabled={disabled || index < 0 || total <= 1}
           onClick={() => onMove(-1)}
         >
           <ChevronLeft size={21} />
@@ -141,7 +141,7 @@ export function GameNavigation({
           className="icon-button"
           aria-label="Jeu suivant"
           title="Jeu suivant (→)"
-          disabled={disabled || index < 0 || index >= total - 1}
+          disabled={disabled || index < 0 || total <= 1}
           onClick={() => onMove(1)}
         >
           <ChevronRight size={21} />

@@ -4,9 +4,10 @@ import {
   galleryKeyboardNeighbor,
   stepGalleryColumns,
   verticalGameNeighbor,
+  wrapGameIndex,
 } from '../src/lib/gallery-navigation'
 
-test('Sans sidebar, le clavier suit les jeux visibles sans boucle et retrouve une cible après filtrage', () => {
+test('Sans sidebar, gauche/droite bouclent entre les jeux visibles et retrouvent une cible après filtrage', () => {
   const cards = [
     { id: 'a', top: 0, centerX: 50 },
     { id: 'b', top: 0, centerX: 150 },
@@ -18,10 +19,21 @@ test('Sans sidebar, le clavier suit les jeux visibles sans boucle et retrouve un
   assert.equal(galleryKeyboardNeighbor(cards, 'b', 'ArrowLeft'), 'a')
   assert.equal(galleryKeyboardNeighbor(cards, 'b', 'ArrowDown'), 'c')
   assert.equal(galleryKeyboardNeighbor(cards, 'c', 'ArrowUp'), 'a')
-  assert.equal(galleryKeyboardNeighbor(cards, 'a', 'ArrowLeft'), undefined)
-  assert.equal(galleryKeyboardNeighbor(cards, 'c', 'ArrowRight'), undefined)
+  assert.equal(galleryKeyboardNeighbor(cards, 'a', 'ArrowLeft'), 'c')
+  assert.equal(galleryKeyboardNeighbor(cards, 'c', 'ArrowRight'), 'a')
+  assert.equal(galleryKeyboardNeighbor([cards[0]], 'a', 'ArrowLeft'), 'a')
+  assert.equal(galleryKeyboardNeighbor([cards[0]], 'a', 'ArrowRight'), 'a')
   assert.equal(galleryKeyboardNeighbor([], undefined, 'ArrowRight'), undefined)
   assert.equal(galleryKeyboardNeighbor(cards, 'a', 'Enter'), undefined)
+})
+
+test('Les fiches bouclent dans les deux sens sans inventer de cible pour une liste vide ou absente', () => {
+  assert.equal(wrapGameIndex(0, 3, -1), 2)
+  assert.equal(wrapGameIndex(2, 3, 1), 0)
+  assert.equal(wrapGameIndex(1, 3, -1), 0)
+  assert.equal(wrapGameIndex(0, 1, 1), 0)
+  assert.equal(wrapGameIndex(0, 0, 1), -1)
+  assert.equal(wrapGameIndex(-1, 3, 1), -1)
 })
 
 test('La navigation verticale suit la rangée voisine et la colonne la plus proche', () => {

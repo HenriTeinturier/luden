@@ -1,5 +1,10 @@
 # État courant
 
+## Navigation circulaire des jeux — 2026-10-02
+
+- Gauche sur le premier jeu rejoint le dernier ; droite sur le dernier revient au premier. Ordre filtré/regroupé conservé dans la galerie, la sidebar et la fiche complète, y compris les URLs directes. Boutons précédent/suivant actifs aux extrémités, désactivés pour un seul jeu. Haut/bas dans la grille restent liés aux rangées, sans boucle.
+- Vérifié : TypeScript, lint ciblé, formatage et quatre tests de navigation (boucle dans les deux sens, listes vide/unique, cible filtrée et rangées). Aucun serveur supplémentaire lancé.
+
 ## Serveur compilé et navigation clavier — 2026-10-02
 
 - Le serveur sur le port 3000 utilisait encore la compilation du 1er octobre à 15 h 22, antérieure aux derniers raccourcis et corrections de focus. Serveur arrêté, compilation actuelle générée puis serveur redémarré sur l’interface locale. Aucune modification du code de navigation nécessaire pour les symptômes reproduits sur cette ancienne version.
@@ -10,7 +15,7 @@
 
 - Arrivée dans une plateforme : focus sur la première jaquette, puis navigation aux flèches sans ouverture de jeu, même si l’accueil de la plateforme est affiché. Entrée ouvre la sidebar du jeu ciblé. Le focus initial ne se répète pas à la fermeture d’un jeu ni au changement de filtre sur la même page.
 - Vérifié pour l’arrivée : TypeScript, lint ciblé et formatage ; navigateur Amiga → Amstrad : première jaquette ciblée, droite déplace le focus en conservant l’accueil, Entrée ouvre Daley Thompson’s Decathlon dans la sidebar.
-- Sidebar masquée : les quatre flèches déplacent le focus entre les jaquettes visibles, à partir du dernier jeu consulté (premier résultat si absent). Aucun panneau ne s’ouvre avant Entrée sur la jaquette ; une deuxième Entrée dans la sidebar ouvre ensuite le détail. Ordre filtré/regroupé et rangées réelles respectés, sans boucle ni contour de sélection conservé à la fermeture.
+- Sidebar masquée : les quatre flèches déplacent le focus entre les jaquettes visibles, à partir du dernier jeu consulté (premier résultat si absent). Aucun panneau ne s’ouvre avant Entrée sur la jaquette ; une deuxième Entrée dans la sidebar ouvre ensuite le détail. Ordre filtré/regroupé et rangées réelles respectés, sans contour de sélection conservé à la fermeture. Boucle horizontale ajoutée le 2 octobre.
 - Alt + gauche/droite change d’univers avec la même boucle et le même ordre que les flèches du bandeau, sidebar visible ou masquée. Ces touches remplacent l’historique navigateur uniquement sur une page de plateforme, hors champs, édition, modales et fermeture animée. Tab conserve son usage habituel.
 - Vérifié : TypeScript, lint ciblé, formatage et trois tests de navigation ; navigateur : double Échap → droite/bas sans panneau ni jeu sélectionné → Entrée sur Rick Dangerous 2 ouvre sa sidebar → Entrée ouvre le détail ; Alt + droite/gauche : Amiga → Amstrad → Amiga.
 

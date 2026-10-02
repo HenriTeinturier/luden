@@ -1,5 +1,10 @@
 export type GalleryCardPosition = { id: string; top: number; centerX: number }
 
+export function wrapGameIndex(index: number, total: number, delta: number) {
+  if (total < 1 || index < 0 || index >= total) return -1
+  return (((index + delta) % total) + total) % total
+}
+
 export function galleryCardPositions(elements: HTMLElement[]): GalleryCardPosition[] {
   return elements.flatMap((card) => {
     const rect = card.getBoundingClientRect()
@@ -26,7 +31,7 @@ export function galleryKeyboardNeighbor(
   if (index < 0) return cards[0]?.id
   if (key === 'ArrowUp' || key === 'ArrowDown')
     return verticalGameNeighbor(cards, cards[index].id, key === 'ArrowUp' ? -1 : 1)
-  return cards[index + (key === 'ArrowLeft' ? -1 : 1)]?.id
+  return cards[wrapGameIndex(index, cards.length, key === 'ArrowLeft' ? -1 : 1)]?.id
 }
 
 // Use rendered rows so responsive widths, mixed covers and category gaps all work.

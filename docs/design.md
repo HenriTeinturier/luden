@@ -116,7 +116,10 @@ maximum et composition centrée sur la largeur du contenu. Titre/logo et espacem
 captures de 96–140 px de haut pour voir l’expérience, les souvenirs et les captures dès le premier
 écran. Les informations longues et les médias supplémentaires restent accessibles en défilant.
 
-Gauche/droite parcourent l’ordre visible au moment de l’ouverture, regroupement compris, sans boucle.
+Gauche/droite parcourent l’ordre visible au moment de l’ouverture, regroupement compris, avec boucle :
+droite sur le dernier revient au premier, gauche sur le premier rejoint le dernier. Même comportement
+dans la galerie sans jeu ouvert, la sidebar et la fiche complète (y compris les URLs directes).
+Les boutons précédent/suivant restent disponibles aux extrémités ; désactivés avec un seul jeu.
 À l’arrivée dans une plateforme, le focus rejoint la première jaquette sans ouvrir de fiche.
 Tant qu’aucun jeu n’est ouvert (accueil de plateforme visible ou sidebar masquée), les quatre
 flèches déplacent uniquement le focus entre les jaquettes visibles :

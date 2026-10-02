@@ -5,7 +5,11 @@ import { GameSelectionContext } from './game-selection'
 import { GameDetails, GameNavigation, useGameKeys } from './game-details'
 import { GameForm } from './game-form'
 import { UniverseSidebar } from './universe-sidebar'
-import { galleryCardPositions, verticalGameNeighbor } from '../lib/gallery-navigation'
+import {
+  galleryCardPositions,
+  verticalGameNeighbor,
+  wrapGameIndex,
+} from '../lib/gallery-navigation'
 
 export function GameExplorer({
   children,
@@ -122,7 +126,7 @@ export function GameExplorer({
     }
   }
   function move(delta: number) {
-    const id = ids[index + delta]
+    const id = ids[wrapGameIndex(index, ids.length, delta)]
     if (id && selection && !busy) {
       setSelection({ ...selection, id })
       if (mode === 'sidebar' && window.innerWidth > 800)

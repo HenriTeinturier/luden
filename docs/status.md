@@ -1,5 +1,10 @@
 # État courant
 
+## Molette au-dessus de la sidebar — 2026-10-03
+
+- Suppression du confinement vertical du défilement (`overscroll-behavior: contain`) sur la sidebar commune. La molette continue naturellement vers la galerie lorsque le panneau ne défile pas, accueil plateforme et aperçu jeu compris.
+- Vérifié dans le navigateur : défilement sur l’accueil, la scène du jeu et les captures dans les deux sens ; position de page modifiée, scrollTop du panneau maintenu à 0. Formatage et diff vérifiés ; correction CSS seule.
+
 ## Boucle continue des captures — 2026-10-03
 
 - La première capture suit désormais la dernière dans la bande, sans retour animé vers la gauche. Copies visuelles et repositionnement invisible avant le pas suivant ; flèches circulaires dans les deux sens. Largeurs fractionnaires prises en compte pour éviter une dérive du raccord.

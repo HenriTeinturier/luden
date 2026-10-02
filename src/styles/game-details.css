@@ -155,7 +155,8 @@
   top: var(--header-height, 79px);
   height: calc(100dvh - var(--header-height, 79px));
   overflow: auto;
-  overscroll-behavior: contain;
+  /* Let the wheel continue scrolling the gallery when the sidebar cannot scroll. */
+  overscroll-behavior-y: auto;
   border-left: 1px solid var(--line);
   background: #0c1121;
   scrollbar-width: thin;

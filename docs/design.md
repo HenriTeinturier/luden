@@ -51,6 +51,7 @@ Sur écran étroit (800 px et moins), seul le panneau est visible. Les proportio
 suivent la plateforme ; les différences futures sont uniquement de présentation.
 La scène de la sidebar est au ratio paysage 16:7 sur desktop (6:5 sur mobile), avec le même ratio
 dans l’outil de cadrage. Sur desktop, le panneau occupe la hauteur disponible sous le header, sans défilement vertical.
+La molette au-dessus de ce panneau fait défiler la galerie voisine, accueil plateforme comme aperçu jeu.
 La scène garde ses dimensions et placements ; seul le contenu inférieur s’adapte. Les captures
 font 48–120 px de haut suivant la place disponible, et le souvenir conserve jusqu’à six lignes
 entières. Sur une fenêtre moins haute, les métadonnées secondaires et l’aide clavier sont

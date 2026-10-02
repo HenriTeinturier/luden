@@ -270,6 +270,7 @@ function QuickExperience({
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
   const [proposedRating, setProposedRating] = useState<number | null | undefined>(undefined)
+  const [proposedFavorite, setProposedFavorite] = useState<boolean | undefined>(undefined)
   async function update(patch: Omit<z.infer<typeof quickGameSchema>, 'id'>) {
     if (saving.current) return
     saving.current = true
@@ -319,7 +320,10 @@ function QuickExperience({
               className={`sidebar-megastar ${game.favorite ? 'is-favorite' : ''}`}
               aria-label="Megastar — jeu culte, favori"
               aria-pressed={game.favorite}
-              onClick={() => void update({ favorite: !game.favorite })}
+              onClick={() => {
+                setError('')
+                setProposedFavorite(!game.favorite)
+              }}
             >
               <MegastarTrophy />
               <span>
@@ -447,6 +451,51 @@ function QuickExperience({
                 : proposedRating === null
                   ? 'Effacer la note'
                   : 'Valider la note'}
+            </button>
+          </div>
+        </Modal>
+        <Modal
+          open={proposedFavorite !== undefined}
+          onOpenChange={(open) => {
+            if (!open && !busy) setProposedFavorite(undefined)
+          }}
+          title={proposedFavorite ? 'Ajouter à mes Megastar ?' : 'Retirer de mes Megastar ?'}
+          description={
+            proposedFavorite
+              ? `${game.title} sera marqué comme jeu culte parmi vos favoris.`
+              : `${game.title} ne sera plus marqué comme Megastar.`
+          }
+        >
+          {error && (
+            <p className="form-error" role="alert">
+              {error}
+            </p>
+          )}
+          <div className="dialog-actions">
+            <button
+              type="button"
+              className="button secondary"
+              disabled={busy}
+              onClick={() => setProposedFavorite(undefined)}
+            >
+              Annuler
+            </button>
+            <button
+              type="button"
+              className="button sidebar-confirm"
+              disabled={busy}
+              onClick={() => {
+                if (proposedFavorite !== undefined)
+                  void update({ favorite: proposedFavorite }).then((saved) => {
+                    if (saved) setProposedFavorite(undefined)
+                  })
+              }}
+            >
+              {busy
+                ? 'Enregistrement…'
+                : proposedFavorite
+                  ? 'Ajouter aux Megastar'
+                  : 'Retirer des Megastar'}
             </button>
           </div>
         </Modal>

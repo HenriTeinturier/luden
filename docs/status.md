@@ -1,5 +1,10 @@
 # État courant
 
+## Confirmation Megastar — 2026-10-03
+
+- Dans la sidebar de toutes les plateformes, activer ou retirer Megastar ouvre une confirmation nommant le jeu et l’action. Aucune sauvegarde avant validation ; annulation/fermeture sans modification. Boutons bloqués pendant l’enregistrement, erreur affichée dans la fenêtre pour réessayer.
+- Vérifié : TypeScript, lint ciblé et formatage ; navigateur : ajout sur Bruce Lee annulé, retrait sur Match Day II fermé par Échap, états initiaux conservés. Aucune donnée personnelle modifiée pendant les essais.
+
 ## Captures animées dans la sidebar — 2026-10-03
 
 - Bande commune à toutes les plateformes : avance douce d’une vignette toutes les 2 secondes et retour au début, plusieurs images toujours visibles. Bouton pause/reprise discret, flèches et agrandissement conservés. Aucun changement de dimensions de la scène supérieure.

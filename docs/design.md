@@ -77,6 +77,8 @@ sélecteur en doublon. Survol et clic par demi-étoiles, clavier par pas de 0,5 
 Fin : 5), croix ou Suppr pour effacer. Chaque proposition ouvre une confirmation avec la note
 actuelle et la valeur proposée ; seul « Valider la note » enregistre. Annuler ou fermer conserve
 la valeur actuelle. Megastar est distinct, avec un crayon discret à sa droite pour éditer la fiche.
+Dans la sidebar, ajouter ou retirer Megastar demande aussi une confirmation explicite nommant
+le jeu. Annuler ou fermer conserve l’état actuel ; une erreur permet de réessayer dans la fenêtre.
 
 Les états « Joué / Non joué », possession actuelle/ancienne/absente et découverte sont des
 contrôles textuels compacts, avec icônes et coches. La possession précise physique, numérique

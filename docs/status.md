@@ -1,5 +1,10 @@
 # État courant
 
+## Bouton principal de l’accueil — 2026-10-03
+
+- « Parcourir mes souvenirs » adopte le violet, le texte blanc, la bordure lavande et l’ombre discrète du bouton « Ajouter un jeu ». Même traitement pour « Commencer mon histoire » en bibliothèque vide ; destination et dimensions conservées.
+- Vérifié : styles calculés identiques au bouton du header dans le navigateur, lien vers la bibliothèque conservé, formatage et diff propres. Correction CSS seule.
+
 ## Glissement plus doux de la galerie — 2026-10-03
 
 - Chaque déplacement utilise une transition de 750 ms avec départ et arrivée progressifs, au lieu de la durée native du navigateur. Cadence de 2 secondes et boucle continue conservées, flèches comprises. Interactions directes et préférence de mouvement réduit respectées ; animation nettoyée au changement de vue/jeu.

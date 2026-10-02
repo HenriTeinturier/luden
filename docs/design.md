@@ -277,7 +277,9 @@ le mode Auto conserve les règles adaptées à chaque plateforme. Le sélecteur 
 
 Direction actuelle : bleu nuit / Aurora. Fonds sobres bleut�s, navigation et interactions bleues,
 identit� violet/mauve, CTA corail, souvenirs et �toiles jaunes, cyan ponctuel.
-Le bouton « Ajouter un jeu » du header et la confirmation de note utilisent un violet proche du logo.
+Le bouton « Ajouter un jeu » du header, « Parcourir mes souvenirs » sur l’accueil
+(ou « Commencer mon histoire » lorsque la bibliothèque est vide) et la confirmation de note
+utilisent un violet proche du logo, du texte blanc et un survol lavande.
 `src/styles/palette.css` centralise les couleurs et gradients ; `src/styles/theme.css` les applique.
 Logo et illustration pixel art locale (`public/arcade-room.svg`) harmonis�s via leurs couleurs SVG.
 Cette passe conserve structure, dimensions, espacements et composants. Variante Console 90

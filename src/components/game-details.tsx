@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import { useEffect, useId, useRef, useState, type CSSProperties } from 'react'
+import { createPortal } from 'react-dom'
 import { Link, useRouter } from '@tanstack/react-router'
 import {
   ArrowLeft,
@@ -908,6 +909,52 @@ function MemoryExcerpt({ memory }: { memory: string }) {
   const [lines, setLines] = useState(6)
   const preview = useRef<HTMLDivElement>(null)
   const paragraph = useRef<HTMLParagraphElement>(null)
+  const more = useRef<HTMLButtonElement>(null)
+  const hoverTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
+  const [hoverPosition, setHoverPosition] = useState<CSSProperties | null>(null)
+  const hoverId = useId()
+  function closeHover() {
+    clearTimeout(hoverTimer.current)
+    setHoverPosition(null)
+  }
+  function showHover() {
+    clearTimeout(hoverTimer.current)
+    if (expanded) return
+    hoverTimer.current = setTimeout(() => {
+      const bounds = more.current?.getBoundingClientRect()
+      if (!bounds) return
+      const width = Math.min(560, window.innerWidth - 32)
+      const bottom = Math.max(16, window.innerHeight - bounds.bottom)
+      setHoverPosition({
+        width,
+        left: Math.max(16, Math.min(bounds.left - width - 12, window.innerWidth - width - 16)),
+        bottom,
+        maxHeight: Math.min(520, window.innerHeight - bottom - 16),
+      })
+    }, 350)
+  }
+  function leaveHover() {
+    clearTimeout(hoverTimer.current)
+    hoverTimer.current = setTimeout(() => setHoverPosition(null), 180)
+  }
+  useEffect(() => () => clearTimeout(hoverTimer.current), [])
+  useEffect(() => {
+    if (!hoverPosition) return
+    function dismiss(event: KeyboardEvent) {
+      if (event.key !== 'Escape') return
+      event.preventDefault()
+      event.stopPropagation()
+      clearTimeout(hoverTimer.current)
+      setHoverPosition(null)
+    }
+    const resize = () => setHoverPosition(null)
+    document.addEventListener('keydown', dismiss, true)
+    window.addEventListener('resize', resize)
+    return () => {
+      document.removeEventListener('keydown', dismiss, true)
+      window.removeEventListener('resize', resize)
+    }
+  }, [hoverPosition])
   useEffect(() => {
     const frame = preview.current
     const element = paragraph.current
@@ -935,14 +982,41 @@ function MemoryExcerpt({ memory }: { memory: string }) {
       </div>
       {truncated && (
         <button
+          ref={more}
           type="button"
           className="text-link memory-read-more"
           aria-haspopup="dialog"
-          onClick={() => setExpanded(true)}
+          aria-describedby={hoverPosition ? hoverId : undefined}
+          onPointerEnter={(event) => {
+            if (event.pointerType !== 'touch') showHover()
+          }}
+          onPointerLeave={leaveHover}
+          onFocus={showHover}
+          onBlur={closeHover}
+          onClick={() => {
+            closeHover()
+            setExpanded(true)
+          }}
         >
           Lire la suite
         </button>
       )}
+      {hoverPosition &&
+        !expanded &&
+        createPortal(
+          <div
+            id={hoverId}
+            role="tooltip"
+            className="memory-hover-card"
+            style={hoverPosition}
+            onPointerEnter={() => clearTimeout(hoverTimer.current)}
+            onPointerLeave={leaveHover}
+          >
+            <strong>Mes souvenirs</strong>
+            <p className="memory-reader">{memory}</p>
+          </div>,
+          document.body,
+        )}
       <Modal
         open={expanded}
         onOpenChange={setExpanded}

@@ -559,7 +559,9 @@
 .memory-read-more {
   margin-top: 12px;
   color: #f1d6a1;
-  font-size: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  min-height: 26px;
 }
 .memory-heading-actions,
 .screenshot-heading-actions {
@@ -1788,12 +1790,34 @@ kbd {
 .sidebar-open-full:hover:not(:disabled) {
   color: var(--ink);
 }
-.memory-reader {
+.dialog-content:has(> .memory-reader) {
+  width: min(720px, calc(100vw - 32px));
+}
+.dialog-content > .memory-reader,
+.memory-hover-card .memory-reader {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
+  font-size: 18px;
+  line-height: 1.75;
+  color: var(--ink);
+}
+.memory-hover-card {
+  position: fixed;
+  z-index: 49;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 22px 26px;
+  border: 1px solid #b69a615c;
+  border-radius: 14px;
+  background: #171c2e;
+  box-shadow: 0 12px 42px #0009;
+}
+.memory-hover-card > strong {
+  color: #f1d6a1;
   font-size: 16px;
-  line-height: 1.8;
-  color: var(--text-soft);
+}
+.memory-hover-card .memory-reader {
+  margin: 12px 0 0;
 }
 .rating-confirm-preview {
   margin-top: 24px;
@@ -1941,5 +1965,29 @@ kbd {
   }
   .dossier-compact .sidebar-open-full {
     min-height: 28px;
+  }
+}
+@container sidebar-body (max-height: 340px) {
+  .dossier-compact .dossier-personal {
+    min-height: 70px;
+    padding-top: 6px;
+  }
+  .dossier-compact .dossier-memory {
+    padding: 6px 10px;
+  }
+  .dossier-compact .memory-preview {
+    margin-top: 4px;
+  }
+  .dossier-compact .memory-read-more {
+    margin-top: 2px;
+  }
+  .dossier-compact .detail-screenshots {
+    margin-top: 4px;
+  }
+  .dossier-compact .screenshot-strip {
+    padding-bottom: 3px;
+  }
+  .dossier-compact .screenshot-strip.is-compact button {
+    height: 32px;
   }
 }

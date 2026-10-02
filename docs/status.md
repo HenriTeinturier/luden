@@ -1,5 +1,11 @@
 # État courant
 
+## Lecture des souvenirs — 2026-10-03
+
+- Correction de la règle générique des fenêtres qui réduisait le texte complet à 12 px : souvenir en 18 px contrasté, interligne 1,75 et fenêtre jusqu’à 720 px. Lien « Lire la suite » agrandi à 16 px.
+- Aperçu flottant du souvenir entier après 350 ms de survol ou au focus clavier. Transfert du pointeur vers l’encadré possible, Échap ferme l’aperçu sans fermer le jeu ; clic conserve la fenêtre complète. Texte long défilable dans l’aperçu, sidebar inchangée en hauteur.
+- Petites hauteurs : espacements et vignettes réduits pour que le lien agrandi ne chevauche pas la galerie. Vérifié : TypeScript, lint ciblé, formatage ; navigateur : aperçu au focus, Échap, ouverture au clic, styles calculés 16/18 px, fenêtre 720 px et panneau sans débordement (641/641 px).
+
 ## Galerie de tous les médias en sidebar — 2026-10-03
 
 - « Captures d’écran » devient « Galerie » dans la sidebar de toutes les plateformes. Captures en premier, puis toutes les autres images associées au jeu dans leur ordre enregistré : jaquettes, boîtes, publicités, supports, documents et divers. Galerie disponible même sans capture.

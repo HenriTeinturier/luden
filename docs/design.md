@@ -91,7 +91,12 @@ statuts détaillés restent conservés à la simple consultation.
 
 « Mes souvenirs » devient un bloc à bordure dorée, fond chaud discret et texte plus lisible.
 L’extrait s’adapte à la hauteur restante, jusqu’à six lignes. « Lire la suite » ouvre le texte entier
-dans une fenêtre, sans allonger la sidebar. Écrire/Modifier ouvre aussi une fenêtre avec
+dans une fenêtre, sans allonger la sidebar. Le lien est en 16 px ; le souvenir complet en 18 px,
+contrasté et aéré, dans une fenêtre jusqu’à 720 px de large. Survol de « Lire la suite » ou focus
+clavier : aperçu flottant après 350 ms, maintenu quand le pointeur passe sur le texte, fermé par
+Échap ou en quittant l’encadré. Les longs souvenirs défilent dans cet aperçu uniquement. Dans
+les petites hauteurs, les espacements et vignettes s’adaptent pour garder le lien accessible.
+Écrire/Modifier ouvre aussi une fenêtre avec
 Enregistrer et Annuler. La sauvegarde partielle ne change que le souvenir et conserve le
 brouillon en cas d’erreur ; les déplacements entre jeux sont suspendus pendant l’édition.
 

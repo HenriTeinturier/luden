@@ -1,5 +1,11 @@
 # État courant
 
+## Retour souris depuis une fiche — 2026-10-02
+
+- Dans l’explorateur des galeries, l’ouverture de la fiche complète ou de l’édition ajoute une étape à l’historique du navigateur sans changer l’URL. Détail → édition remplace cette étape : Retour souris/navigateur rejoint directement la galerie avec le jeu courant en sidebar, filtres et défilement conservés.
+- Échap/retour de la fiche consomment la même étape, sans empiler de retours vides. Annuler/Enregistrer dans l’éditeur gardent leur destination précédente ; l’avance navigateur peut rouvrir la vue. Navigation bloquée pendant une sauvegarde ou un import ; brouillon non enregistré abandonné comme avec Annuler.
+- Vérifié : TypeScript et lint ciblé, compilation ; navigateur : retour depuis détail, édition depuis détail/sidebar, retours répétés et avance, même jeu sélectionné et défilement 2531 px restauré après ouverture clavier. URLs directes de jeu hors explorateur inchangées.
+
 ## Refonte de la sidebar — 2026-10-02
 
 - Présentation commune à toutes les plateformes : note en grandes étoiles, Megastar distinct, crayon d’édition discret ; souvenirs dans un bloc chaud doré, trois captures sans cadre imbriqué (deux en panneau étroit), lien sobre vers la fiche. « Ajouter un jeu » passe au violet ; édition de l’accueil plateforme réduite à un crayon.

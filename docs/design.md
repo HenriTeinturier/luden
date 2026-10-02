@@ -155,6 +155,13 @@ ne sont pas concernés. Les gestes continus sont limités à un changement toute
 Filtres et défilement sont conservés ; modifier les filtres referme la sélection. Le parcours intégré
 reste sur l’URL de la galerie ; les URLs de jeu servent toujours à l’ouverture directe/nouvel onglet.
 L’ordre capturé évite qu’une action rapide fasse sauter un jeu pendant la consultation.
+Dans l’explorateur de galerie, fiche complète et édition partagent une étape d’historique
+au-dessus de la sidebar. Retour souris/navigateur revient directement à cette sidebar sur le
+jeu courant, en restaurant le défilement et les filtres, même depuis l’édition. Échap depuis
+la fiche utilise cette même étape ; Annuler/Enregistrer gardent leur destination précédente.
+L’avance navigateur peut rouvrir la vue. Sauvegarde et import bloquent temporairement la
+navigation ; quitter l’édition abandonne le brouillon comme Annuler. Les URLs directes hors
+explorateur conservent leur parcours propre.
 
 Boîte/jaquette, support, logo transparent et fond sont quatre rôles facultatifs, indépendants de
 la vignette principale. Import par rôle et réutilisation d’images existantes. Le fond ouvre un outil

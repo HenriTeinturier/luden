@@ -5,6 +5,7 @@ import { GameSelectionContext } from './game-selection'
 import { GameDetails, GameNavigation, useGameKeys } from './game-details'
 import { GameForm } from './game-form'
 import { UniverseSidebar } from './universe-sidebar'
+import { useGameViewHistory } from './use-game-view-history'
 import {
   galleryCardPositions,
   verticalGameNeighbor,
@@ -25,7 +26,6 @@ export function GameExplorer({
     ids: string[]
     location: string
   } | null>(null)
-  const [mode, setMode] = useState<'sidebar' | 'full' | 'edit'>('sidebar')
   const [busy, setBusy] = useState(false)
   const [hidingUniverse, setHidingUniverse] = useState(false)
   const previousMode = useRef<'sidebar' | 'full'>('sidebar')
@@ -36,7 +36,6 @@ export function GameExplorer({
   if (universeVisit.pathname !== location.pathname) {
     setUniverseVisit({ pathname: location.pathname, hidden: false })
     setSelection(null)
-    setMode('sidebar')
     setBusy(false)
     setHidingUniverse(false)
   }
@@ -47,6 +46,18 @@ export function GameExplorer({
   const locationKey =
     location.pathname +
     JSON.stringify(Object.entries(location.search).filter(([key]) => key !== 'columns'))
+  const { mode, setMode, reset: resetView } = useGameViewHistory(locationKey, busy)
+  const lastView = useRef({ mode, locationKey })
+  useEffect(() => {
+    const previous = lastView.current
+    lastView.current = { mode, locationKey }
+    if (previous.locationKey === locationKey && previous.mode !== 'sidebar' && mode === 'sidebar') {
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: scroll.current, behavior: 'instant' })
+        panel.current?.focus({ preventScroll: true })
+      })
+    }
+  }, [mode, locationKey])
   const active = selection?.location === locationKey
   const game = active ? library?.games.find((g) => g.id === selection.id) : undefined
   const ids = selection?.ids.filter((id) => library?.games.some((g) => g.id === id)) ?? []
@@ -192,7 +203,7 @@ export function GameExplorer({
           scroll.current = window.scrollY
           mobileLibraryScroll.current = window.scrollY
           setSelection({ id, ids: sequence.length ? sequence : [id], location: locationKey })
-          setMode('sidebar')
+          resetView()
         },
       }}
     >
@@ -216,6 +227,7 @@ export function GameExplorer({
           <GameForm
             key={game.id}
             game={game}
+            onBusyChange={setBusy}
             onSaved={() => {
               setMode(previousMode.current)
               if (previousMode.current === 'sidebar') restoreLibrary()

@@ -20,11 +20,13 @@ export function GameForm({
   initialPlatformId,
   onSaved,
   onCancel,
+  onBusyChange,
 }: {
   game?: Game
   initialPlatformId?: string
   onSaved?: () => void
   onCancel?: () => void
+  onBusyChange?: (busy: boolean) => void
 }) {
   const library = useLibrary()
   const notify = useNotification()
@@ -87,6 +89,10 @@ export function GameForm({
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
   const [uploading, setUploading] = useState(false)
+  useEffect(() => {
+    onBusyChange?.(busy || uploading)
+    return () => onBusyChange?.(false)
+  }, [busy, uploading, onBusyChange])
   const formId = useId()
   const setFormAction = useContext(FormActionContext)
   const saving = useRef(false)
@@ -208,7 +214,12 @@ export function GameForm({
   return (
     <div className="page form-page">
       {game && onCancel ? (
-        <button type="button" className="back-link text-link" onClick={onCancel}>
+        <button
+          type="button"
+          className="back-link text-link"
+          onClick={onCancel}
+          disabled={busy || uploading}
+        >
           <ArrowLeft size={16} />
           Retour à la fiche
         </button>
@@ -379,7 +390,12 @@ export function GameForm({
           )}
           <span>Vos données restent dans votre bibliothèque.</span>
           {onCancel ? (
-            <button type="button" className="button secondary" onClick={onCancel}>
+            <button
+              type="button"
+              className="button secondary"
+              onClick={onCancel}
+              disabled={busy || uploading}
+            >
               Annuler
             </button>
           ) : (

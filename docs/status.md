@@ -1,5 +1,10 @@
 # État courant
 
+## Glissement plus doux de la galerie — 2026-10-03
+
+- Chaque déplacement utilise une transition de 750 ms avec départ et arrivée progressifs, au lieu de la durée native du navigateur. Cadence de 2 secondes et boucle continue conservées, flèches comprises. Interactions directes et préférence de mouvement réduit respectées ; animation nettoyée au changement de vue/jeu.
+- Vérifié : TypeScript, lint ciblé, formatage ; navigateur : positions intermédiaires puis arrivée exacte à la vignette suivante, retour progressif et franchissement de la jonction de boucle. Validation du ressenti par Henri.
+
 ## Lecture des souvenirs — 2026-10-03
 
 - Correction de la règle générique des fenêtres qui réduisait le texte complet à 12 px : souvenir en 18 px contrasté, interligne 1,75 et fenêtre jusqu’à 720 px. Lien « Lire la suite » agrandi à 16 px.

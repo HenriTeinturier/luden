@@ -110,6 +110,8 @@ Les images forment une bande sans cadre extérieur, trois vignettes (deux dans u
 chaque vignette ouvre l’image agrandie. Pas de halo permanent sur la première capture.
 Dans la sidebar, la bande avance d’une vignette toutes les 2 secondes avec une transition
 douce en boucle continue : la première suit la dernière, sans retour animé vers la gauche.
+Chaque déplacement dure 750 ms avec une accélération et une décélération progressives,
+en automatique comme avec les flèches. Le glissement s’arrête pour une interaction directe.
 Les flèches parcourent aussi la boucle dans les deux sens. Pause au survol, au focus clavier, pendant une fenêtre modale
 ou lorsque l’onglet est masqué ; un bouton discret permet aussi une pause durable.
 Pas de défilement si toutes les images tiennent dans la bande, ni d’automatisme si la

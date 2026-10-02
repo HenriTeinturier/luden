@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState, type CSSProperties } from 'react'
+import { useCallback, useEffect, useId, useRef, useState, type CSSProperties } from 'react'
 import { createPortal } from 'react-dom'
 import { Link, useRouter } from '@tanstack/react-router'
 import {
@@ -633,6 +633,34 @@ function GameImageGallery({ game, compact }: { game: Game; compact: boolean }) {
   const [reducedMotion, setReducedMotion] = useState(false)
   const [looping, setLooping] = useState(false)
   const strip = useRef<HTMLDivElement>(null)
+  const slideFrame = useRef<number | undefined>(undefined)
+  const stopSlide = useCallback(() => {
+    if (slideFrame.current !== undefined) cancelAnimationFrame(slideFrame.current)
+    slideFrame.current = undefined
+  }, [])
+  const slideTo = useCallback(
+    (left: number) => {
+      stopSlide()
+      const container = strip.current
+      if (!container) return
+      if (reducedMotion) {
+        container.scrollTo({ left, behavior: 'instant' })
+        return
+      }
+      const start = container.scrollLeft
+      const started = performance.now()
+      const frame = (now: number) => {
+        const progress = Math.min(1, (now - started) / 750)
+        // Gentle acceleration and deceleration, independent of browser smooth-scroll duration.
+        const eased = (1 - Math.cos(Math.PI * progress)) / 2
+        container.scrollTo({ left: start + (left - start) * eased, behavior: 'instant' })
+        slideFrame.current = progress < 1 ? requestAnimationFrame(frame) : undefined
+      }
+      slideFrame.current = requestAnimationFrame(frame)
+    },
+    [reducedMotion, stopSlide],
+  )
+  useEffect(() => stopSlide, [compact, reducedMotion, stopSlide])
   useEffect(() => {
     const container = strip.current
     if (!compact || !container || images.length < 2) {
@@ -689,11 +717,23 @@ function GameImageGallery({ game, compact }: { game: Game; compact: boolean }) {
       }
       const next = position + 1
       setActive(next % images.length)
-      container.scrollTo({ left: next * step, behavior: 'smooth' })
+      slideTo(next * step)
     }, 2000)
     return () => window.clearInterval(timer)
-  }, [compact, looping, images.length, paused, hovered, focused, reducedMotion, overview, selected])
+  }, [
+    compact,
+    looping,
+    images.length,
+    paused,
+    hovered,
+    focused,
+    reducedMotion,
+    overview,
+    selected,
+    slideTo,
+  ])
   function highlight(index: number) {
+    stopSlide()
     setActive(index % images.length)
     const container = strip.current
     const target = container?.children[index] as HTMLElement | undefined
@@ -709,6 +749,7 @@ function GameImageGallery({ game, compact }: { game: Game; compact: boolean }) {
     }
   }
   function openImage(index: number) {
+    stopSlide()
     setSelected(index)
   }
   function moveImage(delta: number) {
@@ -731,7 +772,7 @@ function GameImageGallery({ game, compact }: { game: Game; compact: boolean }) {
     }
     const next = position + delta
     setActive((next + images.length) % images.length)
-    container.scrollTo({ left: next * step, behavior: reducedMotion ? 'instant' : 'smooth' })
+    slideTo(next * step)
   }
   if (!images.length) return null
   const item = selected === null ? null : images[selected]
@@ -780,6 +821,10 @@ function GameImageGallery({ game, compact }: { game: Game; compact: boolean }) {
         <div
           ref={strip}
           className={`screenshot-strip ${compact ? 'is-compact' : ''} ${looping ? 'is-looping' : ''}`}
+          onPointerDown={stopSlide}
+          onWheel={(event) => {
+            if (event.deltaX || event.shiftKey) stopSlide()
+          }}
         >
           {(looping ? [...images, ...images] : images).map((image, index) => (
             <button

@@ -1,5 +1,11 @@
 # État courant
 
+## Galerie de tous les médias en sidebar — 2026-10-03
+
+- « Captures d’écran » devient « Galerie » dans la sidebar de toutes les plateformes. Captures en premier, puis toutes les autres images associées au jeu dans leur ordre enregistré : jaquettes, boîtes, publicités, supports, documents et divers. Galerie disponible même sans capture.
+- Compteur, Voir tout, libellés de navigation et agrandissement adaptés ; catégorie affichée dans la fenêtre d’image. Boucle continue et rythme conservés. La fiche complète garde ses captures et ses médias séparés.
+- Vérifié : TypeScript, lint ciblé et formatage ; navigateur sur Bruce Lee : 9 images (5 captures, 2 jaquettes, 2 divers), aperçu complet, jaquette agrandie avec le bon compteur/catégorie, sections de la fiche complète conservées.
+
 ## Molette au-dessus de la sidebar — 2026-10-03
 
 - Suppression du confinement vertical du défilement (`overscroll-behavior: contain`) sur la sidebar commune. La molette continue naturellement vers la galerie lorsque le panneau ne défile pas, accueil plateforme et aperçu jeu compris.

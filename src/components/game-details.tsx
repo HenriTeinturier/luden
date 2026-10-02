@@ -27,6 +27,7 @@ import type { z } from 'zod'
 import type { Game } from '../lib/types'
 import type { quickGameSchema } from '../lib/validation'
 import { readPresentation } from '../lib/game-visuals'
+import { mediaCategories } from '../lib/media'
 import { playStatuses } from '../lib/platforms'
 import { hasPlayed } from '../lib/gallery'
 import { coverFormat } from '../lib/presentation'
@@ -613,8 +614,15 @@ function QuickExperience({
   )
 }
 
-function Screenshots({ game, compact }: { game: Game; compact: boolean }) {
-  const images = game.media.filter((m) => m.category === 'SCREENSHOT')
+function GameImageGallery({ game, compact }: { game: Game; compact: boolean }) {
+  const screenshots = game.media.filter((m) => m.category === 'SCREENSHOT')
+  const images = compact
+    ? [...screenshots, ...game.media.filter((m) => m.category !== 'SCREENSHOT')]
+    : screenshots
+  const title = compact ? 'Galerie' : 'Captures d’écran'
+  const imageLabel = (index: number) => (compact ? `Image ${index + 1}` : `Capture ${index + 1}`)
+  const enlargeLabel = (index: number) =>
+    compact ? `Agrandir l’image ${index + 1}` : `Agrandir la capture ${index + 1}`
   const [selected, setSelected] = useState<number | null>(null)
   const [overview, setOverview] = useState(false)
   const [active, setActive] = useState(0)
@@ -702,7 +710,7 @@ function Screenshots({ game, compact }: { game: Game; compact: boolean }) {
   function openImage(index: number) {
     setSelected(index)
   }
-  function moveCapture(delta: number) {
+  function moveImage(delta: number) {
     const container = strip.current
     if (!looping || !container) {
       highlight(Math.max(0, Math.min(images.length - 1, active + delta)))
@@ -739,7 +747,7 @@ function Screenshots({ game, compact }: { game: Game; compact: boolean }) {
       <div className="detail-section-heading">
         <h2>
           <Images size={16} />
-          Captures d’écran
+          {title}
         </h2>
         <div className="screenshot-heading-actions">
           <span>{images.length}</span>
@@ -748,11 +756,9 @@ function Screenshots({ game, compact }: { game: Game; compact: boolean }) {
               type="button"
               className="screenshot-autoplay"
               aria-label={
-                paused ? 'Reprendre le défilement des captures' : 'Mettre les captures en pause'
+                paused ? 'Reprendre le défilement des images' : 'Mettre les images en pause'
               }
-              title={
-                paused ? 'Reprendre le défilement' : 'Pause · une capture toutes les 2 secondes'
-              }
+              title={paused ? 'Reprendre le défilement' : 'Pause · une image toutes les 2 secondes'}
               onClick={() => {
                 setPaused(!paused)
                 // Explicit playback can resume while this control keeps keyboard focus.
@@ -779,14 +785,18 @@ function Screenshots({ game, compact }: { game: Game; compact: boolean }) {
               type="button"
               key={`${image.id}-${index}`}
               tabIndex={index >= images.length ? -1 : undefined}
-              aria-label={`Agrandir la capture ${(index % images.length) + 1}`}
+              aria-label={enlargeLabel(index % images.length)}
+              title={compact ? image.caption || mediaCategories[image.category] : undefined}
               aria-current={compact && active === index % images.length ? 'true' : undefined}
               onFocus={() => compact && highlight(index)}
               onClick={() => openImage(index % images.length)}
             >
               <img
                 src={`/media/${image.mediaId}`}
-                alt={image.caption || `Capture ${(index % images.length) + 1} de ${game.title}`}
+                alt={
+                  image.caption ||
+                  `${compact ? mediaCategories[image.category] : imageLabel(index % images.length)} · ${game.title}`
+                }
                 loading="lazy"
               />
             </button>
@@ -797,18 +807,18 @@ function Screenshots({ game, compact }: { game: Game; compact: boolean }) {
             <button
               type="button"
               className="screenshot-arrow is-previous"
-              aria-label="Capture précédente"
+              aria-label="Image précédente"
               disabled={!looping && active === 0}
-              onClick={() => moveCapture(-1)}
+              onClick={() => moveImage(-1)}
             >
               <ChevronLeft size={18} />
             </button>
             <button
               type="button"
               className="screenshot-arrow is-next"
-              aria-label="Capture suivante"
+              aria-label="Image suivante"
               disabled={!looping && active >= images.length - 1}
-              onClick={() => moveCapture(1)}
+              onClick={() => moveImage(1)}
             >
               <ChevronRight size={18} />
             </button>
@@ -823,11 +833,11 @@ function Screenshots({ game, compact }: { game: Game; compact: boolean }) {
             setOverview(false)
           }
         }}
-        title={item ? item.caption || game.title : 'Captures d’écran'}
+        title={item ? item.caption || game.title : title}
         description={
           item
-            ? `Capture ${(selected ?? 0) + 1} sur ${images.length}`
-            : `${game.title} · ${images.length} captures`
+            ? `${imageLabel(selected ?? 0)} sur ${images.length}${compact ? ` · ${mediaCategories[item.category]}` : ''}`
+            : `${game.title} · ${images.length} ${compact ? 'images' : 'captures'}`
         }
       >
         {overview && !item && (
@@ -836,12 +846,16 @@ function Screenshots({ game, compact }: { game: Game; compact: boolean }) {
               <button
                 type="button"
                 key={image.id}
-                aria-label={`Agrandir la capture ${index + 1}`}
+                aria-label={enlargeLabel(index)}
+                title={image.caption || mediaCategories[image.category]}
                 onClick={() => openImage(index)}
               >
                 <img
                   src={`/media/${image.mediaId}`}
-                  alt={image.caption || `Capture ${index + 1} de ${game.title}`}
+                  alt={
+                    image.caption ||
+                    `${compact ? mediaCategories[image.category] : imageLabel(index)} · ${game.title}`
+                  }
                   loading="lazy"
                 />
               </button>
@@ -852,14 +866,17 @@ function Screenshots({ game, compact }: { game: Game; compact: boolean }) {
           <img
             className="media-lightbox"
             src={`/media/${item.mediaId}`}
-            alt={item.caption || `Capture de ${game.title}`}
+            alt={
+              item.caption ||
+              `${compact ? mediaCategories[item.category] : 'Capture'} · ${game.title}`
+            }
           />
         )}
         {item && (
           <div className="dialog-actions">
             {overview && (
               <button type="button" className="text-link" onClick={() => setSelected(null)}>
-                Toutes les captures
+                {compact ? 'Toutes les images' : 'Toutes les captures'}
               </button>
             )}
             <button
@@ -1145,7 +1162,7 @@ export function GameDetails({
             </section>
           }
         </div>
-        <Screenshots game={game} compact={compact} />
+        <GameImageGallery game={game} compact={compact} />
         {compact ? (
           <div className="dossier-actions">
             <button

@@ -20,6 +20,8 @@ import {
   LoaderCircle,
   ShieldCheck,
   Gamepad2,
+  Pause,
+  Play,
 } from 'lucide-react'
 import type { z } from 'zod'
 import type { Game } from '../lib/types'
@@ -567,7 +569,57 @@ function Screenshots({ game, compact }: { game: Game; compact: boolean }) {
   const [selected, setSelected] = useState<number | null>(null)
   const [overview, setOverview] = useState(false)
   const [active, setActive] = useState(0)
+  const [paused, setPaused] = useState(false)
+  const [hovered, setHovered] = useState(false)
+  const [focused, setFocused] = useState(false)
+  const [reducedMotion, setReducedMotion] = useState(false)
   const strip = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const preference = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const sync = () => setReducedMotion(preference.matches)
+    sync()
+    preference.addEventListener('change', sync)
+    return () => preference.removeEventListener('change', sync)
+  }, [])
+  useEffect(() => {
+    if (
+      !compact ||
+      images.length < 2 ||
+      paused ||
+      hovered ||
+      focused ||
+      reducedMotion ||
+      overview ||
+      selected !== null
+    )
+      return
+    const timer = window.setInterval(() => {
+      const container = strip.current
+      if (
+        !container ||
+        document.hidden ||
+        document.querySelector('[role="dialog"], [role="alertdialog"]')
+      )
+        return
+      const maximum = container.scrollWidth - container.clientWidth
+      if (maximum <= 4) return
+      const bounds = container.getBoundingClientRect()
+      const items = Array.from(container.children) as HTMLElement[]
+      // Advance by one thumbnail; return to the beginning after the last group.
+      const next =
+        container.scrollLeft >= maximum - 4
+          ? 0
+          : items.findIndex((item) => item.getBoundingClientRect().left > bounds.left + 6)
+      if (next < 0) return
+      const left =
+        next === 0
+          ? 0
+          : container.scrollLeft + items[next].getBoundingClientRect().left - bounds.left - 3
+      setActive(next)
+      container.scrollTo({ left: Math.min(left, maximum), behavior: 'smooth' })
+    }, 2000)
+    return () => window.clearInterval(timer)
+  }, [compact, images.length, paused, hovered, focused, reducedMotion, overview, selected])
   function highlight(index: number) {
     setActive(index)
     const container = strip.current
@@ -590,7 +642,15 @@ function Screenshots({ game, compact }: { game: Game; compact: boolean }) {
   if (!images.length) return null
   const item = selected === null ? null : images[selected]
   return (
-    <section className="detail-screenshots">
+    <section
+      className="detail-screenshots"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onFocusCapture={() => setFocused(true)}
+      onBlurCapture={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false)
+      }}
+    >
       <div className="detail-section-heading">
         <h2>
           <Images size={16} />
@@ -598,6 +658,25 @@ function Screenshots({ game, compact }: { game: Game; compact: boolean }) {
         </h2>
         <div className="screenshot-heading-actions">
           <span>{images.length}</span>
+          {compact && images.length > 1 && !reducedMotion && (
+            <button
+              type="button"
+              className="screenshot-autoplay"
+              aria-label={
+                paused ? 'Reprendre le défilement des captures' : 'Mettre les captures en pause'
+              }
+              title={
+                paused ? 'Reprendre le défilement' : 'Pause · une capture toutes les 2 secondes'
+              }
+              onClick={() => {
+                setPaused(!paused)
+                // Explicit playback can resume while this control keeps keyboard focus.
+                if (paused) setFocused(false)
+              }}
+            >
+              {paused ? <Play size={14} /> : <Pause size={14} />}
+            </button>
+          )}
           {compact && (
             <button type="button" className="text-link" onClick={() => setOverview(true)}>
               Voir tout <ArrowRight size={15} />

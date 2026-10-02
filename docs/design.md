@@ -95,6 +95,11 @@ brouillon en cas d’erreur ; les déplacements entre jeux sont suspendus pendan
 Les captures forment une bande sans cadre extérieur, trois vignettes (deux dans un panneau
 étroit), proportions conservées. Flèches discrètes, compteur et accès « Voir tout » à la grille ;
 chaque vignette ouvre l’image agrandie. Pas de halo permanent sur la première capture.
+Dans la sidebar, la bande avance d’une vignette toutes les 2 secondes avec une transition
+douce, puis revient au début. Pause au survol, au focus clavier, pendant une fenêtre modale
+ou lorsque l’onglet est masqué ; un bouton discret permet aussi une pause durable.
+Pas de défilement si toutes les captures tiennent dans la bande, ni d’automatisme si la
+préférence système demande de réduire les animations. La fiche complète reste manuelle.
 
 Toute la scène supérieure est cliquable, fond, boîte et support compris : seul le curseur passe
 en main au survol, sans cadre ni étiquette ; le focus clavier reste visible. Le clic ouvre

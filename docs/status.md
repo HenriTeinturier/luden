@@ -1,5 +1,11 @@
 # État courant
 
+## Captures animées dans la sidebar — 2026-10-03
+
+- Bande commune à toutes les plateformes : avance douce d’une vignette toutes les 2 secondes et retour au début, plusieurs images toujours visibles. Bouton pause/reprise discret, flèches et agrandissement conservés. Aucun changement de dimensions de la scène supérieure.
+- Pause au survol/focus, dans une modale ou un onglet masqué ; automatisme désactivé avec la préférence de mouvement réduit et quand les images tiennent déjà dans la bande. Fiche complète inchangée.
+- Vérifié : TypeScript, lint ciblé, formatage ; navigateur sur Bruce Lee : avance automatique, position conservée après pause, ouverture de la capture 2 en grand. Validation du rythme par Henri.
+
 ## Raccourcis d’historique et plateformes — 2026-10-03
 
 - Changement de plateforme déplacé vers Alt + Maj + gauche/droite (infobulles et accessibilité mises à jour). Alt + gauche/droite n’est plus intercepté : les souris qui émettent ces raccourcis peuvent utiliser le retour/avance navigateur.

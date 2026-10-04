@@ -1,5 +1,12 @@
 # État courant
 
+## Trois lignes de souvenirs et contrôles regroupés — 2026-10-04
+
+- Toutes les sidebars : extrait d’au moins trois lignes si le texte est assez long ; quatre ou six suivant la hauteur disponible. Suppression du calcul de lignes en fonction d’un bloc lui-même rétréci, qui pouvait ramener certains souvenirs à une ligne. Texte court toujours ajusté à son contenu ; lecture complète et aperçu conservés.
+- Lien de pied « Ouvrir la fiche complète » supprimé ; scène cliquable et Entrée conservées. Collections et types réelle/rêvée placés à la suite des statuts, avec repli si la largeur manque, sans masquage en petite hauteur.
+- Si la fenêtre est exceptionnellement trop petite, seul le contenu inférieur peut défiler pour garder le minimum de trois lignes accessible. Visuels supérieurs conservés.
+- Vérifié : TypeScript, lint ciblé, formatage et diff. Navigateur intégré sur Kick Off 2 : six lignes à 2560 × 1440, trois lignes à 1440 × 800 sans débordement (346/346 px), collections alignées aux statuts en grande largeur, lecture complète et ouverture de fiche par la scène. Aucune donnée personnelle modifiée.
+
 ## Souvenirs au premier plan — 2026-10-04
 
 - Sidebar commune à toutes les plateformes : « Mes souvenirs » immédiatement après les étoiles et Megastar, avant métadonnées, statuts et collections. Ordre du DOM identique à l’ordre visuel ; fiche complète conservée.

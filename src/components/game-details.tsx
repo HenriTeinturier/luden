@@ -404,25 +404,26 @@ function QuickExperience({
               <span>{game.discover ? 'À découvrir' : 'Envie de découvrir'}</span>
               {game.discover && <Check size={12} aria-hidden="true" />}
             </button>
-          </div>
-          <div className="sidebar-memberships" aria-label="Mes collections">
-            <Layers size={14} aria-hidden="true" />
-            <span>Collections</span>
-            {inCollections.map((collection) => (
-              <button
-                type="button"
-                key={collection.id}
-                onClick={onEdit}
-                title={`Modifier mes collections · ${collection.name}`}
-              >
-                {collection.name} <small>{collection.kind === 'DREAM' ? 'rêvée' : 'réelle'}</small>
-              </button>
-            ))}
-            {!inCollections.length && (
-              <button type="button" onClick={onEdit}>
-                Ajouter à une collection
-              </button>
-            )}
+            <div className="sidebar-memberships" aria-label="Mes collections">
+              <Layers size={14} aria-hidden="true" />
+              <span>Collections</span>
+              {inCollections.map((collection) => (
+                <button
+                  type="button"
+                  key={collection.id}
+                  onClick={onEdit}
+                  title={`Modifier mes collections · ${collection.name}`}
+                >
+                  {collection.name}{' '}
+                  <small>{collection.kind === 'DREAM' ? 'rêvée' : 'réelle'}</small>
+                </button>
+              ))}
+              {!inCollections.length && (
+                <button type="button" onClick={onEdit}>
+                  Ajouter à une collection
+                </button>
+              )}
+            </div>
           </div>
         </fieldset>
         <Modal
@@ -964,8 +965,6 @@ function GameImageGallery({ game, compact }: { game: Game; compact: boolean }) {
 function MemoryExcerpt({ memory }: { memory: string }) {
   const [expanded, setExpanded] = useState(false)
   const [truncated, setTruncated] = useState(false)
-  const [lines, setLines] = useState(6)
-  const preview = useRef<HTMLDivElement>(null)
   const paragraph = useRef<HTMLParagraphElement>(null)
   const more = useRef<HTMLButtonElement>(null)
   const hoverTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
@@ -1014,29 +1013,18 @@ function MemoryExcerpt({ memory }: { memory: string }) {
     }
   }, [hoverPosition])
   useEffect(() => {
-    const frame = preview.current
     const element = paragraph.current
-    if (!frame || !element) return
-    const observer = new ResizeObserver(() => {
-      const lineHeight = parseFloat(getComputedStyle(element).lineHeight)
-      // Keep the natural height independent of the visible line clamp so it can grow again.
-      frame.style.setProperty('--memory-height', String(element.scrollHeight) + 'px')
-      const visibleLines = Math.max(
-        1,
-        Math.min(6, Math.floor((frame.clientHeight + 1) / lineHeight)),
-      )
-      setLines(visibleLines)
-      setTruncated(
-        element.scrollHeight > Math.min(frame.clientHeight, visibleLines * lineHeight) + 1,
-      )
-    })
-    observer.observe(frame)
+    if (!element) return
+    const measure = () => setTruncated(element.scrollHeight > element.clientHeight + 1)
+    const observer = new ResizeObserver(measure)
+    observer.observe(element)
+    measure()
     return () => observer.disconnect()
   }, [memory])
   return (
     <>
-      <div ref={preview} className="memory-preview">
-        <p ref={paragraph} className="memory-excerpt" style={{ WebkitLineClamp: lines }}>
+      <div className="memory-preview">
+        <p ref={paragraph} className="memory-excerpt">
           {memory}
         </p>
       </div>
@@ -1301,20 +1289,7 @@ export function GameDetails({
           </div>
         )}
         <GameImageGallery game={game} compact={compact} />
-        {compact ? (
-          <div className="dossier-actions">
-            <button
-              className="text-link sidebar-open-full"
-              disabled={busy || editingMemory}
-              onClick={onExpand}
-              title="Voir la fiche complète · Entrée"
-              aria-keyshortcuts="Enter"
-            >
-              Ouvrir la fiche complète
-              <ArrowUpRight size={17} />
-            </button>
-          </div>
-        ) : (
+        {!compact && (
           <>
             <div className="dossier-information">
               <section className="dossier-info-card">

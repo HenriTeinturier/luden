@@ -824,6 +824,7 @@
 .sidebar-collection-actions {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 2px 14px;
   margin-top: 4px;
 }
@@ -858,11 +859,11 @@
   opacity: 0.5;
 }
 .sidebar-memberships {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 5px 8px;
-  margin-top: 5px;
+  margin-top: 0;
   color: var(--muted);
   font-size: 11px;
 }
@@ -1007,7 +1008,7 @@
 }
 .memory-excerpt {
   display: -webkit-box;
-  -webkit-line-clamp: 6;
+  -webkit-line-clamp: var(--memory-lines, 6);
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -1191,26 +1192,6 @@
   .memory-heading-actions {
     gap: 8px;
   }
-}
-.dossier-actions {
-  position: sticky;
-  bottom: -18px;
-  display: flex;
-  gap: 9px;
-  padding: 18px 0;
-  margin-top: 8px;
-  background: linear-gradient(0deg, #0c1121 85%, #0c112100);
-  z-index: 2;
-}
-.dossier-actions .button {
-  padding: 11px 12px;
-  font-size: 12px;
-  flex: 1;
-  justify-content: center;
-  white-space: nowrap;
-}
-.dossier-actions .button.secondary {
-  flex: 0;
 }
 .dossier-keyboard {
   display: flex;
@@ -1723,9 +1704,6 @@ kbd {
   .game-navigation-arrows {
     gap: 6px;
   }
-  .dossier-actions {
-    bottom: 0;
-  }
 }
 @media (max-width: 420px) {
   .visual-slots {
@@ -1733,9 +1711,6 @@ kbd {
   }
   .dossier-compact {
     --dossier-gutter: 18px;
-  }
-  .dossier-actions .button.secondary span {
-    display: none;
   }
   .game-return {
     max-width: 125px;
@@ -1773,25 +1748,6 @@ kbd {
 }
 .dossier-compact .screenshot-arrow.is-next {
   right: -12px;
-}
-.dossier-compact .dossier-actions {
-  position: static;
-  justify-content: flex-end;
-  padding: 15px 0 4px;
-  margin-top: 10px;
-  border-top: 1px solid #ffffff12;
-  background: none;
-}
-.sidebar-open-full {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 32px;
-  color: #c8b7ff;
-  font-size: 13px;
-}
-.sidebar-open-full:hover:not(:disabled) {
-  color: var(--ink);
 }
 .dialog-content:has(> .memory-reader) {
   width: min(720px, calc(100vw - 32px));
@@ -1855,6 +1811,8 @@ kbd {
     flex-direction: column;
     padding-bottom: 10px;
     container: sidebar-body / size;
+    overflow-y: auto;
+    scrollbar-width: thin;
   }
   .dossier-compact .sidebar-experience {
     display: contents;
@@ -1863,8 +1821,7 @@ kbd {
     flex-shrink: 0;
   }
   .dossier-compact .dossier-personal {
-    flex: 0 1 auto;
-    min-height: 0;
+    flex: 0 0 auto;
     display: flex;
     padding-top: 12px;
   }
@@ -1881,18 +1838,11 @@ kbd {
     margin-bottom: 0;
   }
   .dossier-compact .dossier-memory p {
-    min-height: 0;
-    max-height: 10.2em;
     overflow: hidden;
     margin-top: 8px;
   }
   .dossier-compact .memory-preview {
-    flex: 0 1 auto;
-    font-size: 20px;
-    line-height: 1.7;
-    height: var(--memory-height, 10.2em);
-    max-height: 10.2em;
-    min-height: 0;
+    --memory-lines: 3;
     overflow: hidden;
     margin-top: 8px;
   }
@@ -1914,19 +1864,10 @@ kbd {
   .dossier-compact .screenshot-strip.is-compact button {
     height: clamp(56px, 19cqh, 120px);
   }
-  .dossier-compact .dossier-actions {
-    flex-shrink: 0;
-    padding: 6px 0 0;
-    margin-top: 5px;
-  }
   .dossier-compact .dossier-keyboard {
     flex-shrink: 0;
     margin-top: 5px;
     font-size: 9px;
-  }
-  .sidebar-memberships {
-    flex-wrap: nowrap;
-    overflow: hidden;
   }
   .sidebar-memberships > span {
     flex-shrink: 0;
@@ -1935,6 +1876,16 @@ kbd {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+  }
+}
+@container sidebar-body (min-height: 500px) {
+  .dossier-compact .memory-preview {
+    --memory-lines: 4;
+  }
+}
+@container sidebar-body (min-height: 650px) {
+  .dossier-compact .memory-preview {
+    --memory-lines: 6;
   }
 }
 @container sidebar-body (max-height: 540px) {
@@ -1966,37 +1917,24 @@ kbd {
     font-size: 18px;
     line-height: 1.6;
   }
-  .dossier-compact .memory-preview {
-    font-size: 18px;
-    line-height: 1.6;
-    max-height: 9.6em;
-  }
   .dossier-compact .screenshot-strip.is-compact button {
     height: clamp(48px, 14cqh, 76px);
   }
   .dossier-compact .detail-screenshots {
     margin-top: 8px;
   }
-  .dossier-compact .sidebar-open-full {
-    min-height: 28px;
-  }
 }
 @container sidebar-body (max-height: 340px) {
   .dossier-compact .dossier-personal {
-    min-height: 104px;
     padding-top: 6px;
   }
   .sidebar-experience .sidebar-details {
     margin-top: 6px;
   }
-  .sidebar-memberships {
-    display: none;
-  }
   .dossier-compact .dossier-memory {
     padding: 6px 10px;
   }
   .dossier-compact .memory-preview {
-    min-height: 1.6em;
     margin-top: 4px;
   }
   .dossier-compact .memory-read-more {

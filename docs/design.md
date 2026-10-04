@@ -50,11 +50,12 @@ visible lorsqu’on parcourt normalement les jaquettes avec Tab.
 Sur écran étroit (800 px et moins), seul le panneau est visible. Les proportions des visuels
 suivent la plateforme ; les différences futures sont uniquement de présentation.
 La scène de la sidebar est au ratio paysage 16:7 sur desktop (6:5 sur mobile), avec le même ratio
-dans l’outil de cadrage. Sur desktop, le panneau occupe la hauteur disponible sous le header, sans défilement vertical.
-La molette au-dessus de ce panneau fait défiler la galerie voisine, accueil plateforme comme aperçu jeu.
+dans l’outil de cadrage. Sur desktop, le panneau occupe la hauteur disponible sous le header.
+Le contenu inférieur ne défile que si la fenêtre est trop petite pour conserver trois lignes de souvenir
+et les contrôles. Sinon, la molette continue vers la galerie voisine ; la scène supérieure reste fixe.
 La scène garde ses dimensions et placements ; seul le contenu inférieur s’adapte. Les captures
-font 48–120 px de haut suivant la place disponible, et le souvenir conserve jusqu’à six lignes
-entières. Sur une fenêtre moins haute, les métadonnées secondaires et l’aide clavier sont
+font 24–120 px de haut suivant la place disponible, et le souvenir conserve trois à six lignes
+entières si son texte est assez long. Sur une fenêtre moins haute, les métadonnées secondaires et l’aide clavier sont
 masquées au profit du souvenir ; ces informations restent dans la fiche complète. Le parcours
 mobile conserve le défilement de page habituel.
 
@@ -83,8 +84,9 @@ le jeu. Annuler ou fermer conserve l’état actuel ; une erreur permet de rées
 
 Les états « Joué / Non joué », possession actuelle/ancienne/absente et découverte sont des
 contrôles textuels compacts, avec icônes et coches. La possession précise physique, numérique
-ou les deux ; elle ne représente pas l’appartenance à une collection. Une ligne séparée montre
-les collections nommées et leur type réelle/rêvée ; leur clic ouvre l’éditeur. L’absence de collection
+ou les deux ; elle ne représente pas l’appartenance à une collection. Les collections nommées
+et leur type réelle/rêvée suivent les statuts sur la même ligne, avec retour à la ligne si la
+largeur manque ; leur clic ouvre l’éditeur. L’absence de collection
 propose « Ajouter à une collection ». Les trois bascules restent indépendantes et enregistrent
 immédiatement. Joué reflète tout statut autre que non joué et bascule PLAYED/UNPLAYED ; les
 statuts détaillés restent conservés à la simple consultation.
@@ -93,8 +95,10 @@ Dans la sidebar de toutes les plateformes, « Mes souvenirs » suit immédiateme
 et Megastar, avant les métadonnées, statuts et collections, puis la galerie. Fond brun doré
 plus contrasté, liseré ambre et texte ivoire en 20 px (18 px dans les petites hauteurs).
 Le bloc épouse la longueur du texte sans remplir artificiellement la hauteur disponible.
-L’extrait s’adapte à la place restante, jusqu’à six lignes ; dans les très petites hauteurs,
-la ligne des collections est masquée au profit d’une ligne de souvenir et de son accès complet. « Lire la suite » ouvre le texte entier
+L’extrait affiche au moins trois lignes si le texte est assez long : quatre dès 500 px de
+hauteur disponible sous la scène et six dès 650 px (six aussi sur mobile). La hauteur est
+déterminée en CSS ; la détection de troncature sert uniquement à afficher « Lire la suite ».
+Les collections restent accessibles même en petite hauteur. « Lire la suite » ouvre le texte entier
 dans une fenêtre, sans allonger la sidebar. Le lien est en 16 px ; le souvenir complet en 18 px,
 contrasté et aéré, dans une fenêtre jusqu’à 720 px de large. Survol de « Lire la suite » ou focus
 clavier : aperçu flottant après 350 ms, maintenu quand le pointeur passe sur le texte, fermé par
@@ -124,9 +128,9 @@ préférence système demande de réduire les animations. La fiche complète res
 Toute la scène supérieure est cliquable, fond, boîte et support compris : seul le curseur passe
 en main au survol, sans cadre ni étiquette ; le focus clavier reste visible. Le clic ouvre
 la fiche complète. Aucun asset, placement ou ratio n’est modifié,
-y compris les ajustements Amiga. Les flèches/retour gardent leur propre action. La scène et
-le lien sobre « Ouvrir la fiche complète » sont désactivés pendant l’édition ou l’enregistrement.
-Entrée et Échap conservent leur comportement. Le grand bouton de pied de panneau est supprimé.
+y compris les ajustements Amiga. Les flèches/retour gardent leur propre action. La scène est
+désactivée pendant l’édition ou l’enregistrement. Le lien de pied « Ouvrir la fiche complète »
+est supprimé ; le clic sur la scène et Entrée ouvrent toujours la fiche complète. Échap conserve son comportement.
 
 Le favori est un trophée étoilé « Megastar · Jeu culte »
 sur la ligne de notation : dessin SVG dédié, violet/bleu électrique si actif et lavande discret sinon ; même booléen favori que

@@ -536,10 +536,10 @@
 .dossier-compact .dossier-memory {
   margin-top: 20px;
   padding: 18px 20px 20px;
-  border: 1px solid #ffd16619;
-  border-left: 3px solid #d9b66b;
+  border: 1px solid #d9ad6055;
+  border-left: 3px solid #edbd65;
   border-radius: 3px 12px 12px 3px;
-  background: linear-gradient(115deg, #ffd1660e, #ffd16603);
+  background: linear-gradient(115deg, #382b20, #231f20);
 }
 .dossier-compact .dossier-memory h2 {
   font-size: 17px;
@@ -548,9 +548,9 @@
 }
 .dossier-compact .dossier-memory p {
   margin-top: 12px;
-  font-size: 15px;
-  line-height: 1.75;
-  color: #e4dfd6;
+  font-size: 20px;
+  line-height: 1.7;
+  color: #fff3df;
 }
 .dossier-compact .dossier-memory .memory-empty {
   font-size: 13px;
@@ -618,6 +618,9 @@
   border: 0;
   padding: 0;
   margin: 0;
+}
+.sidebar-experience .sidebar-details {
+  margin-top: 12px;
 }
 .sidebar-rating {
   display: flex;
@@ -1854,10 +1857,13 @@ kbd {
     container: sidebar-body / size;
   }
   .dossier-compact .sidebar-experience {
+    display: contents;
+  }
+  .dossier-compact .sidebar-experience > fieldset {
     flex-shrink: 0;
   }
   .dossier-compact .dossier-personal {
-    flex: 1;
+    flex: 0 1 auto;
     min-height: 0;
     display: flex;
     padding-top: 12px;
@@ -1875,14 +1881,17 @@ kbd {
     margin-bottom: 0;
   }
   .dossier-compact .dossier-memory p {
-    flex: 1;
     min-height: 0;
-    max-height: 10.5em;
+    max-height: 10.2em;
     overflow: hidden;
     margin-top: 8px;
   }
   .dossier-compact .memory-preview {
-    flex: 1;
+    flex: 0 1 auto;
+    font-size: 20px;
+    line-height: 1.7;
+    height: var(--memory-height, 10.2em);
+    max-height: 10.2em;
     min-height: 0;
     overflow: hidden;
     margin-top: 8px;
@@ -1954,8 +1963,13 @@ kbd {
     font-size: 15px;
   }
   .dossier-compact .dossier-memory p {
-    font-size: 14px;
+    font-size: 18px;
     line-height: 1.6;
+  }
+  .dossier-compact .memory-preview {
+    font-size: 18px;
+    line-height: 1.6;
+    max-height: 9.6em;
   }
   .dossier-compact .screenshot-strip.is-compact button {
     height: clamp(48px, 14cqh, 76px);
@@ -1969,13 +1983,20 @@ kbd {
 }
 @container sidebar-body (max-height: 340px) {
   .dossier-compact .dossier-personal {
-    min-height: 70px;
+    min-height: 104px;
     padding-top: 6px;
+  }
+  .sidebar-experience .sidebar-details {
+    margin-top: 6px;
+  }
+  .sidebar-memberships {
+    display: none;
   }
   .dossier-compact .dossier-memory {
     padding: 6px 10px;
   }
   .dossier-compact .memory-preview {
+    min-height: 1.6em;
     margin-top: 4px;
   }
   .dossier-compact .memory-read-more {
@@ -1988,6 +2009,6 @@ kbd {
     padding-bottom: 3px;
   }
   .dossier-compact .screenshot-strip.is-compact button {
-    height: 32px;
+    height: 24px;
   }
 }

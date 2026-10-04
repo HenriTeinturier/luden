@@ -1,5 +1,13 @@
 # État courant
 
+## Souvenirs au premier plan — 2026-10-04
+
+- Sidebar commune à toutes les plateformes : « Mes souvenirs » immédiatement après les étoiles et Megastar, avant métadonnées, statuts et collections. Ordre du DOM identique à l’ordre visuel ; fiche complète conservée.
+- Fond brun doré plus marqué, liseré ambre, texte ivoire en 20 px (18 px quand la hauteur manque). Bloc ajusté au contenu, jusqu’à six lignes, sans grand vide sous un souvenir court ; hauteur naturelle conservée pour permettre à l’extrait de grandir après redimensionnement.
+- Petites hauteurs : une ligne lisible et « Lire la suite » prioritaires, collections masquées et galerie réduite. Lecture complète, aperçu au survol et édition conservés.
+- Vérifié : TypeScript, lint ciblé, formatage et compilation. Navigateur : ordre, souvenir court (34 px de texte dans un bloc de 92 px), lecture complète ; version compilée à 1440 × 800 sans chevauchement/débordement, puis retour à 20 px à 2560 × 1440. Aucune donnée personnelle modifiée. Validation esthétique finale par Henri.
+- L’ouverture automatisée de nouvelles pages dans Chrome a affiché une erreur générique ; non reproduite dans le navigateur intégré ni par HTTP local. Serveur compilé temporaire de contrôle arrêté après vérification.
+
 ## Bouton principal de l’accueil — 2026-10-03
 
 - « Parcourir mes souvenirs » adopte le violet, le texte blanc, la bordure lavande et l’ombre discrète du bouton « Ajouter un jeu ». Même traitement pour « Commencer mon histoire » en bibliothèque vide ; destination et dimensions conservées.

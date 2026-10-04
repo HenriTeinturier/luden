@@ -89,8 +89,12 @@ propose « Ajouter à une collection ». Les trois bascules restent indépendant
 immédiatement. Joué reflète tout statut autre que non joué et bascule PLAYED/UNPLAYED ; les
 statuts détaillés restent conservés à la simple consultation.
 
-« Mes souvenirs » devient un bloc à bordure dorée, fond chaud discret et texte plus lisible.
-L’extrait s’adapte à la hauteur restante, jusqu’à six lignes. « Lire la suite » ouvre le texte entier
+Dans la sidebar de toutes les plateformes, « Mes souvenirs » suit immédiatement les étoiles
+et Megastar, avant les métadonnées, statuts et collections, puis la galerie. Fond brun doré
+plus contrasté, liseré ambre et texte ivoire en 20 px (18 px dans les petites hauteurs).
+Le bloc épouse la longueur du texte sans remplir artificiellement la hauteur disponible.
+L’extrait s’adapte à la place restante, jusqu’à six lignes ; dans les très petites hauteurs,
+la ligne des collections est masquée au profit d’une ligne de souvenir et de son accès complet. « Lire la suite » ouvre le texte entier
 dans une fenêtre, sans allonger la sidebar. Le lien est en 16 px ; le souvenir complet en 18 px,
 contrasté et aéré, dans une fenêtre jusqu’à 720 px de large. Survol de « Lire la suite » ou focus
 clavier : aperçu flottant après 350 ms, maintenu quand le pointeur passe sur le texte, fermé par

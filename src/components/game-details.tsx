@@ -1,4 +1,12 @@
-import { useCallback, useEffect, useId, useRef, useState, type CSSProperties } from 'react'
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  type CSSProperties,
+  type ReactNode,
+} from 'react'
 import { createPortal } from 'react-dom'
 import { Link, useRouter } from '@tanstack/react-router'
 import {
@@ -258,12 +266,14 @@ function QuickExperience({
   compact = false,
   onEdit,
   disabled = false,
+  children,
 }: {
   game: Game
   onBusyChange: (busy: boolean) => void
   compact?: boolean
   onEdit?: () => void
   disabled?: boolean
+  children?: ReactNode
 }) {
   const router = useRouter()
   const { collections } = useLibrary()
@@ -343,6 +353,9 @@ function QuickExperience({
               <Pencil size={17} />
             </button>
           </div>
+        </fieldset>
+        {children}
+        <fieldset disabled={busy || disabled} className="sidebar-details">
           <div className="sidebar-facts" aria-label="Informations du jeu">
             {(game.publisher || game.developer) && (
               <span className="sidebar-publisher" title={game.publisher || game.developer}>
@@ -1006,6 +1019,8 @@ function MemoryExcerpt({ memory }: { memory: string }) {
     if (!frame || !element) return
     const observer = new ResizeObserver(() => {
       const lineHeight = parseFloat(getComputedStyle(element).lineHeight)
+      // Keep the natural height independent of the visible line clamp so it can grow again.
+      frame.style.setProperty('--memory-height', String(element.scrollHeight) + 'px')
       const visibleLines = Math.max(
         1,
         Math.min(6, Math.floor((frame.clientHeight + 1) / lineHeight)),
@@ -1142,6 +1157,94 @@ export function GameDetails({
       busyChange(false)
     }
   }
+  const memorySection = (
+    <section className="dossier-memory">
+      <div className="detail-section-heading">
+        <h2>{compact && <NotebookPen size={16} />}Mes souvenirs</h2>
+        <div className="memory-heading-actions">
+          {game.experience?.period && <span>{game.experience.period}</span>}
+          {compact && !editingMemory && (
+            <button
+              ref={memoryTrigger}
+              type="button"
+              className="text-link"
+              disabled={busy}
+              onClick={startMemoryEdit}
+            >
+              <Pencil size={14} />
+              {game.experience?.memory ? 'Modifier' : 'Écrire'}
+            </button>
+          )}
+        </div>
+      </div>
+      {compact && (
+        <Modal
+          open={editingMemory}
+          onOpenChange={(open) => {
+            if (!open && !busy) closeMemoryEdit()
+          }}
+          title="Écrire mon souvenir"
+          description={game.title}
+        >
+          <form
+            className="sidebar-memory-editor"
+            onSubmit={(event) => {
+              event.preventDefault()
+              void saveMemory()
+            }}
+          >
+            <label className="sr-only" htmlFor={`memory-${game.id}`}>
+              Mon souvenir
+            </label>
+            <textarea
+              id={`memory-${game.id}`}
+              ref={memoryInput}
+              value={memoryDraft}
+              onChange={(event) => setMemoryDraft(event.target.value)}
+              rows={4}
+              maxLength={20000}
+              disabled={busy}
+              placeholder="Une aventure, une époque, un souvenir à raconter…"
+            />
+            {memoryError && (
+              <p className="form-error" role="alert">
+                {memoryError}
+              </p>
+            )}
+            <div className="memory-editor-actions">
+              <button
+                type="button"
+                className="button secondary"
+                disabled={busy}
+                onClick={closeMemoryEdit}
+              >
+                Annuler
+              </button>
+              <button type="submit" className="button" disabled={busy}>
+                {busy ? <LoaderCircle size={14} className="spin" /> : <Check size={14} />}
+                {busy ? 'Enregistrement…' : 'Enregistrer'}
+              </button>
+            </div>
+          </form>
+        </Modal>
+      )}
+      {game.experience?.memory ? (
+        compact ? (
+          <MemoryExcerpt memory={game.experience.memory} />
+        ) : (
+          <p className="full-memory">{game.experience.memory}</p>
+        )
+      ) : (
+        <p className="memory-empty">Une aventure, une époque, un souvenir à raconter.</p>
+      )}
+      {!compact && (
+        <button className="text-link" disabled={busy} onClick={onEdit}>
+          <Pencil size={13} />
+          {game.experience?.memory ? 'Préciser mon souvenir' : 'Écrire mon souvenir'}
+        </button>
+      )}
+    </section>
+  )
   return (
     <article
       className={`game-dossier ${compact ? 'dossier-compact' : 'dossier-full'} ${!compact && visuals.background ? 'has-dossier-background' : ''} dossier-${game.platformId}`}
@@ -1181,106 +1284,22 @@ export function GameDetails({
             </button>
           )}
         </div>
-        {compact && (
+        {compact ? (
           <QuickExperience
             game={game}
             onBusyChange={busyChange}
             onEdit={onEdit}
             disabled={busy || editingMemory}
             compact
-          />
+          >
+            <div className="dossier-personal">{memorySection}</div>
+          </QuickExperience>
+        ) : (
+          <div className="dossier-personal">
+            <QuickExperience game={game} onBusyChange={busyChange} />
+            {memorySection}
+          </div>
         )}
-        <div className="dossier-personal">
-          {!compact && <QuickExperience game={game} onBusyChange={busyChange} />}
-          {
-            <section className="dossier-memory">
-              <div className="detail-section-heading">
-                <h2>{compact && <NotebookPen size={16} />}Mes souvenirs</h2>
-                <div className="memory-heading-actions">
-                  {game.experience?.period && <span>{game.experience.period}</span>}
-                  {compact && !editingMemory && (
-                    <button
-                      ref={memoryTrigger}
-                      type="button"
-                      className="text-link"
-                      disabled={busy}
-                      onClick={startMemoryEdit}
-                    >
-                      <Pencil size={14} />
-                      {game.experience?.memory ? 'Modifier' : 'Écrire'}
-                    </button>
-                  )}
-                </div>
-              </div>
-              {compact && (
-                <Modal
-                  open={editingMemory}
-                  onOpenChange={(open) => {
-                    if (!open && !busy) closeMemoryEdit()
-                  }}
-                  title="Écrire mon souvenir"
-                  description={game.title}
-                >
-                  <form
-                    className="sidebar-memory-editor"
-                    onSubmit={(event) => {
-                      event.preventDefault()
-                      void saveMemory()
-                    }}
-                  >
-                    <label className="sr-only" htmlFor={`memory-${game.id}`}>
-                      Mon souvenir
-                    </label>
-                    <textarea
-                      id={`memory-${game.id}`}
-                      ref={memoryInput}
-                      value={memoryDraft}
-                      onChange={(event) => setMemoryDraft(event.target.value)}
-                      rows={4}
-                      maxLength={20000}
-                      disabled={busy}
-                      placeholder="Une aventure, une époque, un souvenir à raconter…"
-                    />
-                    {memoryError && (
-                      <p className="form-error" role="alert">
-                        {memoryError}
-                      </p>
-                    )}
-                    <div className="memory-editor-actions">
-                      <button
-                        type="button"
-                        className="button secondary"
-                        disabled={busy}
-                        onClick={closeMemoryEdit}
-                      >
-                        Annuler
-                      </button>
-                      <button type="submit" className="button" disabled={busy}>
-                        {busy ? <LoaderCircle size={14} className="spin" /> : <Check size={14} />}
-                        {busy ? 'Enregistrement…' : 'Enregistrer'}
-                      </button>
-                    </div>
-                  </form>
-                </Modal>
-              )}
-              {game.experience?.memory ? (
-                compact ? (
-                  <MemoryExcerpt memory={game.experience.memory} />
-                ) : (
-                  <p className="full-memory">{game.experience.memory}</p>
-                )
-              ) : (
-                <p className="memory-empty">Une aventure, une époque, un souvenir à raconter.</p>
-              )}
-              {!compact && (
-                <button className="text-link" disabled={busy} onClick={onEdit}>
-                  <Pencil size={13} />
-                  {game.experience?.memory ? 'Préciser mon souvenir' : 'Écrire mon souvenir'}
-                </button>
-              )}
-            </section>
-          }
-        </div>
         <GameImageGallery game={game} compact={compact} />
         {compact ? (
           <div className="dossier-actions">

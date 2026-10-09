@@ -1,5 +1,11 @@
 # État courant
 
+## Barre stable en tri aléatoire — 2026-10-09
+
+- Sélecteur de tri et bouton « Remélanger » réunis dans un bloc de largeur fixe (190 px, 160 px sur mobile). Le bouton réduit l’espace du sélecteur sans élargir les contrôles : choisir Aléatoire ne déclenche plus de retour à la ligne supplémentaire.
+- Correction commune à toutes les galeries ; repli responsive et actions accessibles conservés.
+- Vérifié : TypeScript, lint ciblé, formatage et diff. Validation visuelle par Henri.
+
 ## Plateformes homogènes sur l’accueil — 2026-10-09
 
 - Les cartes de plateformes de l’accueil partagent désormais le format de « Mes plateformes » : deux par ligne, 250 px de haut, marges et textes identiques ; une par ligne et 190 px de haut sur mobile.

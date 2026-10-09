@@ -287,7 +287,9 @@ de 88 px conservant `Auto` lisible. Les contrôles se replient si la largeur man
 
 Le tri « Aléatoire » est disponible dans toutes les galeries, en grille et en liste. Une icône
 « Remélanger les jeux » apparaît à côté du tri et renouvelle le mélange (désactivée sous deux
-résultats). Le choix et sa graine sont mémorisés par galerie et transmis dans les liens de fiche.
+résultats). Le sélecteur et ce bouton partagent un bloc de largeur constante (190 px, 160 px
+sur mobile) : activer Aléatoire ne provoque pas de retour à la ligne supplémentaire dans la barre.
+Le choix et sa graine sont mémorisés par galerie et transmis dans les liens de fiche.
 L’ordre reste stable lors des rendus, modifications de jeu, changements de densité, retours de
 fiche et nouvelles visites. Les filtres conservent l’ordre relatif des résultats ; avec les
 catégories, le mélange s’applique à l’intérieur de chaque groupe. Un accès « Aléatoire » sans

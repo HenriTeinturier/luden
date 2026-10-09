@@ -132,6 +132,29 @@
 .gallery-toolbar-scoped .gallery-controls select {
   height: 38px;
 }
+.gallery-sort {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 0 0 190px;
+  width: 190px;
+}
+.gallery-controls .gallery-sort select {
+  flex: 1 1 0;
+  width: 0;
+  min-width: 0;
+  max-width: none;
+}
+.gallery-sort .icon-button {
+  flex: 0 0 34px;
+  height: 38px;
+}
+@media (max-width: 720px) {
+  .gallery-sort {
+    flex-basis: 160px;
+    width: 160px;
+  }
+}
 .gallery-toolbar-scoped .gallery-results {
   display: flex;
   flex: 0 0 auto;

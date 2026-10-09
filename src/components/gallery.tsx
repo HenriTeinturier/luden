@@ -325,32 +325,35 @@ export function Gallery({
                 ))}
             </select>
           )}
-          <select
-            aria-label="Trier les jeux"
-            value={filters.sort ?? 'recent'}
-            onChange={(e) => {
-              if (e.target.value === 'random') reshuffle()
-              else update({ sort: e.target.value as GallerySearch['sort'], randomSeed: undefined })
-            }}
-          >
-            <option value="recent">Derniers ajouts / modifiés</option>
-            <option value="title">Titre A → Z</option>
-            <option value="rating">Ma note</option>
-            <option value="year">Année de sortie</option>
-            <option value="desire">Mon envie</option>
-            <option value="random">Aléatoire</option>
-          </select>
-          {filters.sort === 'random' && (
-            <button
-              className="icon-button"
-              aria-label="Remélanger les jeux"
-              title="Remélanger les jeux"
-              disabled={visible.length < 2}
-              onClick={reshuffle}
+          <div className="gallery-sort">
+            <select
+              aria-label="Trier les jeux"
+              value={filters.sort ?? 'recent'}
+              onChange={(e) => {
+                if (e.target.value === 'random') reshuffle()
+                else
+                  update({ sort: e.target.value as GallerySearch['sort'], randomSeed: undefined })
+              }}
             >
-              <Shuffle size={17} />
-            </button>
-          )}
+              <option value="recent">Derniers ajouts / modifiés</option>
+              <option value="title">Titre A → Z</option>
+              <option value="rating">Ma note</option>
+              <option value="year">Année de sortie</option>
+              <option value="desire">Mon envie</option>
+              <option value="random">Aléatoire</option>
+            </select>
+            {filters.sort === 'random' && (
+              <button
+                className="icon-button"
+                aria-label="Remélanger les jeux"
+                title="Remélanger les jeux"
+                disabled={visible.length < 2}
+                onClick={reshuffle}
+              >
+                <Shuffle size={17} />
+              </button>
+            )}
+          </div>
           <button
             className={`icon-button ${advanced ? 'selected' : ''}`}
             aria-label="Afficher les filtres"

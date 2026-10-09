@@ -1,5 +1,11 @@
 # État courant
 
+## Plateformes homogènes sur l’accueil — 2026-10-09
+
+- Les cartes de plateformes de l’accueil partagent désormais le format de « Mes plateformes » : deux par ligne, 250 px de haut, marges et textes identiques ; une par ligne et 190 px de haut sur mobile.
+- Règles CSS communes pour les cartes illustrées et les visuels de repli.
+- Vérifié : formatage ciblé et diff. Validation visuelle par Henri ; correction CSS seule.
+
 ## Découverte homogène entre plateformes — 2026-10-09
 
 - « À découvrir » partage les styles de « Ma bibliothèque » : cartes de même largeur, jaquettes entières dans un cadre carré, titres sur deux lignes et informations alignées, même sans note ou souvenir.

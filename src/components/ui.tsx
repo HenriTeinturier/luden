@@ -8,6 +8,7 @@ import { playStatuses } from '../lib/platforms'
 import { Stars } from './rating'
 import { coverFormat } from '../lib/presentation'
 import { gallerySearch } from '../lib/gallery'
+import { mediaImageSources } from '../lib/image-variants'
 import { useGameSelection } from './game-selection'
 
 export function useLibrary() {
@@ -151,9 +152,13 @@ export function PlatformCard({ platform, count }: { platform: Platform; count: n
 export function Cover({
   game,
   className = '',
+  original = false,
+  sizes = 'auto, (max-width: 700px) 45vw, 320px',
 }: {
-  game: Pick<Game, 'coverUrl' | 'title' | 'platform'>
+  game: Pick<Game, 'coverUrl' | 'title' | 'platform'> & { cover?: { width: number } | null }
   className?: string
+  original?: boolean
+  sizes?: string
 }) {
   const [failedUrl, setFailedUrl] = useState<string | null>(null)
   return (
@@ -168,7 +173,9 @@ export function Cover({
     >
       {game.coverUrl && failedUrl !== game.coverUrl ? (
         <img
-          src={game.coverUrl}
+          {...(original
+            ? { src: game.coverUrl }
+            : mediaImageSources(game.coverUrl, game.cover?.width, sizes))}
           alt={`Jaquette de ${game.title}`}
           loading="lazy"
           onError={() => setFailedUrl(game.coverUrl)}

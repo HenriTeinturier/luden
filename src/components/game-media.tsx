@@ -3,6 +3,7 @@ import { ExternalLink, Play } from 'lucide-react'
 import type { Game } from '../lib/types'
 import { mediaCategories, linkTypes } from '../lib/media'
 import { Modal } from './ui'
+import { mediaImageSources } from '../lib/image-variants'
 
 export function GameMedia({
   game,
@@ -34,7 +35,11 @@ export function GameMedia({
                     aria-label={`Agrandir ${item.caption || label}`}
                   >
                     <img
-                      src={`/media/${item.mediaId}`}
+                      {...mediaImageSources(
+                        `/media/${item.mediaId}`,
+                        item.media.width,
+                        'auto, (max-width: 800px) 40vw, 240px',
+                      )}
                       alt={item.caption || label}
                       loading="lazy"
                     />

@@ -2,6 +2,34 @@
 
 Lire ce document uniquement pour modifier l'import, la galerie ou les liens.
 
+## Miniatures automatiques
+
+`/media/<id>?w=320|640|1280` sert une version WebP redimensionnée en largeur,
+sans recadrage ni agrandissement, avec transparence conservée. Sans `w`, la route sert
+le fichier importé intact. Les autres tailles sont refusées (400). Le contrôle local,
+le propriétaire et le chemin borné sont vérifiés avant la lecture du cache.
+
+Les cartes de jeux, boîtes/jaquettes, supports et logos de jeu dans la sidebar, ainsi
+que les petites captures et galeries média utilisent ces variantes via `srcset`/`sizes`.
+Le navigateur choisit selon l’espace affiché et sa densité de pixels ; chargement différé
+des jaquettes et petites galeries. La grande scène et les agrandissements gardent les
+originaux. Les fonds et visuels de plateformes ne sont pas concernés.
+
+`src/server/image-variants.ts` crée uniquement la taille demandée au premier accès,
+pour les médias existants comme pour les prochains imports (fichier, URL ou IGDB).
+Aucune migration ni préparation manuelle. Deux conversions simultanées maximum par
+processus ; les demandes identiques partagent le même travail. Entrée Sharp en mémoire
+pour éviter les verrous de fichiers Windows, écriture temporaire puis renommage atomique.
+Un échec de conversion ou de cache sert l’original avec `private, no-store` pour permettre
+une nouvelle tentative ; variantes réussies en cache navigateur privé pendant un jour.
+
+Cache disque : `LUDEN_DATA_DIR/cache/thumbnails/v1/<empreinte>/<largeur>.webp`, hors des
+originaux et du rangement des médias. L’empreinte inclut chemin, taille et dates du fichier ;
+déplacement/remplacement produit une nouvelle variante. Un média absent ou supprimé n’est
+pas servi depuis ce cache. Les anciennes variantes ne sont pas purgées automatiquement.
+Ce dossier est régénérable, excluable des sauvegardes et reste hors Git ; aucun original
+n’est modifié ou supprimé par la génération.
+
 ## Rangement sur disque
 
 Les visuels d’accueil des univers sont conservés à part dans `PlatformVisual` :

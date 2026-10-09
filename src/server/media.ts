@@ -1,4 +1,4 @@
-import { mkdir, readFile, writeFile, unlink } from 'node:fs/promises'
+import { mkdir, writeFile, unlink } from 'node:fs/promises'
 import type { MediaSource } from '@prisma/client'
 import path from 'node:path'
 import { randomUUID } from 'node:crypto'
@@ -6,6 +6,8 @@ import sharp, { type OutputInfo } from 'sharp'
 import { db, LOCAL_PROFILE_ID as ownerId } from './db'
 import { resolveMediaPath } from './media-path'
 import { pruneEmptyMediaDirectories, withMediaStorageLock } from './media-storage'
+import { readStoredImage } from './image-variants'
+import type { ImageWidth } from '../lib/image-variants'
 
 export const MAX_IMAGE_BYTES = 12 * 1024 * 1024
 export async function prepareImage(bytes: Buffer) {
@@ -92,19 +94,27 @@ async function removeUnusedImagesLocked(ids: string[]) {
   }
 }
 
-export async function readImage(id: string) {
+export async function readImage(id: string, width?: ImageWidth) {
   const media = await db.media.findFirst({ where: { id, ownerId } })
   if (!media) return null
   try {
-    const bytes = await readFile(resolveMediaPath(process.env.LUDEN_DATA_DIR ?? '', media.path))
-    return { bytes, mimeType: media.mimeType }
+    return await readStoredImage(
+      process.env.LUDEN_DATA_DIR ?? '',
+      media.path,
+      media.mimeType,
+      width,
+    )
   } catch {
     // A reorganization may have committed a new path after the initial query.
     const current = await db.media.findFirst({ where: { id, ownerId } })
     if (!current || current.path === media.path) return null
     try {
-      const bytes = await readFile(resolveMediaPath(process.env.LUDEN_DATA_DIR ?? '', current.path))
-      return { bytes, mimeType: current.mimeType }
+      return await readStoredImage(
+        process.env.LUDEN_DATA_DIR ?? '',
+        current.path,
+        current.mimeType,
+        width,
+      )
     } catch {
       return null
     }

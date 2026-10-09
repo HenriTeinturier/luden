@@ -37,6 +37,7 @@ import type { Game } from '../lib/types'
 import type { quickGameSchema } from '../lib/validation'
 import { readPresentation } from '../lib/game-visuals'
 import { mediaCategories } from '../lib/media'
+import { mediaImageSources } from '../lib/image-variants'
 import { playStatuses } from '../lib/platforms'
 import { hasPlayed } from '../lib/gallery'
 import { coverFormat } from '../lib/presentation'
@@ -185,6 +186,7 @@ function GameScene({
   const visuals = readPresentation(game.presentation)
   const box = visuals.box ?? game.media.find((m) => m.category === 'BOX')?.mediaId ?? game.coverId
   const support = visuals.support ?? game.media.find((m) => m.category === 'MEDIA')?.mediaId
+  const mediaWidth = (id: string) => game.media.find((m) => m.mediaId === id)?.media.width
   const [failedLogo, setFailedLogo] = useState(false)
   return (
     <div
@@ -205,7 +207,13 @@ function GameScene({
         {visuals.logo && !failedLogo ? (
           <img
             className="scene-logo"
-            src={`/media/${visuals.logo}`}
+            {...(compact
+              ? mediaImageSources(
+                  `/media/${visuals.logo}`,
+                  mediaWidth(visuals.logo),
+                  '(max-width: 800px) 34vw, 12vw',
+                )
+              : { src: `/media/${visuals.logo}` })}
             alt={game.title}
             onError={() => setFailedLogo(true)}
           />
@@ -228,14 +236,28 @@ function GameScene({
         )}
       </div>
       <div className={`scene-objects ${support && support !== box ? 'has-support' : ''}`}>
-        <Cover game={{ ...game, coverUrl: box ? `/media/${box}` : null }} className="scene-box" />
+        <Cover
+          game={{
+            ...game,
+            coverUrl: box ? `/media/${box}` : null,
+            cover:
+              box === game.coverId ? game.cover : game.media.find((m) => m.mediaId === box)?.media,
+          }}
+          className="scene-box"
+          original={!compact}
+          sizes="auto, (max-width: 800px) 65vw, 24vw"
+        />
         {support &&
           support !== box &&
           (compact ? (
             <span className="scene-support-stand">
               <img
                 className="scene-support"
-                src={`/media/${support}`}
+                {...mediaImageSources(
+                  `/media/${support}`,
+                  mediaWidth(support),
+                  '(max-width: 800px) 45vw, 17vw',
+                )}
                 alt={`Support de ${game.title}`}
               />
             </span>
@@ -852,7 +874,11 @@ function GameImageGallery({ game, compact }: { game: Game; compact: boolean }) {
               onClick={() => openImage(index % images.length)}
             >
               <img
-                src={`/media/${image.mediaId}`}
+                {...mediaImageSources(
+                  `/media/${image.mediaId}`,
+                  image.media.width,
+                  'auto, (max-width: 800px) 40vw, 240px',
+                )}
                 alt={
                   image.caption ||
                   `${compact ? mediaCategories[image.category] : imageLabel(index % images.length)} · ${game.title}`
@@ -911,7 +937,11 @@ function GameImageGallery({ game, compact }: { game: Game; compact: boolean }) {
                 onClick={() => openImage(index)}
               >
                 <img
-                  src={`/media/${image.mediaId}`}
+                  {...mediaImageSources(
+                    `/media/${image.mediaId}`,
+                    image.media.width,
+                    'auto, (max-width: 800px) 40vw, 240px',
+                  )}
                   alt={
                     image.caption ||
                     `${compact ? mediaCategories[image.category] : imageLabel(index)} · ${game.title}`

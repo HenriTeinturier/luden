@@ -32,6 +32,10 @@ Imports provisoires dans `_imports/`, puis rangement par plateforme/jeu à la sa
 verrou local et retrait des anciens fichiers après mise à jour de `Media.path`.
 Validation de taille/format, décodage et conversion WebP côté serveur, sans recadrage.
 Import fichier, URL publique ou sélection IGDB : même stockage local, dimensions et source conservées.
+Miniatures à la demande : `/media/<id>?w=320|640|1280` → `media.readImage` (propriétaire)
+→ `image-variants.ts` (Sharp, deux conversions simultanées, cache disque régénérable sous
+`LUDEN_DATA_DIR/cache/thumbnails/v1`). Les vues compactes choisissent une taille via
+`srcset`/`sizes` ; originaux conservés pour les agrandissements. Aucune migration nécessaire.
 `remote-image.ts` : HTTP(S), IP publiques uniquement, DNS vérifié et fixé pour la connexion,
 redirections revalidées, MIME autorisé, limite 12 Mo et délai 20 secondes.
 Les retraits sont appliqués à l'enregistrement ; seuls les fichiers sans référence sont supprimés.

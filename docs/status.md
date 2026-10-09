@@ -1,5 +1,13 @@
 # État courant
 
+## Miniatures automatiques — 2026-10-10
+
+- Variantes WebP de 320, 640 et 1280 px de large, créées au premier affichage puis conservées sous `LUDEN_DATA_DIR/cache/thumbnails/v1`. Fonctionne pour les médias existants et futurs imports, sans migration ; proportions/transparence conservées et aucun agrandissement.
+- Jaquettes des galeries, boîtes/supports/logos des sidebars et petites captures/galeries média utilisent des sources adaptées à leur taille. Grandes scènes et agrandissements conservent les originaux ; fonds et illustrations de plateformes inchangés.
+- Deux conversions simultanées maximum, requêtes identiques mutualisées, écriture atomique et repli sur l’original si le cache échoue. Contrôles local/propriétaire conservés, trois tailles autorisées seulement. Entrée Sharp en mémoire pour libérer les fichiers Windows après génération. Anciennes variantes non purgées automatiquement ; cache régénérable et excluable des sauvegardes.
+- Mesure locale sur trois jaquettes réelles : 320 px de 80 à 91 % plus légères, lectures du cache d’environ 1 à 3 ms. Cela mesure les fichiers, pas le temps complet de chargement de la bibliothèque ; rendu de toutes les cartes encore conservé.
+- Vérifié : TypeScript, lint, 36 tests, dont trois tests de miniatures (dimensions/transparence, original intact, concurrence/cache, remplacement/suppression, échecs et chemins bornés), compilation. Contrôle HTTP réel : galerie avec sources adaptées, variantes 320/640 valides, taille invalide 400, origine étrangère et média absent 404. Le navigateur piloté affiche la page d’erreur générique sans diagnostic console, tandis que le contrôle HTTP réussit ; rendu visuel final à confirmer par Henri.
+
 ## Titres des cartes sur une ligne — 2026-10-10
 
 - Bibliothèque et découverte, grille et liste : titre limité à une ligne avec points de suspension ; titre complet au survol. Rangée de titre réduite de 40 à 20 px en grille.

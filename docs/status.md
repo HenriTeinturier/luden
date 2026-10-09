@@ -1,5 +1,11 @@
 # État courant
 
+## Bibliothèque homogène entre plateformes — 2026-10-09
+
+- Grille de « Ma bibliothèque » : une colonne par jeu, cadre carré commun pour les jaquettes entières, centrées et non déformées. Colonnes automatiques de 200 px minimum, deux sur mobile ; densité manuelle conservée.
+- Plateforme/année, titre sur deux lignes, note, statut et souvenir alignés dans des rangées de hauteur commune, y compris sans note ou souvenir. Vue liste et univers plateforme conservés.
+- Vérifié : TypeScript, lint ciblé, formatage et diff. Validation visuelle par Henri ; aucun changement de données.
+
 ## Cartes de plateformes de même taille — 2026-10-09
 
 - « Mes plateformes » : toutes les cartes adoptent le format Amiga/Amstrad/Super Nintendo, deux par ligne et 250 px de haut ; une par ligne et 190 px sous 720 px. Marges intérieures, noms et compteurs harmonisés.

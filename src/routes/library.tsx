@@ -9,7 +9,7 @@ export const Route = createFileRoute('/library')({
 function Library() {
   const { games } = useLibrary()
   return (
-    <div className="page">
+    <div className="page library-page">
       <PageHeading
         eyebrow="TOUS VOS UNIVERS"
         title="Ma bibliothèque."

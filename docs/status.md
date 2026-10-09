@@ -1,5 +1,10 @@
 # État courant
 
+## Titres des cartes sur une ligne — 2026-10-10
+
+- Bibliothèque et découverte, grille et liste : titre limité à une ligne avec points de suspension ; titre complet au survol. Rangée de titre réduite de 40 à 20 px en grille.
+- Vérifié : formatage ciblé et diff. Validation visuelle par Henri ; correction CSS seule.
+
 ## Cartes mixtes simplifiées et vrais logos — 2026-10-09
 
 - Bibliothèque et découverte, grille et liste : jaquette, logo de plateforme, année et titre uniquement, avec le sceau Megastar conservé. Retrait des notes, mentions « Pas encore noté », statuts, possession et extraits de souvenirs sur ces cartes ; données toujours accessibles dans la consultation.

@@ -208,8 +208,8 @@ deux sur mobile ; le réglage manuel de densité reste prioritaire. Sous la jaqu
 logo de plateforme, l’année et le titre sont affichés. Les logos existants Amiga, Amstrad et
 Super Nintendo sont affichés entiers, jusqu’à 140 × 32 px, sans pastille ni cadre coloré ; les
 autres plateformes utilisent leur nom court lisible en attendant un logo. L’année reste à droite.
-La rangée logo/année mesure 36 px et celle du titre 40 px (deux lignes maximum, nom complet au
-survol). Notes, mentions « Pas encore noté », statuts, possession et extraits de souvenirs ne
+La rangée logo/année mesure 36 px et celle du titre 20 px (une seule ligne avec points de
+suspension, nom complet au survol), en grille comme en liste. Notes, mentions « Pas encore noté », statuts, possession et extraits de souvenirs ne
 sont pas rendus dans ces cartes ; leurs données restent disponibles dans la sidebar et la fiche.
 Même contenu simplifié en vue liste, avec sa disposition horizontale. Jaquettes entières et
 sceau Megastar conservés. Les autres pages gardent leur présentation propre.

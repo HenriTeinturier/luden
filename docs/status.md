@@ -1,5 +1,11 @@
 # État courant
 
+## Plateformes mieux identifiées dans les galeries mixtes — 2026-10-09
+
+- « Ma bibliothèque » et « À découvrir », grille et liste : étiquette de plateforme en 12 px gras clair, fond/bordure colorés et pastille, nom complet au survol. Année séparée à droite ; nom long tronqué si nécessaire.
+- Rangée de plateforme portée à 28 px dans les grilles homogènes ; titres, notes et souvenirs restent alignés. Présentation discrète conservée sur les autres pages.
+- Vérifié : TypeScript, lint ciblé, formatage et diff. Validation visuelle par Henri ; aucun changement de données.
+
 ## Barre stable en tri aléatoire — 2026-10-09
 
 - Sélecteur de tri et bouton « Remélanger » réunis dans un bloc de largeur fixe (190 px, 160 px sur mobile). Le bouton réduit l’espace du sélecteur sans élargir les contrôles : choisir Aléatoire ne déclenche plus de retour à la ligne supplémentaire.

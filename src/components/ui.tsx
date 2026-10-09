@@ -238,10 +238,15 @@ export function GameCard({
         )}
       </div>
       <div className="game-card-info">
-        <span className="game-platform">
-          <i style={{ background: game.platform.color }} />
-          {game.platform.shortName}
-          {game.releaseYear ? ` · ${game.releaseYear}` : ''}
+        <span
+          className="game-platform"
+          style={{ '--platform-color': game.platform.color } as CSSProperties}
+        >
+          <span className="game-platform-name" title={game.platform.name}>
+            <i style={{ background: game.platform.color }} aria-hidden="true" />
+            <span>{game.platform.shortName}</span>
+          </span>
+          {game.releaseYear ? <span className="game-platform-year">{game.releaseYear}</span> : null}
         </span>
         <h3 title={game.title}>{game.title}</h3>
         <Stars value={rating} />

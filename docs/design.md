@@ -207,6 +207,10 @@ de marge, entièrement visible et sans déformation. Colonnes automatiques de 20
 deux sur mobile ; le réglage manuel de densité reste prioritaire. Plateforme/année, titre sur
 deux lignes maximum, note, statut et deux lignes de souvenir occupent des rangées de hauteur
 commune, même sans note ou souvenir. Le nom complet reste accessible au survol du titre.
+Sur ces deux pages, en grille et en liste, la plateforme est identifiée par une étiquette de
+28 px de haut avant le titre : nom court en 12 px gras clair, pastille, bordure et fond teintés
+avec la couleur de la plateforme. L’année est séparée à droite. Nom complet de plateforme au
+survol ; les noms longs sont tronqués si nécessaire. La couleur complète le nom lisible.
 Présentation commune aux grilles de la bibliothèque et de la découverte ; les univers plateforme et la vue liste
 gardent leurs formats propres.
 

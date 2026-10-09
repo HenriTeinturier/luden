@@ -221,6 +221,15 @@
   border-radius: 50%;
   display: block;
 }
+.game-platform-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+}
+.game-platform-year::before {
+  content: '· ';
+}
 .game-card h3 {
   font-size: 12px;
   line-height: 1.4;

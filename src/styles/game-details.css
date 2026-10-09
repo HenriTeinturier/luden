@@ -25,29 +25,29 @@
 .with-game-sidebar .platform-page .game-grid {
   grid-template-columns: repeat(auto-fill, minmax(205px, 1fr));
 }
-/* A shared display case keeps the cross-platform library aligned. */
-.library-page .game-grid {
+/* A shared display case keeps the library and discovery galleries aligned. */
+:is(.library-page, .discovery-page) .game-grid {
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr));
   align-items: stretch;
 }
-.library-page .game-grid .game-card {
+:is(.library-page, .discovery-page) .game-grid .game-card {
   grid-column: auto;
 }
-.library-page .game-grid .game-cover {
+:is(.library-page, .discovery-page) .game-grid .game-cover {
   aspect-ratio: 1;
   padding: 8px;
 }
-.library-page .game-grid .game-card-info {
+:is(.library-page, .discovery-page) .game-grid .game-card-info {
   display: grid;
   grid-template-rows: 14px 40px 20px 16px 32px;
   gap: 8px;
 }
-.library-page .game-grid .game-platform,
-.library-page .game-grid .game-card-bottom,
-.library-page .game-grid .card-memory {
+:is(.library-page, .discovery-page) .game-grid .game-platform,
+:is(.library-page, .discovery-page) .game-grid .game-card-bottom,
+:is(.library-page, .discovery-page) .game-grid .card-memory {
   margin: 0;
 }
-.library-page .game-grid h3 {
+:is(.library-page, .discovery-page) .game-grid h3 {
   margin: 0;
   line-height: 20px;
   display: -webkit-box;
@@ -56,7 +56,7 @@
   overflow: hidden;
 }
 @media (max-width: 700px) {
-  .library-page .game-grid {
+  :is(.library-page, .discovery-page) .game-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

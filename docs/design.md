@@ -199,15 +199,15 @@ la vignette principale. Import par rôle et réutilisation d’images existantes
 de cadrage sidebar (déplacement, zoom, trois curseurs accessibles), modifiable ensuite. L’image
 reste entière pour la scène large. Format de création conseillé : 2560 × 1440 px, 16:9, sans texte.
 
-## Bibliothèque toutes plateformes
+## Bibliothèque et découverte toutes plateformes
 
-Dans « Ma bibliothèque », la grille utilise une carte par colonne pour toutes les plateformes,
+Dans « Ma bibliothèque » et « À découvrir », la grille utilise une carte par colonne pour toutes les plateformes,
 y compris les boîtes horizontales. Chaque jaquette est centrée dans un cadre carré avec 8 px
 de marge, entièrement visible et sans déformation. Colonnes automatiques de 200 px minimum,
 deux sur mobile ; le réglage manuel de densité reste prioritaire. Plateforme/année, titre sur
 deux lignes maximum, note, statut et deux lignes de souvenir occupent des rangées de hauteur
 commune, même sans note ou souvenir. Le nom complet reste accessible au survol du titre.
-Présentation limitée à la grille de la bibliothèque ; les univers plateforme et la vue liste
+Présentation commune aux grilles de la bibliothèque et de la découverte ; les univers plateforme et la vue liste
 gardent leurs formats propres.
 
 ## Navigation horizontale (essai)

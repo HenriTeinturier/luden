@@ -9,7 +9,7 @@ export const Route = createFileRoute('/discover')({
 function Discover() {
   const { games } = useLibrary()
   return (
-    <div className="page">
+    <div className="page discovery-page">
       <PageHeading
         eyebrow="LA CURIOSITÉ N’A PAS D’ÂGE"
         title="La prochaine aventure."

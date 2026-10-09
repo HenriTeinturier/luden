@@ -1,5 +1,11 @@
 # État courant
 
+## Découverte homogène entre plateformes — 2026-10-09
+
+- « À découvrir » partage les styles de « Ma bibliothèque » : cartes de même largeur, jaquettes entières dans un cadre carré, titres sur deux lignes et informations alignées, même sans note ou souvenir.
+- Densité manuelle, filtres et tri communs conservés ; deux colonnes sur mobile. Vue liste et univers plateforme inchangés.
+- Vérifié : lint ciblé, formatage et diff. Validation visuelle par Henri ; aucun changement de données.
+
 ## Tri aléatoire commun — 2026-10-09
 
 - « Aléatoire » dans toutes les galeries (bibliothèque, plateformes, collections, découverte), en grille/liste ; bouton accessible « Remélanger les jeux », désactivé sous deux résultats.

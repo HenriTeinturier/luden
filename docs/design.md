@@ -204,15 +204,15 @@ reste entière pour la scène large. Format de création conseillé : 2560 × 14
 Dans « Ma bibliothèque » et « À découvrir », la grille utilise une carte par colonne pour toutes les plateformes,
 y compris les boîtes horizontales. Chaque jaquette est centrée dans un cadre carré avec 8 px
 de marge, entièrement visible et sans déformation. Colonnes automatiques de 200 px minimum,
-deux sur mobile ; le réglage manuel de densité reste prioritaire. Plateforme/année, titre sur
-deux lignes maximum, note, statut et deux lignes de souvenir occupent des rangées de hauteur
-commune, même sans note ou souvenir. Le nom complet reste accessible au survol du titre.
-Sur ces deux pages, en grille et en liste, la plateforme est identifiée par une étiquette de
-28 px de haut avant le titre : nom court en 12 px gras clair, pastille, bordure et fond teintés
-avec la couleur de la plateforme. L’année est séparée à droite. Nom complet de plateforme au
-survol ; les noms longs sont tronqués si nécessaire. La couleur complète le nom lisible.
-Présentation commune aux grilles de la bibliothèque et de la découverte ; les univers plateforme et la vue liste
-gardent leurs formats propres.
+deux sur mobile ; le réglage manuel de densité reste prioritaire. Sous la jaquette, seuls le
+logo de plateforme, l’année et le titre sont affichés. Les logos existants Amiga, Amstrad et
+Super Nintendo sont affichés entiers, jusqu’à 140 × 32 px, sans pastille ni cadre coloré ; les
+autres plateformes utilisent leur nom court lisible en attendant un logo. L’année reste à droite.
+La rangée logo/année mesure 36 px et celle du titre 40 px (deux lignes maximum, nom complet au
+survol). Notes, mentions « Pas encore noté », statuts, possession et extraits de souvenirs ne
+sont pas rendus dans ces cartes ; leurs données restent disponibles dans la sidebar et la fiche.
+Même contenu simplifié en vue liste, avec sa disposition horizontale. Jaquettes entières et
+sceau Megastar conservés. Les autres pages gardent leur présentation propre.
 
 ## Navigation horizontale (essai)
 

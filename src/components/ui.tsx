@@ -197,6 +197,11 @@ export function GameCard({
   const rating = game.experience?.rating
   const { platformId, collectionId } = useParams({ strict: false })
   const location = useLocation()
+  const simpleCard = ['/library', '/discover'].includes(location.pathname.replace(/\/$/, ''))
+  const platformLogo =
+    simpleCard && ['amiga', 'amstrad', 'snes'].includes(game.platformId)
+      ? `/platforms/${game.platformId}/logo.webp`
+      : undefined
   return (
     <Link
       to="/games/$gameId"
@@ -238,33 +243,42 @@ export function GameCard({
         )}
       </div>
       <div className="game-card-info">
-        <span
-          className="game-platform"
-          style={{ '--platform-color': game.platform.color } as CSSProperties}
-        >
+        <span className="game-platform">
           <span className="game-platform-name" title={game.platform.name}>
-            <i style={{ background: game.platform.color }} aria-hidden="true" />
-            <span>{game.platform.shortName}</span>
+            {platformLogo ? (
+              <img className="game-platform-logo" src={platformLogo} alt={game.platform.name} />
+            ) : (
+              <>
+                {!simpleCard && (
+                  <i style={{ background: game.platform.color }} aria-hidden="true" />
+                )}
+                <span>{game.platform.shortName}</span>
+              </>
+            )}
           </span>
           {game.releaseYear ? <span className="game-platform-year">{game.releaseYear}</span> : null}
         </span>
         <h3 title={game.title}>{game.title}</h3>
-        <Stars value={rating} />
-        <div className="game-card-bottom">
-          <span>{playStatuses[game.experience?.status ?? 'UNPLAYED']}</span>
-          <span className="possession-icons">
-            {game.possessions.some((p) => p.format === 'PHYSICAL') && (
-              <Disc3 size={14} aria-label="Exemplaire physique" />
-            )}
-            {game.possessions.some((p) => p.format === 'DIGITAL') && (
-              <Cloud size={14} aria-label="Version digitale" />
-            )}
-            {game.possessions.some((p) => p.state === 'PAST') && (
-              <Clock3 size={14} aria-label="Possession ancienne" />
-            )}
-          </span>
-        </div>
-        {game.experience?.memory && <p className="card-memory">{game.experience.memory}</p>}
+        {!simpleCard && (
+          <>
+            <Stars value={rating} />
+            <div className="game-card-bottom">
+              <span>{playStatuses[game.experience?.status ?? 'UNPLAYED']}</span>
+              <span className="possession-icons">
+                {game.possessions.some((p) => p.format === 'PHYSICAL') && (
+                  <Disc3 size={14} aria-label="Exemplaire physique" />
+                )}
+                {game.possessions.some((p) => p.format === 'DIGITAL') && (
+                  <Cloud size={14} aria-label="Version digitale" />
+                )}
+                {game.possessions.some((p) => p.state === 'PAST') && (
+                  <Clock3 size={14} aria-label="Possession ancienne" />
+                )}
+              </span>
+            </div>
+            {game.experience?.memory && <p className="card-memory">{game.experience.memory}</p>}
+          </>
+        )}
       </div>
     </Link>
   )

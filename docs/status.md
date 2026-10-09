@@ -1,5 +1,12 @@
 # État courant
 
+## Cartes mixtes simplifiées et vrais logos — 2026-10-09
+
+- Bibliothèque et découverte, grille et liste : jaquette, logo de plateforme, année et titre uniquement, avec le sceau Megastar conservé. Retrait des notes, mentions « Pas encore noté », statuts, possession et extraits de souvenirs sur ces cartes ; données toujours accessibles dans la consultation.
+- Logos existants Amiga, Amstrad et Super Nintendo affichés entiers jusqu’à 140 × 32 px ; suppression des étiquettes colorées. Nom court simple pour les plateformes sans logo disponible.
+- Grille ramenée à deux rangées sous la jaquette (logo/année 36 px, titre 40 px), sans espaces réservés aux informations retirées. Autres pages conservées.
+- Vérifié : TypeScript, lint ciblé, formatage et diff ; logos sources inspectés. Validation du rendu final par Henri.
+
 ## Plateformes mieux identifiées dans les galeries mixtes — 2026-10-09
 
 - « Ma bibliothèque » et « À découvrir », grille et liste : étiquette de plateforme en 12 px gras clair, fond/bordure colorés et pastille, nom complet au survol. Année séparée à droite ; nom long tronqué si nécessaire.

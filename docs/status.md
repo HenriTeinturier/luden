@@ -1,5 +1,12 @@
 # État courant
 
+## Tri aléatoire commun — 2026-10-09
+
+- « Aléatoire » dans toutes les galeries (bibliothèque, plateformes, collections, découverte), en grille/liste ; bouton accessible « Remélanger les jeux », désactivé sous deux résultats.
+- Rang déterministe par identifiant et graine mémorisée dans l’URL/préférences : ordre stable après filtrage, édition, changement de densité et retour de fiche. Regroupement conservé, mélange à l’intérieur de chaque catégorie. Aucune écriture en base.
+- Calcul O(n log n), un rang par jeu. Mesure locale sur données fictives (hors rendu/images) : médiane 0,3 ms pour 1 000 jeux, 3,6 ms pour 10 000 et 24,7 ms pour 50 000.
+- Vérifié : TypeScript, lint, 33 tests dont quatre nouveaux, formatage et diff. Le test existant de rangement a rencontré EPERM dans le temporaire protégé Windows ; relancé avec succès dans `.local/test-tmp`. Validation visuelle par Henri.
+
 ## Bibliothèque homogène entre plateformes — 2026-10-09
 
 - Grille de « Ma bibliothèque » : une colonne par jeu, cadre carré commun pour les jaquettes entières, centrées et non déformées. Colonnes automatiques de 200 px minimum, deux sur mobile ; densité manuelle conservée.

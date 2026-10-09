@@ -63,3 +63,12 @@ test('Stockage absent ou invalide : conserver les choix URL sans imposer de regr
     assert.deepEqual(restoreGalleryPreferences(raw, { scope: 'played' }), { scope: 'played' })
   }
 })
+
+test('Le mélange mémorisé est restauré et la graine du lien reste prioritaire', () => {
+  const saved = JSON.stringify({ sort: 'random', randomSeed: 12345 })
+  assert.deepEqual(restoreGalleryPreferences(saved, {}), { sort: 'random', randomSeed: 12345 })
+  assert.deepEqual(restoreGalleryPreferences(saved, { sort: 'random', randomSeed: 67890 }), {
+    sort: 'random',
+    randomSeed: 67890,
+  })
+})

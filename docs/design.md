@@ -285,6 +285,16 @@ ligne compacte sur grand écran, y compris avec la sidebar ouverte à 2560 px. L
 même ligne à droite. Recherche limitée à 200 px, libellé « Rechercher… » ; sélecteur de colonnes
 de 88 px conservant `Auto` lisible. Les contrôles se replient si la largeur manque.
 
+Le tri « Aléatoire » est disponible dans toutes les galeries, en grille et en liste. Une icône
+« Remélanger les jeux » apparaît à côté du tri et renouvelle le mélange (désactivée sous deux
+résultats). Le choix et sa graine sont mémorisés par galerie et transmis dans les liens de fiche.
+L’ordre reste stable lors des rendus, modifications de jeu, changements de densité, retours de
+fiche et nouvelles visites. Les filtres conservent l’ordre relatif des résultats ; avec les
+catégories, le mélange s’applique à l’intérieur de chaque groupe. Un accès « Aléatoire » sans
+graine utilise un ordre déterministe jusqu’au prochain remélange.
+Le rang pseudo-aléatoire est calculé une fois par identifiant puis trié : aucun changement de
+données ni requête serveur supplémentaire. Coût O(n log n), mémoire temporaire O(n).
+
 À côté du choix grille/liste, une icône de colonnes et un sélecteur compact (104 px) règlent
 le nombre de jaquettes par ligne : `Auto` ou 4 à 10. Choix mémorisé par galerie et conservé
 dans l’URL, y compris au retour de fiche. La sidebar reste ouverte lors du réglage.

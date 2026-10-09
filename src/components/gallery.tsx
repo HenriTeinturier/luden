@@ -8,6 +8,7 @@ import {
   Columns3,
   PanelRightOpen,
   RotateCcw,
+  Shuffle,
   X,
 } from 'lucide-react'
 import { MegastarTrophy } from './megastar-trophy'
@@ -186,6 +187,13 @@ export function Gallery({
     saveGalleryPreferences(pathname, next)
     void navigate({ to: '.', search: next, replace: true, resetScroll: false })
   }
+  const reshuffle = () => {
+    const seed = crypto.getRandomValues(new Uint32Array(1))[0]
+    update({
+      sort: 'random',
+      randomSeed: seed === (filters.randomSeed ?? 0) ? (seed + 1) >>> 0 : seed,
+    })
+  }
   useEffect(() => {
     const container = gallery.current
     if (!container || filters.view === 'list') return
@@ -320,14 +328,29 @@ export function Gallery({
           <select
             aria-label="Trier les jeux"
             value={filters.sort ?? 'recent'}
-            onChange={(e) => update({ sort: e.target.value as GallerySearch['sort'] })}
+            onChange={(e) => {
+              if (e.target.value === 'random') reshuffle()
+              else update({ sort: e.target.value as GallerySearch['sort'], randomSeed: undefined })
+            }}
           >
             <option value="recent">Derniers ajouts / modifiés</option>
             <option value="title">Titre A → Z</option>
             <option value="rating">Ma note</option>
             <option value="year">Année de sortie</option>
             <option value="desire">Mon envie</option>
+            <option value="random">Aléatoire</option>
           </select>
+          {filters.sort === 'random' && (
+            <button
+              className="icon-button"
+              aria-label="Remélanger les jeux"
+              title="Remélanger les jeux"
+              disabled={visible.length < 2}
+              onClick={reshuffle}
+            >
+              <Shuffle size={17} />
+            </button>
+          )}
           <button
             className={`icon-button ${advanced ? 'selected' : ''}`}
             aria-label="Afficher les filtres"

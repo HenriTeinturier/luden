@@ -7,7 +7,8 @@ export const gallerySearch = z.object({
   machine: z.string().optional(),
   status: z.string().optional(),
   scope: z.enum(['all', 'played', 'discover', 'owned']).optional(),
-  sort: z.enum(['recent', 'title', 'rating', 'year', 'desire']).optional(),
+  sort: z.enum(['recent', 'title', 'rating', 'year', 'desire', 'random']).optional(),
+  randomSeed: z.number().int().min(0).max(0xffffffff).optional().catch(undefined),
   view: z.enum(['grid', 'list']).optional(),
   columns: z
     .union([z.literal('auto'), z.number().int().min(4).max(10)])
@@ -26,6 +27,18 @@ export const gameReturnSearch = z.object({
 export function hasPlayed(game: Game) {
   return Boolean(game.experience && game.experience.status !== 'UNPLAYED')
 }
+
+// Stable per-game ranks preserve relative order through filtering, edits and return navigation.
+function randomRank(id: string, seed: number) {
+  let hash = 2166136261 ^ seed
+  for (let index = 0; index < id.length; index++) {
+    hash = Math.imul(hash ^ id.charCodeAt(index), 16777619)
+  }
+  hash = Math.imul(hash ^ (hash >>> 16), 0x85ebca6b)
+  hash = Math.imul(hash ^ (hash >>> 13), 0xc2b2ae35)
+  return (hash ^ (hash >>> 16)) >>> 0
+}
+
 export function filterGames(games: Game[], filters: GallerySearch) {
   const normalize = (s: string) =>
     s
@@ -53,6 +66,15 @@ export function filterGames(games: Game[], filters: GallerySearch) {
               (p) => p.state === (filters.owned === 'past' ? 'PAST' : 'CURRENT'),
             ))),
   )
+  if (filters.sort === 'random') {
+    // Compute each rank once, not at every sort comparison. Never mutate the library array.
+    return filtered
+      .map((game) => ({ game, rank: randomRank(game.id, filters.randomSeed ?? 0) }))
+      .sort(
+        (a, b) => a.rank - b.rank || (a.game.id < b.game.id ? -1 : a.game.id > b.game.id ? 1 : 0),
+      )
+      .map(({ game }) => game)
+  }
   return filtered.sort((a, b) => {
     if (filters.sort === 'title') return a.title.localeCompare(b.title, 'fr')
     if (filters.sort === 'rating')

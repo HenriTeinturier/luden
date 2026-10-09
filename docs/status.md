@@ -1,5 +1,11 @@
 # État courant
 
+## Cartes de plateformes de même taille — 2026-10-09
+
+- « Mes plateformes » : toutes les cartes adoptent le format Amiga/Amstrad/Super Nintendo, deux par ligne et 250 px de haut ; une par ligne et 190 px sous 720 px. Marges intérieures, noms et compteurs harmonisés.
+- Styles limités à cette page ; illustrations existantes et visuels de repli conservés.
+- Vérification : formatage ciblé et diff ; validation visuelle par Henri. Correction CSS seule.
+
 ## Trois lignes de souvenirs et contrôles regroupés — 2026-10-04
 
 - Toutes les sidebars : extrait d’au moins trois lignes si le texte est assez long ; quatre ou six suivant la hauteur disponible. Suppression du calcul de lignes en fonction d’un bloc lui-même rétréci, qui pouvait ramener certains souvenirs à une ligne. Texte court toujours ajusté à son contenu ; lecture complète et aperçu conservés.

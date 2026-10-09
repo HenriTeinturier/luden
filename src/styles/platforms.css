@@ -11,6 +11,35 @@
   letter-spacing: 0;
 }
 
+.platforms-index .platform-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.platforms-index .platform-grid .platform-card {
+  grid-column: auto;
+  height: 250px;
+  min-height: 0;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.platforms-index .platform-card-bottom h3 {
+  font-size: 16px;
+}
+.platforms-index .platform-card-bottom > span {
+  font-size: 13px;
+  color: var(--text-soft);
+}
+@media (max-width: 720px) {
+  .platforms-index .platform-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .platforms-index .platform-grid .platform-card {
+    height: 190px;
+    padding: 18px;
+  }
+}
+
 @media (min-width: 1201px) {
   .page.platform-page {
     max-width: none;

@@ -215,6 +215,11 @@ Le titre « Les machines de votre histoire » utilise Chakra Petch 600 (sous-ens
 servi localement via Fontsource), pour une touche rétro lisible. Les autres titres et textes
 conservent leur typographie. Règle limitée à `.platforms-index .page-heading h1`.
 
+Dans « Mes plateformes », toutes les cartes partagent le format des cartes Amiga, Amstrad et
+Super Nintendo : deux cartes par ligne, hauteur 250 px, padding 24 px, nom 16 px et compteur
+13 px. À 720 px et moins : une carte par ligne, hauteur 190 px et padding 18 px. Les identités
+illustrées et les visuels de repli sont conservés. Règles limitées à `.platforms-index`.
+
 ## Amiga
 
 Carte large et bandeau intérieur : fond graphite chaud, arc-en-ciel atténué à droite,

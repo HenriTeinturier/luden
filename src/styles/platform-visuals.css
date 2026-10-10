@@ -105,6 +105,16 @@
 .universe-banner-fallback h2 {
   margin: 0;
 }
+.universe-atari-st :is(.universe-banner-fallback, .universe-sidebar-fallback) {
+  background:
+    linear-gradient(#09132280, #09132280),
+    url('/platforms/atari-st/stripes.webp') center / cover no-repeat;
+}
+.universe-fallback-hardware {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 12px 12px #0008);
+}
 .universe-poster {
   position: relative;
   flex: 1;

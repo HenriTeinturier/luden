@@ -66,7 +66,7 @@ export function PlatformArt({
   platform: Pick<Platform, 'id' | 'color'>
   className?: string
 }) {
-  const computer = ['pc', 'amiga', 'amstrad'].includes(platform.id)
+  const computer = ['pc', 'amiga', 'amstrad', 'atari-st'].includes(platform.id)
   return (
     <div
       className={`platform-art ${computer ? 'computer' : ''} ${className}`}
@@ -110,7 +110,7 @@ export function PlatformArt({
   )
 }
 export function PlatformCard({ platform, count }: { platform: Platform; count: number }) {
-  const illustrated = ['snes', 'amiga', 'amstrad'].includes(platform.id)
+  const illustrated = ['snes', 'amiga', 'amstrad', 'atari-st'].includes(platform.id)
   return (
     <Link
       to="/platforms/$platformId"
@@ -206,7 +206,7 @@ export function GameCard({
   const location = useLocation()
   const simpleCard = ['/library', '/discover'].includes(location.pathname.replace(/\/$/, ''))
   const platformLogo =
-    simpleCard && ['amiga', 'amstrad', 'snes'].includes(game.platformId)
+    simpleCard && ['amiga', 'amstrad', 'snes', 'atari-st'].includes(game.platformId)
       ? `/platforms/${game.platformId}/logo.webp`
       : undefined
   return (

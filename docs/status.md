@@ -1,5 +1,12 @@
 # État courant
 
+## Atari ST — 2026-10-10
+
+- Plateforme ajoutée au catalogue et à la base locale : `atari-st`, famille Ordinateurs, 1985, IGDB 63 (Atari ST/STE confirmé par l’API). Disponible dans les filtres et l’ajout manuel/IGDB ; ajout depuis son univers prérempli.
+- Trois assets fournis copiés sans modification dans `public/platforms/atari-st/` : fond bleu marine à diagonales, logo bleu/blanc et ordinateur avec souris. Carte de même format que l’Amiga, logo à gauche et matériel à droite ; adaptation mobile. Logo aussi dans les galeries mixtes et l’accueil de l’univers, avec fond/matériel de repli en attendant des visuels personnels.
+- Galerie comparable à l’Amiga : jaquettes verticales entières, alignées en haut, titre sur une ligne et étoiles, Megastar conservé. Raccourci du header disponible dès qu’un jeu Atari ST est enregistré. Quatre statistiques et éditeur de visuels communs conservés.
+- Vérifié : TypeScript, lint ciblé, compilation, formatage et diff. Pages Mes plateformes/Atari ST et trois images servies en HTTP 200 ; octets des images servis identiques aux fichiers copiés. Serveur local démarré sur le port 3000 ; validation visuelle finale par Henri.
+
 ## Jaquettes chargées mais invisibles dans Chrome — 2026-10-10
 
 - Symptôme reproduit dans Chrome sur la grille Amiga : Beneath a Steel Sky, Banshee, The Chaos Engine et Guy Roux Manager restent vides alors que leurs images sont complètes, avec dimensions et source valides. Le blocage est au rendu, pas à la génération des miniatures.
@@ -505,7 +512,7 @@ Ne pas relancer une grande batterie de tests pour des ajustements graphiques min
 ## Limites connues / futures
 
 - Profil local uniquement, aucun partage/auth ; l'application refuse les hôtes non locaux.
-- Catalogue de 29 plateformes fourni ; ajouter d'autres plateformes dans `src/lib/platforms.ts`
+- Catalogue de 30 plateformes fourni ; ajouter d'autres plateformes dans `src/lib/platforms.ts`
   puis amorcer la base, pas encore d'éditeur de plateformes dans l'interface.
 - Dates de sortie à l'année, période personnelle libre ; éditions détaillées reportées.
 - Les métadonnées IGDB peuvent décrire plusieurs versions : vérification/correction manuelle disponible.

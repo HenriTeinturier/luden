@@ -27,12 +27,13 @@ function PlatformPage() {
   const isSnes = platformId === 'snes'
   const isAmiga = platformId === 'amiga'
   const isAmstrad = platformId === 'amstrad'
+  const isAtari = platformId === 'atari-st'
   const playedCount = chosen.filter(hasPlayed).length
   const favoriteCount = chosen.filter((g) => g.favorite).length
   const ownedCount = chosen.filter((g) => g.possessions.some((p) => p.state === 'CURRENT')).length
   return (
     <div
-      className={`page platform-page ${isSnes || isAmiga || isAmstrad ? `platform-${platformId}` : ''}`}
+      className={`page platform-page ${isSnes || isAmiga || isAmstrad || isAtari ? `platform-${platformId}` : ''}`}
     >
       <h1 id="platform-overview-title" className="sr-only">
         {platform.name}
@@ -90,13 +91,13 @@ function PlatformPage() {
         )}
         <div className="platform-hero-identity">
           <h1>
-            {isSnes || isAmiga || isAmstrad ? (
+            {isSnes || isAmiga || isAmstrad || isAtari ? (
               <img
                 className={`${platformId}-hero-logo`}
                 src={`/platforms/${platformId}/logo.webp`}
                 alt={platform.name}
-                width={isAmstrad ? 900 : 800}
-                height={isAmstrad ? 375 : isAmiga ? 232 : 169}
+                width={isAtari ? 1200 : isAmstrad ? 900 : 800}
+                height={isAtari ? 243 : isAmstrad ? 375 : isAmiga ? 232 : 169}
               />
             ) : (
               <>
@@ -145,6 +146,14 @@ function PlatformPage() {
               height={738}
             />
           </div>
+        ) : isAtari ? (
+          <img
+            className="atari-st-hero-hardware"
+            src="/platforms/atari-st/computer.webp"
+            alt=""
+            width={1200}
+            height={677}
+          />
         ) : (
           <PlatformArt platform={platform} />
         )}

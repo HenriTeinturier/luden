@@ -205,7 +205,7 @@ Dans « Ma bibliothèque » et « À découvrir », la grille utilise une carte 
 y compris les boîtes horizontales. Chaque jaquette est centrée dans un cadre carré avec 8 px
 de marge, entièrement visible et sans déformation. Colonnes automatiques de 200 px minimum,
 deux sur mobile ; le réglage manuel de densité reste prioritaire. Sous la jaquette, seuls le
-logo de plateforme, l’année et le titre sont affichés. Les logos existants Amiga, Amstrad et
+logo de plateforme, l’année et le titre sont affichés. Les logos existants Amiga, Amstrad, Atari ST et
 Super Nintendo sont affichés entiers, jusqu’à 140 × 32 px, sans pastille ni cadre coloré ; les
 autres plateformes utilisent leur nom court lisible en attendant un logo. L’année reste à droite.
 La rangée logo/année mesure 36 px et celle du titre 20 px (une seule ligne avec points de
@@ -250,6 +250,20 @@ sans padding, proportions conservées ; coins masqués par l’arrondi de la car
 une seule ligne avec ellipsis et nom complet au survol. Pas de note chiffrée, plateforme/année,
 statut, icônes de possession ou extrait de souvenir. Favori conservé sur la
 jaquette comme pour SNES. Les informations détaillées restent dans la fiche.
+
+## Atari ST
+
+Carte d’entrée de même format que l’Amiga : fond bleu marine à bandes diagonales, logo bleu/blanc
+à gauche et Atari ST avec souris à droite. Trois assets fournis par Henri conservés sans modification
+dans `public/platforms/atari-st/` ; proportions et transparence conservées. Nom et compteur en HTML,
+hauteur 250 px (190 px sur mobile), deux cartes par ligne puis une sur mobile.
+
+Galerie comme l’Amiga : format vertical 0,71, colonnes de 210 px minimum en mode Auto au-dessus
+de 700 px, images entières alignées en haut sans padding extérieur, titre sur une ligne et étoiles.
+Megastar conservé, informations détaillées accessibles dans la fiche. Logo disponible dans les
+galeries mixtes et le bandeau de repli de la sidebar ; sans affiche personnelle, fond diagonal
+et ordinateur remplacent l’illustration générique. Les visuels personnels restent prioritaires.
+En-tête commun avec quatre statistiques ; ancien bandeau masqué comme pour les autres univers.
 
 ## Super Nintendo
 
@@ -352,4 +366,4 @@ Les cartes de jeux favoris portent le sceau violet/bleu Megastar fourni (`public
 
 Cartes de jeux Amstrad : ratio 3:4 adapté aux visuels de disquettes, image entière sans recadrage ni padding extérieur en grille. Présentation compacte comme Amiga : titre sur une ligne avec ellipse, étoiles seules, sans plateforme, année, statut ni souvenir. Le sceau Megastar reste visible pour les favoris.
 
-Dans les univers Amiga et Amstrad, la grille utilise des colonnes de 210 px minimum au-dessus de 700 px pour donner plus de place aux jaquettes. Le ratio reste identique ; les deux colonnes mobiles et la vue liste sont conservées.
+Dans les univers Amiga, Amstrad et Atari ST, la grille utilise des colonnes de 210 px minimum au-dessus de 700 px pour donner plus de place aux jaquettes. Le ratio reste identique ; les deux colonnes mobiles et la vue liste sont conservées.

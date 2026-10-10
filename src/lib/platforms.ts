@@ -207,6 +207,15 @@ export const platforms = [
     igdbId: 16,
   },
   {
+    id: 'atari-st',
+    name: 'Atari ST',
+    shortName: 'Atari ST',
+    family: 'Ordinateurs',
+    color: '#4388ec',
+    era: '1985',
+    igdbId: 63,
+  },
+  {
     id: 'amstrad',
     name: 'Amstrad CPC',
     shortName: 'Amstrad',

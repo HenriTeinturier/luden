@@ -104,7 +104,7 @@ export function UniverseSidebar({
     <aside
       id="universe-sidebar"
       tabIndex={-1}
-      className={`game-sidebar universe-sidebar ${hiding ? 'is-hiding' : ''}`}
+      className={`game-sidebar universe-sidebar universe-${platform.id} ${hiding ? 'is-hiding' : ''}`}
       inert={hiding}
       aria-label={`Accueil de l’univers ${platform.name}`}
     >
@@ -144,7 +144,7 @@ export function UniverseSidebar({
           />
         ) : (
           <div className="universe-banner-fallback">
-            {['snes', 'amiga', 'amstrad'].includes(platform.id) ? (
+            {['snes', 'amiga', 'amstrad', 'atari-st'].includes(platform.id) ? (
               <img src={`/platforms/${platform.id}/logo.webp`} alt={platform.name} />
             ) : (
               <h2>{platform.name}</h2>
@@ -181,7 +181,17 @@ export function UniverseSidebar({
           </div>
         ) : (
           <div className="universe-sidebar-fallback">
-            <PlatformArt platform={platform} />
+            {platform.id === 'atari-st' ? (
+              <img
+                className="universe-fallback-hardware"
+                src="/platforms/atari-st/computer.webp"
+                alt=""
+                width={1200}
+                height={677}
+              />
+            ) : (
+              <PlatformArt platform={platform} />
+            )}
             <h2>{platform.name}</h2>
             <p>Vos jeux. Vos souvenirs.</p>
           </div>

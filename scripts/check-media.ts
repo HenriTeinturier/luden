@@ -1,7 +1,7 @@
 // Optional, small integration check against the local DB. Only its own fixtures are removed.
 import 'dotenv/config'
 import assert from 'node:assert/strict'
-import { mkdtemp, access } from 'node:fs/promises'
+import { mkdtemp, access, readdir } from 'node:fs/promises'
 import path from 'node:path'
 import os from 'node:os'
 import sharp from 'sharp'
@@ -131,9 +131,17 @@ try {
   assert.ok(moved.path.startsWith('jeux/amiga/luden-autre-titre--'))
   const originalFile = resolveMediaPath(process.env.LUDEN_DATA_DIR!, moved.path)
   await access(originalFile)
-  await deleteGame(created.id)
+  for (let attempt = 0; attempt < 100; attempt++) {
+    if (!(await readImage(image.id, 320))?.fallback) break
+    await new Promise((resolve) => setTimeout(resolve, 20))
+  }
+  assert.equal((await readImage(image.id, 320))?.fallback, false)
+  assert.equal((await deleteGame(created.id)).mediaWarning, null)
   assert.equal(await db.media.count({ where: { id: image.id } }), 0)
   await assert.rejects(access(originalFile))
+  assert.equal(await db.possession.count({ where: { gameId: created.id } }), 0)
+  assert.equal(await db.mediaAttachment.count({ where: { possessionId } }), 0)
+  assert.deepEqual(await readdir(path.join(process.env.LUDEN_DATA_DIR!, 'cache/thumbnails/v1')), [])
   console.log(
     'OK : migration des jaquettes, création, édition, exemplaires stables, galerie, liens, export, rollback et suppression des fichiers inutilisés.',
   )

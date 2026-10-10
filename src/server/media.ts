@@ -6,7 +6,7 @@ import sharp, { type OutputInfo } from 'sharp'
 import { db, LOCAL_PROFILE_ID as ownerId } from './db'
 import { resolveMediaPath } from './media-path'
 import { pruneEmptyMediaDirectories, withMediaStorageLock } from './media-storage'
-import { readStoredImage } from './image-variants'
+import { readStoredImage, removeStoredImage } from './image-variants'
 import type { ImageWidth } from '../lib/image-variants'
 
 export const MAX_IMAGE_BYTES = 12 * 1024 * 1024
@@ -64,13 +64,14 @@ export async function importImageUrl(url: string, source: MediaSource = 'EXTERNA
 
 // Only copies no longer referenced by any game or owned copy can be removed.
 export async function removeUnusedImages(ids: string[]) {
-  if (!ids.length) return
+  if (!ids.length) return true
   const root = process.env.LUDEN_DATA_DIR ?? ''
-  if (!root.trim()) return
+  if (!root.trim()) return false
   return withMediaStorageLock(root, () => removeUnusedImagesLocked(ids))
 }
 
 async function removeUnusedImagesLocked(ids: string[]) {
+  let cleaned = true
   for (const id of new Set(ids)) {
     const media = await db.media.findFirst({
       where: { id, ownerId, games: { none: {} }, attachments: { none: {} } },
@@ -81,17 +82,15 @@ async function removeUnusedImagesLocked(ids: string[]) {
       const removed = await db.media.deleteMany({
         where: { id, ownerId, games: { none: {} }, attachments: { none: {} } },
       })
-      if (removed.count)
-        await unlink(absolute).catch((error: NodeJS.ErrnoException) => {
-          if (error.code !== 'ENOENT')
-            console.warn('Un fichier média détaché reste sur disque.', media.id)
-        })
+      if (removed.count) await removeStoredImage(process.env.LUDEN_DATA_DIR ?? '', media.path)
       if (removed.count)
         await pruneEmptyMediaDirectories(process.env.LUDEN_DATA_DIR ?? '', path.dirname(absolute))
     } catch {
+      cleaned = false
       console.warn('Nettoyage du média différé.', id)
     }
   }
+  return cleaned
 }
 
 export async function readImage(id: string, width?: ImageWidth) {

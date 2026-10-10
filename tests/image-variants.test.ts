@@ -16,7 +16,7 @@ import os from 'node:os'
 import path from 'node:path'
 import sharp, { type Sharp } from 'sharp'
 import { mediaImageSources, parseImageWidth } from '../src/lib/image-variants'
-import { readStoredImage } from '../src/server/image-variants'
+import { readStoredImage, removeStoredImage } from '../src/server/image-variants'
 
 async function readyThumbnail(root: string, relative: string, width: 320 | 640) {
   for (let attempt = 0; attempt < 500; attempt++) {
@@ -26,6 +26,32 @@ async function readyThumbnail(root: string, relative: string, width: 320 | 640) 
   }
   throw new Error('La miniature ne s’est pas créée en arrière-plan.')
 }
+
+test('Suppression : original et miniatures retirés, conversions drainées et autres images conservées', async () => {
+  const root = await mkdtemp(path.join(os.tmpdir(), 'luden-delete-image-'))
+  try {
+    await mkdir(path.join(root, 'media'))
+    const bytes = await sharp({
+      create: { width: 800, height: 600, channels: 3, background: '#123456' },
+    })
+      .png()
+      .toBuffer()
+    for (const name of ['deleted.png', 'retained.png'])
+      await writeFile(path.join(root, 'media', name), bytes)
+    await readyThumbnail(root, 'deleted.png', 320)
+    await readyThumbnail(root, 'retained.png', 320)
+    // Starts a second size in the background immediately before deletion.
+    await readStoredImage(root, 'deleted.png', 'image/png', 640)
+    await removeStoredImage(root, 'deleted.png')
+    await assert.rejects(readFile(path.join(root, 'media', 'deleted.png')))
+    assert.equal((await readStoredImage(root, 'retained.png', 'image/png', 320)).fallback, false)
+    assert.equal((await readdir(path.join(root, 'cache', 'thumbnails', 'v1'))).length, 1)
+    await removeStoredImage(root, 'deleted.png')
+    await assert.rejects(removeStoredImage(root, '../retained.png'), /Chemin média/)
+  } finally {
+    await rm(root, { recursive: true, force: true })
+  }
+})
 
 test('Miniatures : seules les tailles prévues sont acceptées et les petites images restent exactes', () => {
   assert.equal(parseImageWidth(null), undefined)

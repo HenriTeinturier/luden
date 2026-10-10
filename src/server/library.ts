@@ -260,12 +260,23 @@ export async function deleteGame(id: string) {
     include: { media: true, possessions: { include: { media: true } } },
   })
   await db.game.deleteMany({ where: { id, ownerId } })
-  if (game)
-    await removeUnusedImages([
-      ...game.media.map((m) => m.mediaId),
-      ...game.possessions.flatMap((p) => p.media.map((m) => m.mediaId)),
-      ...(game.coverId ? [game.coverId] : []),
-    ])
+  let cleaned = true
+  if (game) {
+    try {
+      cleaned = await removeUnusedImages([
+        ...game.media.map((m) => m.mediaId),
+        ...game.possessions.flatMap((p) => p.media.map((m) => m.mediaId)),
+        ...(game.coverId ? [game.coverId] : []),
+      ])
+    } catch {
+      cleaned = false
+    }
+  }
+  return {
+    mediaWarning: cleaned
+      ? null
+      : 'Le jeu a été supprimé, mais le nettoyage de ses images ou miniatures n’a pas pu être terminé. Vérifiez l’accès au dossier de données.',
+  }
 }
 
 export async function saveCollection(input: unknown) {

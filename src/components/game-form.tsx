@@ -10,8 +10,8 @@ import { Link, useNavigate, useRouter } from '@tanstack/react-router'
 import { ArrowLeft, Check, ImagePlus, Plus, Search, Sparkles, LoaderCircle } from 'lucide-react'
 import { emptyGame, gameSchema, type GameInput } from '../lib/validation'
 import type { Game } from '../lib/types'
-import { saveGameFn, searchIgdbFn } from '../server/functions'
-import { PageHeading, useLibrary } from './ui'
+import { deleteGameFn, saveGameFn, searchIgdbFn } from '../server/functions'
+import { Confirm, PageHeading, useLibrary } from './ui'
 
 type SearchResult = Extract<Awaited<ReturnType<typeof searchIgdbFn>>, { ok: true }>['data'][number]
 
@@ -19,12 +19,14 @@ export function GameForm({
   game,
   initialPlatformId,
   onSaved,
+  onDeleted,
   onCancel,
   onBusyChange,
 }: {
   game?: Game
   initialPlatformId?: string
   onSaved?: () => void
+  onDeleted?: () => void
   onCancel?: () => void
   onBusyChange?: (busy: boolean) => void
 }) {
@@ -206,6 +208,25 @@ export function GameForm({
       }
     } catch {
       setError('Enregistrement impossible. Vos champs ont été conservés, vous pouvez réessayer.')
+    } finally {
+      saving.current = false
+      setBusy(false)
+    }
+  }
+  async function remove() {
+    if (!game || saving.current || uploading) return
+    saving.current = true
+    setBusy(true)
+    setError('')
+    try {
+      const result = await deleteGameFn({ data: game.id })
+      if (!result.ok) throw new Error(result.error)
+      await router.invalidate({ sync: true })
+      if (onDeleted) onDeleted()
+      else await navigate({ to: '/library' })
+      notify(result.data.mediaWarning ?? 'Le jeu a été supprimé de votre bibliothèque.')
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'La suppression a échoué.')
     } finally {
       saving.current = false
       setBusy(false)
@@ -413,6 +434,24 @@ export function GameForm({
           </button>
         </div>
       </form>
+      {game && (
+        <div className="detail-danger">
+          <Confirm
+            title={`Supprimer « ${game.title} » ?`}
+            confirmLabel="Oui, supprimer ce jeu"
+            description="La fiche, ses souvenirs, ses possessions et ses associations aux collections seront définitivement supprimés. Ses images locales et miniatures inutilisées seront également supprimées."
+            onConfirm={() => void remove()}
+          >
+            <button
+              type="button"
+              className="text-link danger-text game-delete"
+              disabled={busy || uploading}
+            >
+              Supprimer ce jeu
+            </button>
+          </Confirm>
+        </div>
+      )}
     </div>
   )
 }

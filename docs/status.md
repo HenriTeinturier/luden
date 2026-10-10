@@ -1,5 +1,11 @@
 # État courant
 
+## Supprimer depuis l’édition — 2026-10-10
+
+- Action « Supprimer ce jeu » en rouge tout en bas de l’édition, avec confirmation nominative. Suppression puis retour à la galerie d’origine et notification ; doubles soumissions bloquées pendant import/sauvegarde/suppression. Action existante des détails conservée.
+- Fiche et relations supprimées en cascade ; médias propres au jeu et à ses possessions retirés de la base et du disque. Images partagées conservées. Nettoyage des miniatures de la révision courante et de l’ancienne clé identifiable, après drainage des conversions ; dossiers média vides retirés. Échec disque/verrou signalé dans la notification sans annoncer un échec de suppression de fiche.
+- Vérifié : TypeScript, lint, 39 tests, compilation et contrôle DB avec fixtures temporaires (partage, possessions, lignes média, original et cache). Les conversions Sharp et le contrôle DB nécessitent l’accès local hors isolation. Validation visuelle par Henri. Anciennes révisions de cache devenues non identifiables et imports abandonnés sans association : aucune purge globale ajoutée.
+
 ## Fonds Amiga et Amstrad — 2026-10-10
 
 - Cartes de l’accueil et de Mes plateformes : nouveaux fonds fournis par Henri, arc-en-ciel sur anthracite pour Amiga et graphite/rouge pour Amstrad. Copies inchangées dans `public/platforms/amiga/graphite.webp` et `public/platforms/amstrad/graphite.webp`, centrées en `cover`. Dégradés et anciennes couches de rayures atténuées retirés ; placements du logo/matériel, dimensions et responsive conservés. Même fond appliqué aux bandeaux historiques masqués.

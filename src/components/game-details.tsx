@@ -1411,7 +1411,9 @@ export function GameDetails({
                       if (!result.ok) throw new Error(result.error)
                       await router.invalidate({ sync: true })
                       onDeleted()
-                      notify('Le jeu a été supprimé de votre bibliothèque.')
+                      notify(
+                        result.data.mediaWarning ?? 'Le jeu a été supprimé de votre bibliothèque.',
+                      )
                     } catch (err) {
                       setError(err instanceof Error ? err.message : 'La suppression a échoué.')
                     } finally {

@@ -91,6 +91,7 @@ function GamePage() {
         key={game.id}
         game={game}
         onSaved={() => setEditing(false)}
+        onDeleted={returnToLibrary}
         onCancel={() => setEditing(false)}
       />
     )

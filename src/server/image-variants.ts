@@ -1,5 +1,5 @@
 import { createHash, randomUUID } from 'node:crypto'
-import { mkdir, readFile, rename, stat, unlink, writeFile } from 'node:fs/promises'
+import { mkdir, readFile, rename, rmdir, stat, unlink, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import sharp from 'sharp'
 import { imageWidths, type ImageWidth } from '../lib/image-variants'
@@ -8,6 +8,35 @@ import { resolveMediaPath } from './media-path'
 const pending = new Map<string, Promise<Buffer>>()
 const waiting: Array<() => void> = []
 let generating = 0
+
+// Capture the revision before removing the original, then drain conversions so they
+// cannot recreate its cache after deletion. Only known files in hash directories are removed.
+export async function removeStoredImage(root: string, relative: string) {
+  const source = resolveMediaPath(root, relative)
+  const original = await stat(source).catch((error: NodeJS.ErrnoException) => {
+    if (error.code !== 'ENOENT') throw error
+    return null
+  })
+  await unlink(source).catch((error: NodeJS.ErrnoException) => {
+    if (error.code !== 'ENOENT') throw error
+  })
+  if (!original) return
+  const revision = `${source}:${original.size}:${original.mtimeMs}`
+  for (const value of [revision, `${revision}:${original.ctimeMs}`]) {
+    const key = createHash('sha256').update(value).digest('hex')
+    const directory = path.resolve(root, 'cache', 'thumbnails', 'v1', key)
+    for (const width of imageWidths) {
+      const destination = path.join(directory, `${width}.webp`)
+      await pending.get(destination)?.catch(() => undefined)
+      await unlink(destination).catch((error: NodeJS.ErrnoException) => {
+        if (error.code !== 'ENOENT') throw error
+      })
+    }
+    await rmdir(directory).catch((error: NodeJS.ErrnoException) => {
+      if (error.code !== 'ENOENT') throw error
+    })
+  }
+}
 
 async function cacheThumbnail(destination: string, bytes: Buffer) {
   await mkdir(path.dirname(destination), { recursive: true })

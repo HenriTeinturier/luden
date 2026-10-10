@@ -35,7 +35,9 @@ fichier OneDrive sans changement des octets. Les miniatures identifiables avec l
 sont copiées atomiquement sous la nouvelle clé, sans conversion ; celles dont l’ancienne
 révision n’est plus identifiable sont régénérées une fois. Déplacement/remplacement produit
 une nouvelle variante. Un média absent ou supprimé n’est
-pas servi depuis ce cache. Les anciennes variantes ne sont pas purgées automatiquement.
+pas servi depuis ce cache. Le nettoyage d’un média inutilisé supprime aussi les miniatures de
+sa révision courante et de l’ancienne clé encore identifiable, en attendant les conversions en cours.
+Les anciennes révisions devenues non identifiables ne sont pas purgées automatiquement.
 Ce dossier est régénérable, excluable des sauvegardes et reste hors Git ; aucun original
 n’est modifié ou supprimé par la génération.
 
@@ -141,6 +143,11 @@ existant en COVER principale sans modifier les fichiers. Les anciens emplacement
 MediaAttachment son usage.
 Contraintes SQL supplémentaires : contexte exclusif, position positive et principale unique par contexte.
 Un média encore utilisé par un exemplaire ou un autre jeu n'est jamais nettoyé.
+
+La suppression est accessible en rouge en bas du formulaire d’édition, avec confirmation du
+nom du jeu, retour à la galerie et notification. Elle retire en cascade souvenirs, possessions,
+liens et associations aux collections, puis nettoie les médias qui ne sont plus utilisés et
+leurs miniatures identifiables. Un échec de nettoyage disque est signalé après suppression.
 
 Le formulaire envoie toute la galerie et les liens ; omission conserve l'existant pour compatibilité.
 La principale peut être de n'importe quelle catégorie. Les cartes utilisent toujours Game.coverId.

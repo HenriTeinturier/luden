@@ -577,3 +577,9 @@
 .danger-text:hover {
   color: #a14c40;
 }
+.form-page .game-delete {
+  color: #ff6b6b;
+}
+.form-page .game-delete:hover {
+  color: #ff9999;
+}

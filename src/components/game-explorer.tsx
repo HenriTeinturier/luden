@@ -228,6 +228,11 @@ export function GameExplorer({
             key={game.id}
             game={game}
             onBusyChange={setBusy}
+            onDeleted={() => {
+              setSelection(null)
+              setMode('sidebar')
+              restoreLibrary(true)
+            }}
             onSaved={() => {
               setMode(previousMode.current)
               if (previousMode.current === 'sidebar') restoreLibrary()

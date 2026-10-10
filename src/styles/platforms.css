@@ -63,7 +63,7 @@
 }
 .platform-card.platform-card-snes,
 .platform-snes .platform-hero {
-  background: #151a22 url('/platforms/snes/background.webp') center / cover no-repeat;
+  background: #151a22 url('/platforms/snes/graphite.webp') center / cover no-repeat;
   border-color: var(--hero-border);
 }
 .platform-card-snes .platform-card-top,

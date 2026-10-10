@@ -269,7 +269,7 @@ En-tête commun avec quatre statistiques ; ancien bandeau masqué comme pour les
 
 Carte d’entrée : logo et console transparents fournis par Henri dans `public/platforms/snes/`.
 Composition large sur deux colonnes, fond graphite aux quatre formes colorées fourni par Henri
-dans `public/platforms/snes/background.webp`, textes HTML ; originaux conservés hors repo.
+dans `public/platforms/snes/graphite.webp`, textes HTML ; originaux conservés hors repo.
 Fond copié sans modification, affiché centré en `cover` ; logo et console gardent leur placement.
 
 En-tête commun à tous les univers : uniquement quatre cartes de statistiques colorées au-dessus des filtres.

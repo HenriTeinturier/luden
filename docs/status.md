@@ -2,8 +2,9 @@
 
 ## Fond Super Nintendo — 2026-10-10
 
-- Carte Super Nintendo sur l’accueil et Mes plateformes : fond Aurora remplacé par le fond graphite aux quatre formes colorées fourni par Henri, copié sans modification dans `public/platforms/snes/background.webp`. Ancien voile diagonal retiré ; même fond appliqué au bandeau historique masqué. Placement du logo/console et dimensions conservés.
-- Vérifié : copie identique à l’original, formatage ciblé et diff. Validation visuelle par Henri ; changement CSS/asset uniquement.
+- Carte Super Nintendo sur l’accueil et Mes plateformes : fond Aurora remplacé par le fond graphite aux quatre formes colorées fourni par Henri, copié sans modification dans `public/platforms/snes/graphite.webp`. Ancien voile diagonal retiré ; même fond appliqué au bandeau historique masqué. Placement du logo/console et dimensions conservés.
+- Correction du fond uni reproduit dans Chrome : le serveur répondait 200 et le CSS référençait l’image, mais elle restait absente même après rechargement. Renommage de `background.webp` en `graphite.webp` : fond désormais visible dans Chrome après actualisation CSS, fichier inchangé. Cause exacte du blocage de l’ancien chemin non établie.
+- Vérifié : copie identique à l’original, rendu réel de la carte sur l’accueil dans Chrome, formatage ciblé et diff. Changement CSS/asset uniquement.
 
 ## Atari ST — 2026-10-10
 

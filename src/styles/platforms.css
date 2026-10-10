@@ -372,7 +372,7 @@
   }
 }
 
-/* Amiga: warm graphite, original hardware and the Commodore rainbow. */
+/* Amiga: anthracite rainbow stripes and original hardware. */
 .platform-card.platform-card-amiga,
 .platform-amiga .platform-hero {
   --amiga-border: #665456;
@@ -380,21 +380,8 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background:
-    radial-gradient(ellipse at 12% 90%, #443037 0, transparent 65%),
-    linear-gradient(115deg, #211c26, #121720 75%);
+  background: #171b22 url('/platforms/amiga/graphite.webp') center / cover no-repeat;
   border-color: var(--amiga-border);
-}
-.platform-card-amiga::before,
-.platform-amiga .platform-hero::before {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  inset: 0 0 0 30%;
-  background: url('/platforms/amiga/rainbow.webp') right center / cover no-repeat;
-  opacity: 0.55;
-  mask-image: linear-gradient(100deg, transparent, #000 85%);
-  pointer-events: none;
 }
 .platform-card.platform-card-amiga {
   grid-column: span 2;
@@ -717,27 +704,14 @@
   }
 }
 
-/* Amstrad CPC: midnight blue, red/graphite stripes and original hardware. */
+/* Amstrad CPC: graphite/red stripes and original hardware. */
 .platform-card.platform-card-amstrad,
 .platform-amstrad .platform-hero {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background:
-    radial-gradient(ellipse at 72% 100%, #123f82, transparent 65%),
-    linear-gradient(115deg, #0e172b, #101b3e);
+  background: #171b22 url('/platforms/amstrad/graphite.webp') center / cover no-repeat;
   border-color: #375b98;
-}
-.platform-card-amstrad::before,
-.platform-amstrad .platform-hero::before {
-  content: '';
-  position: absolute;
-  inset: 0 0 0 30%;
-  z-index: -1;
-  background: url('/platforms/amstrad/stripes.webp') center / cover no-repeat;
-  opacity: 0.32;
-  mask-image: linear-gradient(to right, transparent, #000 45%);
-  pointer-events: none;
 }
 .platform-card.platform-card-amstrad {
   grid-column: span 2;

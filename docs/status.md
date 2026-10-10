@@ -1,5 +1,10 @@
 # État courant
 
+## Fonds Amiga et Amstrad — 2026-10-10
+
+- Cartes de l’accueil et de Mes plateformes : nouveaux fonds fournis par Henri, arc-en-ciel sur anthracite pour Amiga et graphite/rouge pour Amstrad. Copies inchangées dans `public/platforms/amiga/graphite.webp` et `public/platforms/amstrad/graphite.webp`, centrées en `cover`. Dégradés et anciennes couches de rayures atténuées retirés ; placements du logo/matériel, dimensions et responsive conservés. Même fond appliqué aux bandeaux historiques masqués.
+- Vérifié : empreintes des copies identiques aux sources, formatage ciblé et diff ; deux cartes complètes affichées dans Chrome sur l’accueil. Serveur Vite local relancé en arrière-plan sur le port 3000. Changement CSS/assets uniquement.
+
 ## Fond Super Nintendo — 2026-10-10
 
 - Carte Super Nintendo sur l’accueil et Mes plateformes : fond Aurora remplacé par le fond graphite aux quatre formes colorées fourni par Henri, copié sans modification dans `public/platforms/snes/graphite.webp`. Ancien voile diagonal retiré ; même fond appliqué au bandeau historique masqué. Placement du logo/console et dimensions conservés.

@@ -237,7 +237,8 @@ illustrées et les visuels de repli sont conservés. Styles partagés entre `.pl
 
 ## Amiga
 
-Carte large et bandeau intérieur : fond graphite chaud, arc-en-ciel atténué à droite,
+Carte large et bandeau intérieur : rayures arc-en-ciel sur fond anthracite fournies par Henri,
+copiées sans modification dans `public/platforms/amiga/graphite.webp`, affichées centrées en `cover`,
 logo blanc et Amiga 500 avec souris. Le joystick Quickjoy complète le bandeau intérieur.
 Dans le bandeau compact, matériel agrandi et partiellement cadré par les bords, joystick devant
 l’ordinateur. Zoom réduit sous 1100 px, sans augmenter la hauteur du bandeau.
@@ -354,7 +355,8 @@ Validation visuelle et parcours opérationnels par l'utilisateur, pas de suite n
 ## Amstrad CPC
 
 Carte illustrée de même format que SNES et Amiga (deux colonnes, 250 px ; 190 px sur mobile).
-Fond bleu nuit, halo bleu et diagonales rouges/grises atténuées, logo à gauche et CPC 6128
+Fond graphite et diagonales rouges/grises fournis par Henri dans `public/platforms/amstrad/graphite.webp`,
+copiés sans modification et affichés centrés en `cover`, logo à gauche et CPC 6128
 avec écran à droite. Bandeau intérieur compact de 120 px : logo et compteurs à gauche,
 ordinateur légèrement recadré à droite. Matériel réduit sous 1100 px et masqué
 sur mobile. Les quatre assets utilisés sont dans `public/platforms/amstrad/`.

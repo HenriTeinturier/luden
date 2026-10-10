@@ -1,5 +1,10 @@
 # État courant
 
+## Fond Super Nintendo — 2026-10-10
+
+- Carte Super Nintendo sur l’accueil et Mes plateformes : fond Aurora remplacé par le fond graphite aux quatre formes colorées fourni par Henri, copié sans modification dans `public/platforms/snes/background.webp`. Ancien voile diagonal retiré ; même fond appliqué au bandeau historique masqué. Placement du logo/console et dimensions conservés.
+- Vérifié : copie identique à l’original, formatage ciblé et diff. Validation visuelle par Henri ; changement CSS/asset uniquement.
+
 ## Atari ST — 2026-10-10
 
 - Plateforme ajoutée au catalogue et à la base locale : `atari-st`, famille Ordinateurs, 1985, IGDB 63 (Atari ST/STE confirmé par l’API). Disponible dans les filtres et l’ajout manuel/IGDB ; ajout depuis son univers prérempli.

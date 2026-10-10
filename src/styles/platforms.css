@@ -63,23 +63,8 @@
 }
 .platform-card.platform-card-snes,
 .platform-snes .platform-hero {
-  background:
-    radial-gradient(
-      ellipse at 80% 85%,
-      color-mix(in srgb, var(--purple) 30%, transparent),
-      transparent 65%
-    ),
-    linear-gradient(120deg, var(--sidebar-background), var(--identity-background));
+  background: #151a22 url('/platforms/snes/background.webp') center / cover no-repeat;
   border-color: var(--hero-border);
-}
-.platform-card-snes::before,
-.platform-snes .platform-hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: linear-gradient(125deg, transparent 55%, var(--soft-light) 55% 66%, transparent 66%);
-  opacity: 0.3;
 }
 .platform-card-snes .platform-card-top,
 .platform-card-snes .platform-card-bottom {

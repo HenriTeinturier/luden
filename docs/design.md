@@ -268,7 +268,9 @@ En-tête commun avec quatre statistiques ; ancien bandeau masqué comme pour les
 ## Super Nintendo
 
 Carte d’entrée : logo et console transparents fournis par Henri dans `public/platforms/snes/`.
-Composition large sur deux colonnes, fond CSS Aurora, textes HTML ; originaux conservés hors repo.
+Composition large sur deux colonnes, fond graphite aux quatre formes colorées fourni par Henri
+dans `public/platforms/snes/background.webp`, textes HTML ; originaux conservés hors repo.
+Fond copié sans modification, affiché centré en `cover` ; logo et console gardent leur placement.
 
 En-tête commun à tous les univers : uniquement quatre cartes de statistiques colorées au-dessus des filtres.
 Titre visuellement masqué pour l’accessibilité ; aucun texte de présentation ni tag de plateforme.

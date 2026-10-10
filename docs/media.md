@@ -14,6 +14,8 @@ que les petites captures et galeries média utilisent ces variantes via `srcset`
 Le navigateur choisit selon l’espace affiché et sa densité de pixels ; chargement différé
 des jaquettes et petites galeries. La grande scène et les agrandissements gardent les
 originaux. Les fonds et visuels de plateformes ne sont pas concernés.
+Le décodage est laissé au choix natif du navigateur : forcer `decoding="async"` a provoqué
+dans Chrome des jaquettes chargées mais invisibles jusqu’à un survol/défilement.
 
 `src/server/image-variants.ts` crée uniquement la taille demandée en arrière-plan au premier accès,
 pour les médias existants comme pour les prochains imports (fichier, URL ou IGDB).

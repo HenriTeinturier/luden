@@ -1,5 +1,12 @@
 # État courant
 
+## Jaquettes chargées mais invisibles dans Chrome — 2026-10-10
+
+- Symptôme reproduit dans Chrome sur la grille Amiga : Beneath a Steel Sky, Banshee, The Chaos Engine et Guy Roux Manager restent vides alors que leurs images sont complètes, avec dimensions et source valides. Le blocage est au rendu, pas à la génération des miniatures.
+- Retrait de `decoding="async"` forcé dans le helper commun des images ; retour au choix natif du navigateur. Après modification et reconstruction de la grille par changement de filtre au clavier, les deux premières rangées s’affichent entièrement sans survol des cartes ni défilement. Sources responsives, chargement différé et cache disque conservés.
+- Vérifié : TypeScript, lint ciblé, formatage et diff ; contrôle visuel Chrome Amiga puis SNES sans survol/défilement. Aucun changement serveur ou de données.
+- Pour les contrôles Chrome : ouvrir une nouvelle galerie depuis un lien de Luden avec Ctrl+clic évite l’erreur générique rencontrée avec les ouvertures directes automatisées. Ne pas quitter/recharger un formulaire en cours dans l’onglet utilisateur ; contrôle effectué dans un onglet séparé.
+
 ## Cache des miniatures stable après lecture/synchronisation — 2026-10-10
 
 - Audit sur trois jaquettes, quatre accès chacune : les variantes déjà identifiées sont réutilisées sans réécriture. Sur deux sources, la première lecture a changé `ctime` alors que taille, `mtime` et SHA-256 du contenu restaient identiques ; l’ancienne clé incluait cette date de métadonnées et pouvait perdre la référence au cache.

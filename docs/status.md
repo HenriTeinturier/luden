@@ -1,5 +1,12 @@
 # État courant
 
+## Cache des miniatures stable après lecture/synchronisation — 2026-10-10
+
+- Audit sur trois jaquettes, quatre accès chacune : les variantes déjà identifiées sont réutilisées sans réécriture. Sur deux sources, la première lecture a changé `ctime` alors que taille, `mtime` et SHA-256 du contenu restaient identiques ; l’ancienne clé incluait cette date de métadonnées et pouvait perdre la référence au cache.
+- Clé désormais fondée sur chemin, taille et `mtime`, sans `ctime`. Un changement de métadonnées seul ne déclenche plus de conversion. Les anciennes variantes encore identifiables sont reprises par copie atomique, sans recalcul ; une ancienne révision devenue introuvable nécessite une génération unique. Originaux et comportement non bloquant conservés.
+- Tests : changement de métadonnées sans modification du contenu conserve octets, date et dossier de miniature ; reprise de l’ancien cache sur trois accès avec zéro conversion. Modification du contenu, suppression et conversions en arrière-plan toujours couvertes.
+- Vérifié : TypeScript, lint, 38 tests, compilation, formatage et diff. Après correction, contrôle HTTP sur trois jaquettes × quatre accès : miniatures servies dès la reprise de l’ancien cache, dates d’écriture inchangées aux accès suivants et contenu original intact.
+
 ## Affichage immédiat quand les miniatures manquent — 2026-10-10
 
 - Correction de la régression au premier affichage : les réponses image attendaient les conversions, limitées à deux simultanément. Les grandes grilles formaient une file d’attente visible.

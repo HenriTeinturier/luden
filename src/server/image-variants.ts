@@ -9,6 +9,17 @@ const pending = new Map<string, Promise<Buffer>>()
 const waiting: Array<() => void> = []
 let generating = 0
 
+async function cacheThumbnail(destination: string, bytes: Buffer) {
+  await mkdir(path.dirname(destination), { recursive: true })
+  const temporary = `${destination}.${randomUUID()}.tmp`
+  try {
+    await writeFile(temporary, bytes, { flag: 'wx' })
+    await rename(temporary, destination)
+  } finally {
+    await unlink(temporary).catch(() => undefined)
+  }
+}
+
 async function generate(action: () => Promise<Buffer>) {
   if (generating >= 2) await new Promise<void>((resolve) => waiting.push(resolve))
   else generating++
@@ -23,13 +34,29 @@ async function generate(action: () => Promise<Buffer>) {
 
 async function thumbnail(root: string, source: string, width: ImageWidth) {
   const original = await stat(source)
-  // Imports are immutable. File metadata also invalidates manually replaced source files.
-  const revision = `${source}:${original.size}:${original.mtimeMs}:${original.ctimeMs}`
+  // ctime changes on metadata-only updates (including OneDrive hydration).
+  // Use only content modification time and size to invalidate an unchanged source path.
+  const revision = `${source}:${original.size}:${original.mtimeMs}`
   const key = createHash('sha256').update(revision).digest('hex')
   const directory = path.join(root, 'cache', 'thumbnails', 'v1', key)
   const destination = path.join(directory, `${width}.webp`)
   try {
     return await readFile(destination)
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error
+  }
+  // Reuse the previous cache format when its current revision is still identifiable.
+  // Copy only: existing variants and any older running process remain undisturbed.
+  const legacyKey = createHash('sha256').update(`${revision}:${original.ctimeMs}`).digest('hex')
+  const legacy = path.join(root, 'cache', 'thumbnails', 'v1', legacyKey, `${width}.webp`)
+  try {
+    const bytes = await readFile(legacy)
+    try {
+      await cacheThumbnail(destination, bytes)
+    } catch {
+      // Even a read-only cache can serve a previously generated thumbnail.
+    }
+    return bytes
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error
   }
@@ -45,16 +72,9 @@ async function thumbnail(root: string, source: string, width: ImageWidth) {
       .webp({ quality: 84, alphaQuality: 100 })
       .toBuffer()
     const current = await stat(source)
-    if (`${source}:${current.size}:${current.mtimeMs}:${current.ctimeMs}` !== revision)
+    if (`${source}:${current.size}:${current.mtimeMs}` !== revision)
       throw new Error('Image modifiée pendant la génération.')
-    await mkdir(directory, { recursive: true })
-    const temporary = `${destination}.${randomUUID()}.tmp`
-    try {
-      await writeFile(temporary, bytes, { flag: 'wx' })
-      await rename(temporary, destination)
-    } finally {
-      await unlink(temporary).catch(() => undefined)
-    }
+    await cacheThumbnail(destination, bytes)
     return bytes
   }).finally(() => pending.delete(destination))
   pending.set(destination, job)

@@ -27,8 +27,12 @@ Un échec de conversion ou de cache laisse l’original disponible et permet une
 tentative à la prochaine demande ; variantes réussies en cache navigateur privé pendant un jour.
 
 Cache disque : `LUDEN_DATA_DIR/cache/thumbnails/v1/<empreinte>/<largeur>.webp`, hors des
-originaux et du rangement des médias. L’empreinte inclut chemin, taille et dates du fichier ;
-déplacement/remplacement produit une nouvelle variante. Un média absent ou supprimé n’est
+originaux et du rangement des médias. L’empreinte inclut chemin, taille et date de modification
+du contenu (`mtime`) ; elle ignore `ctime`, qui peut changer à la lecture/synchronisation d’un
+fichier OneDrive sans changement des octets. Les miniatures identifiables avec l’ancienne clé
+sont copiées atomiquement sous la nouvelle clé, sans conversion ; celles dont l’ancienne
+révision n’est plus identifiable sont régénérées une fois. Déplacement/remplacement produit
+une nouvelle variante. Un média absent ou supprimé n’est
 pas servi depuis ce cache. Les anciennes variantes ne sont pas purgées automatiquement.
 Ce dossier est régénérable, excluable des sauvegardes et reste hors Git ; aucun original
 n’est modifié ou supprimé par la génération.

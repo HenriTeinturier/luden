@@ -1,6 +1,17 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { mkdtemp, mkdir, readFile, readdir, rm, stat, unlink, writeFile } from 'node:fs/promises'
+import { createHash } from 'node:crypto'
+import {
+  mkdtemp,
+  mkdir,
+  readFile,
+  readdir,
+  rm,
+  stat,
+  unlink,
+  utimes,
+  writeFile,
+} from 'node:fs/promises'
 import os from 'node:os'
 import path from 'node:path'
 import sharp, { type Sharp } from 'sharp'
@@ -47,6 +58,8 @@ test('Miniatures : proportions, transparence, original intact et cache réutilis
       .toBuffer()
     const source = path.join(root, 'media', 'portrait.png')
     await writeFile(source, original)
+    const modifiedAt = new Date('2026-01-01T00:00:00.000Z')
+    await utimes(source, modifiedAt, modifiedAt)
     await readyThumbnail(root, 'portrait.png', 320)
     const results = await Promise.all(
       Array.from({ length: 8 }, () => readStoredImage(root, 'portrait.png', 'image/png', 320)),
@@ -74,6 +87,18 @@ test('Miniatures : proportions, transparence, original intact et cache réutilis
     assert.deepEqual(await readFile(source), original)
     assert.deepEqual((await readStoredImage(root, 'portrait.png', 'image/png')).bytes, original)
 
+    // Metadata-only updates must keep the same thumbnail, as with hydrated cloud files.
+    const sourceBefore = await stat(source)
+    await utimes(source, new Date(), modifiedAt)
+    const sourceAfter = await stat(source)
+    assert.equal(sourceAfter.mtimeMs, sourceBefore.mtimeMs)
+    assert.notEqual(sourceAfter.ctimeMs, sourceBefore.ctimeMs)
+    const reused = await readStoredImage(root, 'portrait.png', 'image/png', 320)
+    assert.equal(reused.fallback, false)
+    assert.deepEqual(reused.bytes, results[0].bytes)
+    assert.equal((await stat(cached)).mtimeMs, before.mtimeMs)
+    assert.deepEqual(await readdir(cacheRoot), revisions)
+
     // A replaced image must never reuse the previous revision's thumbnail.
     await writeFile(
       source,
@@ -93,6 +118,41 @@ test('Miniatures : proportions, transparence, original intact et cache réutilis
     await assert.rejects(readStoredImage(root, 'portrait.png', 'image/png', 640))
   } finally {
     // Only the unique directory created by this test.
+    await rm(root, { recursive: true, force: true })
+  }
+})
+
+test('Miniatures : les anciennes variantes identifiables sont reprises sans conversion', async (t) => {
+  const root = await mkdtemp(path.join(os.tmpdir(), 'luden-thumbnails-'))
+  try {
+    await mkdir(path.join(root, 'media'))
+    const original = await sharp({
+      create: { width: 800, height: 600, channels: 3, background: '#987654' },
+    })
+      .png()
+      .toBuffer()
+    const source = path.join(root, 'media', 'legacy.png')
+    await writeFile(source, original)
+    const info = await stat(source)
+    const key = createHash('sha256')
+      .update(`${source}:${info.size}:${info.mtimeMs}:${info.ctimeMs}`)
+      .digest('hex')
+    const legacy = path.join(root, 'cache', 'thumbnails', 'v1', key)
+    await mkdir(legacy, { recursive: true })
+    const bytes = await sharp(original).resize({ width: 320 }).webp().toBuffer()
+    await writeFile(path.join(legacy, '320.webp'), bytes)
+    const convert = t.mock.method(sharp.prototype, 'toBuffer', () => {
+      throw new Error('Une miniature existante ne doit pas être recalculée.')
+    })
+    for (let visit = 0; visit < 3; visit++) {
+      const image = await readStoredImage(root, 'legacy.png', 'image/png', 320)
+      assert.equal(image.fallback, false)
+      assert.deepEqual(image.bytes, bytes)
+    }
+    assert.equal(convert.mock.callCount(), 0)
+    assert.equal((await readdir(path.join(root, 'cache', 'thumbnails', 'v1'))).length, 2)
+  } finally {
+    t.mock.restoreAll()
     await rm(root, { recursive: true, force: true })
   }
 })

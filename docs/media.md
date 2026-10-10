@@ -15,13 +15,16 @@ Le navigateur choisit selon l’espace affiché et sa densité de pixels ; charg
 des jaquettes et petites galeries. La grande scène et les agrandissements gardent les
 originaux. Les fonds et visuels de plateformes ne sont pas concernés.
 
-`src/server/image-variants.ts` crée uniquement la taille demandée au premier accès,
+`src/server/image-variants.ts` crée uniquement la taille demandée en arrière-plan au premier accès,
 pour les médias existants comme pour les prochains imports (fichier, URL ou IGDB).
+Si la miniature manque ou est en cours de génération, la requête sert immédiatement
+l’original avec `private, no-store`, sans attendre de place dans la file ni la conversion.
+Une visite suivante utilise la miniature une fois prête ; pas de remplacement forcé à l’écran.
 Aucune migration ni préparation manuelle. Deux conversions simultanées maximum par
 processus ; les demandes identiques partagent le même travail. Entrée Sharp en mémoire
 pour éviter les verrous de fichiers Windows, écriture temporaire puis renommage atomique.
-Un échec de conversion ou de cache sert l’original avec `private, no-store` pour permettre
-une nouvelle tentative ; variantes réussies en cache navigateur privé pendant un jour.
+Un échec de conversion ou de cache laisse l’original disponible et permet une nouvelle
+tentative à la prochaine demande ; variantes réussies en cache navigateur privé pendant un jour.
 
 Cache disque : `LUDEN_DATA_DIR/cache/thumbnails/v1/<empreinte>/<largeur>.webp`, hors des
 originaux et du rangement des médias. L’empreinte inclut chemin, taille et dates du fichier ;

@@ -3,9 +3,18 @@ import assert from 'node:assert/strict'
 import { mkdtemp, mkdir, readFile, readdir, rm, stat, unlink, writeFile } from 'node:fs/promises'
 import os from 'node:os'
 import path from 'node:path'
-import sharp from 'sharp'
+import sharp, { type Sharp } from 'sharp'
 import { mediaImageSources, parseImageWidth } from '../src/lib/image-variants'
 import { readStoredImage } from '../src/server/image-variants'
+
+async function readyThumbnail(root: string, relative: string, width: 320 | 640) {
+  for (let attempt = 0; attempt < 500; attempt++) {
+    const result = await readStoredImage(root, relative, 'image/png', width)
+    if (!result.fallback) return result
+    await new Promise((resolve) => setTimeout(resolve, 20))
+  }
+  throw new Error('La miniature ne s’est pas créée en arrière-plan.')
+}
 
 test('Miniatures : seules les tailles prévues sont acceptées et les petites images restent exactes', () => {
   assert.equal(parseImageWidth(null), undefined)
@@ -38,6 +47,7 @@ test('Miniatures : proportions, transparence, original intact et cache réutilis
       .toBuffer()
     const source = path.join(root, 'media', 'portrait.png')
     await writeFile(source, original)
+    await readyThumbnail(root, 'portrait.png', 320)
     const results = await Promise.all(
       Array.from({ length: 8 }, () => readStoredImage(root, 'portrait.png', 'image/png', 320)),
     )
@@ -73,7 +83,7 @@ test('Miniatures : proportions, transparence, original intact et cache réutilis
         .png()
         .toBuffer(),
     )
-    const changed = await readStoredImage(root, 'portrait.png', 'image/png', 640)
+    const changed = await readyThumbnail(root, 'portrait.png', 640)
     assert.equal(changed.fallback, false)
     const small = await sharp(changed.bytes).metadata()
     assert.equal(small.width, 200)
@@ -83,6 +93,58 @@ test('Miniatures : proportions, transparence, original intact et cache réutilis
     await assert.rejects(readStoredImage(root, 'portrait.png', 'image/png', 640))
   } finally {
     // Only the unique directory created by this test.
+    await rm(root, { recursive: true, force: true })
+  }
+})
+
+test('Miniatures : une conversion bloquée ne bloque aucune réponse image à froid', async (t) => {
+  const root = await mkdtemp(path.join(os.tmpdir(), 'luden-thumbnails-'))
+  let release!: () => void
+  const gate = new Promise<void>((resolve) => {
+    release = resolve
+  })
+  let requests: Promise<Awaited<ReturnType<typeof readStoredImage>>[]> | undefined
+  let timer: ReturnType<typeof setTimeout> | undefined
+  try {
+    await mkdir(path.join(root, 'media'))
+    const original = await sharp({
+      create: { width: 800, height: 600, channels: 3, background: '#345678' },
+    })
+      .png()
+      .toBuffer()
+    await writeFile(path.join(root, 'media', 'cold.png'), original)
+    const convert = sharp.prototype.toBuffer
+    let conversions = 0
+    t.mock.method(sharp.prototype, 'toBuffer', async function (this: Sharp) {
+      conversions++
+      await gate
+      return Reflect.apply(convert, this, [])
+    })
+    requests = Promise.all(
+      Array.from({ length: 8 }, () => readStoredImage(root, 'cold.png', 'image/png', 320)),
+    )
+    const results = await Promise.race([
+      requests,
+      new Promise<never>((_, reject) => {
+        timer = setTimeout(() => reject(new Error('Réponses bloquées par la conversion.')), 2000)
+      }),
+    ])
+    for (const result of results) {
+      assert.equal(result.fallback, true)
+      assert.equal(result.mimeType, 'image/png')
+      assert.deepEqual(result.bytes, original)
+    }
+    release()
+    const cached = await readyThumbnail(root, 'cold.png', 320)
+    assert.equal((await sharp(cached.bytes).metadata()).width, 320)
+    assert.equal(conversions, 1)
+  } finally {
+    clearTimeout(timer)
+    release()
+    await requests
+    // Drain the work started by this test before deleting its unique directory.
+    await readyThumbnail(root, 'cold.png', 320)
+    t.mock.restoreAll()
     await rm(root, { recursive: true, force: true })
   }
 })
@@ -110,6 +172,10 @@ test('Miniatures : cache indisponible et conversion impossible servent la grande
     )
     await assert.rejects(readStoredImage(root, 'missing.webp', 'image/webp', 320))
   } finally {
-    await rm(root, { recursive: true, force: true })
+    // Invalidate the sources before removing the blocked cache: background work must abort,
+    // even if a conversion finishes while the temporary directory is being cleaned up.
+    await unlink(path.join(root, 'media', 'image.png')).catch(() => undefined)
+    await unlink(path.join(root, 'media', 'invalid.webp')).catch(() => undefined)
+    await rm(root, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 })
   }
 })

@@ -34,7 +34,7 @@ async function thumbnail(root: string, source: string, width: ImageWidth) {
     if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error
   }
   const existing = pending.get(destination)
-  if (existing) return existing
+  if (existing) return null
   const job = generate(async () => {
     // Buffer input avoids libvips retaining a file handle that blocks moves/deletes on Windows.
     const bytes = await sharp(await readFile(source), {
@@ -58,7 +58,10 @@ async function thumbnail(root: string, source: string, width: ImageWidth) {
     return bytes
   }).finally(() => pending.delete(destination))
   pending.set(destination, job)
-  return job
+  // Never make an image response wait for conversion or for the background queue.
+  // Failed jobs can be retried by a later request; no unhandled background rejection.
+  void job.catch(() => undefined)
+  return null
 }
 
 // Call only after checking the media owner. Cache hits never bypass that check.
@@ -73,15 +76,12 @@ export async function readStoredImage(
     throw new Error('Taille de miniature invalide.')
   if (width) {
     try {
-      return {
-        bytes: await thumbnail(root, source, width),
-        mimeType: 'image/webp',
-        fallback: false,
-      }
+      const bytes = await thumbnail(root, source, width)
+      if (bytes) return { bytes, mimeType: 'image/webp', fallback: false }
     } catch {
       // A full disk, unavailable cache or conversion failure must not hide the user's image.
-      return { bytes: await readFile(source), mimeType, fallback: true }
     }
+    return { bytes: await readFile(source), mimeType, fallback: true }
   }
   return { bytes: await readFile(source), mimeType, fallback: false }
 }

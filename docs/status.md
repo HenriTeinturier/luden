@@ -1,5 +1,12 @@
 # État courant
 
+## Affichage immédiat quand les miniatures manquent — 2026-10-10
+
+- Correction de la régression au premier affichage : les réponses image attendaient les conversions, limitées à deux simultanément. Les grandes grilles formaient une file d’attente visible.
+- Miniature absente/en cours : original servi sans attendre la conversion, avec `private, no-store`. Génération en arrière-plan, toujours mutualisée et limitée à deux traitements ; miniature réutilisée aux affichages suivants. Aucun changement aux médias, à la présentation ou au chargement différé existant.
+- Test de régression avec conversion volontairement bloquée : huit requêtes retournent les originaux avant sa libération, une seule miniature générée puis réutilisée. Contrôle HTTP local à froid : original servi en 41 ms ; demande suivante avec miniature en cache, dimensions et en-têtes corrects. Mesure ponctuelle d’une image, pas un temps global de navigation.
+- Vérifié : TypeScript, lint, 37 tests, compilation, formatage et diff. Rendu visuel à confirmer par Henri.
+
 ## Miniatures automatiques — 2026-10-10
 
 - Variantes WebP de 320, 640 et 1280 px de large, créées au premier affichage puis conservées sous `LUDEN_DATA_DIR/cache/thumbnails/v1`. Fonctionne pour les médias existants et futurs imports, sans migration ; proportions/transparence conservées et aucun agrandissement.

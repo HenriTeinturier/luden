@@ -36,6 +36,8 @@ Miniatures à la demande : `/media/<id>?w=320|640|1280` → `media.readImage` (p
 → `image-variants.ts` (Sharp, deux conversions simultanées, cache disque régénérable sous
 `LUDEN_DATA_DIR/cache/thumbnails/v1`). Les vues compactes choisissent une taille via
 `srcset`/`sizes` ; originaux conservés pour les agrandissements. Aucune migration nécessaire.
+Cache absent : original servi sans attendre, génération en arrière-plan ; les requêtes
+image ne sont jamais mises en attente de la conversion.
 `remote-image.ts` : HTTP(S), IP publiques uniquement, DNS vérifié et fixé pour la connexion,
 redirections revalidées, MIME autorisé, limite 12 Mo et délai 20 secondes.
 Les retraits sont appliqués à l'enregistrement ; seuls les fichiers sans référence sont supprimés.

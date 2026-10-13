@@ -585,6 +585,28 @@
 .dossier-compact .game-scene[data-platform='amiga'] .scene-support-stand {
   transform: translateY(16px);
 }
+/* Tall Mega Drive cases beside wide cartridges; preserve the supplied image ratios. */
+.dossier-compact .game-scene[data-platform='megadrive'] .scene-box {
+  height: 128%;
+}
+.dossier-compact .game-scene[data-platform='megadrive'] .has-support .scene-box {
+  max-width: 56%;
+  flex-basis: 56%;
+}
+.dossier-compact .game-scene[data-platform='megadrive'] .scene-support-stand {
+  flex-basis: 48%;
+  height: 78%;
+  margin-left: -4%;
+  transform: translateY(16px);
+}
+.dossier-full .game-scene[data-platform='megadrive'] .has-support .scene-box {
+  max-width: 58%;
+}
+.dossier-full .game-scene[data-platform='megadrive'] .scene-support {
+  width: 46%;
+  max-height: 60%;
+  margin-left: -4%;
+}
 .dossier-compact .dossier-body {
   padding: 0 var(--dossier-gutter) 18px;
   position: relative;

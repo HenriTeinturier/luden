@@ -144,7 +144,7 @@ export function UniverseSidebar({
           />
         ) : (
           <div className="universe-banner-fallback">
-            {['snes', 'amiga', 'amstrad', 'atari-st'].includes(platform.id) ? (
+            {['snes', 'amiga', 'amstrad', 'atari-st', 'megadrive'].includes(platform.id) ? (
               <img src={`/platforms/${platform.id}/logo.webp`} alt={platform.name} />
             ) : (
               <h2>{platform.name}</h2>
@@ -181,7 +181,15 @@ export function UniverseSidebar({
           </div>
         ) : (
           <div className="universe-sidebar-fallback">
-            {platform.id === 'atari-st' ? (
+            {platform.id === 'megadrive' ? (
+              <img
+                className="universe-fallback-hardware"
+                src="/platforms/megadrive/console.webp"
+                alt=""
+                width={1000}
+                height={605}
+              />
+            ) : platform.id === 'atari-st' ? (
               <img
                 className="universe-fallback-hardware"
                 src="/platforms/atari-st/computer.webp"

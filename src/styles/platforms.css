@@ -1,6 +1,6 @@
 /* Platform identities. No changes to stored game images. */
 @media (min-width: 701px) {
-  :is(.platform-amiga, .platform-amstrad, .platform-atari-st) .game-grid {
+  :is(.platform-amiga, .platform-amstrad, .platform-atari-st, .platform-megadrive) .game-grid {
     grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
   }
 }
@@ -265,13 +265,16 @@
 .platform-snes .results-line {
   font-size: 13px;
 }
-:is(.platform-amiga, .platform-amstrad, .platform-atari-st)
+:is(.platform-amiga, .platform-amstrad, .platform-atari-st, .platform-megadrive)
   .game-card
   :is(.game-platform, .game-card-bottom, .card-memory),
-:is(.platform-amiga, .platform-amstrad, .platform-atari-st) .game-card .stars small {
+:is(.platform-amiga, .platform-amstrad, .platform-atari-st, .platform-megadrive)
+  .game-card
+  .stars
+  small {
   display: none;
 }
-:is(.platform-amiga, .platform-amstrad, .platform-atari-st) .game-card h3 {
+:is(.platform-amiga, .platform-amstrad, .platform-atari-st, .platform-megadrive) .game-card h3 {
   margin: 0 0 8px;
   display: block;
   font-size: 13px;
@@ -280,18 +283,27 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-:is(.platform-amiga, .platform-amstrad, .platform-atari-st) .game-grid .game-card {
+:is(.platform-amiga, .platform-amstrad, .platform-atari-st, .platform-megadrive)
+  .game-grid
+  .game-card {
   padding: 0;
   overflow: visible;
 }
-:is(.platform-amiga, .platform-amstrad, .platform-atari-st) .game-grid .game-cover {
+:is(.platform-amiga, .platform-amstrad, .platform-atari-st, .platform-megadrive)
+  .game-grid
+  .game-cover {
   border: 0;
   border-radius: 9px 9px 0 0;
 }
-:is(.platform-amiga, .platform-amstrad, .platform-atari-st) .game-grid .game-cover img {
+:is(.platform-amiga, .platform-amstrad, .platform-atari-st, .platform-megadrive)
+  .game-grid
+  .game-cover
+  img {
   object-position: center top;
 }
-:is(.platform-amiga, .platform-amstrad, .platform-atari-st) .game-grid .game-card-info {
+:is(.platform-amiga, .platform-amstrad, .platform-atari-st, .platform-megadrive)
+  .game-grid
+  .game-card-info {
   border-radius: 0 0 9px 9px;
   padding: 12px;
 }
@@ -305,6 +317,46 @@
   .platform-snes .gallery-toolbar,
   .platform-snes .results-line {
     flex-wrap: wrap;
+  }
+}
+
+/* Mega Drive: graphite grid, silver logo and original console/controller. */
+.platform-card.platform-card-megadrive {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #171717 url('/platforms/megadrive/graphite.webp') center / cover no-repeat;
+  border-color: #494345;
+}
+.platform-card-megadrive .platform-card-top {
+  align-items: flex-start;
+}
+.platform-card-megadrive .platform-card-logo {
+  width: 47%;
+  max-width: 340px;
+  height: auto;
+  margin-top: 16px;
+}
+.platform-card-megadrive .platform-card-console {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 56%;
+  height: 96%;
+  object-fit: contain;
+  object-position: right bottom;
+  filter: drop-shadow(0 12px 12px #0008);
+  z-index: -1;
+}
+.platform-card-megadrive .platform-card-bottom {
+  width: 43%;
+}
+.platform-card.platform-card-megadrive:hover {
+  border-color: #ce4148;
+}
+@media (max-width: 720px) {
+  .platform-card-megadrive .platform-card-logo {
+    margin-top: 12px;
   }
 }
 

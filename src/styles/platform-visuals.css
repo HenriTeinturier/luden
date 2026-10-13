@@ -115,6 +115,35 @@
   height: auto;
   filter: drop-shadow(0 12px 12px #0008);
 }
+.universe-megadrive :is(.universe-banner-fallback, .universe-sidebar-fallback) {
+  background: #171717 url('/platforms/megadrive/graphite.webp') center / cover no-repeat;
+}
+.universe-megadrive .universe-banner-fallback {
+  padding-top: 64px;
+  padding-right: 24px;
+  padding-bottom: 24px;
+}
+.universe-megadrive .universe-fallback-hardware {
+  max-height: 65%;
+  object-fit: contain;
+}
+@media (max-width: 800px) {
+  .universe-megadrive .universe-banner-fallback {
+    padding: 54px 24px 12px;
+  }
+  .universe-megadrive .universe-banner-fallback img {
+    max-height: 35px;
+  }
+  .universe-megadrive .universe-sidebar-fallback {
+    padding: 12px;
+  }
+  .universe-megadrive .universe-fallback-hardware {
+    max-height: 100%;
+  }
+  .universe-megadrive .universe-sidebar-fallback :is(h2, p) {
+    display: none;
+  }
+}
 .universe-poster {
   position: relative;
   flex: 1;

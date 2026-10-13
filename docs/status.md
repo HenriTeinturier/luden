@@ -1,5 +1,12 @@
 # État courant
 
+## Identité Mega Drive — 2026-10-13
+
+- Assets de présentation fournis (console/manette, logo et fond quadrillé rouge/graphite) copiés sans modification dans `public/platforms/megadrive/`. Carte d’accueil et Mes plateformes composée comme la référence ; logo aussi dans les galeries mixtes et raccourci d’univers dès qu’un jeu existe.
+- Sidebar sans sélection : logo et composition console sur le fond fourni, responsive, en repli des bandeaux/affiches personnels. Aucun média personnel ni exemple Orbital importé dans la bibliothèque.
+- Galerie verticale 2:3, titre et étoiles comme Amiga/Atari ST. Consultation : boîte verticale agrandie et cartouche large à droite, proportions conservées dans la sidebar et la fiche complète. Fond propre au jeu toujours disponible via l’éditeur commun.
+- Vérifié : TypeScript, lint ciblé, compilation, formatage et diff ; dimensions/transparence des trois assets contrôlées. Validation visuelle finale par Henri.
+
 ## Supprimer depuis l’édition — 2026-10-10
 
 - Action « Supprimer ce jeu » en rouge tout en bas de l’édition, avec confirmation nominative. Suppression puis retour à la galerie d’origine et notification ; doubles soumissions bloquées pendant import/sauvegarde/suppression. Action existante des détails conservée.

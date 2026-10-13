@@ -252,6 +252,19 @@ une seule ligne avec ellipsis et nom complet au survol. Pas de note chiffrée, p
 statut, icônes de possession ou extrait de souvenir. Favori conservé sur la
 jaquette comme pour SNES. Les informations détaillées restent dans la fiche.
 
+## Mega Drive
+
+Carte d’entrée : fond quadrillé graphite avec diagonales rouges/grises, logo argenté à gauche,
+console et manette à droite, selon la référence fournie. Trois fichiers de présentation copiés
+sans modification dans `public/platforms/megadrive/`. Dimensions communes des cartes et responsive
+conservés. Logo dans les galeries mixtes et la sidebar ; console sur le fond fourni quand aucune
+affiche personnelle n’est active. Les bandeaux et affiches personnels restent prioritaires.
+
+Boîtes de galerie au ratio 2:3, entières, titre sur une ligne et étoiles. Scène de consultation :
+boîte verticale (cadre à 128 % en sidebar) et cartouche paysage à droite, sans déformation ni
+recadrage. Exemples Orbital utilisés uniquement comme références de proportions, non importés.
+Fond de jeu et cadrage restent configurables par l’éditeur commun, comme pour les autres plateformes.
+
 ## Atari ST
 
 Carte d’entrée de même format que l’Amiga : fond bleu marine à bandes diagonales, logo bleu/blanc

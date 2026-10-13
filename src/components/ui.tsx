@@ -110,7 +110,7 @@ export function PlatformArt({
   )
 }
 export function PlatformCard({ platform, count }: { platform: Platform; count: number }) {
-  const illustrated = ['snes', 'amiga', 'amstrad', 'atari-st'].includes(platform.id)
+  const illustrated = ['snes', 'amiga', 'amstrad', 'atari-st', 'megadrive'].includes(platform.id)
   return (
     <Link
       to="/platforms/$platformId"
@@ -130,8 +130,8 @@ export function PlatformCard({ platform, count }: { platform: Platform; count: n
         <img
           className="platform-card-console"
           src={
-            platform.id === 'snes'
-              ? '/platforms/snes/console.webp'
+            ['snes', 'megadrive'].includes(platform.id)
+              ? `/platforms/${platform.id}/console.webp`
               : `/platforms/${platform.id}/computer.webp`
           }
           alt=""
@@ -206,7 +206,7 @@ export function GameCard({
   const location = useLocation()
   const simpleCard = ['/library', '/discover'].includes(location.pathname.replace(/\/$/, ''))
   const platformLogo =
-    simpleCard && ['amiga', 'amstrad', 'snes', 'atari-st'].includes(game.platformId)
+    simpleCard && ['amiga', 'amstrad', 'snes', 'atari-st', 'megadrive'].includes(game.platformId)
       ? `/platforms/${game.platformId}/logo.webp`
       : undefined
   return (

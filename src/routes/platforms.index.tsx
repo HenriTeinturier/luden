@@ -31,7 +31,7 @@ function Platforms() {
           .filter((p) => family === 'Toutes' || p.family === family)
           .sort(
             (a, b) =>
-              Number(gameCounts.has(b.id)) - Number(gameCounts.has(a.id)) ||
+              (gameCounts.get(b.id) ?? 0) - (gameCounts.get(a.id) ?? 0) ||
               a.name.localeCompare(b.name, 'fr', { sensitivity: 'base', numeric: true }),
           )
           .map((p) => (

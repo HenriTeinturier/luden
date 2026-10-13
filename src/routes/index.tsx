@@ -12,7 +12,8 @@ function Home() {
   const chosen = [...platforms].sort(
     (a, b) =>
       games.filter((g) => g.platformId === b.id).length -
-      games.filter((g) => g.platformId === a.id).length,
+        games.filter((g) => g.platformId === a.id).length ||
+      a.name.localeCompare(b.name, 'fr', { sensitivity: 'base', numeric: true }),
   )
   const shown = games.length
     ? chosen.slice(0, 4)

@@ -1,5 +1,10 @@
 # État courant
 
+## Plateformes par nombre de jeux — 2026-10-13
+
+- Mes plateformes : classement par nombre total de jeux décroissant, y compris sous les filtres de famille. Égalités départagées par nom en français ; plateformes vides en dernier. Même départage sur l’accueil, déjà trié par nombre de jeux.
+- Vérification : TypeScript, lint et formatage ciblés, diff. Aucun changement des données.
+
 ## Identité Mega Drive — 2026-10-13
 
 - Assets de présentation fournis (console/manette, logo et fond quadrillé rouge/graphite) copiés sans modification dans `public/platforms/megadrive/`. Carte d’accueil et Mes plateformes composée comme la référence ; logo aussi dans les galeries mixtes et raccourci d’univers dès qu’un jeu existe.

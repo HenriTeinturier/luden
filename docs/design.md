@@ -235,6 +235,10 @@ Super Nintendo : deux cartes par ligne, hauteur 250 px, padding 24 px, nom 16 px
 13 px. À 720 px et moins : une carte par ligne, hauteur 190 px et padding 18 px. Les identités
 illustrées et les visuels de repli sont conservés. Styles partagés entre `.platforms-index` et `.home-platforms`.
 
+Les plateformes sont classées par nombre total de jeux décroissant, puis par nom en français
+en cas d’égalité. Ce tri reste actif sous les filtres de famille ; les plateformes sans jeu
+arrivent en dernier. L’accueil présente les quatre premières quand la bibliothèque contient des jeux.
+
 ## Amiga
 
 Carte large et bandeau intérieur : rayures arc-en-ciel sur fond anthracite fournies par Henri,

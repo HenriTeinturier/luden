@@ -1,5 +1,11 @@
 # État courant
 
+## Cartes Mega Drive et Super Nintendo — 2026-10-14
+
+- Activation de la classe plateforme Mega Drive manquante : sous la jaquette, titre sur une ligne et étoiles, sans année, plateforme, statut ni souvenir, comme Amiga/Atari/Amstrad.
+- Étoiles vides pour les jeux Mega Drive et Super Nintendo sans note, sans leur attribuer une note zéro. Titres SNES sur une ligne aussi en liste ; nom complet au survol.
+- Vérification : TypeScript, lint et formatage ciblés, diff. Validation visuelle par Henri.
+
 ## Plateformes par nombre de jeux — 2026-10-13
 
 - Mes plateformes : classement par nombre total de jeux décroissant, y compris sous les filtres de famille. Égalités départagées par nom en français ; plateformes vides en dernier. Même départage sur l’accueil, déjà trié par nombre de jeux.

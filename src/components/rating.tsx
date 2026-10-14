@@ -90,23 +90,31 @@ export function EditableStars({
   )
 }
 
-export function Stars({ value }: { value: number | null | undefined }) {
-  if (value == null) return <span className="unrated">Pas encore noté</span>
+export function Stars({
+  value,
+  showEmpty = false,
+}: {
+  value: number | null | undefined
+  showEmpty?: boolean
+}) {
+  if (value == null && !showEmpty) return <span className="unrated">Pas encore noté</span>
   return (
     <span
       className="stars"
       role="img"
-      aria-label={`${value.toLocaleString('fr-FR')} sur 5 étoiles`}
+      aria-label={
+        value == null ? 'Pas encore noté' : `${value.toLocaleString('fr-FR')} sur 5 étoiles`
+      }
     >
       {[1, 2, 3, 4, 5].map((n) => (
         <span className="star" key={n}>
           <Star size={18} />
-          <span style={{ width: `${Math.max(0, Math.min(1, value - n + 1)) * 100}%` }}>
+          <span style={{ width: `${Math.max(0, Math.min(1, (value ?? 0) - n + 1)) * 100}%` }}>
             <Star size={18} fill="currentColor" />
           </span>
         </span>
       ))}
-      <small>{value.toLocaleString('fr-FR')}</small>
+      {value != null && <small>{value.toLocaleString('fr-FR')}</small>}
     </span>
   )
 }

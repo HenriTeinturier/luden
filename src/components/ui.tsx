@@ -268,7 +268,7 @@ export function GameCard({
         <h3 title={game.title}>{game.title}</h3>
         {!simpleCard && (
           <>
-            <Stars value={rating} />
+            <Stars value={rating} showEmpty={platformId === 'snes' || platformId === 'megadrive'} />
             <div className="game-card-bottom">
               <span>{playStatuses[game.experience?.status ?? 'UNPLAYED']}</span>
               <span className="possession-icons">

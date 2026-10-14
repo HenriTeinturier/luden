@@ -239,6 +239,9 @@
 .platform-snes .game-card h3 {
   font-size: 16px;
   line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .platform-snes .game-grid .game-card h3 {
   flex: 1;
@@ -306,6 +309,7 @@
   .game-card-info {
   border-radius: 0 0 9px 9px;
   padding: 12px;
+  min-width: 0;
 }
 @media (max-width: 720px) {
   .platform-snes .platform-hero {

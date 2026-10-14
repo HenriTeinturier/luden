@@ -32,9 +32,7 @@ function PlatformPage() {
   const favoriteCount = chosen.filter((g) => g.favorite).length
   const ownedCount = chosen.filter((g) => g.possessions.some((p) => p.state === 'CURRENT')).length
   return (
-    <div
-      className={`page platform-page ${isSnes || isAmiga || isAmstrad || isAtari ? `platform-${platformId}` : ''}`}
-    >
+    <div className={`page platform-page platform-${platformId}`}>
       <h1 id="platform-overview-title" className="sr-only">
         {platform.name}
       </h1>

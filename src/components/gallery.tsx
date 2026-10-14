@@ -161,15 +161,19 @@ export function Gallery({
     measure()
     return () => observer.disconnect()
   }, [desktop, selection?.sidebarVisible, filters.columns, filters.view, pathname, visible.length])
-  const restoredPath = useRef<string | null>(null)
+  const restoredEntry = useRef<{ pathname: string; bare: boolean } | null>(null)
   useEffect(() => {
-    if (restoredPath.current === pathname) return
-    restoredPath.current = pathname
+    const bare = Object.values(search).every((value) => value === undefined)
+    const previous = restoredEntry.current
+    restoredEntry.current = { pathname, bare }
+    // A shortcut back to the current universe can clear its URL without remounting it.
+    if (previous?.pathname === pathname && (!bare || previous.bare)) return
     try {
       const restored = restoreGalleryPreferences(
         localStorage.getItem(galleryPreferenceKey(pathname)),
         search,
       )
+      saveGalleryPreferences(pathname, { ...restored, scope: restored.scope ?? defaultScope })
       if (
         Object.entries(restored).some(
           ([key, value]) => search[key as keyof GallerySearch] !== value,
@@ -180,10 +184,10 @@ export function Gallery({
     } catch {
       // Browser storage is optional, including during private browsing.
     }
-  }, [pathname, search, navigate])
+  }, [pathname, search, navigate, defaultScope])
   const [advanced, setAdvanced] = useState(false)
   const update = (patch: Partial<GallerySearch>) => {
-    const next = { ...search, ...patch }
+    const next = { ...search, scope: filters.scope, ...patch }
     saveGalleryPreferences(pathname, next)
     void navigate({ to: '.', search: next, replace: true, resetScroll: false })
   }

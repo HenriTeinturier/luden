@@ -1,5 +1,11 @@
 # État courant
 
+## Préférences de bibliothèque par plateforme — 2026-10-14
+
+- Mémorisation localStorage existante complétée : restauration également lors d’un retour sans filtres sur la même plateforme, sans remontage du composant.
+- Portée affichée enregistrée explicitement lors des changements ; choix d’un lien explicite mémorisés à l’entrée. Joués / À découvrir / Possédés / Tous mes jeux, Megastar et autres options restent indépendants par galerie ; recherche temporaire.
+- Vérification : TypeScript, lint et tests ciblés de préférences (quatre portées, Megastar et isolation SNES/Amiga). Validation visuelle par Henri.
+
 ## Étoiles sous les titres Super Nintendo — 2026-10-14
 
 - Cartes SNES en grille : étoiles sous le titre, espacement et marge intérieure identiques aux autres univers ; titre toujours sur une ligne.

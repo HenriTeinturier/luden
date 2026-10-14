@@ -318,7 +318,11 @@ un accès sans préférence mémorisée repart sur Joués, pour toutes les plate
 La même barre est utilisée dans toutes les galeries, collections comprises. Bibliothèque et
 collections partent sur Tous mes jeux ; Découverte sur À découvrir, avec possibilité de changer
 de vue. Dans une collection, les boutons filtrent uniquement ses jeux. Les préférences navigateur
-restent propres à chaque galerie. Filtres de portée, Megastar, recherche et réglages occupent une
+restent propres à chaque galerie dans localStorage : portée (Joués / À découvrir / Possédés /
+Tous mes jeux), Megastar, tri, regroupement, grille/liste, colonnes et filtres avancés.
+La recherche textuelle reste temporaire. Un lien avec des choix explicites reste prioritaire ;
+un retour sans filtres, même sur la plateforme courante, restaure ses préférences.
+Filtres de portée, Megastar, recherche et réglages occupent une
 ligne compacte sur grand écran, y compris avec la sidebar ouverte à 2560 px. Le compteur compact
 « 123 / 127 » et l’icône de réinitialisation (avec infobulle et nom accessible) restent sur cette
 même ligne à droite. Recherche limitée à 200 px, libellé « Rechercher… » ; sélecteur de colonnes

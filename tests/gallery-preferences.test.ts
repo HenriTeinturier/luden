@@ -56,6 +56,18 @@ test('Le nombre de colonnes est enregistré et restauré après une nouvelle vis
     assert.equal(restored.columns, columns)
     assert.equal(restored.q, undefined)
   }
+  saveGalleryPreferences('/platforms/amiga', { scope: 'owned', favorite: false, view: 'list' })
+  for (const scope of ['played', 'discover', 'owned', 'all'] as const) {
+    saveGalleryPreferences('/platforms/snes', { scope, favorite: true, columns: 7 })
+    assert.deepEqual(
+      restoreGalleryPreferences(storage.get(galleryPreferenceKey('/platforms/snes'))!, {}),
+      { scope, favorite: true, columns: 7 },
+    )
+    assert.deepEqual(
+      restoreGalleryPreferences(storage.get(galleryPreferenceKey('/platforms/amiga'))!, {}),
+      { scope: 'owned', favorite: false, view: 'list' },
+    )
+  }
 })
 
 test('Stockage absent ou invalide : conserver les choix URL sans imposer de regroupement', () => {

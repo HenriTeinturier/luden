@@ -305,7 +305,7 @@ avec `hidden` et une règle CSS explicite : il est conservé pour réutilisation
 Styles communs `platform-overview` dans `src/styles/platforms.css`, identiques sur toutes les plateformes.
 Galerie de faces avant à plat, horizontales, sans recadrage. Titre et étoiles sont prioritaires ;
 plateforme, année, statut et icônes de possession sont masqués sur les cartes SNES pour les alléger.
-En grille SNES, une bande de 32 px accueille le titre à gauche et les étoiles à droite, sans chiffre répété. Le titre est tronqué si nécessaire, avec son nom complet au survol ; aucune note ne recouvre la jaquette.
+En grille SNES, le titre sur une ligne est suivi des étoiles en dessous, avec 8 px d’espacement et 12 px de marge intérieure, comme les autres univers. Aucun chiffre répété. Le titre est tronqué si nécessaire, avec son nom complet au survol ; aucune note ne recouvre la jaquette.
 Les cartes SNES et Mega Drive affichent cinq étoiles vides en l’absence de note, sans assimiler cette absence à zéro. Le titre reste sur une seule ligne en grille et en liste.
 Sur desktop, présentation, filtres et galerie utilisent toute la largeur disponible avec les
 marges habituelles. La barre de filtres compacte reste placée sous les statistiques.

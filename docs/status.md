@@ -1,5 +1,10 @@
 # État courant
 
+## Étoiles sous les titres Super Nintendo — 2026-10-14
+
+- Cartes SNES en grille : étoiles sous le titre, espacement et marge intérieure identiques aux autres univers ; titre toujours sur une ligne.
+- Vérification : formatage ciblé et diff (CSS uniquement). Validation visuelle par Henri.
+
 ## Cartes Mega Drive et Super Nintendo — 2026-10-14
 
 - Activation de la classe plateforme Mega Drive manquante : sous la jaquette, titre sur une ligne et étoiles, sans année, plateforme, statut ni souvenir, comme Amiga/Atari/Amstrad.

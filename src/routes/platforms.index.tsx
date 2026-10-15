@@ -20,15 +20,29 @@ function Platforms() {
     <div className="page platforms-index">
       <PageHeading title="Les machines de votre histoire" />
       <div className="filter-tabs">
-        {['Toutes', ...new Set(platforms.map((p) => p.family))].map((f) => (
-          <button key={f} className={f === family ? 'active' : ''} onClick={() => setFamily(f)}>
+        {[
+          'Toutes',
+          'Ordinateurs',
+          'Consoles',
+          ...new Set(platforms.map((p) => p.family).filter((f) => f !== 'Ordinateurs')),
+        ].map((f) => (
+          <button
+            key={f}
+            className={f === family ? 'active' : ''}
+            aria-pressed={f === family}
+            onClick={() => setFamily(f)}
+          >
             {f}
           </button>
         ))}
       </div>
       <div className="platform-grid">
         {platforms
-          .filter((p) => family === 'Toutes' || p.family === family)
+          .filter((p) =>
+            family === 'Consoles'
+              ? p.family !== 'Ordinateurs'
+              : family === 'Toutes' || p.family === family,
+          )
           .sort(
             (a, b) =>
               (gameCounts.get(b.id) ?? 0) - (gameCounts.get(a.id) ?? 0) ||
@@ -38,33 +52,37 @@ function Platforms() {
             <PlatformCard key={p.id} platform={p} count={gameCounts.get(p.id) ?? 0} />
           ))}
       </div>
-      <SectionHeading title="Mes PC, mes repères." />
-      <p className="section-description">
-        Un espace pour chaque PC qui vous a accompagné. Les jeux restent rattachés à la plateforme
-        PC.
-      </p>
-      <div className="machine-grid">
-        {machines.map((m) => (
-          <Link
-            key={m.id}
-            to="/platforms/$platformId"
-            params={{ platformId: 'pc' }}
-            search={{ machine: m.id }}
-            className="machine-card"
-          >
-            <Monitor size={28} strokeWidth={1.2} />
-            <div>
-              <h3>{m.name}</h3>
-              <span>{games.filter((g) => g.machineId === m.id).length} jeux</span>
-            </div>
-            <ArrowUpRight size={18} />
-          </Link>
-        ))}
-        <button className="machine-card add-machine" onClick={() => setOpen(true)}>
-          <Plus size={24} />
-          <span>Ajouter un PC personnel</span>
-        </button>
-      </div>
+      {['Toutes', 'Ordinateurs'].includes(family) && (
+        <>
+          <SectionHeading title="Mes PC, mes repères." />
+          <p className="section-description">
+            Un espace pour chaque PC qui vous a accompagné. Les jeux restent rattachés à la
+            plateforme PC.
+          </p>
+          <div className="machine-grid">
+            {machines.map((m) => (
+              <Link
+                key={m.id}
+                to="/platforms/$platformId"
+                params={{ platformId: 'pc' }}
+                search={{ machine: m.id }}
+                className="machine-card"
+              >
+                <Monitor size={28} strokeWidth={1.2} />
+                <div>
+                  <h3>{m.name}</h3>
+                  <span>{games.filter((g) => g.machineId === m.id).length} jeux</span>
+                </div>
+                <ArrowUpRight size={18} />
+              </Link>
+            ))}
+            <button className="machine-card add-machine" onClick={() => setOpen(true)}>
+              <Plus size={24} />
+              <span>Ajouter un PC personnel</span>
+            </button>
+          </div>
+        </>
+      )}
       <Modal
         open={open}
         onOpenChange={setOpen}

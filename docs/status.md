@@ -1,5 +1,11 @@
 # État courant
 
+## Filtre Consoles — 2026-10-15
+
+- Ajout de « Consoles » après « Ordinateurs » dans Mes plateformes : regroupe toutes les marques de consoles, de salon et portables, en excluant la famille Ordinateurs. Tri par nombre de jeux conservé.
+- Section des PC personnels limitée aux filtres Toutes et Ordinateurs ; état actif des boutons annoncé avec aria-pressed.
+- Vérification : TypeScript, lint et formatage ciblés, diff. Aucun changement de données.
+
 ## Identités PlayStation et Nintendo 64 — 2026-10-15
 
 - Six assets fournis copiés sans modification dans `public/platforms/ps1/` et `public/platforms/n64/` : fonds, logos et consoles/manettes. Cartes, logos des galeries mixtes, accueil de sidebar et raccourcis Mes univers raccordés ; visuels personnels prioritaires.

@@ -238,6 +238,9 @@ illustrées et les visuels de repli sont conservés. Styles partagés entre `.pl
 Les plateformes sont classées par nombre total de jeux décroissant, puis par nom en français
 en cas d’égalité. Ce tri reste actif sous les filtres de famille ; les plateformes sans jeu
 arrivent en dernier. L’accueil présente les quatre premières quand la bibliothèque contient des jeux.
+Le filtre « Consoles », après « Ordinateurs », regroupe toutes les familles hors Ordinateurs,
+consoles de salon et portables comprises. Les filtres par marque restent disponibles.
+La section « Mes PC, mes repères » apparaît uniquement dans Toutes et Ordinateurs.
 
 ## Amiga
 

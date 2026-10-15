@@ -1,5 +1,11 @@
 # État courant
 
+## Nombre de colonnes des plateformes — 2026-10-15
+
+- Sélecteur Colonnes (1 à 4, défaut 2) à droite des filtres de Mes plateformes. Réglage conservé dans localStorage, restauré après hydratation, accès au stockage protégé.
+- Grille adaptative : cartes de 280 px minimum si possible, une colonne sur mobile. Préférence conservée lors des changements de filtre ; accueil et bibliothèques de jeux inchangés.
+- Vérification : TypeScript, lint ciblé, compilation, formatage et diff. Validation visuelle par Henri.
+
 ## Filtre Consoles — 2026-10-15
 
 - Ajout de « Consoles » après « Ordinateurs » dans Mes plateformes : regroupe toutes les marques de consoles, de salon et portables, en excluant la famille Ordinateurs. Tri par nombre de jeux conservé.

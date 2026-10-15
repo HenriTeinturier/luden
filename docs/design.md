@@ -241,6 +241,11 @@ arrivent en dernier. L’accueil présente les quatre premières quand la biblio
 Le filtre « Consoles », après « Ordinateurs », regroupe toutes les familles hors Ordinateurs,
 consoles de salon et portables comprises. Les filtres par marque restent disponibles.
 La section « Mes PC, mes repères » apparaît uniquement dans Toutes et Ordinateurs.
+Le sélecteur « Colonnes » de Mes plateformes propose 1 à 4 colonnes (2 par défaut),
+mémorisées dans localStorage sous `luden:platforms:columns:v1`, indépendamment des galeries
+de jeux. Les cartes gardent au moins 280 px de largeur quand la place le permet ; le nombre
+effectif de colonnes diminue si nécessaire, avec une seule colonne sous 720 px. Le choix
+reste conservé entre les filtres et au retour sur la page. L’accueil garde sa grille existante.
 
 ## Amiga
 

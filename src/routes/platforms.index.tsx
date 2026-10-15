@@ -1,12 +1,24 @@
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
-import { useState } from 'react'
+import { useEffect, useState, type CSSProperties } from 'react'
 import { Monitor, Plus, ArrowUpRight } from 'lucide-react'
 import { PageHeading, PlatformCard, SectionHeading, Modal, useLibrary } from '../components/ui'
 import { saveMachineFn } from '../server/functions'
+const columnsStorageKey = 'luden:platforms:columns:v1'
+const columnOptions = [1, 2, 3, 4]
+
 export const Route = createFileRoute('/platforms/')({ component: Platforms })
 function Platforms() {
   const { platforms, games, machines } = useLibrary()
   const [family, setFamily] = useState('Toutes')
+  const [columns, setColumns] = useState(2)
+  useEffect(() => {
+    try {
+      const saved = Number(localStorage.getItem(columnsStorageKey))
+      if (columnOptions.includes(saved)) setColumns(saved)
+    } catch {
+      // Keep the default when browser storage is unavailable.
+    }
+  }, [])
   const [open, setOpen] = useState(false)
   const [name, setName] = useState('')
   const [error, setError] = useState('')
@@ -19,24 +31,48 @@ function Platforms() {
   return (
     <div className="page platforms-index">
       <PageHeading title="Les machines de votre histoire" />
-      <div className="filter-tabs">
-        {[
-          'Toutes',
-          'Ordinateurs',
-          'Consoles',
-          ...new Set(platforms.map((p) => p.family).filter((f) => f !== 'Ordinateurs')),
-        ].map((f) => (
-          <button
-            key={f}
-            className={f === family ? 'active' : ''}
-            aria-pressed={f === family}
-            onClick={() => setFamily(f)}
+      <div className="platforms-toolbar">
+        <div className="filter-tabs">
+          {[
+            'Toutes',
+            'Ordinateurs',
+            'Consoles',
+            ...new Set(platforms.map((p) => p.family).filter((f) => f !== 'Ordinateurs')),
+          ].map((f) => (
+            <button
+              key={f}
+              className={f === family ? 'active' : ''}
+              aria-pressed={f === family}
+              onClick={() => setFamily(f)}
+            >
+              {f}
+            </button>
+          ))}
+        </div>
+        <label className="platforms-columns">
+          Colonnes
+          <select
+            value={columns}
+            onChange={(event) => {
+              const value = Number(event.target.value)
+              if (!columnOptions.includes(value)) return
+              setColumns(value)
+              try {
+                localStorage.setItem(columnsStorageKey, String(value))
+              } catch {
+                // The layout stays usable without persistent storage.
+              }
+            }}
           >
-            {f}
-          </button>
-        ))}
+            {columnOptions.map((count) => (
+              <option key={count} value={count}>
+                {count}
+              </option>
+            ))}
+          </select>
+        </label>
       </div>
-      <div className="platform-grid">
+      <div className="platform-grid" style={{ '--platform-columns': columns } as CSSProperties}>
         {platforms
           .filter((p) =>
             family === 'Consoles'

@@ -987,3 +987,58 @@
     margin-top: 12px;
   }
 }
+
+/* Platform gallery density is independent from game-gallery preferences. */
+.platforms-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  margin-bottom: 25px;
+}
+.platforms-toolbar .filter-tabs {
+  margin-bottom: 0;
+}
+.platforms-columns {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--text-soft);
+}
+.platforms-columns select {
+  width: 72px;
+  min-height: 36px;
+  padding: 6px 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--ink);
+}
+.platforms-columns select:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+.platforms-index .platform-grid {
+  gap: 17px;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(
+      min(
+        100%,
+        max(
+          280px,
+          calc((100% - (var(--platform-columns, 2) - 1) * 17px) / var(--platform-columns, 2))
+        )
+      ),
+      1fr
+    )
+  );
+}
+@media (max-width: 720px) {
+  .platforms-index .platform-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

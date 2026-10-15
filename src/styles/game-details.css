@@ -609,6 +609,12 @@
 }
 /* PS1 jewel cases and round CDs; N64 landscape boxes and wide cartridges.
    Frames only: object-fit preserves each imported image, including transparent edges. */
+.dossier-compact .game-scene[data-platform='ps1'] {
+  margin-bottom: 180px;
+}
+.dossier-compact .game-scene[data-platform='ps1'] .scene-objects {
+  bottom: -160px;
+}
 .dossier-compact .game-scene[data-platform='ps1'] .scene-box {
   height: 112%;
 }

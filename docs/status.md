@@ -1,5 +1,10 @@
 # État courant
 
+## Objets PS1 légèrement abaissés — 2026-10-15
+
+- Boîte et CD descendus ensemble de 12 px dans la sidebar, taille conservée. Espace sous la scène augmenté de 12 px pour préserver la séparation avec la note.
+- Vérifié : formatage et diff CSS. Validation visuelle par Henri.
+
 ## Décor PS1 plus visible dans la sidebar — 2026-10-15
 
 - Cadre de boîte ramené de 140 % à 112 % et cadre de CD de 118 % à 94 % de la hauteur des objets. Images entières, alignement inférieur conservé : leur bord supérieur descend et laisse davantage de place au décor.

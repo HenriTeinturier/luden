@@ -286,7 +286,8 @@ Uniquement le titre sur une ligne et les étoiles dessous, en grille comme en li
 Scènes de consultation adaptées dans la sidebar et la fiche complète : boîtier PS1 avec CD
 à droite, boîte N64 avec cartouche large au premier plan. Dans la sidebar PS1, cadres de boîte
 et de CD réduits d’environ 20 % en hauteur, toujours ancrés en bas pour dégager le décor sans
-décaler la note et les souvenirs. Fiche complète conservée. Aucun masque, découpage ou étirement
+décaler la note et les souvenirs. Ajustement complémentaire : ensemble boîte/CD abaissé de 12 px,
+avec 12 px supplémentaires sous la scène pour préserver la séparation avec la note. Fiche complète conservée. Aucun masque, découpage ou étirement
 des médias importés. Les emplacements Boîte et Support existants reçoivent les futurs assets
 des jeux ; les six fichiers fournis ici servent uniquement à l’identité des plateformes.
 

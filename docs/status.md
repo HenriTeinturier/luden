@@ -1,5 +1,11 @@
 # État courant
 
+## Plateformes en pleine largeur — 2026-10-15
+
+- Suppression du plafond de 1540 px uniquement pour Mes plateformes : titre, filtres et cartes utilisent la largeur disponible avec des marges latérales de 20 à 64 px.
+- Choix mémorisé de 1 à 4 colonnes et adaptation mobile conservés. Aucun changement aux autres pages.
+- Vérifié : formatage ciblé et diff ; changement CSS uniquement. Validation visuelle par Henri.
+
 ## Nombre de colonnes des plateformes — 2026-10-15
 
 - Sélecteur Colonnes (1 à 4, défaut 2) à droite des filtres de Mes plateformes. Réglage conservé dans localStorage, restauré après hydratation, accès au stockage protégé.

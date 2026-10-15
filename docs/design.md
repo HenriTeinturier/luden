@@ -241,6 +241,8 @@ arrivent en dernier. L’accueil présente les quatre premières quand la biblio
 Le filtre « Consoles », après « Ordinateurs », regroupe toutes les familles hors Ordinateurs,
 consoles de salon et portables comprises. Les filtres par marque restent disponibles.
 La section « Mes PC, mes repères » apparaît uniquement dans Toutes et Ordinateurs.
+Mes plateformes utilise toute la largeur disponible, sans plafond de 1540 px, avec des marges
+latérales adaptatives de 20 à 64 px. Titre, filtres et grille restent alignés.
 Le sélecteur « Colonnes » de Mes plateformes propose 1 à 4 colonnes (2 par défaut),
 mémorisées dans localStorage sous `luden:platforms:columns:v1`, indépendamment des galeries
 de jeux. Les cartes gardent au moins 280 px de largeur quand la place le permet ; le nombre

@@ -284,7 +284,9 @@ Uniquement le titre sur une ligne et les étoiles dessous, en grille comme en li
 étoiles vides sans note et sceau Megastar conservé. Colonnes N64 Auto de 280 px minimum hors sidebar,
 205 px avec sidebar ; réglages manuels de densité et préférences par plateforme conservés.
 Scènes de consultation adaptées dans la sidebar et la fiche complète : boîtier PS1 avec CD
-à droite, boîte N64 avec cartouche large au premier plan. Aucun masque, découpage ou étirement
+à droite, boîte N64 avec cartouche large au premier plan. Dans la sidebar PS1, cadres de boîte
+et de CD réduits d’environ 20 % en hauteur, toujours ancrés en bas pour dégager le décor sans
+décaler la note et les souvenirs. Fiche complète conservée. Aucun masque, découpage ou étirement
 des médias importés. Les emplacements Boîte et Support existants reçoivent les futurs assets
 des jeux ; les six fichiers fournis ici servent uniquement à l’identité des plateformes.
 

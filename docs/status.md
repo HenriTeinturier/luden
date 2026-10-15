@@ -1,5 +1,11 @@
 # État courant
 
+## Décor PS1 plus visible dans la sidebar — 2026-10-15
+
+- Cadre de boîte ramené de 140 % à 112 % et cadre de CD de 118 % à 94 % de la hauteur des objets. Images entières, alignement inférieur conservé : leur bord supérieur descend et laisse davantage de place au décor.
+- Note, souvenirs, fiche complète et autres plateformes inchangés.
+- Vérifié : formatage ciblé et diff (CSS uniquement). Validation visuelle par Henri.
+
 ## Ctrl + molette dans Mes plateformes — 2026-10-15
 
 - Raccourci sur la grille, même sens et cadence (160 ms) que la bibliothèque : bas ajoute une colonne, haut en retire une, bornes 1 à 4 et départ depuis le nombre affiché.

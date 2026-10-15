@@ -247,7 +247,11 @@ Le sélecteur « Colonnes » de Mes plateformes propose 1 à 4 colonnes (2 par d
 mémorisées dans localStorage sous `luden:platforms:columns:v1`, indépendamment des galeries
 de jeux. Les cartes gardent au moins 280 px de largeur quand la place le permet ; le nombre
 effectif de colonnes diminue si nécessaire, avec une seule colonne sous 720 px. Le choix
-reste conservé entre les filtres et au retour sur la page. L’accueil garde sa grille existante.
+reste conservé entre les filtres et au retour sur la page. Ctrl + molette sur les cartes ajuste
+également la densité : vers le bas ajoute une colonne, vers le haut en retire une (1 à 4),
+en partant du nombre effectivement affiché. Même cadence de 160 ms que les bibliothèques ;
+zoom remplacé uniquement sur la grille, hors dialogue et saisie active. Le sélecteur et
+localStorage restent synchronisés. L’accueil garde sa grille existante.
 
 ## Amiga
 

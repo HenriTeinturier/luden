@@ -1,5 +1,11 @@
 # État courant
 
+## Ctrl + molette dans Mes plateformes — 2026-10-15
+
+- Raccourci sur la grille, même sens et cadence (160 ms) que la bibliothèque : bas ajoute une colonne, haut en retire une, bornes 1 à 4 et départ depuis le nombre affiché.
+- Sélecteur et localStorage synchronisés via une action commune. Écoute native non passive nettoyée au démontage ; dialogue et saisie active exclus, défilement normal conservé sans Ctrl.
+- Vérifié : TypeScript, lint ciblé, formatage et diff. Validation du geste par Henri.
+
 ## Plateformes en pleine largeur — 2026-10-15
 
 - Suppression du plafond de 1540 px uniquement pour Mes plateformes : titre, filtres et cartes utilisent la largeur disponible avec des marges latérales de 20 à 64 px.

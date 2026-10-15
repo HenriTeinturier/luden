@@ -57,7 +57,7 @@ export function Shell({ children, library }: { children: ReactNode; library: Lib
     library?.platforms
       .filter((p) => library.games.some((g) => g.platformId === p.id))
       .slice(0, 6) ?? []
-  const quickUniverses = ['amiga', 'snes', 'amstrad', 'atari-st', 'megadrive']
+  const quickUniverses = ['amiga', 'snes', 'amstrad', 'atari-st', 'megadrive', 'ps1', 'n64']
     .map((id) => favorites.find((platform) => platform.id === id))
     .filter((platform) => platform !== undefined)
   return (

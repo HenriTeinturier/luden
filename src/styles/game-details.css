@@ -607,6 +607,48 @@
   max-height: 60%;
   margin-left: -4%;
 }
+/* PS1 jewel cases and round CDs; N64 landscape boxes and wide cartridges.
+   Frames only: object-fit preserves each imported image, including transparent edges. */
+.dossier-compact .game-scene[data-platform='ps1'] .scene-box {
+  height: 140%;
+}
+.dossier-compact .game-scene[data-platform='ps1'] .has-support .scene-box {
+  max-width: 62%;
+  flex-basis: 62%;
+}
+.dossier-compact .game-scene[data-platform='ps1'] .scene-support-stand {
+  flex-basis: 42%;
+  height: 118%;
+  margin-left: -4%;
+  transform: translateY(16px);
+}
+.dossier-compact .game-scene[data-platform='n64'] .has-support .scene-box {
+  max-width: 74%;
+  flex-basis: 74%;
+  height: 122%;
+}
+.dossier-compact .game-scene[data-platform='n64'] .scene-support-stand {
+  flex-basis: 42%;
+  height: 78%;
+  margin-left: -16%;
+  transform: translateY(16px);
+}
+.dossier-full .game-scene[data-platform='ps1'] .has-support .scene-box {
+  max-width: 62%;
+}
+.dossier-full .game-scene[data-platform='ps1'] .scene-support {
+  width: 42%;
+  max-height: 85%;
+  margin-left: -4%;
+}
+.dossier-full .game-scene[data-platform='n64'] .has-support .scene-box {
+  max-width: 74%;
+}
+.dossier-full .game-scene[data-platform='n64'] .scene-support {
+  width: 42%;
+  max-height: 56%;
+  margin-left: -16%;
+}
 .dossier-compact .dossier-body {
   padding: 0 var(--dossier-gutter) 18px;
   position: relative;

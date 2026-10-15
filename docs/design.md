@@ -256,6 +256,24 @@ une seule ligne avec ellipsis et nom complet au survol. Pas de note chiffrée, p
 statut, icônes de possession ou extrait de souvenir. Favori conservé sur la
 jaquette comme pour SNES. Les informations détaillées restent dans la fiche.
 
+## PlayStation et Nintendo 64
+
+Cartes d’entrée et accueil de la sidebar : fonds, logos et consoles fournis par Henri,
+copiés sans modification dans `public/platforms/ps1/` et `public/platforms/n64/`.
+Composition identique aux autres consoles : logo à gauche, console/manette à droite,
+nom et compteur en HTML. Dimensions communes et adaptation mobile conservées.
+Logos également dans les galeries mixtes ; raccourcis Mes univers dès qu’un jeu existe.
+Les bandeaux et affiches personnels restent prioritaires sur ces compositions de repli.
+
+Galeries : boîtes PS1 carrées (ratio 1), boîtes N64 horizontales (ratio 1,42), images entières.
+Uniquement le titre sur une ligne et les étoiles dessous, en grille comme en liste ;
+étoiles vides sans note et sceau Megastar conservé. Colonnes N64 Auto de 280 px minimum hors sidebar,
+205 px avec sidebar ; réglages manuels de densité et préférences par plateforme conservés.
+Scènes de consultation adaptées dans la sidebar et la fiche complète : boîtier PS1 avec CD
+à droite, boîte N64 avec cartouche large au premier plan. Aucun masque, découpage ou étirement
+des médias importés. Les emplacements Boîte et Support existants reçoivent les futurs assets
+des jeux ; les six fichiers fournis ici servent uniquement à l’identité des plateformes.
+
 ## Mega Drive
 
 Carte d’entrée : fond quadrillé graphite avec diagonales rouges/grises, logo argenté à gauche,

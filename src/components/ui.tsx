@@ -110,7 +110,9 @@ export function PlatformArt({
   )
 }
 export function PlatformCard({ platform, count }: { platform: Platform; count: number }) {
-  const illustrated = ['snes', 'amiga', 'amstrad', 'atari-st', 'megadrive'].includes(platform.id)
+  const illustrated = ['snes', 'amiga', 'amstrad', 'atari-st', 'megadrive', 'ps1', 'n64'].includes(
+    platform.id,
+  )
   return (
     <Link
       to="/platforms/$platformId"
@@ -130,7 +132,7 @@ export function PlatformCard({ platform, count }: { platform: Platform; count: n
         <img
           className="platform-card-console"
           src={
-            ['snes', 'megadrive'].includes(platform.id)
+            ['snes', 'megadrive', 'ps1', 'n64'].includes(platform.id)
               ? `/platforms/${platform.id}/console.webp`
               : `/platforms/${platform.id}/computer.webp`
           }
@@ -206,7 +208,8 @@ export function GameCard({
   const location = useLocation()
   const simpleCard = ['/library', '/discover'].includes(location.pathname.replace(/\/$/, ''))
   const platformLogo =
-    simpleCard && ['amiga', 'amstrad', 'snes', 'atari-st', 'megadrive'].includes(game.platformId)
+    simpleCard &&
+    ['amiga', 'amstrad', 'snes', 'atari-st', 'megadrive', 'ps1', 'n64'].includes(game.platformId)
       ? `/platforms/${game.platformId}/logo.webp`
       : undefined
   return (
@@ -268,7 +271,10 @@ export function GameCard({
         <h3 title={game.title}>{game.title}</h3>
         {!simpleCard && (
           <>
-            <Stars value={rating} showEmpty={platformId === 'snes' || platformId === 'megadrive'} />
+            <Stars
+              value={rating}
+              showEmpty={['snes', 'megadrive', 'ps1', 'n64'].includes(platformId ?? '')}
+            />
             <div className="game-card-bottom">
               <span>{playStatuses[game.experience?.status ?? 'UNPLAYED']}</span>
               <span className="possession-icons">

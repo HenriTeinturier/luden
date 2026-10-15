@@ -1,6 +1,14 @@
 /* Platform identities. No changes to stored game images. */
 @media (min-width: 701px) {
-  :is(.platform-amiga, .platform-amstrad, .platform-atari-st, .platform-megadrive) .game-grid {
+  :is(
+      .platform-amiga,
+      .platform-amstrad,
+      .platform-atari-st,
+      .platform-megadrive,
+      .platform-ps1,
+      .platform-n64
+    )
+    .game-grid {
     grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
   }
 }
@@ -260,16 +268,39 @@
 .platform-snes .results-line {
   font-size: 13px;
 }
-:is(.platform-amiga, .platform-amstrad, .platform-atari-st, .platform-megadrive)
+:is(
+    .platform-amiga,
+    .platform-amstrad,
+    .platform-atari-st,
+    .platform-megadrive,
+    .platform-ps1,
+    .platform-n64
+  )
   .game-card
   :is(.game-platform, .game-card-bottom, .card-memory),
-:is(.platform-amiga, .platform-amstrad, .platform-atari-st, .platform-megadrive)
+:is(
+    .platform-amiga,
+    .platform-amstrad,
+    .platform-atari-st,
+    .platform-megadrive,
+    .platform-ps1,
+    .platform-n64
+  )
   .game-card
   .stars
   small {
   display: none;
 }
-:is(.platform-amiga, .platform-amstrad, .platform-atari-st, .platform-megadrive) .game-card h3 {
+:is(
+    .platform-amiga,
+    .platform-amstrad,
+    .platform-atari-st,
+    .platform-megadrive,
+    .platform-ps1,
+    .platform-n64
+  )
+  .game-card
+  h3 {
   margin: 0 0 8px;
   display: block;
   font-size: 13px;
@@ -278,25 +309,53 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-:is(.platform-amiga, .platform-amstrad, .platform-atari-st, .platform-megadrive)
+:is(
+    .platform-amiga,
+    .platform-amstrad,
+    .platform-atari-st,
+    .platform-megadrive,
+    .platform-ps1,
+    .platform-n64
+  )
   .game-grid
   .game-card {
   padding: 0;
   overflow: visible;
 }
-:is(.platform-amiga, .platform-amstrad, .platform-atari-st, .platform-megadrive)
+:is(
+    .platform-amiga,
+    .platform-amstrad,
+    .platform-atari-st,
+    .platform-megadrive,
+    .platform-ps1,
+    .platform-n64
+  )
   .game-grid
   .game-cover {
   border: 0;
   border-radius: 9px 9px 0 0;
 }
-:is(.platform-amiga, .platform-amstrad, .platform-atari-st, .platform-megadrive)
+:is(
+    .platform-amiga,
+    .platform-amstrad,
+    .platform-atari-st,
+    .platform-megadrive,
+    .platform-ps1,
+    .platform-n64
+  )
   .game-grid
   .game-cover
   img {
   object-position: center top;
 }
-:is(.platform-amiga, .platform-amstrad, .platform-atari-st, .platform-megadrive)
+:is(
+    .platform-amiga,
+    .platform-amstrad,
+    .platform-atari-st,
+    .platform-megadrive,
+    .platform-ps1,
+    .platform-n64
+  )
   .game-grid
   .game-card-info {
   border-radius: 0 0 9px 9px;
@@ -874,5 +933,57 @@
   .platform-page .amstrad-hero-logo {
     width: 200px;
     height: 60px;
+  }
+}
+
+/* PlayStation and Nintendo 64: supplied platform artwork, original proportions. */
+.platform-card:is(.platform-card-ps1, .platform-card-n64) {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-color: #39465d;
+}
+.platform-card.platform-card-ps1 {
+  background: #151a22 url('/platforms/ps1/graphite.webp') center / cover no-repeat;
+}
+.platform-card.platform-card-n64 {
+  background: #091830 url('/platforms/n64/graphite.webp') center / cover no-repeat;
+}
+:is(.platform-card-ps1, .platform-card-n64) .platform-card-top {
+  align-items: flex-start;
+}
+:is(.platform-card-ps1, .platform-card-n64) .platform-card-logo {
+  width: 47%;
+  max-width: 340px;
+  height: auto;
+  margin-top: 16px;
+}
+:is(.platform-card-ps1, .platform-card-n64) .platform-card-console {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 56%;
+  height: 92%;
+  object-fit: contain;
+  object-position: right bottom;
+  filter: drop-shadow(0 12px 12px #0008);
+  z-index: -1;
+}
+:is(.platform-card-ps1, .platform-card-n64) .platform-card-bottom {
+  width: 43%;
+}
+.platform-card.platform-card-ps1:hover {
+  border-color: #9286bd;
+}
+.platform-card.platform-card-n64:hover {
+  border-color: #55b981;
+}
+.platform-n64 .game-grid.wide-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  gap: 24px;
+}
+@media (max-width: 720px) {
+  :is(.platform-card-ps1, .platform-card-n64) .platform-card-logo {
+    margin-top: 12px;
   }
 }

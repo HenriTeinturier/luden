@@ -1,5 +1,12 @@
 # État courant
 
+## Identités PlayStation et Nintendo 64 — 2026-10-15
+
+- Six assets fournis copiés sans modification dans `public/platforms/ps1/` et `public/platforms/n64/` : fonds, logos et consoles/manettes. Cartes, logos des galeries mixtes, accueil de sidebar et raccourcis Mes univers raccordés ; visuels personnels prioritaires.
+- Galeries PS1 carrées et N64 horizontales : titre sur une ligne et étoiles dessous, étoiles vides sans note, Megastar conservé. Densité et préférences existantes conservées.
+- Scènes sidebar/fiche complète adaptées aux boîtiers et CD PS1, boîtes et cartouches N64. Médias affichés entiers ; aucun jeu ni média de jeu ajouté.
+- Vérifié : TypeScript, lint ciblé, compilation, formatage et diff. Six copies identiques aux originaux, dimensions et transparence contrôlées. Pages PS1/N64 et six assets servis en HTTP 200 ; nouvelles classes et images confirmées dans le HTML local. Validation visuelle finale par Henri, notamment avec les futurs médias de jeux.
+
 ## Préférences de bibliothèque par plateforme — 2026-10-14
 
 - Mémorisation localStorage existante complétée : restauration également lors d’un retour sans filtres sur la même plateforme, sans remontage du composant.

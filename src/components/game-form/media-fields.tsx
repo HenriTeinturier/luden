@@ -82,13 +82,13 @@ export function MediaFields({
     }
     pending.current.add(id)
     update([
-      ...items,
+      ...items.map((item) => (role === 'box' ? { ...item, isPrimary: false } : item)),
       {
         mediaId: id,
         category: kind,
         caption: '',
         position: items.length,
-        isPrimary: items.length === 0,
+        isPrimary: role === 'box' || items.length === 0,
       },
     ])
     if (role)

@@ -1,5 +1,11 @@
 # État courant
 
+## Boîte importée automatiquement principale — 2026-10-15
+
+- Import réussi depuis Boîte / jaquette dans la mise en scène : nouvelle image étoilée automatiquement, ancienne désélectionnée ; coverId synchronisé par le formulaire existant. Applicable à toutes les plateformes.
+- Autres imports et sélection d’images existantes conservés ; choix modifiable ensuite avec l’étoile. Aucune modification rétroactive des jeux ; persistance à l’enregistrement de la fiche.
+- Vérifié : TypeScript, lint ciblé, tests médias existants, formatage et diff.
+
 ## Objets PS1 légèrement abaissés — 2026-10-15
 
 - Boîte et CD descendus ensemble de 12 px dans la sidebar, taille conservée. Espace sous la scène augmenté de 12 px pour préserver la séparation avec la note.

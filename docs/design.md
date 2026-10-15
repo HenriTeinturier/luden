@@ -195,7 +195,10 @@ navigation ; quitter l’édition abandonne le brouillon comme Annuler. Les URLs
 explorateur conservent leur parcours propre.
 
 Boîte/jaquette, support, logo transparent et fond sont quatre rôles facultatifs, indépendants de
-la vignette principale. Import par rôle et réutilisation d’images existantes. Le fond ouvre un outil
+la vignette principale. Import par rôle et réutilisation d’images existantes. Un import réussi dans « Boîte / jaquette »
+remplace aussi l’image principale étoilée et la vignette de bibliothèque ; une seule image
+reste principale. Les autres rôles conservent le choix existant. La sélection d’une image
+déjà présente reste indépendante ; l’étoile de la galerie permet toujours de changer la vignette. Le fond ouvre un outil
 de cadrage sidebar (déplacement, zoom, trois curseurs accessibles), modifiable ensuite. L’image
 reste entière pour la scène large. Format de création conseillé : 2560 × 1440 px, 16:9, sans texte.
 

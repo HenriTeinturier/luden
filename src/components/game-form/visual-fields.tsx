@@ -144,8 +144,8 @@ export function VisualFields({
         })}
       </div>
       <p className="field-hint">
-        Choisissez une image déjà enregistrée ou importez-la directement. L’étoile de la galerie
-        reste le choix de la vignette de bibliothèque.
+        Une image importée dans « Boîte / jaquette » devient automatiquement la vignette de
+        bibliothèque. Vous pouvez ensuite choisir une autre image avec l’étoile de la galerie.
       </p>
       <Modal
         open={cropping && Boolean(visuals.background)}

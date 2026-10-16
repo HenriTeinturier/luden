@@ -1,5 +1,10 @@
 # État courant
 
+## Boîte N64 alignée à gauche — 2026-10-16
+
+- Boîte décalée vers la gauche dans la sidebar avec cartouche, pour retrouver l’alignement Amiga/PS1 après la réduction de l’ensemble. Taille, hauteur et position de la cartouche conservées.
+- Vérifié : formatage et diff CSS. Validation visuelle par Henri.
+
 ## Boîte et cartouche N64 réduites et abaissées — 2026-10-16
 
 - Dans la sidebar, ensemble boîte/cartouche réduit de 20 % et descendu de 24 px, proportions et alignement conservés. Marge sous la scène augmentée de 24 px pour préserver la séparation avec la note.

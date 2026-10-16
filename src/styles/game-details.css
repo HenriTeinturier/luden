@@ -640,6 +640,7 @@
   max-width: 74%;
   flex-basis: 74%;
   height: 122%;
+  translate: -11.5cqw 16px;
 }
 .dossier-compact .game-scene[data-platform='n64'] .scene-support-stand {
   flex-basis: 42%;

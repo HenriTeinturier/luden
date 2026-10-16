@@ -298,7 +298,9 @@ des jeux ; les six fichiers fournis ici servent uniquement à l’identité des 
 
 Dans la sidebar N64, l’ensemble boîte/cartouche est réduit à 80 % autour de son ancrage
 inférieur et abaissé de 24 px pour dégager le décor. La marge sous la scène augmente de
-24 px pour conserver l’espace avant la note. Fiche complète inchangée.
+24 px pour conserver l’espace avant la note. Avec une cartouche, la boîte est décalée vers
+la gauche de 11,5 cqw avant réduction pour retrouver l’alignement des boîtes Amiga/PS1 ;
+la cartouche garde sa position. Fiche complète inchangée.
 
 ## Mega Drive
 

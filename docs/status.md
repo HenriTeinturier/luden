@@ -1,5 +1,10 @@
 # État courant
 
+## Préremplissage plateforme à l’ajout — 2026-10-16
+
+- Conflit de navigation reproduit : la galerie sortante pouvait restaurer ses filtres sur /games/new et effacer le paramètre de plateforme. Chemin de galerie désormais issu de sa propre route, avec garde empêchant une restauration après départ.
+- Vérifié dans le navigateur : ajout depuis le header PS2, GameCube, Xbox et Dreamcast, paramètre conservé et bonne console présélectionnée. Aucun jeu créé. TypeScript, lint ciblé et tests de préférences validés.
+
 ## Identités PS2, GameCube, Xbox et Dreamcast — 2026-10-16
 
 - Quatre plateformes déjà présentes au catalogue : douze assets fournis intégrés à l’accueil, Mes plateformes et aux sidebars de repli. Visuels personnels prioritaires.

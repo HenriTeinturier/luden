@@ -1,5 +1,5 @@
 import { coverFormat } from '../lib/presentation'
-import { useLocation, useNavigate, useSearch } from '@tanstack/react-router'
+import { useMatch, useNavigate, useRouter, useSearch } from '@tanstack/react-router'
 import {
   Search,
   LayoutGrid,
@@ -52,7 +52,8 @@ export function Gallery({
   const filters = { ...search, scope: search.scope ?? defaultScope }
   const visible = filterGames(games, filters)
   const navigate = useNavigate()
-  const pathname = useLocation({ select: (location) => location.pathname })
+  const router = useRouter()
+  const pathname = useMatch({ strict: false, select: (match) => match.pathname })
   const selection = useGameSelection()
   const desktop = useSyncExternalStore(subscribeDesktop, isDesktop, serverDesktop)
   const columnBonus = desktop && selection?.sidebarVisible === false ? 2 : 0
@@ -163,6 +164,9 @@ export function Gallery({
   }, [desktop, selection?.sidebarVisible, filters.columns, filters.view, pathname, visible.length])
   const restoredEntry = useRef<{ pathname: string; bare: boolean } | null>(null)
   useEffect(() => {
+    // The outgoing gallery can still render while the next route is loading.
+    // Never restore its filters onto the destination (notably /games/new).
+    if (router.state.location.pathname !== pathname) return
     const bare = Object.values(search).every((value) => value === undefined)
     const previous = restoredEntry.current
     restoredEntry.current = { pathname, bare }
@@ -184,7 +188,7 @@ export function Gallery({
     } catch {
       // Browser storage is optional, including during private browsing.
     }
-  }, [pathname, search, navigate, defaultScope])
+  }, [pathname, search, navigate, defaultScope, router])
   const [advanced, setAdvanced] = useState(false)
   const update = (patch: Partial<GallerySearch>) => {
     const next = { ...search, scope: filters.scope, ...patch }

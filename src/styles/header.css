@@ -11,6 +11,7 @@
 }
 .header-primary {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 20px;
   min-height: 78px;
@@ -97,9 +98,11 @@
 }
 .universe-shortcuts {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 4px;
-  flex-shrink: 0;
+  flex-shrink: 1;
+  max-width: 100%;
 }
 .universe-shortcut {
   display: inline-flex;

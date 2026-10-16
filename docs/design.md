@@ -221,8 +221,10 @@ sceau Megastar conservés. Les autres pages gardent leur présentation propre.
 
 La sidebar est remplacée par un header sticky : logo, navigation existante, paramètres,
 profil, recherche et action Ajouter/Enregistrer. Fil d’Ariane supprimé ; Mes univers est un menu
-compact dans la navigation principale, sans seconde ligne permanente.
-Sous 1650 px, le bouton Menu déplie navigation et profil ; recherche et action restent visibles.
+compact dans la navigation principale. Ce menu et les raccourcis du bandeau affichent toutes
+les plateformes ayant au moins un jeu, sans plafond ni liste de plateformes prédéfinie.
+Les raccourcis et le header passent à la ligne si nécessaire.
+Sous 1900 px, le bouton Menu déplie navigation et profil ; recherche et action restent visibles.
 Le champ de recherche globale se vide au changement de page et à la soumission ; la requête
 soumise reste appliquée à la galerie de résultats de la bibliothèque.
 Les informations d’espace personnel sont conservées dans le footer. Aucun changement de routes

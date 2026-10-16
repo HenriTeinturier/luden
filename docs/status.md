@@ -1,5 +1,11 @@
 # État courant
 
+## Univers sans limite d’affichage — 2026-10-16
+
+- Plafond de six plateformes supprimé dans « Mes univers » et les raccourcis du header : toutes les plateformes avec au moins un jeu sont affichées, dont la Super Nintendo. Liste fixe des raccourcis supprimée également.
+- Header et raccourcis avec retour à la ligne quand la largeur manque. Aucun changement des données.
+- Vérifié : TypeScript, lint ciblé, formatage et diff. Validation visuelle par Henri.
+
 ## Boîte importée automatiquement principale — 2026-10-15
 
 - Import réussi depuis Boîte / jaquette dans la mise en scène : nouvelle image étoilée automatiquement, ancienne désélectionnée ; coverId synchronisé par le formulaire existant. Applicable à toutes les plateformes.

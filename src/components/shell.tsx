@@ -53,13 +53,8 @@ export function Shell({ children, library }: { children: ReactNode; library: Lib
   const currentPlatform = library?.platforms.find(
     (platform) => pathname.replace(/\/$/, '') === `/platforms/${platform.id}`,
   )
-  const favorites =
-    library?.platforms
-      .filter((p) => library.games.some((g) => g.platformId === p.id))
-      .slice(0, 6) ?? []
-  const quickUniverses = ['amiga', 'snes', 'amstrad', 'atari-st', 'megadrive', 'ps1', 'n64']
-    .map((id) => favorites.find((platform) => platform.id === id))
-    .filter((platform) => platform !== undefined)
+  const universes =
+    library?.platforms.filter((p) => library.games.some((g) => g.platformId === p.id)) ?? []
   return (
     <FormActionContext.Provider value={setFormAction}>
       <div className="app-shell horizontal-shell">
@@ -99,7 +94,7 @@ export function Shell({ children, library }: { children: ReactNode; library: Lib
                     {to === '/library' && <small>{library?.games.length ?? 0}</small>}
                   </Link>
                 ))}
-                {favorites.length > 0 && (
+                {universes.length > 0 && (
                   <details
                     className="universe-menu"
                     onKeyDown={(event) => {
@@ -117,7 +112,7 @@ export function Shell({ children, library }: { children: ReactNode; library: Lib
                       <Gamepad2 size={18} /> Mes univers <ChevronDown size={14} />
                     </summary>
                     <div className="universe-links">
-                      {favorites.map((p) => (
+                      {universes.map((p) => (
                         <Link
                           key={p.id}
                           to="/platforms/$platformId"
@@ -156,9 +151,9 @@ export function Shell({ children, library }: { children: ReactNode; library: Lib
                 </div>
               </div>
             </div>
-            {quickUniverses.length > 0 && (
+            {universes.length > 0 && (
               <nav className="universe-shortcuts" aria-label="Accès direct aux univers">
-                {quickUniverses.map((platform) => (
+                {universes.map((platform) => (
                   <Link
                     key={platform.id}
                     to="/platforms/$platformId"

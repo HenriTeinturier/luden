@@ -6,7 +6,11 @@
       .platform-atari-st,
       .platform-megadrive,
       .platform-ps1,
-      .platform-n64
+      .platform-n64,
+      .platform-ps2,
+      .platform-gamecube,
+      .platform-xbox,
+      .platform-dreamcast
     )
     .game-grid {
     grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
@@ -279,7 +283,11 @@
     .platform-atari-st,
     .platform-megadrive,
     .platform-ps1,
-    .platform-n64
+    .platform-n64,
+    .platform-ps2,
+    .platform-gamecube,
+    .platform-xbox,
+    .platform-dreamcast
   )
   .game-card
   :is(.game-platform, .game-card-bottom, .card-memory),
@@ -289,7 +297,11 @@
     .platform-atari-st,
     .platform-megadrive,
     .platform-ps1,
-    .platform-n64
+    .platform-n64,
+    .platform-ps2,
+    .platform-gamecube,
+    .platform-xbox,
+    .platform-dreamcast
   )
   .game-card
   .stars
@@ -302,7 +314,11 @@
     .platform-atari-st,
     .platform-megadrive,
     .platform-ps1,
-    .platform-n64
+    .platform-n64,
+    .platform-ps2,
+    .platform-gamecube,
+    .platform-xbox,
+    .platform-dreamcast
   )
   .game-card
   h3 {
@@ -320,7 +336,11 @@
     .platform-atari-st,
     .platform-megadrive,
     .platform-ps1,
-    .platform-n64
+    .platform-n64,
+    .platform-ps2,
+    .platform-gamecube,
+    .platform-xbox,
+    .platform-dreamcast
   )
   .game-grid
   .game-card {
@@ -333,7 +353,11 @@
     .platform-atari-st,
     .platform-megadrive,
     .platform-ps1,
-    .platform-n64
+    .platform-n64,
+    .platform-ps2,
+    .platform-gamecube,
+    .platform-xbox,
+    .platform-dreamcast
   )
   .game-grid
   .game-cover {
@@ -346,7 +370,11 @@
     .platform-atari-st,
     .platform-megadrive,
     .platform-ps1,
-    .platform-n64
+    .platform-n64,
+    .platform-ps2,
+    .platform-gamecube,
+    .platform-xbox,
+    .platform-dreamcast
   )
   .game-grid
   .game-cover
@@ -359,7 +387,11 @@
     .platform-atari-st,
     .platform-megadrive,
     .platform-ps1,
-    .platform-n64
+    .platform-n64,
+    .platform-ps2,
+    .platform-gamecube,
+    .platform-xbox,
+    .platform-dreamcast
   )
   .game-grid
   .game-card-info {
@@ -942,7 +974,14 @@
 }
 
 /* PlayStation and Nintendo 64: supplied platform artwork, original proportions. */
-.platform-card:is(.platform-card-ps1, .platform-card-n64) {
+.platform-card:is(
+  .platform-card-ps1,
+  .platform-card-n64,
+  .platform-card-ps2,
+  .platform-card-gamecube,
+  .platform-card-xbox,
+  .platform-card-dreamcast
+) {
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -954,16 +993,40 @@
 .platform-card.platform-card-n64 {
   background: #091830 url('/platforms/n64/graphite.webp') center / cover no-repeat;
 }
-:is(.platform-card-ps1, .platform-card-n64) .platform-card-top {
+:is(
+    .platform-card-ps1,
+    .platform-card-n64,
+    .platform-card-ps2,
+    .platform-card-gamecube,
+    .platform-card-xbox,
+    .platform-card-dreamcast
+  )
+  .platform-card-top {
   align-items: flex-start;
 }
-:is(.platform-card-ps1, .platform-card-n64) .platform-card-logo {
+:is(
+    .platform-card-ps1,
+    .platform-card-n64,
+    .platform-card-ps2,
+    .platform-card-gamecube,
+    .platform-card-xbox,
+    .platform-card-dreamcast
+  )
+  .platform-card-logo {
   width: 47%;
   max-width: 340px;
   height: auto;
   margin-top: 16px;
 }
-:is(.platform-card-ps1, .platform-card-n64) .platform-card-console {
+:is(
+    .platform-card-ps1,
+    .platform-card-n64,
+    .platform-card-ps2,
+    .platform-card-gamecube,
+    .platform-card-xbox,
+    .platform-card-dreamcast
+  )
+  .platform-card-console {
   position: absolute;
   right: 0;
   bottom: 0;
@@ -974,7 +1037,15 @@
   filter: drop-shadow(0 12px 12px #0008);
   z-index: -1;
 }
-:is(.platform-card-ps1, .platform-card-n64) .platform-card-bottom {
+:is(
+    .platform-card-ps1,
+    .platform-card-n64,
+    .platform-card-ps2,
+    .platform-card-gamecube,
+    .platform-card-xbox,
+    .platform-card-dreamcast
+  )
+  .platform-card-bottom {
   width: 43%;
 }
 .platform-card.platform-card-ps1:hover {
@@ -988,7 +1059,15 @@
   gap: 24px;
 }
 @media (max-width: 720px) {
-  :is(.platform-card-ps1, .platform-card-n64) .platform-card-logo {
+  :is(
+      .platform-card-ps1,
+      .platform-card-n64,
+      .platform-card-ps2,
+      .platform-card-gamecube,
+      .platform-card-xbox,
+      .platform-card-dreamcast
+    )
+    .platform-card-logo {
     margin-top: 12px;
   }
 }
@@ -1046,4 +1125,32 @@
   .platforms-index .platform-grid {
     grid-template-columns: minmax(0, 1fr);
   }
+}
+
+.platform-card.platform-card-ps2 {
+  background: #091830 url('/platforms/ps2/graphite.webp') center / cover no-repeat;
+}
+.platform-card.platform-card-ps2:hover {
+  border-color: var(--platform-color);
+}
+
+.platform-card.platform-card-gamecube {
+  background: #091830 url('/platforms/gamecube/graphite.webp') center / cover no-repeat;
+}
+.platform-card.platform-card-gamecube:hover {
+  border-color: var(--platform-color);
+}
+
+.platform-card.platform-card-xbox {
+  background: #091830 url('/platforms/xbox/graphite.webp') center / cover no-repeat;
+}
+.platform-card.platform-card-xbox:hover {
+  border-color: var(--platform-color);
+}
+
+.platform-card.platform-card-dreamcast {
+  background: #091830 url('/platforms/dreamcast/graphite.webp') center / cover no-repeat;
+}
+.platform-card.platform-card-dreamcast:hover {
+  border-color: var(--platform-color);
 }

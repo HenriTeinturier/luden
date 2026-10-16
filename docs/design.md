@@ -440,3 +440,16 @@ Les cartes de jeux favoris portent le sceau violet/bleu Megastar fourni (`public
 Cartes de jeux Amstrad : ratio 3:4 adapté aux visuels de disquettes, image entière sans recadrage ni padding extérieur en grille. Présentation compacte comme Amiga : titre sur une ligne avec ellipse, étoiles seules, sans plateforme, année, statut ni souvenir. Le sceau Megastar reste visible pour les favoris.
 
 Dans les univers Amiga, Amstrad et Atari ST, la grille utilise des colonnes de 210 px minimum au-dessus de 700 px pour donner plus de place aux jaquettes. Le ratio reste identique ; les deux colonnes mobiles et la vue liste sont conservées.
+
+## Identités PS2, GameCube, Xbox et Dreamcast
+
+Les quatre plateformes du catalogue disposent de leurs fonds, logos et consoles fournis,
+versionnés comme assets de présentation dans `public/platforms/{id}/`. Ils habillent
+l’accueil, Mes plateformes et le repli de la sidebar ; les visuels personnels restent prioritaires.
+Les galeries PS2, GameCube et Xbox utilisent des boîtes verticales (ratio 0,71), Dreamcast
+des boîtiers carrés. Les images restent entières, sans déformation. Les univers affichent
+le titre sur une ligne et les étoiles dessous, y compris sans note. Dans Ma bibliothèque
+et À découvrir, les cartes communes conservent leur cadre carré avec image entière,
+le logo de la console, le titre du jeu et son année lorsqu’elle est renseignée.
+Les scènes de consultation associent boîte et disque ; le mini-disque GameCube dispose
+d’un cadre plus petit. Filtres, densité, préférences, édition et imports restent communs.

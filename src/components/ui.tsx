@@ -110,9 +110,19 @@ export function PlatformArt({
   )
 }
 export function PlatformCard({ platform, count }: { platform: Platform; count: number }) {
-  const illustrated = ['snes', 'amiga', 'amstrad', 'atari-st', 'megadrive', 'ps1', 'n64'].includes(
-    platform.id,
-  )
+  const illustrated = [
+    'snes',
+    'amiga',
+    'amstrad',
+    'atari-st',
+    'megadrive',
+    'ps1',
+    'n64',
+    'ps2',
+    'gamecube',
+    'xbox',
+    'dreamcast',
+  ].includes(platform.id)
   return (
     <Link
       to="/platforms/$platformId"
@@ -132,7 +142,9 @@ export function PlatformCard({ platform, count }: { platform: Platform; count: n
         <img
           className="platform-card-console"
           src={
-            ['snes', 'megadrive', 'ps1', 'n64'].includes(platform.id)
+            ['snes', 'megadrive', 'ps1', 'n64', 'ps2', 'gamecube', 'xbox', 'dreamcast'].includes(
+              platform.id,
+            )
               ? `/platforms/${platform.id}/console.webp`
               : `/platforms/${platform.id}/computer.webp`
           }
@@ -209,7 +221,19 @@ export function GameCard({
   const simpleCard = ['/library', '/discover'].includes(location.pathname.replace(/\/$/, ''))
   const platformLogo =
     simpleCard &&
-    ['amiga', 'amstrad', 'snes', 'atari-st', 'megadrive', 'ps1', 'n64'].includes(game.platformId)
+    [
+      'amiga',
+      'amstrad',
+      'snes',
+      'atari-st',
+      'megadrive',
+      'ps1',
+      'n64',
+      'ps2',
+      'gamecube',
+      'xbox',
+      'dreamcast',
+    ].includes(game.platformId)
       ? `/platforms/${game.platformId}/logo.webp`
       : undefined
   return (
@@ -273,7 +297,16 @@ export function GameCard({
           <>
             <Stars
               value={rating}
-              showEmpty={['snes', 'megadrive', 'ps1', 'n64'].includes(platformId ?? '')}
+              showEmpty={[
+                'snes',
+                'megadrive',
+                'ps1',
+                'n64',
+                'ps2',
+                'gamecube',
+                'xbox',
+                'dreamcast',
+              ].includes(platformId ?? '')}
             />
             <div className="game-card-bottom">
               <span>{playStatuses[game.experience?.status ?? 'UNPLAYED']}</span>

@@ -144,9 +144,19 @@ export function UniverseSidebar({
           />
         ) : (
           <div className="universe-banner-fallback">
-            {['snes', 'amiga', 'amstrad', 'atari-st', 'megadrive', 'ps1', 'n64'].includes(
-              platform.id,
-            ) ? (
+            {[
+              'snes',
+              'amiga',
+              'amstrad',
+              'atari-st',
+              'megadrive',
+              'ps1',
+              'n64',
+              'ps2',
+              'gamecube',
+              'xbox',
+              'dreamcast',
+            ].includes(platform.id) ? (
               <img src={`/platforms/${platform.id}/logo.webp`} alt={platform.name} />
             ) : (
               <h2>{platform.name}</h2>
@@ -183,13 +193,13 @@ export function UniverseSidebar({
           </div>
         ) : (
           <div className="universe-sidebar-fallback">
-            {['ps1', 'n64'].includes(platform.id) ? (
+            {['ps1', 'n64', 'ps2', 'gamecube', 'xbox', 'dreamcast'].includes(platform.id) ? (
               <img
                 className="universe-fallback-hardware"
                 src={`/platforms/${platform.id}/console.webp`}
                 alt=""
                 width={1200}
-                height={platform.id === 'ps1' ? 751 : 706}
+                height={platform.id === 'ps1' ? 751 : platform.id === 'n64' ? 706 : 800}
               />
             ) : platform.id === 'megadrive' ? (
               <img

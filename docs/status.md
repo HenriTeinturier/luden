@@ -1,5 +1,12 @@
 # État courant
 
+## Identités PS2, GameCube, Xbox et Dreamcast — 2026-10-16
+
+- Quatre plateformes déjà présentes au catalogue : douze assets fournis intégrés à l’accueil, Mes plateformes et aux sidebars de repli. Visuels personnels prioritaires.
+- Galeries : boîtes verticales PS2/GameCube/Xbox, carrées Dreamcast, titre sur une ligne et étoiles. Ma bibliothèque et À découvrir : logo console, titre et année renseignée, images entières dans le cadre commun.
+- Scènes boîte/disque adaptées en sidebar et fiche complète, mini-disque GameCube plus petit. Options, filtres, préférences et imports communs conservés. Aucun jeu ni média personnel ajouté.
+- Vérifié : TypeScript, lint ciblé, compilation, formatage et diff ; douze copies identiques, dimensions et transparence contrôlées. Quatre pages et douze assets servis en HTTP 200, classes/logos/consoles présents dans le HTML local. Validation visuelle finale par Henri.
+
 ## Cartouche N64 décalée à droite — 2026-10-16
 
 - Cartouche décalée vers la droite de 11,5 cqw avant réduction dans la sidebar, en complément de la boîte alignée à gauche. Taille et hauteur conservées.

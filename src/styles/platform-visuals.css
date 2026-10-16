@@ -118,29 +118,94 @@
 .universe-megadrive :is(.universe-banner-fallback, .universe-sidebar-fallback) {
   background: #171717 url('/platforms/megadrive/graphite.webp') center / cover no-repeat;
 }
-:is(.universe-megadrive, .universe-ps1, .universe-n64) .universe-banner-fallback {
+:is(
+    .universe-megadrive,
+    .universe-ps1,
+    .universe-n64,
+    .universe-ps2,
+    .universe-gamecube,
+    .universe-xbox,
+    .universe-dreamcast
+  )
+  .universe-banner-fallback {
   padding-top: 64px;
   padding-right: 24px;
   padding-bottom: 24px;
 }
-:is(.universe-megadrive, .universe-ps1, .universe-n64) .universe-fallback-hardware {
+:is(
+    .universe-megadrive,
+    .universe-ps1,
+    .universe-n64,
+    .universe-ps2,
+    .universe-gamecube,
+    .universe-xbox,
+    .universe-dreamcast
+  )
+  .universe-fallback-hardware {
   max-height: 65%;
   object-fit: contain;
 }
 @media (max-width: 800px) {
-  :is(.universe-megadrive, .universe-ps1, .universe-n64) .universe-banner-fallback {
+  :is(
+      .universe-megadrive,
+      .universe-ps1,
+      .universe-n64,
+      .universe-ps2,
+      .universe-gamecube,
+      .universe-xbox,
+      .universe-dreamcast
+    )
+    .universe-banner-fallback {
     padding: 54px 24px 12px;
   }
-  :is(.universe-megadrive, .universe-ps1, .universe-n64) .universe-banner-fallback img {
+  :is(
+      .universe-megadrive,
+      .universe-ps1,
+      .universe-n64,
+      .universe-ps2,
+      .universe-gamecube,
+      .universe-xbox,
+      .universe-dreamcast
+    )
+    .universe-banner-fallback
+    img {
     max-height: 35px;
   }
-  :is(.universe-megadrive, .universe-ps1, .universe-n64) .universe-sidebar-fallback {
+  :is(
+      .universe-megadrive,
+      .universe-ps1,
+      .universe-n64,
+      .universe-ps2,
+      .universe-gamecube,
+      .universe-xbox,
+      .universe-dreamcast
+    )
+    .universe-sidebar-fallback {
     padding: 12px;
   }
-  :is(.universe-megadrive, .universe-ps1, .universe-n64) .universe-fallback-hardware {
+  :is(
+      .universe-megadrive,
+      .universe-ps1,
+      .universe-n64,
+      .universe-ps2,
+      .universe-gamecube,
+      .universe-xbox,
+      .universe-dreamcast
+    )
+    .universe-fallback-hardware {
     max-height: 100%;
   }
-  :is(.universe-megadrive, .universe-ps1, .universe-n64) .universe-sidebar-fallback :is(h2, p) {
+  :is(
+      .universe-megadrive,
+      .universe-ps1,
+      .universe-n64,
+      .universe-ps2,
+      .universe-gamecube,
+      .universe-xbox,
+      .universe-dreamcast
+    )
+    .universe-sidebar-fallback
+    :is(h2, p) {
     display: none;
   }
 }
@@ -445,4 +510,20 @@
 }
 .universe-n64 :is(.universe-banner-fallback, .universe-sidebar-fallback) {
   background: #091830 url('/platforms/n64/graphite.webp') center / cover no-repeat;
+}
+
+.universe-ps2 :is(.universe-banner-fallback, .universe-sidebar-fallback) {
+  background: #091830 url('/platforms/ps2/graphite.webp') center / cover no-repeat;
+}
+
+.universe-gamecube :is(.universe-banner-fallback, .universe-sidebar-fallback) {
+  background: #091830 url('/platforms/gamecube/graphite.webp') center / cover no-repeat;
+}
+
+.universe-xbox :is(.universe-banner-fallback, .universe-sidebar-fallback) {
+  background: #091830 url('/platforms/xbox/graphite.webp') center / cover no-repeat;
+}
+
+.universe-dreamcast :is(.universe-banner-fallback, .universe-sidebar-fallback) {
+  background: #091830 url('/platforms/dreamcast/graphite.webp') center / cover no-repeat;
 }

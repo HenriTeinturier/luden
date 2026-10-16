@@ -1,5 +1,10 @@
 # État courant
 
+## Boîte et cartouche N64 réduites et abaissées — 2026-10-16
+
+- Dans la sidebar, ensemble boîte/cartouche réduit de 20 % et descendu de 24 px, proportions et alignement conservés. Marge sous la scène augmentée de 24 px pour préserver la séparation avec la note.
+- Vérifié : formatage et diff CSS. Validation visuelle par Henri.
+
 ## Univers sans limite d’affichage — 2026-10-16
 
 - Plafond de six plateformes supprimé dans « Mes univers » et les raccourcis du header : toutes les plateformes avec au moins un jeu sont affichées, dont la Super Nintendo. Liste fixe des raccourcis supprimée également.

@@ -628,6 +628,14 @@
   margin-left: -4%;
   transform: translateY(16px);
 }
+.dossier-compact .game-scene[data-platform='n64'] {
+  margin-bottom: 192px;
+}
+.dossier-compact .game-scene[data-platform='n64'] .scene-objects {
+  bottom: -172px;
+  scale: 0.8;
+  transform-origin: center bottom;
+}
 .dossier-compact .game-scene[data-platform='n64'] .has-support .scene-box {
   max-width: 74%;
   flex-basis: 74%;

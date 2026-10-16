@@ -296,6 +296,10 @@ avec 12 px supplémentaires sous la scène pour préserver la séparation avec l
 des médias importés. Les emplacements Boîte et Support existants reçoivent les futurs assets
 des jeux ; les six fichiers fournis ici servent uniquement à l’identité des plateformes.
 
+Dans la sidebar N64, l’ensemble boîte/cartouche est réduit à 80 % autour de son ancrage
+inférieur et abaissé de 24 px pour dégager le décor. La marge sous la scène augmente de
+24 px pour conserver l’espace avant la note. Fiche complète inchangée.
+
 ## Mega Drive
 
 Carte d’entrée : fond quadrillé graphite avec diagonales rouges/grises, logo argenté à gauche,

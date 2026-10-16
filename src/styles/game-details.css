@@ -646,6 +646,7 @@
   flex-basis: 42%;
   height: 78%;
   margin-left: -16%;
+  translate: 11.5cqw 0;
   transform: translateY(16px);
 }
 .dossier-full .game-scene[data-platform='ps1'] .has-support .scene-box {

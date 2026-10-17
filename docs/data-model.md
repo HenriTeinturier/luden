@@ -2,6 +2,9 @@
 
 - Profile : propriétaire local explicite, futur point d'entrée d'authentification.
 - Platform : Switch, PS5, PC, Amiga… pas de périodes pour les consoles/anciens ordinateurs.
+  Les filtres de Mes plateformes sont indépendants des familles de marques : Consoles regroupe
+  les consoles de salon et hybrides ; Portables regroupe Game Boy, GBA, DS, 3DS, PSP et les hybrides
+  Switch/Switch 2. Les hybrides apparaissent dans les deux filtres, sans dupliquer les plateformes ni les jeux.
   `slideshowEnabled` (false par défaut) et `slideshowSeconds` (8, entier de 3 à 120, contrainte SQL)
   règlent le défilement des affiches dans la V1 locale. Dernière affiche consultée par plateforme
   conservée uniquement dans le localStorage du navigateur, avec repli sur le défaut actif.

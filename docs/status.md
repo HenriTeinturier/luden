@@ -1,5 +1,12 @@
 # État courant
 
+## Filtre Portables — 2026-10-18
+
+- Mes plateformes : ajout de Portables (Game Boy, GBA, DS, 3DS, PSP, Switch et Switch 2). Consoles regroupe désormais les consoles de salon et hybrides ; Switch et Switch 2 appartiennent aux deux filtres. Familles de marques et tri par nombre de jeux conservés.
+- PSP ajoutée au catalogue. Aucun jeu ni visuel ajouté.
+- Vérifié : TypeScript, lint ciblé, test des filtres (portables, hybrides, ordinateurs et marques), formatage et diff. Validation visuelle par Henri.
+- À prévoir : deux plateformes distinctes PC Engine (représentée par une CoreGrafx) et PC Engine CD (représentée par une Duo-R), avec leurs visuels dédiés.
+
 ## Logo des cartes Dreamcast contenu en hauteur — 2026-10-18
 
 - Accueil et Mes plateformes : logo Dreamcast contenu dans une hauteur de 110 px (80 px sur mobile), entier et aligné en haut à gauche. Le titre et le nombre de jeux retrouvent leur place en bas de carte.

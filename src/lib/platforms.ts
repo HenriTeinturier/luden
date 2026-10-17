@@ -1,5 +1,14 @@
 export const platforms = [
   {
+    id: 'psp',
+    name: 'PlayStation Portable',
+    shortName: 'PSP',
+    family: 'PlayStation',
+    color: '#65718c',
+    era: '2004',
+    igdbId: 38,
+  },
+  {
     id: 'switch',
     name: 'Nintendo Switch',
     shortName: 'Switch',
@@ -270,6 +279,17 @@ export const platforms = [
     igdbId: 80,
   },
 ]
+
+const handheldIds = new Set(['gameboy', 'gba', 'ds', '3ds', 'psp'])
+const hybridIds = new Set(['switch', 'switch-2'])
+
+export function matchesPlatformFilter(platform: { id: string; family: string }, filter: string) {
+  if (filter === 'Toutes') return true
+  if (filter === 'Portables') return handheldIds.has(platform.id) || hybridIds.has(platform.id)
+  if (filter === 'Consoles')
+    return platform.family !== 'Ordinateurs' && !handheldIds.has(platform.id)
+  return platform.family === filter
+}
 
 export const playStatuses = {
   UNPLAYED: 'Pas encore joué',

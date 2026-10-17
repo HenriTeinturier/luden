@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState, type CSSProperties } from 're
 import { Monitor, Plus, ArrowUpRight } from 'lucide-react'
 import { PageHeading, PlatformCard, SectionHeading, Modal, useLibrary } from '../components/ui'
 import { saveMachineFn } from '../server/functions'
+import { matchesPlatformFilter } from '../lib/platforms'
 const columnsStorageKey = 'luden:platforms:columns:v1'
 const columnOptions = [1, 2, 3, 4]
 
@@ -69,6 +70,7 @@ function Platforms() {
             'Toutes',
             'Ordinateurs',
             'Consoles',
+            'Portables',
             ...new Set(platforms.map((p) => p.family).filter((f) => f !== 'Ordinateurs')),
           ].map((f) => (
             <button
@@ -101,11 +103,7 @@ function Platforms() {
         style={{ '--platform-columns': columns } as CSSProperties}
       >
         {platforms
-          .filter((p) =>
-            family === 'Consoles'
-              ? p.family !== 'Ordinateurs'
-              : family === 'Toutes' || p.family === family,
-          )
+          .filter((p) => matchesPlatformFilter(p, family))
           .sort(
             (a, b) =>
               (gameCounts.get(b.id) ?? 0) - (gameCounts.get(a.id) ?? 0) ||

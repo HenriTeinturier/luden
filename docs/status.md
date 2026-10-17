@@ -1,5 +1,10 @@
 # État courant
 
+## Boîte et CD Xbox légèrement abaissés — 2026-10-17
+
+- Sidebar Xbox : boîte et CD descendus ensemble de 12 px, avec 12 px supplémentaires sous la scène pour préserver la séparation avec la note.
+- Vérifié : formatage ciblé et diff CSS. Validation visuelle par Henri.
+
 ## Cadres Dreamcast aux proportions PAL — 2026-10-17
 
 - Grille Dreamcast : cadre fixé au ratio 1,24 des boîtiers PAL, image entière occupant ce cadre. Remplace la hauteur automatique qui laissait des bandes latérales avec le dimensionnement des images différées ; titre et étoiles dessous, repli sans image carré.

@@ -1,5 +1,23 @@
 export const platforms = [
   {
+    id: 'pc-engine',
+    name: 'PC Engine (CoreGrafx)',
+    shortName: 'PC Engine',
+    family: 'NEC',
+    color: '#537ca0',
+    era: '1987',
+    igdbId: 86,
+  },
+  {
+    id: 'pc-engine-cd',
+    name: 'PC Engine CD (Duo-R)',
+    shortName: 'PC Engine CD',
+    family: 'NEC',
+    color: '#8a87a4',
+    era: '1988',
+    igdbId: 150,
+  },
+  {
     id: 'psp',
     name: 'PlayStation Portable',
     shortName: 'PSP',

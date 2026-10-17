@@ -19,5 +19,11 @@ test('platform filters separate handhelds and computers while sharing hybrids', 
     assert.ok(!ids('Consoles').includes(id))
   assert.ok(ids('Consoles').includes('dreamcast'))
   assert.ok(ids('PlayStation').includes('psp'))
+  assert.deepEqual(ids('NEC').sort(), ['pc-engine', 'pc-engine-cd'])
+  for (const id of ids('NEC')) {
+    assert.ok(ids('Consoles').includes(id))
+    assert.ok(!ids('Portables').includes(id))
+    assert.ok(!ids('Ordinateurs').includes(id))
+  }
   assert.equal(ids('Toutes').length, platforms.length)
 })

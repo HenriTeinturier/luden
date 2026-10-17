@@ -1,11 +1,17 @@
 # État courant
 
+## Plateformes NEC — 2026-10-18
+
+- Catalogue : PC Engine (CoreGrafx) et PC Engine CD (Duo-R), distinctes avec leurs identifiants IGDB. Famille NEC disponible automatiquement dans Mes plateformes ; les deux sont des consoles de salon, présentes dans Consoles et exclues de Portables et Ordinateurs.
+- Cartes génériques en attendant les visuels dédiés. Aucun jeu ajouté.
+- Deux entrées enregistrées et relues dans la base locale. Vérifié : lint ciblé, test des filtres NEC/Consoles/Portables/Ordinateurs, formatage et diff.
+
 ## Filtre Portables — 2026-10-18
 
 - Mes plateformes : ajout de Portables (Game Boy, GBA, DS, 3DS, PSP, Switch et Switch 2). Consoles regroupe désormais les consoles de salon et hybrides ; Switch et Switch 2 appartiennent aux deux filtres. Familles de marques et tri par nombre de jeux conservés.
 - PSP ajoutée au catalogue. Aucun jeu ni visuel ajouté.
 - Vérifié : TypeScript, lint ciblé, test des filtres (portables, hybrides, ordinateurs et marques), formatage et diff. Validation visuelle par Henri.
-- À prévoir : deux plateformes distinctes PC Engine (représentée par une CoreGrafx) et PC Engine CD (représentée par une Duo-R), avec leurs visuels dédiés.
+- À prévoir : visuels dédiés CoreGrafx pour PC Engine et Duo-R pour PC Engine CD (plateformes ajoutées depuis).
 
 ## Logo des cartes Dreamcast contenu en hauteur — 2026-10-18
 

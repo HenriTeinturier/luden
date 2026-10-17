@@ -1,5 +1,9 @@
 # Direction graphique actuelle
 
+Les cartes de plateformes (accueil et Mes plateformes, illustrées ou génériques) affichent
+`année · nombre de jeux` sous le nom, dans le style discret du compteur. Région de sortie en
+infobulle sur l’année ; PC générique sans année. Référentiel et sources : `platform-release-years.md`.
+
 ## Consultation commune : sidebar et fiche complète
 
 Toutes les plateformes partagent le même parcours, dans `game-explorer.tsx` et `game-details.tsx`.

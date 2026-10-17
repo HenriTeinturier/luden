@@ -1,0 +1,38 @@
+// Display dates and their sources: docs/platform-release-years.md.
+// Separate from the legacy `era` field, which mixes world dates and free text.
+type PlatformRelease = { year: number; region: 'France' | 'Europe' | 'Japon' }
+
+export const platformReleases: Record<string, PlatformRelease | undefined> = {
+  'pc-engine': { year: 1987, region: 'Japon' },
+  'pc-engine-cd': { year: 1988, region: 'Japon' },
+  psp: { year: 2005, region: 'Europe' },
+  switch: { year: 2017, region: 'Europe' },
+  'switch-2': { year: 2025, region: 'Europe' },
+  ps5: { year: 2020, region: 'Europe' },
+  ps4: { year: 2013, region: 'Europe' },
+  ps3: { year: 2007, region: 'Europe' },
+  ps2: { year: 2000, region: 'Europe' },
+  ps1: { year: 1995, region: 'Europe' },
+  snes: { year: 1992, region: 'Europe' },
+  nes: { year: 1987, region: 'France' },
+  n64: { year: 1997, region: 'Europe' },
+  gamecube: { year: 2002, region: 'Europe' },
+  wii: { year: 2006, region: 'Europe' },
+  'wii-u': { year: 2012, region: 'Europe' },
+  gameboy: { year: 1990, region: 'Europe' },
+  gba: { year: 2001, region: 'Europe' },
+  ds: { year: 2005, region: 'Europe' },
+  '3ds': { year: 2011, region: 'Europe' },
+  'xbox-series': { year: 2020, region: 'Europe' },
+  'xbox-one': { year: 2013, region: 'Europe' },
+  xbox360: { year: 2005, region: 'Europe' },
+  xbox: { year: 2002, region: 'Europe' },
+  amiga: { year: 1986, region: 'Europe' },
+  'atari-st': { year: 1985, region: 'Europe' },
+  amstrad: { year: 1984, region: 'Europe' },
+  megadrive: { year: 1990, region: 'Europe' },
+  mastersystem: { year: 1987, region: 'France' },
+  saturn: { year: 1995, region: 'Europe' },
+  dreamcast: { year: 1999, region: 'Europe' },
+  neogeo: { year: 1991, region: 'Europe' },
+}

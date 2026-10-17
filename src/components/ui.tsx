@@ -5,6 +5,7 @@ import { Link, useLoaderData, useParams, useLocation } from '@tanstack/react-rou
 import { useState, type CSSProperties, type ReactNode } from 'react'
 import type { Game, Platform } from '../lib/types'
 import { playStatuses } from '../lib/platforms'
+import { platformReleases } from '../lib/platform-releases'
 import { Stars } from './rating'
 import { coverFormat } from '../lib/presentation'
 import { gallerySearch } from '../lib/gallery'
@@ -110,6 +111,7 @@ export function PlatformArt({
   )
 }
 export function PlatformCard({ platform, count }: { platform: Platform; count: number }) {
+  const release = platformReleases[platform.id]
   const illustrated = [
     'snes',
     'amiga',
@@ -157,6 +159,14 @@ export function PlatformCard({ platform, count }: { platform: Platform; count: n
       <div className="platform-card-bottom">
         <h3>{platform.name}</h3>
         <span>
+          {release && (
+            <>
+              <span title={`Sortie de la plateforme — ${release.region} : ${release.year}`}>
+                {release.year}
+              </span>
+              {' · '}
+            </>
+          )}
           {count} jeu{count !== 1 ? 'x' : ''}
         </span>
       </div>

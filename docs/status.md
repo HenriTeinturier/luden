@@ -1,5 +1,11 @@
 # État courant
 
+## Années sur toutes les cartes de plateformes — 2026-10-18
+
+- 32 plateformes datées, y compris celles sans visuels : année puis nombre de jeux, région en infobulle. France/Europe en priorité, Japon pour les PC Engine d’import ; années de plateformes plutôt que de variantes matérielles. PC générique sans date unique.
+- Référentiel statique indépendant du champ historique `era`, sans migration ni modification des jeux. Sources et conventions dans `docs/platform-release-years.md`.
+- Vérifié : TypeScript, lint ciblé, test de couverture du catalogue (32 dates et exclusion du PC), formatage et diff. Validation visuelle par Henri.
+
 ## Plateformes NEC — 2026-10-18
 
 - Catalogue : PC Engine (CoreGrafx) et PC Engine CD (Duo-R), distinctes avec leurs identifiants IGDB. Famille NEC disponible automatiquement dans Mes plateformes ; les deux sont des consoles de salon, présentes dans Consoles et exclues de Portables et Ordinateurs.

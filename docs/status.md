@@ -1,8 +1,8 @@
 # État courant
 
-## Boîte et CD Xbox légèrement abaissés — 2026-10-17
+## Boîte et CD Xbox abaissés — 2026-10-17
 
-- Sidebar Xbox : boîte et CD descendus ensemble de 12 px, avec 12 px supplémentaires sous la scène pour préserver la séparation avec la note.
+- Sidebar Xbox : boîte et CD descendus ensemble de 42 px au total (30 px supplémentaires après le premier ajustement), avec une marge sous la scène augmentée d’autant pour préserver la séparation avec la note.
 - Vérifié : formatage ciblé et diff CSS. Validation visuelle par Henri.
 
 ## Cadres Dreamcast aux proportions PAL — 2026-10-17

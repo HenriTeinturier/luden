@@ -2145,10 +2145,10 @@ kbd {
 
 /* DVD cases and discs; GameCube's mini-disc keeps a smaller frame. */
 .dossier-compact .game-scene[data-platform='xbox'] {
-  margin-bottom: 180px;
+  margin-bottom: 210px;
 }
 .dossier-compact .game-scene[data-platform='xbox'] .scene-objects {
-  bottom: -160px;
+  bottom: -190px;
 }
 .dossier-compact
   .game-scene:is([data-platform='ps2'], [data-platform='gamecube'], [data-platform='xbox'])

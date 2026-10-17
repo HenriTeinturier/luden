@@ -1,5 +1,10 @@
 # État courant
 
+## Proportions et placement Dreamcast — 2026-10-17
+
+- Sidebar : boîte et CD descendus de 24 px, espace sous la scène augmenté d’autant. CD réduit d’environ 15 % (cadre de 94 % à 80 %) pour rester plus petit que le boîtier, proportions des images conservées.
+- Vérifié : formatage ciblé et diff CSS. Validation visuelle par Henri.
+
 ## Préremplissage plateforme à l’ajout — 2026-10-16
 
 - Conflit de navigation reproduit : la galerie sortante pouvait restaurer ses filtres sur /games/new et effacer le paramètre de plateforme. Chemin de galerie désormais issu de sa propre route, avec garde empêchant une restauration après départ.

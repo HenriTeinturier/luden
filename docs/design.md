@@ -453,3 +453,6 @@ et À découvrir, les cartes communes conservent leur cadre carré avec image en
 le logo de la console, le titre du jeu et son année lorsqu’elle est renseignée.
 Les scènes de consultation associent boîte et disque ; le mini-disque GameCube dispose
 d’un cadre plus petit. Filtres, densité, préférences, édition et imports restent communs.
+Dans la sidebar Dreamcast, boîte et CD sont abaissés ensemble de 24 px ; la marge sous
+la scène suit ce décalage. Le cadre du CD passe de 94 % à 80 % de la hauteur des objets
+(réduction d’environ 15 %) pour que son diamètre reste inférieur à la hauteur du boîtier.

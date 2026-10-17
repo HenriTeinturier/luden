@@ -633,6 +633,15 @@
   margin-left: -4%;
   transform: translateY(16px);
 }
+.dossier-compact .game-scene[data-platform='dreamcast'] {
+  margin-bottom: 204px;
+}
+.dossier-compact .game-scene[data-platform='dreamcast'] .scene-objects {
+  bottom: -184px;
+}
+.dossier-compact .game-scene[data-platform='dreamcast'] .scene-support-stand {
+  height: 80%;
+}
 .dossier-compact .game-scene[data-platform='n64'] {
   margin-bottom: 192px;
 }

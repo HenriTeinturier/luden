@@ -48,11 +48,11 @@
   color: var(--text-soft);
 }
 .platform-dreamcast .game-grid .game-cover:has(> img) {
-  aspect-ratio: auto;
+  aspect-ratio: 1.24;
 }
 .platform-dreamcast .game-grid .game-cover > img {
   display: block;
-  height: auto;
+  height: 100%;
 }
 @media (max-width: 720px) {
   :is(.platforms-index .platform-grid, .home-platforms) {

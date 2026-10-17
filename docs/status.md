@@ -1,5 +1,10 @@
 # État courant
 
+## Cadres Dreamcast aux proportions PAL — 2026-10-17
+
+- Grille Dreamcast : cadre fixé au ratio 1,24 des boîtiers PAL, image entière occupant ce cadre. Remplace la hauteur automatique qui laissait des bandes latérales avec le dimensionnement des images différées ; titre et étoiles dessous, repli sans image carré.
+- Vérifié : formatage ciblé et diff CSS. Validation visuelle par Henri.
+
 ## Marge des cartes Dreamcast — 2026-10-17
 
 - Grille Dreamcast : cadre de jaquette ajusté au ratio naturel de l’image au lieu du carré imposé, pour supprimer la bande vide sous les boîtiers PAL. Titre et étoiles suivent immédiatement ; repli sans image toujours carré.

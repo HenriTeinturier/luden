@@ -1,5 +1,10 @@
 # État courant
 
+## Logo des cartes Dreamcast contenu en hauteur — 2026-10-18
+
+- Accueil et Mes plateformes : logo Dreamcast contenu dans une hauteur de 110 px (80 px sur mobile), entier et aligné en haut à gauche. Le titre et le nombre de jeux retrouvent leur place en bas de carte.
+- Vérifié : formatage ciblé et diff CSS. Validation visuelle par Henri.
+
 ## Boîte et CD Xbox abaissés — 2026-10-17
 
 - Sidebar Xbox : boîte et CD descendus ensemble de 42 px au total (30 px supplémentaires après le premier ajustement), avec une marge sous la scène augmentée d’autant pour préserver la séparation avec la note.

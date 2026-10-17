@@ -1158,6 +1158,17 @@
 .platform-card.platform-card-dreamcast {
   background: #091830 url('/platforms/dreamcast/graphite.webp') center / cover no-repeat;
 }
+.platform-card-dreamcast .platform-card-logo {
+  height: 110px;
+  object-fit: contain;
+  object-position: left top;
+}
 .platform-card.platform-card-dreamcast:hover {
   border-color: var(--platform-color);
+}
+
+@media (max-width: 720px) {
+  .platform-card-dreamcast .platform-card-logo {
+    height: 80px;
+  }
 }

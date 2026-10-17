@@ -1,5 +1,10 @@
 # État courant
 
+## Marge des cartes Dreamcast — 2026-10-17
+
+- Grille Dreamcast : cadre de jaquette ajusté au ratio naturel de l’image au lieu du carré imposé, pour supprimer la bande vide sous les boîtiers PAL. Titre et étoiles suivent immédiatement ; repli sans image toujours carré.
+- Vérifié : formatage ciblé et diff CSS. Validation visuelle par Henri.
+
 ## CD Dreamcast centré en hauteur — 2026-10-17
 
 - Sidebar : CD remonté de 20 % de son cadre (environ 60 px sur la capture fournie), pour aligner son centre avec celui de la boîte. Taille et position de la boîte conservées.

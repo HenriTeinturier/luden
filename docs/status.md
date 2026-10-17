@@ -1,5 +1,10 @@
 # État courant
 
+## CD Dreamcast centré en hauteur — 2026-10-17
+
+- Sidebar : CD remonté de 20 % de son cadre (environ 60 px sur la capture fournie), pour aligner son centre avec celui de la boîte. Taille et position de la boîte conservées.
+- Vérifié : formatage ciblé et diff CSS. Validation visuelle par Henri.
+
 ## Proportions et placement Dreamcast — 2026-10-17
 
 - Sidebar : boîte et CD descendus de 24 px, espace sous la scène augmenté d’autant. CD réduit d’environ 15 % (cadre de 94 % à 80 %) pour rester plus petit que le boîtier, proportions des images conservées.

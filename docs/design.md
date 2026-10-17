@@ -456,3 +456,5 @@ d’un cadre plus petit. Filtres, densité, préférences, édition et imports r
 Dans la sidebar Dreamcast, boîte et CD sont abaissés ensemble de 24 px ; la marge sous
 la scène suit ce décalage. Le cadre du CD passe de 94 % à 80 % de la hauteur des objets
 (réduction d’environ 15 %) pour que son diamètre reste inférieur à la hauteur du boîtier.
+Le CD est remonté de 20 % de son cadre pour aligner approximativement son centre
+avec celui de la boîte, en conservant sa taille et le placement de la boîte.

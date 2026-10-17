@@ -641,6 +641,7 @@
 }
 .dossier-compact .game-scene[data-platform='dreamcast'] .scene-support-stand {
   height: 80%;
+  transform: translateY(calc(16px - 20%));
 }
 .dossier-compact .game-scene[data-platform='n64'] {
   margin-bottom: 192px;

@@ -10,7 +10,24 @@ Chaque modèle définit les proportions, le style des cartes et les étoiles vid
 puis les cadres boîte/support et leurs positions dans la sidebar et la fiche complète.
 Les ajustements N64, Dreamcast et Xbox sont conservés ; les images restent entières.
 La bibliothèque générale conserve son cadre commun et les préférences de densité restent indépendantes.
-Le sélecteur de modèles arrivera avec l’éditeur de plateforme ; cette étape ne change pas l’interface.
+L’éditeur de plateforme permet de sélectionner ces modèles ; « Présentation d’origine » conserve
+les ajustements spécifiques existants. Un schéma montre les proportions de la collection et de la scène.
+
+## Éditeur commun des plateformes
+
+Accessible par le crayon sur les cartes de Mes plateformes ou celui de l’accueil sidebar,
+`/platforms/<id>/edit` propose quatre sections : Identité, Carte, Présentation des jeux et Sidebar.
+Titre, nom court et année/période sont personnalisables ; un champ vide reprend le catalogue.
+Les aperçus de carte et d’accueil sidebar utilisent les composants réels, sans enregistrer les brouillons.
+
+Carte : logo, fond et machine PNG/WebP, proportions conservées, placement réglable (tailles, décalages,
+cadrage du fond). Les mises en page existantes restent intactes par défaut ; retour à la carte d’origine disponible.
+Sidebar : bandeau/affiches avec défilement existant, ou composition logo/fond/machine reprenant les images
+de carte avec variantes facultatives propres à la sidebar et placement séparé.
+Chaque rôle permet import, sélection, désactivation, suppression immédiate confirmée, masquage et retour au repli.
+Les images importées sont stockées inactives immédiatement ; les choix et réglages prennent effet à l’enregistrement.
+La bibliothèque générale reprend le logo personnalisé tout en gardant son cadre commun.
+La création de plateformes et les catégories multiples restent l’étape suivante.
 
 Les cartes de plateformes (accueil et Mes plateformes, illustrées ou génériques) affichent
 `année · nombre de jeux` sous le nom, dans le style discret du compteur. Région de sortie en

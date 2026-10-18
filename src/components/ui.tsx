@@ -11,6 +11,9 @@ import { coverFormat, platformPresentation } from '../lib/presentation'
 import { gallerySearch } from '../lib/gallery'
 import { mediaImageSources } from '../lib/image-variants'
 import { useGameSelection } from './game-selection'
+import { platformArtwork, artworkStyle } from '../lib/platform-artwork'
+import type { PlatformVisual } from '../lib/platform-visuals'
+import { readPlatformCustomization } from '../lib/platform-customization'
 
 export function useLibrary() {
   const { library } = useLoaderData({ from: '__root__' })
@@ -110,59 +113,65 @@ export function PlatformArt({
     </div>
   )
 }
-export function PlatformCard({ platform, count }: { platform: Platform; count: number }) {
+export function PlatformCard({
+  platform,
+  count,
+  visuals,
+  preview = false,
+}: {
+  platform: Platform
+  count: number
+  visuals?: PlatformVisual[]
+  preview?: boolean
+}) {
+  const library = useLibrary()
+  const artwork = platformArtwork(
+    platform.id,
+    platform.customization,
+    visuals ?? library.platformVisuals.filter((v) => v.platformId === platform.id),
+  )
   const release = platformReleases[platform.id]
-  const illustrated = [
-    'snes',
-    'amiga',
-    'amstrad',
-    'atari-st',
-    'megadrive',
-    'ps1',
-    'n64',
-    'ps2',
-    'gamecube',
-    'xbox',
-    'dreamcast',
-  ].includes(platform.id)
-  return (
-    <Link
-      to="/platforms/$platformId"
-      params={{ platformId: platform.id }}
-      className={`platform-card ${illustrated ? `platform-card-${platform.id}` : ''}`}
-      style={{ '--platform-color': platform.color } as CSSProperties}
-    >
+  const date = platform.customization.dateLabel ?? release?.year
+  const className = `platform-card ${artwork.customCard ? 'platform-card-custom' : artwork.illustrated ? `platform-card-${platform.id}` : ''}`
+  const style = {
+    '--platform-color': platform.color,
+    ...(artwork.customCard
+      ? artworkStyle(
+          platform.customization.cardEnabled
+            ? platform.customization.card
+            : readPlatformCustomization({}).card,
+          artwork.background,
+        )
+      : {}),
+  } as CSSProperties
+  const content = (
+    <>
       <div className="platform-card-top">
-        {illustrated ? (
-          <img className="platform-card-logo" src={`/platforms/${platform.id}/logo.webp`} alt="" />
+        {artwork.logo ? (
+          <img className="platform-card-logo" src={artwork.logo} alt="" />
         ) : (
           <span>{platform.family}</span>
         )}
         <ArrowUpRight size={18} />
       </div>
-      {illustrated ? (
-        <img
-          className="platform-card-console"
-          src={
-            ['snes', 'megadrive', 'ps1', 'n64', 'ps2', 'gamecube', 'xbox', 'dreamcast'].includes(
-              platform.id,
-            )
-              ? `/platforms/${platform.id}/console.webp`
-              : `/platforms/${platform.id}/computer.webp`
-          }
-          alt=""
-          loading="lazy"
-        />
-      ) : (
+      {artwork.hardware ? (
+        <img className="platform-card-console" src={artwork.hardware} alt="" loading="lazy" />
+      ) : !platform.customization.hiddenAssets.includes('HARDWARE') ? (
         <PlatformArt platform={platform} />
-      )}
+      ) : null}
       <div className="platform-card-bottom">
         <h3>{platform.name}</h3>
         <span>
-          {release && (
+          {date && (
             <>
-              <span title={`Sortie de la plateforme — ${release.region} : ${release.year}`}>
-                {release.year}
+              <span
+                title={
+                  platform.customization.dateLabel
+                    ? 'Année ou période personnalisée'
+                    : `Sortie de la plateforme — ${release?.region} : ${release?.year}`
+                }
+              >
+                {date}
               </span>
               {' · '}
             </>
@@ -170,6 +179,20 @@ export function PlatformCard({ platform, count }: { platform: Platform; count: n
           {count} jeu{count !== 1 ? 'x' : ''}
         </span>
       </div>
+    </>
+  )
+  return preview ? (
+    <article className={className} style={style}>
+      {content}
+    </article>
+  ) : (
+    <Link
+      to="/platforms/$platformId"
+      params={{ platformId: platform.id }}
+      className={className}
+      style={style}
+    >
+      {content}
     </Link>
   )
 }
@@ -191,7 +214,7 @@ export function Cover({
       style={
         {
           '--platform-color': game.platform.color,
-          '--cover-ratio': coverFormat(game.platform.id).ratio,
+          '--cover-ratio': coverFormat(game.platform).ratio,
         } as CSSProperties
       }
     >
@@ -225,27 +248,18 @@ export function GameCard({
   sequence?: string[]
 }) {
   const selection = useGameSelection()
+  const { platformVisuals } = useLibrary()
   const rating = game.experience?.rating
   const { platformId, collectionId } = useParams({ strict: false })
   const location = useLocation()
   const simpleCard = ['/library', '/discover'].includes(location.pathname.replace(/\/$/, ''))
-  const platformLogo =
-    simpleCard &&
-    [
-      'amiga',
-      'amstrad',
-      'snes',
-      'atari-st',
-      'megadrive',
-      'ps1',
-      'n64',
-      'ps2',
-      'gamecube',
-      'xbox',
-      'dreamcast',
-    ].includes(game.platformId)
-      ? `/platforms/${game.platformId}/logo.webp`
-      : undefined
+  const platformLogo = simpleCard
+    ? platformArtwork(
+        game.platformId,
+        game.platform.customization,
+        platformVisuals.filter((v) => v.platformId === game.platformId),
+      ).logo
+    : undefined
   return (
     <Link
       to="/games/$gameId"
@@ -276,7 +290,7 @@ export function GameCard({
         fromId: platformId ?? collectionId,
         filters: gallerySearch.parse(location.search),
       }}
-      className={`game-card ${compact ? 'compact' : ''} ${coverFormat(game.platformId).wide ? 'wide-cover' : ''}`}
+      className={`game-card ${compact ? 'compact' : ''} ${coverFormat(game.platform).wide ? 'wide-cover' : ''}`}
     >
       <div className="cover-frame">
         <Cover game={game} />
@@ -307,7 +321,9 @@ export function GameCard({
           <>
             <Stars
               value={rating}
-              showEmpty={platformPresentation(platformId ?? '').gallery.showEmptyStars}
+              showEmpty={
+                platformPresentation(platformId ? game.platform : '').gallery.showEmptyStars
+              }
             />
             <div className="game-card-bottom">
               <span>{playStatuses[game.experience?.status ?? 'UNPLAYED']}</span>

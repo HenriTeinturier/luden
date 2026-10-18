@@ -54,8 +54,8 @@ Les imports provisoires sont nettoyés au retrait/quand le formulaire est démon
 Un onglet fermé brutalement ou un échec disque peut laisser un fichier orphelin ; aucune purge globale.
 Voir `docs/media.md` pour les points d'entrée et la migration.
 Les illustrations d’accueil des univers sont référencées dans `PlatformVisual`, avec propriétaire,
-plateforme, type BANNER/POSTER, ordre, activation et défaut unique par type. Les fichiers restent
-hors Git sous `media/plateformes/<id>/bandeaux|affiches/<uuid>.webp` ; aucune image personnelle dans
+plateforme, rôle (bandeau, affiche, logo, fond, machine et variantes sidebar), ordre, activation et défaut unique par type. Les fichiers restent
+hors Git sous `media/plateformes/<id>/<rôle>/<uuid>.webp` (`bandeaux`, `affiches`, puis noms d’enum en minuscules) ; aucune image personnelle dans
 `public`. `/platform-media/<id>` vérifie le profil local et sert le fichier via un chemin borné.
 `/platforms/<id>/edit` → fonctions serveur → `platform-visuals.ts` → Prisma gère les choix.
 L’import utilise le même décodage WebP borné que les jeux, mais une table indépendante : aucun
@@ -63,9 +63,12 @@ nettoyage ou rangement de médias de jeux ne peut supprimer une affiche inactive
 Imports persistés inactifs immédiatement ; activation et défauts appliqués à l’enregistrement.
 Transaction avec verrou de plateforme et contraintes SQL pour éviter deux défauts concurrents.
 Les réglages `Platform.slideshowEnabled/slideshowSeconds` sont sauvegardés dans cette même
-transaction. La sidebar restaure l’affiche depuis `luden:platform-poster:v1:<id>` (localStorage)
+transaction, ainsi que `Platform.customization` (identité affichée, modèles et placement des visuels).
+`platform-customization.ts` valide les réglages, `platform-artwork.ts` résout les priorités des images ;
+les réglages omis restent intacts et une liste de visuels périmée annule toute la transaction.
+La sidebar restaure l’affiche depuis `luden:platform-poster:v1:<id>` (localStorage)
 après hydratation ; le timer ne tourne que pour deux affiches actives ou plus et un onglet visible.
-Export JSON v6 : plateformes et réglages inclus, en plus des visuels personnels (v5).
+Export JSON v7 : personnalisation des plateformes et nouveaux rôles inclus, en plus des réglages de défilement (v6) et des visuels personnels (v5).
 Pas de copie de la base vivante dans OneDrive ; volume Docker dédié.
 
 ## Futur

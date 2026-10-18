@@ -9,6 +9,8 @@ import {
   type PlatformVisual,
 } from '../lib/platform-visuals'
 import { PlatformArt } from './ui'
+import { PlatformComposition } from './platform-composition'
+import { artworkStyle, platformArtwork } from '../lib/platform-artwork'
 
 export function UniverseSidebar({
   platform,
@@ -16,18 +18,32 @@ export function UniverseSidebar({
   visuals,
   onClose,
   hiding = false,
+  preview = false,
 }: {
   platform: Platform
   platforms: Platform[]
   visuals: PlatformVisual[]
   onClose: () => void
   hiding?: boolean
+  preview?: boolean
 }) {
+  const composition = platform.customization.sidebarMode === 'composition'
+  const artwork = platformArtwork(platform.id, platform.customization, visuals)
+  const customFallback =
+    artwork.customCard ||
+    visuals.some((v) => v.active && v.kind.startsWith('SIDEBAR_')) ||
+    platform.customization.hiddenAssets.some((k) => k.startsWith('SIDEBAR_'))
+  const fallbackStyle = customFallback
+    ? artworkStyle(platform.customization.sidebar, artwork.sidebarBackground)
+    : undefined
   const platformIndex = platforms.findIndex((p) => p.id === platform.id)
   const previousPlatform = platforms[(platformIndex - 1 + platforms.length) % platforms.length]
   const nextPlatform = platforms[(platformIndex + 1) % platforms.length]
   const banners = activePlatformVisuals(visuals, 'BANNER')
-  const posters = useMemo(() => activePlatformVisuals(visuals, 'POSTER'), [visuals])
+  const posters = useMemo(
+    () => (composition ? [] : activePlatformVisuals(visuals, 'POSTER')),
+    [visuals, composition],
+  )
   const [selected, setSelected] = useState<string | null>(null)
   const [restored, setRestored] = useState(false)
   const [paused, setPaused] = useState(false)
@@ -36,14 +52,14 @@ export function UniverseSidebar({
     direction: 'next' | 'previous'
   } | null>(null)
   useEffect(() => {
-    if (restored) return
+    if (restored || preview || composition) return
     try {
       setSelected(restorePlatformPoster(window.localStorage, platform.id, posters))
     } catch {
       /* Keep the default when access to localStorage is blocked. */
     }
     setRestored(true)
-  }, [platform.id, posters, restored])
+  }, [platform.id, posters, restored, preview, composition])
   const index = Math.max(
     0,
     posters.findIndex((v) => v.id === selected),
@@ -52,7 +68,7 @@ export function UniverseSidebar({
   const currentId = current?.id
   const nextUrl = posters[(index + 1) % posters.length]?.url
   const previousUrl = posters[(index - 1 + posters.length) % posters.length]?.url
-  const playing = platform.slideshowEnabled && posters.length > 1 && !paused && !hiding
+  const playing = platform.slideshowEnabled && posters.length > 1 && !paused && !hiding && !preview
   const move = useCallback(
     (delta: number) => {
       if (!current || posters.length < 2 || transition) return
@@ -77,14 +93,14 @@ export function UniverseSidebar({
     return () => clearTimeout(timer)
   }, [transition])
   useEffect(() => {
-    if (!restored) return
+    if (!restored || preview || composition) return
     try {
       if (currentId) window.localStorage.setItem(platformPosterStorageKey(platform.id), currentId)
       else window.localStorage.removeItem(platformPosterStorageKey(platform.id))
     } catch {
       /* Navigation remains available without storage. */
     }
-  }, [currentId, platform.id, restored])
+  }, [currentId, platform.id, restored, preview, composition])
   useEffect(() => {
     if (!restored || !playing || transition) return
     let timer: ReturnType<typeof setTimeout> | undefined
@@ -102,13 +118,13 @@ export function UniverseSidebar({
   const posterUrl = current?.url
   return (
     <aside
-      id="universe-sidebar"
+      id={preview ? undefined : 'universe-sidebar'}
       tabIndex={-1}
-      className={`game-sidebar universe-sidebar universe-${platform.id} ${hiding ? 'is-hiding' : ''}`}
+      className={`game-sidebar universe-sidebar universe-${platform.id} ${hiding ? 'is-hiding' : ''} ${preview ? 'platform-sidebar-preview' : ''}`}
       inert={hiding}
       aria-label={`Accueil de l’univers ${platform.name}`}
     >
-      {platforms.length > 1 && platformIndex >= 0 && (
+      {!preview && platforms.length > 1 && platformIndex >= 0 && (
         <nav className="universe-platform-navigation" aria-label="Changer d’univers">
           <Link
             className="icon-button"
@@ -134,133 +150,139 @@ export function UniverseSidebar({
           </Link>
         </nav>
       )}
-      <div className="universe-banner">
-        {banners[0] ? (
-          <img
-            src={banners[0].url}
-            alt={banners[0].caption || platform.name}
-            width={banners[0].width}
-            height={banners[0].height}
-          />
-        ) : (
-          <div className="universe-banner-fallback">
-            {[
-              'snes',
-              'amiga',
-              'amstrad',
-              'atari-st',
-              'megadrive',
-              'ps1',
-              'n64',
-              'ps2',
-              'gamecube',
-              'xbox',
-              'dreamcast',
-            ].includes(platform.id) ? (
-              <img src={`/platforms/${platform.id}/logo.webp`} alt={platform.name} />
+      {composition ? (
+        <PlatformComposition platform={platform} visuals={visuals} />
+      ) : (
+        <>
+          <div className="universe-banner">
+            {banners[0] ? (
+              <img
+                src={banners[0].url}
+                alt={banners[0].caption || platform.name}
+                width={banners[0].width}
+                height={banners[0].height}
+              />
             ) : (
-              <h2>{platform.name}</h2>
+              <div className="universe-banner-fallback" style={fallbackStyle}>
+                {artwork.sidebarLogo ? (
+                  <img src={artwork.sidebarLogo} alt={platform.name} />
+                ) : (
+                  <h2>{platform.name}</h2>
+                )}
+              </div>
             )}
           </div>
-        )}
-      </div>
-      <div
-        className="universe-poster"
-        role="region"
-        aria-label="Affiches de la plateforme"
-        aria-roledescription="carrousel"
-      >
-        {posterUrl ? (
           <div
-            className={`universe-poster-images ${transition ? `slide-${transition.direction}` : ''}`}
+            className="universe-poster"
+            role="region"
+            aria-label="Affiches de la plateforme"
+            aria-roledescription="carrousel"
           >
-            {transition && (
-              <img
-                key={`out-${transition.from.id}`}
-                className="universe-sidebar-image is-leaving"
-                src={transition.from.url}
-                alt=""
-                aria-hidden="true"
-              />
-            )}
-            <img
-              key={currentId}
-              className={`universe-sidebar-image ${transition ? 'is-entering' : ''}`}
-              src={posterUrl}
-              alt={current?.caption || `Ambiance de l’univers ${platform.name}`}
-              onAnimationEnd={() => setTransition(null)}
-            />
-          </div>
-        ) : (
-          <div className="universe-sidebar-fallback">
-            {['ps1', 'n64', 'ps2', 'gamecube', 'xbox', 'dreamcast'].includes(platform.id) ? (
-              <img
-                className="universe-fallback-hardware"
-                src={`/platforms/${platform.id}/console.webp`}
-                alt=""
-                width={1200}
-                height={platform.id === 'ps1' ? 751 : platform.id === 'n64' ? 706 : 800}
-              />
-            ) : platform.id === 'megadrive' ? (
-              <img
-                className="universe-fallback-hardware"
-                src="/platforms/megadrive/console.webp"
-                alt=""
-                width={1000}
-                height={605}
-              />
-            ) : platform.id === 'atari-st' ? (
-              <img
-                className="universe-fallback-hardware"
-                src="/platforms/atari-st/computer.webp"
-                alt=""
-                width={1200}
-                height={677}
-              />
+            {posterUrl ? (
+              <div
+                className={`universe-poster-images ${transition ? `slide-${transition.direction}` : ''}`}
+              >
+                {transition && (
+                  <img
+                    key={`out-${transition.from.id}`}
+                    className="universe-sidebar-image is-leaving"
+                    src={transition.from.url}
+                    alt=""
+                    aria-hidden="true"
+                  />
+                )}
+                <img
+                  key={currentId}
+                  className={`universe-sidebar-image ${transition ? 'is-entering' : ''}`}
+                  src={posterUrl}
+                  alt={current?.caption || `Ambiance de l’univers ${platform.name}`}
+                  onAnimationEnd={() => setTransition(null)}
+                />
+              </div>
             ) : (
-              <PlatformArt platform={platform} />
+              <div className="universe-sidebar-fallback" style={fallbackStyle}>
+                {customFallback ? (
+                  artwork.sidebarHardware ? (
+                    <img
+                      className="universe-fallback-hardware"
+                      src={artwork.sidebarHardware}
+                      alt=""
+                    />
+                  ) : null
+                ) : ['ps1', 'n64', 'ps2', 'gamecube', 'xbox', 'dreamcast'].includes(platform.id) ? (
+                  <img
+                    className="universe-fallback-hardware"
+                    src={`/platforms/${platform.id}/console.webp`}
+                    alt=""
+                    width={1200}
+                    height={platform.id === 'ps1' ? 751 : platform.id === 'n64' ? 706 : 800}
+                  />
+                ) : platform.id === 'megadrive' ? (
+                  <img
+                    className="universe-fallback-hardware"
+                    src="/platforms/megadrive/console.webp"
+                    alt=""
+                    width={1000}
+                    height={605}
+                  />
+                ) : platform.id === 'atari-st' ? (
+                  <img
+                    className="universe-fallback-hardware"
+                    src="/platforms/atari-st/computer.webp"
+                    alt=""
+                    width={1200}
+                    height={677}
+                  />
+                ) : (
+                  <PlatformArt platform={platform} />
+                )}
+                <h2>{platform.name}</h2>
+                <p>Vos jeux. Vos souvenirs.</p>
+              </div>
             )}
-            <h2>{platform.name}</h2>
-            <p>Vos jeux. Vos souvenirs.</p>
-          </div>
-        )}
-        {posters.length > 1 && (
-          <>
-            <button
-              type="button"
-              className="universe-gallery-arrow previous"
-              aria-label="Affiche précédente"
-              onClick={() => move(-1)}
-            >
-              <ChevronLeft size={22} />
-            </button>
-            <button
-              type="button"
-              className="universe-gallery-arrow next"
-              aria-label="Affiche suivante"
-              onClick={() => move(1)}
-            >
-              <ChevronRight size={22} />
-            </button>
-            <span
-              className="universe-gallery-count"
-              aria-live={playing ? 'off' : 'polite'}
-              aria-atomic="true"
-            >
-              {platform.slideshowEnabled && (
+            {posters.length > 1 && (
+              <>
                 <button
                   type="button"
-                  className="universe-gallery-play"
-                  aria-label={paused ? 'Reprendre le défilement' : 'Mettre le défilement en pause'}
-                  onClick={() => setPaused(!paused)}
+                  className="universe-gallery-arrow previous"
+                  aria-label="Affiche précédente"
+                  onClick={() => move(-1)}
                 >
-                  {paused ? <Play size={15} /> : <Pause size={15} />}
+                  <ChevronLeft size={22} />
                 </button>
-              )}
-              {index + 1} / {posters.length}
-            </span>
-          </>
-        )}
+                <button
+                  type="button"
+                  className="universe-gallery-arrow next"
+                  aria-label="Affiche suivante"
+                  onClick={() => move(1)}
+                >
+                  <ChevronRight size={22} />
+                </button>
+                <span
+                  className="universe-gallery-count"
+                  aria-live={playing ? 'off' : 'polite'}
+                  aria-atomic="true"
+                >
+                  {platform.slideshowEnabled && (
+                    <button
+                      type="button"
+                      className="universe-gallery-play"
+                      aria-label={
+                        paused ? 'Reprendre le défilement' : 'Mettre le défilement en pause'
+                      }
+                      onClick={() => setPaused(!paused)}
+                    >
+                      {paused ? <Play size={15} /> : <Pause size={15} />}
+                    </button>
+                  )}
+                  {index + 1} / {posters.length}
+                </span>
+              </>
+            )}
+          </div>
+        </>
+      )}
+      {!preview && (
         <Link
           className="universe-edit"
           to="/platforms/$platformId/edit"
@@ -270,16 +292,18 @@ export function UniverseSidebar({
         >
           <Pencil size={16} />
         </Link>
-      </div>
-      <button
-        type="button"
-        className="icon-button universe-sidebar-close"
-        aria-label="Masquer la sidebar de l’univers"
-        title="Masquer la sidebar · Échap"
-        onClick={onClose}
-      >
-        <PanelRightClose size={20} />
-      </button>
+      )}
+      {!preview && (
+        <button
+          type="button"
+          className="icon-button universe-sidebar-close"
+          aria-label="Masquer la sidebar de l’univers"
+          title="Masquer la sidebar · Échap"
+          onClick={onClose}
+        >
+          <PanelRightClose size={20} />
+        </button>
+      )}
     </aside>
   )
 }

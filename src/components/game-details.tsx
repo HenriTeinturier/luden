@@ -184,7 +184,7 @@ function GameScene({
   disabled: boolean
 }) {
   const visuals = readPresentation(game.presentation)
-  const presentation = platformPresentation(game.platformId)
+  const presentation = platformPresentation(game.platform)
   const box = visuals.box ?? game.media.find((m) => m.category === 'BOX')?.mediaId ?? game.coverId
   const support = visuals.support ?? game.media.find((m) => m.category === 'MEDIA')?.mediaId
   const mediaWidth = (id: string) => game.media.find((m) => m.mediaId === id)?.media.width

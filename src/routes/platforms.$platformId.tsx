@@ -25,7 +25,7 @@ function PlatformPage() {
       </div>
     )
   const chosen = games.filter((g) => g.platformId === platformId)
-  const presentation = platformPresentation(platformId)
+  const presentation = platformPresentation(platform)
   const gallery = presentation.gallery
   const isSnes = platformId === 'snes'
   const isAmiga = platformId === 'amiga'

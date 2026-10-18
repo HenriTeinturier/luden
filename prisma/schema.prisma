@@ -31,11 +31,18 @@ model Platform {
   visuals          PlatformVisual[]
   slideshowEnabled Boolean          @default(false)
   slideshowSeconds Int              @default(8)
+  customization    Json             @default("{}")
 }
 
 enum PlatformVisualKind {
   BANNER
   POSTER
+  LOGO
+  BACKGROUND
+  HARDWARE
+  SIDEBAR_LOGO
+  SIDEBAR_BACKGROUND
+  SIDEBAR_HARDWARE
 }
 
 model PlatformVisual {

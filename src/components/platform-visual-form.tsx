@@ -8,7 +8,25 @@ import {
   type PlatformVisual,
 } from '../lib/platform-visuals'
 import { savePlatformVisualsFn, deletePlatformVisualFn } from '../server/functions'
-import { Confirm } from './ui'
+import { Confirm, PlatformCard, useLibrary } from './ui'
+import { UniverseSidebar } from './universe-sidebar'
+import {
+  PlatformEditorSettings,
+  PlatformPresetPreview,
+  editorSections,
+  type EditorSection,
+} from './platform-editor-settings'
+import { platformAssetKinds, type PlatformCustomization } from '../lib/platform-customization'
+const assetLabels: Record<PlatformVisual['kind'], string> = {
+  BANNER: 'Bandeaux',
+  POSTER: 'Affiches',
+  LOGO: 'Logo de la carte',
+  BACKGROUND: 'Fond de la carte',
+  HARDWARE: 'Console ou ordinateur',
+  SIDEBAR_LOGO: 'Logo de la sidebar',
+  SIDEBAR_BACKGROUND: 'Fond de la sidebar',
+  SIDEBAR_HARDWARE: 'Machine de la sidebar',
+}
 
 export function PlatformVisualForm({
   platform,
@@ -18,6 +36,33 @@ export function PlatformVisualForm({
   visuals: PlatformVisual[]
 }) {
   const [items, setItems] = useState(visuals)
+  const [section, setSection] = useState<EditorSection>('identity')
+  const [customization, setCustomization] = useState<PlatformCustomization>(platform.customization)
+  const { games } = useLibrary()
+  const draftPlatform = {
+    ...platform,
+    name: customization.title || platform.catalogName,
+    shortName: customization.shortName || platform.catalogShortName,
+    customization,
+  }
+  const orderedItems = items.map((item, position) => ({ ...item, position }))
+  const kinds: PlatformVisual['kind'][] =
+    section === 'card'
+      ? ['LOGO', 'BACKGROUND', 'HARDWARE']
+      : section === 'sidebar'
+        ? customization.sidebarMode === 'artwork'
+          ? ['BANNER', 'POSTER']
+          : ['SIDEBAR_LOGO', 'SIDEBAR_BACKGROUND', 'SIDEBAR_HARDWARE']
+        : []
+  function resetAsset(kind: PlatformCustomization['hiddenAssets'][number]) {
+    setItems((previous) =>
+      previous.map((v) => (v.kind === kind ? { ...v, active: false, isDefault: false } : v)),
+    )
+    setCustomization((previous) => ({
+      ...previous,
+      hiddenAssets: previous.hiddenAssets.filter((k) => k !== kind),
+    }))
+  }
   const [slideshowEnabled, setSlideshowEnabled] = useState(platform.slideshowEnabled)
   const [slideshowSeconds, setSlideshowSeconds] = useState(String(platform.slideshowSeconds))
   const [busy, setBusy] = useState(false)
@@ -65,11 +110,18 @@ export function PlatformVisualForm({
     setItems(next)
   }
   async function upload(files: File[], kind: PlatformVisual['kind']) {
+    if (busy) return
     setBusy(true)
     setError('')
     setMessage('')
     try {
       for (const file of files) {
+        if (
+          kind !== 'BANNER' &&
+          kind !== 'POSTER' &&
+          !['image/png', 'image/webp'].includes(file.type)
+        )
+          throw new Error(`${file.name} : choisissez une image PNG ou WebP.`)
         if (file.size > 12 * 1024 * 1024) throw new Error(`${file.name} : 12 Mo maximum par image.`)
         const form = new FormData()
         form.set('image', file)
@@ -78,14 +130,21 @@ export function PlatformVisualForm({
         const response = await fetch('/api/media', { method: 'POST', body: form })
         const result = (await response.json()) as PlatformVisual & { error?: string }
         if (!response.ok || result.error) throw new Error(result.error || 'Import impossible.')
+        const single = kind !== 'BANNER' && kind !== 'POSTER'
         setItems((previous) => [
-          ...previous,
+          ...previous.map((v) => (single && v.kind === kind ? { ...v, isDefault: false } : v)),
           {
             ...result,
             active: true,
-            isDefault: !previous.some((v) => v.kind === kind && v.active),
+            isDefault: single || !previous.some((v) => v.kind === kind && v.active),
           },
         ])
+        if (single)
+          setCustomization((previous) => ({
+            ...previous,
+            cardEnabled: previous.cardEnabled || !kind.startsWith('SIDEBAR_'),
+            hiddenAssets: previous.hiddenAssets.filter((k) => k !== kind),
+          }))
       }
       setMessage('Images ajoutées. Enregistrez pour appliquer vos choix.')
     } catch (err) {
@@ -100,15 +159,17 @@ export function PlatformVisualForm({
         <ArrowLeft size={16} /> Retour à l’univers
       </Link>
       <h1>Personnaliser {platform.name}</h1>
-      <p className="muted">Un bandeau fixe et vos affiches à parcourir dans la sidebar.</p>
+      <p className="muted">Identité, carte, formats de jeux et visuels de la sidebar.</p>
       <form
         onSubmit={async (event) => {
           event.preventDefault()
+          if (busy) return
           setError('')
           setMessage('')
           const parsed = platformVisualsSchema.safeParse({
             platformId: platform.id,
             visuals: items,
+            customization,
             slideshow: { enabled: slideshowEnabled, seconds: Number(slideshowSeconds) },
           })
           if (!parsed.success) {
@@ -132,179 +193,294 @@ export function PlatformVisualForm({
         }}
       >
         <fieldset disabled={busy} className="platform-visual-fields">
-          {(['BANNER', 'POSTER'] as const).map((kind) => {
-            const group = items.filter((v) => v.kind === kind)
-            return (
-              <section className="platform-visual-section" key={kind}>
-                <div className="platform-visual-heading">
-                  <h2>{kind === 'BANNER' ? 'Bandeaux' : 'Affiches'}</h2>
-                  <span>
-                    {group.length} image{group.length !== 1 ? 's' : ''}
-                  </span>
-                </div>
-                <p>
-                  {kind === 'BANNER'
-                    ? 'Seul le bandeau par défaut est affiché. Il reste fixe et conserve ses proportions.'
-                    : 'La dernière affiche consultée est mémorisée sur cet appareil. Sinon, la galerie s’ouvre sur l’affiche par défaut. Seules les affiches actives défilent.'}
-                </p>
-                {!group.length && (
-                  <p className="field-hint">
-                    Aucune image ajoutée. L’identité de la plateforme sert de remplacement.
-                  </p>
-                )}
-                <div className={`platform-visual-grid ${kind === 'BANNER' ? 'is-banners' : ''}`}>
-                  {group.map((item, index) => (
-                    <article
-                      className={`platform-visual-item ${item.active ? '' : 'is-inactive'}`}
-                      key={item.id}
-                    >
-                      <img
-                        src={item.url}
-                        alt={
-                          item.caption ||
-                          `${kind === 'BANNER' ? 'Bandeau' : 'Affiche'} ${index + 1}`
-                        }
-                      />
-                      <div className="platform-visual-item-controls">
+          <div
+            className="filter-tabs platform-editor-tabs"
+            aria-label="Sections de la personnalisation"
+          >
+            {Object.entries(editorSections).map(([key, label]) => (
+              <button
+                key={key}
+                type="button"
+                aria-pressed={section === key}
+                className={section === key ? 'active' : ''}
+                onClick={() => setSection(key as EditorSection)}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+          <div className="platform-editor-layout">
+            <div className="platform-editor-controls">
+              <PlatformEditorSettings
+                section={section}
+                platform={platform}
+                value={customization}
+                onChange={setCustomization}
+              />
+              {section === 'card' && (
+                <button
+                  type="button"
+                  className="text-link platform-reset-card"
+                  onClick={() => {
+                    setItems((previous) =>
+                      previous.map((v) =>
+                        ['LOGO', 'BACKGROUND', 'HARDWARE'].includes(v.kind)
+                          ? { ...v, active: false, isDefault: false }
+                          : v,
+                      ),
+                    )
+                    setCustomization((previous) => ({
+                      ...previous,
+                      cardEnabled: false,
+                      hiddenAssets: previous.hiddenAssets.filter((k) => k.startsWith('SIDEBAR_')),
+                    }))
+                  }}
+                >
+                  Rétablir la carte d’origine
+                </button>
+              )}
+              {kinds.map((kind) => {
+                const group = items.filter((v) => v.kind === kind)
+                const assetKind = platformAssetKinds.find((k) => k === kind)
+                return (
+                  <section className="platform-visual-section" key={kind}>
+                    <div className="platform-visual-heading">
+                      <h2>{assetLabels[kind]}</h2>
+                      <span>
+                        {group.length} image{group.length !== 1 ? 's' : ''}
+                      </span>
+                    </div>
+                    <p>
+                      {kind === 'BANNER'
+                        ? 'Seul le bandeau par défaut est affiché. Il reste fixe et conserve ses proportions.'
+                        : kind === 'POSTER'
+                          ? 'La dernière affiche consultée est mémorisée sur cet appareil. Sinon, la galerie s’ouvre sur l’affiche par défaut. Seules les affiches actives défilent.'
+                          : 'L’image active par défaut est affichée. Les autres restent disponibles pour un prochain choix.'}
+                    </p>
+                    {assetKind && (
+                      <div className="platform-mode-options">
                         <label>
-                          Nom de l’image
                           <input
-                            maxLength={120}
-                            value={item.caption}
+                            type="checkbox"
+                            checked={customization.hiddenAssets.includes(assetKind)}
                             onChange={(event) =>
-                              setItems(
-                                items.map((v) =>
-                                  v.id === item.id ? { ...v, caption: event.target.value } : v,
-                                ),
-                              )
+                              setCustomization((previous) => ({
+                                ...previous,
+                                hiddenAssets: event.target.checked
+                                  ? [
+                                      ...previous.hiddenAssets.filter((k) => k !== assetKind),
+                                      assetKind,
+                                    ]
+                                  : previous.hiddenAssets.filter((k) => k !== assetKind),
+                              }))
                             }
                           />
+                          Masquer ce visuel
                         </label>
-                        <div className="platform-visual-choices">
-                          <label>
-                            <input
-                              type="checkbox"
-                              checked={item.active}
-                              onChange={() => toggle(item)}
-                            />{' '}
-                            Active
-                          </label>
-                          <label>
-                            <input
-                              type="radio"
-                              name={`default-${kind}`}
-                              checked={item.isDefault}
-                              onChange={() =>
-                                setItems(
-                                  items.map((v) =>
-                                    v.kind === kind
-                                      ? {
-                                          ...v,
-                                          isDefault: v.id === item.id,
-                                          active: v.id === item.id || v.active,
-                                        }
-                                      : v,
-                                  ),
-                                )
-                              }
-                            />{' '}
-                            Par défaut
-                          </label>
-                        </div>
-                        <div className="platform-visual-order">
-                          <span>
-                            {item.active
-                              ? item.isDefault
-                                ? 'Par défaut'
-                                : 'Active'
-                              : 'Conservée · inactive'}
-                          </span>
-                          <button
-                            type="button"
-                            className="icon-button"
-                            aria-label={`Monter ${item.caption || 'l’image'}`}
-                            disabled={index === 0}
-                            onClick={() => move(item.id, -1)}
-                          >
-                            <ArrowUp size={16} />
-                          </button>
-                          <button
-                            type="button"
-                            className="icon-button"
-                            aria-label={`Descendre ${item.caption || 'l’image'}`}
-                            disabled={index === group.length - 1}
-                            onClick={() => move(item.id, 1)}
-                          >
-                            <ArrowDown size={16} />
-                          </button>
-                        </div>
-                        <Confirm
-                          title={`Supprimer ${kind === 'BANNER' ? 'ce bandeau' : 'cette affiche'} ?`}
-                          description="L’image sera immédiatement supprimée de cette plateforme et du stockage Luden. Si elle est celle par défaut, la première image active restante la remplacera. Le fichier source importé reste intact."
-                          confirmLabel="Supprimer l’image"
-                          onConfirm={() => void remove(item)}
+                        <button
+                          type="button"
+                          className="text-link"
+                          onClick={() => resetAsset(assetKind)}
                         >
-                          <button
-                            type="button"
-                            className="text-link danger-text platform-visual-delete"
-                            disabled={busy}
-                          >
-                            <Trash2 size={15} /> Supprimer
-                          </button>
-                        </Confirm>
+                          {kind.startsWith('SIDEBAR_')
+                            ? 'Reprendre l’image de la carte'
+                            : 'Reprendre le visuel d’origine'}
+                        </button>
                       </div>
-                    </article>
-                  ))}
-                </div>
-                <label className="platform-upload">
-                  <ImagePlus size={19} />
-                  <span>Ajouter {kind === 'BANNER' ? 'des bandeaux' : 'des affiches'}</span>
-                  <input
-                    type="file"
-                    multiple
-                    accept="image/jpeg,image/png,image/webp,image/avif,image/gif"
-                    aria-label={kind === 'BANNER' ? 'Ajouter des bandeaux' : 'Ajouter des affiches'}
-                    onChange={(event) => {
-                      const files = Array.from(event.currentTarget.files ?? [])
-                      event.currentTarget.value = ''
-                      if (files.length) void upload(files, kind)
-                    }}
+                    )}
+                    {!group.length && (
+                      <p className="field-hint">
+                        Aucune image ajoutée. L’identité de la plateforme sert de remplacement.
+                      </p>
+                    )}
+                    <div
+                      className={`platform-visual-grid ${kind === 'BANNER' ? 'is-banners' : ''}`}
+                    >
+                      {group.map((item, index) => (
+                        <article
+                          className={`platform-visual-item ${item.active ? '' : 'is-inactive'}`}
+                          key={item.id}
+                        >
+                          <img
+                            src={item.url}
+                            alt={item.caption || `${assetLabels[kind]} ${index + 1}`}
+                          />
+                          <div className="platform-visual-item-controls">
+                            <label>
+                              Nom de l’image
+                              <input
+                                maxLength={120}
+                                value={item.caption}
+                                onChange={(event) =>
+                                  setItems(
+                                    items.map((v) =>
+                                      v.id === item.id ? { ...v, caption: event.target.value } : v,
+                                    ),
+                                  )
+                                }
+                              />
+                            </label>
+                            <div className="platform-visual-choices">
+                              <label>
+                                <input
+                                  type="checkbox"
+                                  checked={item.active}
+                                  onChange={() => toggle(item)}
+                                />{' '}
+                                Active
+                              </label>
+                              <label>
+                                <input
+                                  type="radio"
+                                  name={`default-${kind}`}
+                                  checked={item.isDefault}
+                                  onChange={() =>
+                                    setItems(
+                                      items.map((v) =>
+                                        v.kind === kind
+                                          ? {
+                                              ...v,
+                                              isDefault: v.id === item.id,
+                                              active: v.id === item.id || v.active,
+                                            }
+                                          : v,
+                                      ),
+                                    )
+                                  }
+                                />{' '}
+                                Par défaut
+                              </label>
+                            </div>
+                            <div className="platform-visual-order">
+                              <span>
+                                {item.active
+                                  ? item.isDefault
+                                    ? 'Par défaut'
+                                    : 'Active'
+                                  : 'Conservée · inactive'}
+                              </span>
+                              <button
+                                type="button"
+                                className="icon-button"
+                                aria-label={`Monter ${item.caption || 'l’image'}`}
+                                disabled={index === 0}
+                                onClick={() => move(item.id, -1)}
+                              >
+                                <ArrowUp size={16} />
+                              </button>
+                              <button
+                                type="button"
+                                className="icon-button"
+                                aria-label={`Descendre ${item.caption || 'l’image'}`}
+                                disabled={index === group.length - 1}
+                                onClick={() => move(item.id, 1)}
+                              >
+                                <ArrowDown size={16} />
+                              </button>
+                            </div>
+                            <Confirm
+                              title="Supprimer cette image ?"
+                              description="L’image sera immédiatement supprimée de cette plateforme et du stockage Luden. Si elle est celle par défaut, la première image active restante la remplacera. Le fichier source importé reste intact."
+                              confirmLabel="Supprimer l’image"
+                              onConfirm={() => void remove(item)}
+                            >
+                              <button
+                                type="button"
+                                className="text-link danger-text platform-visual-delete"
+                                disabled={busy}
+                              >
+                                <Trash2 size={15} /> Supprimer
+                              </button>
+                            </Confirm>
+                          </div>
+                        </article>
+                      ))}
+                    </div>
+                    <label className="platform-upload">
+                      <ImagePlus size={19} />
+                      <span>Importer une image</span>
+                      <input
+                        type="file"
+                        multiple={!assetKind}
+                        accept={
+                          assetKind
+                            ? 'image/png,image/webp'
+                            : 'image/jpeg,image/png,image/webp,image/avif,image/gif'
+                        }
+                        aria-label={`Importer : ${assetLabels[kind]}`}
+                        onChange={(event) => {
+                          const files = Array.from(event.currentTarget.files ?? [])
+                          event.currentTarget.value = ''
+                          if (files.length) void upload(files, kind)
+                        }}
+                      />
+                    </label>
+                  </section>
+                )
+              })}
+              {section === 'sidebar' && customization.sidebarMode === 'artwork' && (
+                <section className="platform-visual-section">
+                  <div className="platform-visual-heading">
+                    <h2>Défilement des affiches</h2>
+                  </div>
+                  <div className="platform-slideshow-settings">
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={slideshowEnabled}
+                        onChange={(event) => setSlideshowEnabled(event.target.checked)}
+                      />
+                      Défilement automatique
+                    </label>
+                    <label>
+                      Durée par image (secondes)
+                      <input
+                        type="number"
+                        min={3}
+                        max={120}
+                        step={1}
+                        required
+                        value={slideshowSeconds}
+                        onChange={(event) => setSlideshowSeconds(event.target.value)}
+                      />
+                    </label>
+                  </div>
+                  <p>
+                    De 3 à 120 secondes. Le défilement commence avec au moins deux affiches actives.
+                    Le bandeau reste fixe.
+                  </p>
+                </section>
+              )}
+            </div>
+            <aside className="platform-editor-preview" aria-label="Aperçu de la présentation">
+              <h2>Aperçu</h2>
+              {section === 'games' ? (
+                <PlatformPresetPreview platform={draftPlatform} />
+              ) : section === 'sidebar' ? (
+                <UniverseSidebar
+                  key={customization.sidebarMode}
+                  platform={{
+                    ...draftPlatform,
+                    slideshowEnabled,
+                    slideshowSeconds: Number(slideshowSeconds),
+                  }}
+                  platforms={[]}
+                  visuals={orderedItems}
+                  onClose={() => {}}
+                  preview
+                />
+              ) : (
+                <div className="platforms-index">
+                  <PlatformCard
+                    platform={draftPlatform}
+                    count={games.filter((g) => g.platformId === platform.id).length}
+                    visuals={orderedItems}
+                    preview
                   />
-                </label>
-              </section>
-            )
-          })}
-          <section className="platform-visual-section">
-            <div className="platform-visual-heading">
-              <h2>Défilement des affiches</h2>
-            </div>
-            <div className="platform-slideshow-settings">
-              <label>
-                <input
-                  type="checkbox"
-                  checked={slideshowEnabled}
-                  onChange={(event) => setSlideshowEnabled(event.target.checked)}
-                />
-                Défilement automatique
-              </label>
-              <label>
-                Durée par image (secondes)
-                <input
-                  type="number"
-                  min={3}
-                  max={120}
-                  step={1}
-                  required
-                  value={slideshowSeconds}
-                  onChange={(event) => setSlideshowSeconds(event.target.value)}
-                />
-              </label>
-            </div>
-            <p>
-              De 3 à 120 secondes. Le défilement commence avec au moins deux affiches actives. Le
-              bandeau reste fixe.
-            </p>
-          </section>
+                </div>
+              )}
+            </aside>
+          </div>
           <p className="field-hint">
             JPG, PNG, WebP, AVIF ou GIF · 12 Mo par image. Les imports sont conservés immédiatement.
             Enregistrez pour appliquer l’activation, l’ordre et les images par défaut. Désactiver

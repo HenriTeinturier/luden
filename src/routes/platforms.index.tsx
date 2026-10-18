@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react'
-import { Monitor, Plus, ArrowUpRight } from 'lucide-react'
+import { Monitor, Plus, ArrowUpRight, Pencil } from 'lucide-react'
 import { PageHeading, PlatformCard, SectionHeading, Modal, useLibrary } from '../components/ui'
 import { saveMachineFn } from '../server/functions'
 import { matchesPlatformFilter } from '../lib/platforms'
@@ -110,7 +110,18 @@ function Platforms() {
               a.name.localeCompare(b.name, 'fr', { sensitivity: 'base', numeric: true }),
           )
           .map((p) => (
-            <PlatformCard key={p.id} platform={p} count={gameCounts.get(p.id) ?? 0} />
+            <div key={p.id} className="platform-card-entry">
+              <PlatformCard platform={p} count={gameCounts.get(p.id) ?? 0} />
+              <Link
+                to="/platforms/$platformId/edit"
+                params={{ platformId: p.id }}
+                className="platform-card-edit icon-button"
+                aria-label={`Personnaliser ${p.name}`}
+                title={`Personnaliser ${p.name}`}
+              >
+                <Pencil size={16} />
+              </Link>
+            </div>
           ))}
       </div>
       {['Toutes', 'Ordinateurs'].includes(family) && (

@@ -8,6 +8,7 @@ import {
 import { retainVisuals } from '../lib/game-visuals'
 import { removeUnusedImages } from './media'
 import { organizeGameImages } from './media-organization'
+import { customizePlatform } from '../lib/platform-customization'
 
 export async function loadLibrary() {
   const [profile, platforms, machines, games, collections, categories, platformVisuals] =
@@ -59,12 +60,13 @@ export async function loadLibrary() {
     ])
   return {
     profile,
-    platforms,
+    platforms: platforms.map(customizePlatform),
     platformVisuals: platformVisuals.map((v) => ({ ...v, url: `/platform-media/${v.id}` })),
     machines,
     categories,
     games: games.map((g) => ({
       ...g,
+      platform: customizePlatform(g.platform),
       createdAt: g.createdAt.toISOString(),
       updatedAt: g.updatedAt.toISOString(),
       coverUrl: g.coverId ? `/media/${g.coverId}` : null,
@@ -324,7 +326,7 @@ export async function exportLibrary() {
     ])
   return {
     format: 'luden',
-    version: 6,
+    version: 7,
     exportedAt: new Date().toISOString(),
     profile,
     games,

@@ -1,5 +1,13 @@
 # État courant
 
+## Refonte plateformes — étape 2 : éditeur commun — 2026-10-18
+
+- Éditeur accessible depuis le crayon de chaque carte de Mes plateformes et de la sidebar : identité (titre, nom court, année/période), carte, modèles de jeux et accueil sidebar. Disponible aussi pour toutes les plateformes sans visuels dédiés.
+- Carte : logo/fond/machine PNG/WebP, tailles et placement, aperçu réel, masquage et retour aux visuels fournis. Sidebar : composition héritée de la carte avec variantes et placement distincts, ou bandeau/affiches avec galerie et défilement conservés. Imports, activation, défaut, ordre et suppression confirmée partagent le service existant.
+- Migration additive appliquée : `Platform.customization` et six rôles supplémentaires dans `PlatformVisualKind`. Identité catalogue préservée du seed, affichage personnalisé au chargement ; modèles appliqués à la galerie, aux scènes sidebar et fiches complètes. Bibliothèque générale au cadre commun, logo personnalisé repris. Export v7.
+- Vérifié : TypeScript, lint, 47 tests (4 blocages de fichiers temporaires dans le sandbox, relance ciblée hors sandbox réussie), compilation. Script DB/fichiers isolé couvrant les huit rôles, la sauvegarde atomique, le rechargement, l’export et les suppressions. Navigateur : accès par crayon, aperçus carte/sidebar, choix de modèle et enregistrement complet sur plateforme temporaire nettoyée. Validation esthétique finale par Henri.
+- Suite : étape 3, création de plateformes personnalisées et catégories multiples (console/ordinateur/portable), remplacement de l’ajout de PC personnel ; métadonnées des PC rattachées au catalogue PC. Aucune plateforme personnelle créée à cette étape.
+
 ## Refonte plateformes — étape 1 : modèles de présentation — 2026-10-18
 
 - Modèles de galerie et de scène boîte/support regroupés dans `src/lib/presentation.ts`, réutilisables sans identifiant de plateforme. Affectations actuelles conservées, y compris les réglages N64, Dreamcast, mini-disque GameCube et décalage Xbox.

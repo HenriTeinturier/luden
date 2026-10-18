@@ -1,7 +1,11 @@
 # Données et invariants
 
 - Profile : propriétaire local explicite, futur point d'entrée d'authentification.
-- Platform : Switch, PS5, PC, Amiga… pas de périodes pour les consoles/anciens ordinateurs.
+- Platform : Switch, PS5, PC, Amiga… identité stable du catalogue.
+  `customization` JSON validé contient les surcharges titre/nom court/année ou période, le modèle
+  de jeux facultatif, les placements carte/sidebar, le mode sidebar et les rôles de visuels masqués.
+  JSON vide = rendu historique. Les noms catalogue ne sont pas écrasés : le seed conserve les choix
+  personnels et le chargement expose les deux identités. Aucun identifiant ni rattachement de jeu ne change.
   Les filtres de Mes plateformes sont indépendants des familles de marques : Consoles regroupe
   les consoles de salon et hybrides ; Portables regroupe Game Boy, GBA, DS, 3DS, PSP et les hybrides
   Switch/Switch 2. Les hybrides apparaissent dans les deux filtres, sans dupliquer les plateformes ni les jeux.
@@ -12,10 +16,13 @@
   règlent le défilement des affiches dans la V1 locale. Dernière affiche consultée par plateforme
   conservée uniquement dans le localStorage du navigateur, avec repli sur le défaut actif.
 - PlatformVisual : fichier personnel lié à un propriétaire et une plateforme, type BANNER/POSTER,
+  LOGO/BACKGROUND/HARDWARE ou SIDEBAR_LOGO/SIDEBAR_BACKGROUND/SIDEBAR_HARDWARE,
   chemin relatif, dimensions, légende, ordre, activation et défaut. Un défaut actif au maximum par
   type (contrainte SQL), exactement un si des images sont actives (validation serveur). Une image
   inactive reste en base et sur disque. Le bandeau par défaut est fixe ; les affiches actives sont
   parcourables manuellement ou automatiquement, défaut en premier dans l’ordre. Ces fichiers sont indépendants des médias de jeux.
+  Les autres rôles affichent leur défaut actif, sinon le visuel fourni (carte) ou celui de la carte
+  (sidebar). Un rôle explicitement masqué n’affiche aucun visuel, même en présence d’une image active.
 - Machine : PC personnel nommé ; rattachement facultatif d'une fiche PC.
 - Game : fiche personnelle sur UNE plateforme, toutes métadonnées indépendantes. Aucun Game universel imposé.
   `presentation` JSON contient les rôles boîte/support/logo/fond (identifiants de médias déjà attachés

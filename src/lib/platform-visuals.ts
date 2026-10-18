@@ -1,7 +1,8 @@
 import { z } from 'zod'
+import { platformAssetKinds, platformCustomizationSchema } from './platform-customization'
 
 export const platformIdSchema = z.string().regex(/^[a-z0-9][a-z0-9-]{0,79}$/)
-export const platformVisualKind = z.enum(['BANNER', 'POSTER'])
+export const platformVisualKind = z.enum(['BANNER', 'POSTER', ...platformAssetKinds])
 export const platformSlideshowSchema = z.object({
   enabled: z.boolean(),
   seconds: z.number().int().min(3, '3 secondes minimum.').max(120, '120 secondes maximum.'),
@@ -14,6 +15,7 @@ export const platformVisualsSchema = z
   .object({
     platformId: platformIdSchema,
     slideshow: platformSlideshowSchema.optional(),
+    customization: platformCustomizationSchema.optional(),
     visuals: z
       .array(
         z.object({

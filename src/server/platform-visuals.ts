@@ -20,7 +20,9 @@ export async function savePlatformImage(
   const platformId = platformIdSchema.parse(platform)
   const kind = platformVisualKind.parse(kindInput)
   await db.platform.findUniqueOrThrow({ where: { id: platformId } })
-  const relative = `plateformes/${platformId}/${kind === 'BANNER' ? 'bandeaux' : 'affiches'}/${randomUUID()}.webp`
+  const folder =
+    kind === 'BANNER' ? 'bandeaux' : kind === 'POSTER' ? 'affiches' : kind.toLowerCase()
+  const relative = `plateformes/${platformId}/${folder}/${randomUUID()}.webp`
   const absolute = resolveMediaPath(process.env.LUDEN_DATA_DIR ?? '', relative)
   const result = await prepareImage(bytes)
   await mkdir(path.dirname(absolute), { recursive: true })
@@ -61,10 +63,12 @@ export async function savePlatformImage(
 }
 
 export async function savePlatformVisuals(input: unknown) {
-  const { platformId, visuals, slideshow } = platformVisualsSchema.parse(input)
+  const { platformId, visuals, slideshow, customization } = platformVisualsSchema.parse(input)
   await db.$transaction(async (tx) => {
     await tx.platform.findUniqueOrThrow({ where: { id: platformId } })
     await tx.$queryRaw`SELECT "id" FROM "Platform" WHERE "id" = ${platformId} FOR UPDATE`
+    if (customization)
+      await tx.platform.update({ where: { id: platformId }, data: { customization } })
     if (slideshow)
       await tx.platform.update({
         where: { id: platformId },

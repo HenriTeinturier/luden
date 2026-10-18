@@ -509,7 +509,7 @@ export function Gallery({
                 className={
                   filters.view === 'list'
                     ? 'game-list'
-                    : `game-grid ${group.games.every((g) => coverFormat(g.platformId).wide) ? 'wide-grid' : 'mixed-grid'} ${typeof gridColumns === 'number' ? 'has-columns' : ''}`
+                    : `game-grid ${group.games.every((g) => coverFormat(g.platform).wide) ? 'wide-grid' : 'mixed-grid'} ${typeof gridColumns === 'number' ? 'has-columns' : ''}`
                 }
                 style={
                   typeof gridColumns === 'number'

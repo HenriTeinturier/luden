@@ -256,12 +256,21 @@ const resolvedPlatforms = new Map(
   Object.entries(platformChoices).map(([id, choice]) => [id, resolvePresentation(choice)]),
 )
 
-export function platformPresentation(platformId: string) {
-  return resolvedPlatforms.get(platformId) ?? defaultPresentation
+type PlatformChoice =
+  string | { id: string; customization?: { preset?: PresentationPresetId | null } }
+
+export function platformPresentation(platform: PlatformChoice) {
+  if (typeof platform !== 'string' && platform.customization?.preset) {
+    return resolvePresentation({ preset: platform.customization.preset })
+  }
+  return (
+    resolvedPlatforms.get(typeof platform === 'string' ? platform : platform.id) ??
+    defaultPresentation
+  )
 }
 
-export function coverFormat(platformId: string) {
-  const { ratio, wide } = platformPresentation(platformId).gallery
+export function coverFormat(platform: PlatformChoice) {
+  const { ratio, wide } = platformPresentation(platform).gallery
   return { ratio, wide }
 }
 

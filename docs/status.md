@@ -1,5 +1,13 @@
 # État courant
 
+## Refonte plateformes — étape 1 : modèles de présentation — 2026-10-18
+
+- Modèles de galerie et de scène boîte/support regroupés dans `src/lib/presentation.ts`, réutilisables sans identifiant de plateforme. Affectations actuelles conservées, y compris les réglages N64, Dreamcast, mini-disque GameCube et décalage Xbox.
+- Dimensions des scènes pilotées par les modèles via variables CSS ; styles de galerie liés à la présentation, pas au nom de la plateforme. Bibliothèque générale, préférences et plateformes non traitées conservent leur présentation actuelle.
+- PC personnel « test » supprimé à la demande d’Henri, après vérification qu’il n’avait aucun jeu. Aucun jeu ni média supprimé.
+- Vérifié : TypeScript, lint, 44 tests (4 échecs de fichiers temporaires dans le sandbox, relance ciblée hors sandbox réussie), compilation, formatage et diff. Page N64 HTTP 200 avec modèle et classes attendus. Validation visuelle par Henri.
+- Suite validée : éditeur commun de plateformes et de leurs médias (carte et accueil sidebar), puis création de plateformes avec catégories multiples. Les futurs PC personnels seront rattachés au catalogue PC pour les métadonnées. Le formulaire actuel d’ajout de PC sera remplacé à cette étape.
+
 ## Années sur toutes les cartes de plateformes — 2026-10-18
 
 - 32 plateformes datées, y compris celles sans visuels : année puis nombre de jeux, région en infobulle. France/Europe en priorité, Japon pour les PC Engine d’import ; années de plateformes plutôt que de variantes matérielles. PC générique sans date unique.

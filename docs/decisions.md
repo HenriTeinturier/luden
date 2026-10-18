@@ -1,10 +1,16 @@
 # Décisions validées
 
+- 2026-10-18 : refonte progressive des plateformes. Les PC personnels deviennent à terme des
+  plateformes personnalisées, avec rattachement au catalogue PC pour les métadonnées. Les entrées
+  PC de test peuvent être supprimées ; pas de migration de ces machines vers des plateformes.
+  Ordinateur, console de salon et portable seront des catégories cumulables, distinctes de la marque.
+  Étape 1 : modèles de présentation réutilisables en préservant les rendus actuels. Étapes suivantes :
+  éditeur commun et médias de plateforme, puis création de plateformes et remplacement de l’ajout de PC.
 - 2026-09-26 : nom Luden, V1 locale Windows, un utilisateur.
 - TanStack Start retenu pour garder le rendu serveur de futures collections publiques.
 - PostgreSQL Docker ; médias OneDrive via `.env` configurable ; pas de backup applicatif.
 - Fiches par plateforme avec TOUTES leurs métadonnées indépendantes.
-- Une expérience par fiche ; PC personnels distingués, pas d'époques sur les autres plateformes.
+- Une expérience par fiche ; PC personnels distingués dans le modèle initial (remplacement prévu ci-dessus).
 - Collection virtuelle sans obligation d'achat ; réelle actuelle et/ou ancienne, sélection volontaire.
 - Détails d'éditions et migration Excel exclus V1.
 - Tests techniques minimaux ; validation visuelle surtout par l'utilisateur.

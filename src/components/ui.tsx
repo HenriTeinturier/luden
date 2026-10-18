@@ -7,7 +7,7 @@ import type { Game, Platform } from '../lib/types'
 import { playStatuses } from '../lib/platforms'
 import { platformReleases } from '../lib/platform-releases'
 import { Stars } from './rating'
-import { coverFormat } from '../lib/presentation'
+import { coverFormat, platformPresentation } from '../lib/presentation'
 import { gallerySearch } from '../lib/gallery'
 import { mediaImageSources } from '../lib/image-variants'
 import { useGameSelection } from './game-selection'
@@ -307,16 +307,7 @@ export function GameCard({
           <>
             <Stars
               value={rating}
-              showEmpty={[
-                'snes',
-                'megadrive',
-                'ps1',
-                'n64',
-                'ps2',
-                'gamecube',
-                'xbox',
-                'dreamcast',
-              ].includes(platformId ?? '')}
+              showEmpty={platformPresentation(platformId ?? '').gallery.showEmptyStars}
             />
             <div className="game-card-bottom">
               <span>{playStatuses[game.experience?.status ?? 'UNPLAYED']}</span>

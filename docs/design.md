@@ -1,5 +1,17 @@
 # Direction graphique actuelle
 
+## Modèles de présentation des jeux
+
+Étape 1 de la refonte des plateformes : modèles communs dans `src/lib/presentation.ts`,
+affectés aux plateformes existantes en conservant les réglages validés. Grande boîte ordinateur,
+boîte verticale (dont 3:4), boîte horizontale (dont grande cartouche), boîtier vertical/cartouche,
+CD, CD large, DVD, DVD/mini-disque et boîtier étroit ; repli classique pour les plateformes non traitées.
+Chaque modèle définit les proportions, le style des cartes et les étoiles vides dans la galerie,
+puis les cadres boîte/support et leurs positions dans la sidebar et la fiche complète.
+Les ajustements N64, Dreamcast et Xbox sont conservés ; les images restent entières.
+La bibliothèque générale conserve son cadre commun et les préférences de densité restent indépendantes.
+Le sélecteur de modèles arrivera avec l’éditeur de plateforme ; cette étape ne change pas l’interface.
+
 Les cartes de plateformes (accueil et Mes plateformes, illustrées ou génériques) affichent
 `année · nombre de jeux` sous le nom, dans le style discret du compteur. Région de sortie en
 infobulle sur l’année ; PC générique sans année. Référentiel et sources : `platform-release-years.md`.

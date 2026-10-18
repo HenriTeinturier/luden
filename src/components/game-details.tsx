@@ -40,7 +40,7 @@ import { mediaCategories } from '../lib/media'
 import { mediaImageSources } from '../lib/image-variants'
 import { playStatuses } from '../lib/platforms'
 import { hasPlayed } from '../lib/gallery'
-import { coverFormat } from '../lib/presentation'
+import { platformPresentation, sceneStyle } from '../lib/presentation'
 import { quickUpdateGameFn, deleteGameFn } from '../server/functions'
 import { GameBackground } from './game-background'
 import { Cover, Confirm, Modal, useLibrary } from './ui'
@@ -184,14 +184,16 @@ function GameScene({
   disabled: boolean
 }) {
   const visuals = readPresentation(game.presentation)
+  const presentation = platformPresentation(game.platformId)
   const box = visuals.box ?? game.media.find((m) => m.category === 'BOX')?.mediaId ?? game.coverId
   const support = visuals.support ?? game.media.find((m) => m.category === 'MEDIA')?.mediaId
   const mediaWidth = (id: string) => game.media.find((m) => m.mediaId === id)?.media.width
   const [failedLogo, setFailedLogo] = useState(false)
   return (
     <div
-      className={`game-scene ${visuals.background ? 'has-background' : 'without-background'} ${coverFormat(game.platformId).wide ? 'scene-wide-box' : ''}`}
-      data-platform={game.platformId}
+      className={`game-scene ${visuals.background ? 'has-background' : 'without-background'} ${presentation.gallery.wide ? 'scene-wide-box' : ''}`}
+      data-presentation={presentation.preset}
+      style={sceneStyle(presentation.scene) as CSSProperties}
     >
       {compact && visuals.background && (
         <GameBackground mediaId={visuals.background} crop={visuals.sidebarCrop} />

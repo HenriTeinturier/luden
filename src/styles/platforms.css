@@ -1,18 +1,6 @@
 /* Platform identities. No changes to stored game images. */
 @media (min-width: 701px) {
-  :is(
-      .platform-amiga,
-      .platform-amstrad,
-      .platform-atari-st,
-      .platform-megadrive,
-      .platform-ps1,
-      .platform-n64,
-      .platform-ps2,
-      .platform-gamecube,
-      .platform-xbox,
-      .platform-dreamcast
-    )
-    .game-grid {
+  .gallery-framed .game-grid {
     grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
   }
 }
@@ -47,10 +35,10 @@
   font-size: 13px;
   color: var(--text-soft);
 }
-.platform-dreamcast .game-grid .game-cover:has(> img) {
-  aspect-ratio: 1.24;
+.gallery-image-ratio .game-grid .game-cover:has(> img) {
+  aspect-ratio: var(--gallery-image-ratio);
 }
-.platform-dreamcast .game-grid .game-cover > img {
+.gallery-image-ratio .game-grid .game-cover > img {
   display: block;
   height: 100%;
 }
@@ -237,33 +225,33 @@
   border-color: var(--blue);
   color: var(--blue);
 }
-.platform-snes .game-grid.wide-grid {
+.gallery-wide .game-grid.wide-grid {
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
   gap: 24px;
 }
-.platform-snes .game-grid .game-card {
+.gallery-boxed .game-grid .game-card {
   padding: 0;
   overflow: visible;
   background: var(--surface);
   border-color: var(--line);
 }
-.platform-snes .game-grid .game-cover {
+.gallery-boxed .game-grid .game-cover {
   border-radius: 9px 9px 0 0;
   background: var(--sidebar-background);
 }
-.platform-snes .game-grid .game-card-info {
+.gallery-boxed .game-grid .game-card-info {
   border-radius: 0 0 9px 9px;
   padding: 12px;
   min-width: 0;
 }
-.platform-snes .game-card h3 {
+.gallery-boxed .game-card h3 {
   font-size: 16px;
   line-height: 1.4;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.platform-snes .game-grid .game-card h3 {
+.gallery-boxed .game-grid .game-card h3 {
   min-width: 0;
   margin: 0 0 8px;
   display: block;
@@ -273,62 +261,22 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.platform-snes .game-grid .stars small {
+.gallery-boxed .game-grid .stars small {
   display: none;
 }
-.platform-snes .card-memory,
-.platform-snes .game-platform,
-.platform-snes .game-card-bottom {
+.gallery-boxed .card-memory,
+.gallery-boxed .game-platform,
+.gallery-boxed .game-card-bottom {
   display: none;
 }
-.platform-snes .results-line {
+.gallery-boxed .results-line {
   font-size: 13px;
 }
-:is(
-    .platform-amiga,
-    .platform-amstrad,
-    .platform-atari-st,
-    .platform-megadrive,
-    .platform-ps1,
-    .platform-n64,
-    .platform-ps2,
-    .platform-gamecube,
-    .platform-xbox,
-    .platform-dreamcast
-  )
-  .game-card
-  :is(.game-platform, .game-card-bottom, .card-memory),
-:is(
-    .platform-amiga,
-    .platform-amstrad,
-    .platform-atari-st,
-    .platform-megadrive,
-    .platform-ps1,
-    .platform-n64,
-    .platform-ps2,
-    .platform-gamecube,
-    .platform-xbox,
-    .platform-dreamcast
-  )
-  .game-card
-  .stars
-  small {
+.gallery-framed .game-card :is(.game-platform, .game-card-bottom, .card-memory),
+.gallery-framed .game-card .stars small {
   display: none;
 }
-:is(
-    .platform-amiga,
-    .platform-amstrad,
-    .platform-atari-st,
-    .platform-megadrive,
-    .platform-ps1,
-    .platform-n64,
-    .platform-ps2,
-    .platform-gamecube,
-    .platform-xbox,
-    .platform-dreamcast
-  )
-  .game-card
-  h3 {
+.gallery-framed .game-card h3 {
   margin: 0 0 8px;
   display: block;
   font-size: 13px;
@@ -337,71 +285,18 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-:is(
-    .platform-amiga,
-    .platform-amstrad,
-    .platform-atari-st,
-    .platform-megadrive,
-    .platform-ps1,
-    .platform-n64,
-    .platform-ps2,
-    .platform-gamecube,
-    .platform-xbox,
-    .platform-dreamcast
-  )
-  .game-grid
-  .game-card {
+.gallery-framed .game-grid .game-card {
   padding: 0;
   overflow: visible;
 }
-:is(
-    .platform-amiga,
-    .platform-amstrad,
-    .platform-atari-st,
-    .platform-megadrive,
-    .platform-ps1,
-    .platform-n64,
-    .platform-ps2,
-    .platform-gamecube,
-    .platform-xbox,
-    .platform-dreamcast
-  )
-  .game-grid
-  .game-cover {
+.gallery-framed .game-grid .game-cover {
   border: 0;
   border-radius: 9px 9px 0 0;
 }
-:is(
-    .platform-amiga,
-    .platform-amstrad,
-    .platform-atari-st,
-    .platform-megadrive,
-    .platform-ps1,
-    .platform-n64,
-    .platform-ps2,
-    .platform-gamecube,
-    .platform-xbox,
-    .platform-dreamcast
-  )
-  .game-grid
-  .game-cover
-  img {
+.gallery-framed .game-grid .game-cover img {
   object-position: center top;
 }
-:is(
-    .platform-amiga,
-    .platform-amstrad,
-    .platform-atari-st,
-    .platform-megadrive,
-    .platform-ps1,
-    .platform-n64,
-    .platform-ps2,
-    .platform-gamecube,
-    .platform-xbox,
-    .platform-dreamcast
-  )
-  .game-grid
-  .game-card-info {
+.gallery-framed .game-grid .game-card-info {
   border-radius: 0 0 9px 9px;
   padding: 12px;
   min-width: 0;
@@ -413,8 +308,8 @@
   .snes-console {
     display: none;
   }
-  .platform-snes .gallery-toolbar,
-  .platform-snes .results-line {
+  .gallery-boxed .gallery-toolbar,
+  .gallery-boxed .results-line {
     flex-wrap: wrap;
   }
 }
@@ -1060,10 +955,6 @@
 }
 .platform-card.platform-card-n64:hover {
   border-color: #55b981;
-}
-.platform-n64 .game-grid.wide-grid {
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
-  gap: 24px;
 }
 @media (max-width: 720px) {
   :is(

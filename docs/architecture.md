@@ -16,6 +16,15 @@ Prisma 6 + PostgreSQL 17 Docker. Le navigateur n'accède ni à Prisma ni aux sec
 Fonctions serveur TanStack pour les opérations applicatives ; chargement des routes et invalidation suffisent en V1.
 Pas de Query ajouté sans besoin, de repository abstrait, de DI ou de microservices.
 
+Présentation des jeux : `src/lib/presentation.ts` définit les modèles réutilisables, leurs
+proportions de galerie et leur géométrie boîte/support en sidebar et fiche complète.
+`resolvePresentation` combine un modèle et ses ajustements sans dépendre d’un identifiant de plateforme.
+`platformPresentation` applique les affectations actuelles (précalculées), dont l’abaissement Xbox.
+La route plateforme expose les classes de galerie ; `GameScene` transmet la géométrie via des
+variables CSS. Les dimensions des scènes ne dépendent plus de sélecteurs CSS par plateforme.
+Les illustrations de machines et l’accueil des univers restent séparés de ces modèles.
+Les choix sont encore dans le code : persistance et éditeur prévus à l’étape suivante de la refonte.
+
 Consultation : `GameExplorer` dans le shell conserve la galerie montée et gère sélection/ordre,
 sidebar, fiche et édition. `GameDetails` est partagé avec la route de jeu directe.
 Dans une route plateforme, `UniverseSidebar` fournit l’état d’accueil par défaut ; `GameExplorer`

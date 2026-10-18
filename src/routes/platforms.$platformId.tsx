@@ -4,6 +4,7 @@ import { Gallery } from '../components/gallery'
 import { MegastarTrophy } from '../components/megastar-trophy'
 import { useGameSelection } from '../components/game-selection'
 import { gallerySearch, hasPlayed } from '../lib/gallery'
+import { platformPresentation } from '../lib/presentation'
 import type { CSSProperties } from 'react'
 import { Gamepad2, CirclePlay, ShieldCheck } from 'lucide-react'
 export const Route = createFileRoute('/platforms/$platformId')({
@@ -24,6 +25,8 @@ function PlatformPage() {
       </div>
     )
   const chosen = games.filter((g) => g.platformId === platformId)
+  const presentation = platformPresentation(platformId)
+  const gallery = presentation.gallery
   const isSnes = platformId === 'snes'
   const isAmiga = platformId === 'amiga'
   const isAmstrad = platformId === 'amstrad'
@@ -32,7 +35,11 @@ function PlatformPage() {
   const favoriteCount = chosen.filter((g) => g.favorite).length
   const ownedCount = chosen.filter((g) => g.possessions.some((p) => p.state === 'CURRENT')).length
   return (
-    <div className={`page platform-page platform-${platformId}`}>
+    <div
+      className={`page platform-page platform-${platformId} gallery-${gallery.appearance} ${gallery.wide && gallery.appearance !== 'legacy' ? 'gallery-wide' : ''} ${gallery.imageRatio ? 'gallery-image-ratio' : ''}`}
+      style={{ '--gallery-image-ratio': gallery.imageRatio } as CSSProperties}
+      data-presentation={presentation.preset}
+    >
       <h1 id="platform-overview-title" className="sr-only">
         {platform.name}
       </h1>

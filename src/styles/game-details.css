@@ -489,7 +489,7 @@
 }
 .dossier-compact .game-scene {
   aspect-ratio: 16 / 7;
-  margin-bottom: 168px;
+  margin-bottom: var(--scene-margin-bottom, 168px);
   overflow: visible;
 }
 .dossier-compact .scene-shade {
@@ -522,7 +522,9 @@
 }
 .dossier-compact .scene-objects {
   position: absolute;
-  inset: auto 4% -148px;
+  inset: auto 4% var(--scene-objects-bottom, -148px);
+  scale: var(--scene-objects-scale, none);
+  transform-origin: center bottom;
   height: 70%;
   margin: 0;
   gap: 0;
@@ -530,7 +532,7 @@
   perspective: 850px;
 }
 .dossier-compact .scene-box {
-  height: 112%;
+  height: var(--scene-box-height, 112%);
   max-width: 74%;
   flex: 0 0 74%;
   translate: 0 16px;
@@ -545,8 +547,10 @@
   flex-basis: 100%;
 }
 .dossier-compact .has-support .scene-box {
-  max-width: 65%;
-  flex-basis: 65%;
+  max-width: var(--scene-paired-box-width, 65%);
+  flex-basis: var(--scene-paired-box-width, 65%);
+  height: var(--scene-paired-box-height, 112%);
+  translate: var(--scene-paired-box-x, 0px) 16px;
   transform: translateX(calc(var(--dossier-gutter) - 4cqw));
 }
 .dossier-compact .has-support .scene-box > img {
@@ -555,10 +559,11 @@
 .dossier-compact .scene-support-stand {
   position: relative;
   isolation: isolate;
-  flex: 0 0 49%;
-  height: 90%;
-  margin-left: -12%;
-  transform: translateY(8px);
+  flex: 0 0 var(--scene-support-width, 49%);
+  height: var(--scene-support-height, 90%);
+  margin-left: var(--scene-support-margin-left, -12%);
+  translate: var(--scene-support-x, 0px) 0;
+  transform: translateY(var(--scene-support-y, 8px));
 }
 .dossier-compact .scene-support-stand::after {
   content: '';
@@ -579,109 +584,13 @@
   transform: none;
   filter: drop-shadow(0 9px 6px #0007);
 }
-.dossier-compact .game-scene[data-platform='amiga'] .scene-box {
-  height: 128.8%;
+.dossier-full .game-scene[data-presentation] .has-support .scene-box {
+  max-width: var(--scene-full-box-width, 65%);
 }
-.dossier-compact .game-scene[data-platform='amiga'] .scene-support-stand {
-  transform: translateY(16px);
-}
-/* Tall Mega Drive cases beside wide cartridges; preserve the supplied image ratios. */
-.dossier-compact .game-scene[data-platform='megadrive'] .scene-box {
-  height: 128%;
-}
-.dossier-compact .game-scene[data-platform='megadrive'] .has-support .scene-box {
-  max-width: 56%;
-  flex-basis: 56%;
-}
-.dossier-compact .game-scene[data-platform='megadrive'] .scene-support-stand {
-  flex-basis: 48%;
-  height: 78%;
-  margin-left: -4%;
-  transform: translateY(16px);
-}
-.dossier-full .game-scene[data-platform='megadrive'] .has-support .scene-box {
-  max-width: 58%;
-}
-.dossier-full .game-scene[data-platform='megadrive'] .scene-support {
-  width: 46%;
-  max-height: 60%;
-  margin-left: -4%;
-}
-/* PS1 jewel cases and round CDs; N64 landscape boxes and wide cartridges.
-   Frames only: object-fit preserves each imported image, including transparent edges. */
-.dossier-compact .game-scene:is([data-platform='ps1'], [data-platform='dreamcast']) {
-  margin-bottom: 180px;
-}
-.dossier-compact .game-scene:is([data-platform='ps1'], [data-platform='dreamcast']) .scene-objects {
-  bottom: -160px;
-}
-.dossier-compact .game-scene:is([data-platform='ps1'], [data-platform='dreamcast']) .scene-box {
-  height: 112%;
-}
-.dossier-compact
-  .game-scene:is([data-platform='ps1'], [data-platform='dreamcast'])
-  .has-support
-  .scene-box {
-  max-width: 62%;
-  flex-basis: 62%;
-}
-.dossier-compact
-  .game-scene:is([data-platform='ps1'], [data-platform='dreamcast'])
-  .scene-support-stand {
-  flex-basis: 42%;
-  height: 94%;
-  margin-left: -4%;
-  transform: translateY(16px);
-}
-.dossier-compact .game-scene[data-platform='dreamcast'] {
-  margin-bottom: 204px;
-}
-.dossier-compact .game-scene[data-platform='dreamcast'] .scene-objects {
-  bottom: -184px;
-}
-.dossier-compact .game-scene[data-platform='dreamcast'] .scene-support-stand {
-  height: 80%;
-  transform: translateY(calc(16px - 20%));
-}
-.dossier-compact .game-scene[data-platform='n64'] {
-  margin-bottom: 192px;
-}
-.dossier-compact .game-scene[data-platform='n64'] .scene-objects {
-  bottom: -172px;
-  scale: 0.8;
-  transform-origin: center bottom;
-}
-.dossier-compact .game-scene[data-platform='n64'] .has-support .scene-box {
-  max-width: 74%;
-  flex-basis: 74%;
-  height: 122%;
-  translate: -11.5cqw 16px;
-}
-.dossier-compact .game-scene[data-platform='n64'] .scene-support-stand {
-  flex-basis: 42%;
-  height: 78%;
-  margin-left: -16%;
-  translate: 11.5cqw 0;
-  transform: translateY(16px);
-}
-.dossier-full
-  .game-scene:is([data-platform='ps1'], [data-platform='dreamcast'])
-  .has-support
-  .scene-box {
-  max-width: 62%;
-}
-.dossier-full .game-scene:is([data-platform='ps1'], [data-platform='dreamcast']) .scene-support {
-  width: 42%;
-  max-height: 85%;
-  margin-left: -4%;
-}
-.dossier-full .game-scene[data-platform='n64'] .has-support .scene-box {
-  max-width: 74%;
-}
-.dossier-full .game-scene[data-platform='n64'] .scene-support {
-  width: 42%;
-  max-height: 56%;
-  margin-left: -16%;
+.dossier-full .game-scene[data-presentation] .scene-support {
+  width: var(--scene-full-support-width, 39%);
+  max-height: var(--scene-full-support-height, 65%);
+  margin-left: var(--scene-full-support-margin-left, -9%);
 }
 .dossier-compact .dossier-body {
   padding: 0 var(--dossier-gutter) 18px;
@@ -2141,54 +2050,4 @@ kbd {
   .dossier-compact .screenshot-strip.is-compact button {
     height: 24px;
   }
-}
-
-/* DVD cases and discs; GameCube's mini-disc keeps a smaller frame. */
-.dossier-compact .game-scene[data-platform='xbox'] {
-  margin-bottom: 210px;
-}
-.dossier-compact .game-scene[data-platform='xbox'] .scene-objects {
-  bottom: -190px;
-}
-.dossier-compact
-  .game-scene:is([data-platform='ps2'], [data-platform='gamecube'], [data-platform='xbox'])
-  .scene-box {
-  height: 128%;
-}
-.dossier-compact
-  .game-scene:is([data-platform='ps2'], [data-platform='gamecube'], [data-platform='xbox'])
-  .has-support
-  .scene-box {
-  max-width: 56%;
-  flex-basis: 56%;
-}
-.dossier-compact
-  .game-scene:is([data-platform='ps2'], [data-platform='xbox'])
-  .scene-support-stand {
-  flex-basis: 44%;
-  height: 94%;
-  margin-left: 0;
-  transform: translateY(16px);
-}
-.dossier-compact .game-scene[data-platform='gamecube'] .scene-support-stand {
-  flex-basis: 32%;
-  height: 68%;
-  margin-left: 4%;
-  transform: translateY(16px);
-}
-.dossier-full
-  .game-scene:is([data-platform='ps2'], [data-platform='gamecube'], [data-platform='xbox'])
-  .has-support
-  .scene-box {
-  max-width: 56%;
-}
-.dossier-full .game-scene:is([data-platform='ps2'], [data-platform='xbox']) .scene-support {
-  width: 44%;
-  max-height: 75%;
-  margin-left: 0;
-}
-.dossier-full .game-scene[data-platform='gamecube'] .scene-support {
-  width: 32%;
-  max-height: 54%;
-  margin-left: 4%;
 }

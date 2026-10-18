@@ -4,6 +4,7 @@ import { platforms } from '../src/lib/platforms'
 import {
   coverFormat,
   platformPresentation,
+  platformScenePresentation,
   resolvePresentation,
   sceneStyle,
 } from '../src/lib/presentation'
@@ -64,4 +65,31 @@ test('models can be reused without platform identity and adjustments are isolate
   assert.equal(platformPresentation('ps2').scene.supportWidth, 44)
   assert.deepEqual(platformPresentation('unknown'), resolvePresentation({ preset: 'standard' }))
   assert.equal(resolvePresentation({ preset: 'landscape-box' }).scene.fullBoxWidth, 78)
+})
+
+test('collection and scene choices stay independent while old settings keep their exact geometry', () => {
+  const platform = {
+    id: 'xbox',
+    customization: { preset: 'slim-case' as const, scenePreset: 'original' as const },
+  }
+  assert.equal(coverFormat(platform).ratio, '0.62')
+  assert.deepEqual(platformScenePresentation(platform), platformPresentation('xbox'))
+  const custom = {
+    ...platform,
+    customization: { ...platform.customization, scenePreset: 'landscape-cartridge' as const },
+  }
+  assert.equal(coverFormat(custom).ratio, '0.62')
+  assert.equal(platformScenePresentation(custom).gallery.wide, true)
+  assert.equal(platformScenePresentation(custom).scene.supportOffsetX, '11.5cqw')
+  for (const id of ['xbox', 'n64', 'dreamcast', 'unknown']) {
+    assert.deepEqual(platformScenePresentation(id), platformPresentation(id))
+    for (const preset of [null, 'dvd-case', 'landscape-box'] as const) {
+      const previous = { id, customization: { preset } }
+      assert.deepEqual(platformScenePresentation(previous), platformPresentation(previous))
+      assert.deepEqual(
+        platformScenePresentation({ ...previous, customization: { preset, scenePreset: null } }),
+        platformPresentation(previous),
+      )
+    }
+  }
 })

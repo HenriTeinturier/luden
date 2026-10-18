@@ -203,11 +203,13 @@ export function Cover({
   className = '',
   original = false,
   sizes = 'auto, (max-width: 700px) 45vw, 320px',
+  ratio,
 }: {
   game: Pick<Game, 'coverUrl' | 'title' | 'platform'> & { cover?: { width: number } | null }
   className?: string
   original?: boolean
   sizes?: string
+  ratio?: string
 }) {
   const [failedUrl, setFailedUrl] = useState<string | null>(null)
   return (
@@ -216,7 +218,7 @@ export function Cover({
       style={
         {
           '--platform-color': game.platform.color,
-          '--cover-ratio': coverFormat(game.platform).ratio,
+          '--cover-ratio': ratio ?? coverFormat(game.platform).ratio,
         } as CSSProperties
       }
     >
@@ -244,17 +246,20 @@ export function GameCard({
   game,
   compact = false,
   sequence,
+  preview = false,
 }: {
   game: Game
   compact?: boolean
   sequence?: string[]
+  preview?: boolean
 }) {
   const selection = useGameSelection()
   const { platformVisuals } = useLibrary()
   const rating = game.experience?.rating
   const { platformId, collectionId } = useParams({ strict: false })
   const location = useLocation()
-  const simpleCard = ['/library', '/discover'].includes(location.pathname.replace(/\/$/, ''))
+  const simpleCard =
+    !preview && ['/library', '/discover'].includes(location.pathname.replace(/\/$/, ''))
   const platformLogo = simpleCard
     ? platformArtwork(
         game.platformId,
@@ -262,38 +267,9 @@ export function GameCard({
         platformVisuals.filter((v) => v.platformId === game.platformId),
       ).logo
     : undefined
-  return (
-    <Link
-      to="/games/$gameId"
-      data-game-id={game.id}
-      aria-current={selection?.selectedId === game.id ? 'true' : undefined}
-      onClick={(event) => {
-        if (
-          !selection ||
-          event.button !== 0 ||
-          event.ctrlKey ||
-          event.metaKey ||
-          event.shiftKey ||
-          event.altKey
-        )
-          return
-        event.preventDefault()
-        selection.open(game.id, sequence ?? [game.id], event.currentTarget)
-      }}
-      params={{ gameId: game.id }}
-      search={{
-        from: platformId
-          ? 'platform'
-          : collectionId
-            ? 'collection'
-            : location.pathname === '/discover'
-              ? 'discover'
-              : 'library',
-        fromId: platformId ?? collectionId,
-        filters: gallerySearch.parse(location.search),
-      }}
-      className={`game-card ${compact ? 'compact' : ''} ${coverFormat(game.platform).wide ? 'wide-cover' : ''}`}
-    >
+  const className = `game-card ${compact ? 'compact' : ''} ${coverFormat(game.platform).wide ? 'wide-cover' : ''}`
+  const content = (
+    <>
       <div className="cover-frame">
         <Cover game={game} />
         {game.favorite && (
@@ -324,7 +300,8 @@ export function GameCard({
             <Stars
               value={rating}
               showEmpty={
-                platformPresentation(platformId ? game.platform : '').gallery.showEmptyStars
+                platformPresentation(platformId || preview ? game.platform : '').gallery
+                  .showEmptyStars
               }
             />
             <div className="game-card-bottom">
@@ -345,6 +322,42 @@ export function GameCard({
           </>
         )}
       </div>
+    </>
+  )
+  if (preview) return <div className={className}>{content}</div>
+  return (
+    <Link
+      to="/games/$gameId"
+      data-game-id={game.id}
+      aria-current={selection?.selectedId === game.id ? 'true' : undefined}
+      onClick={(event) => {
+        if (
+          !selection ||
+          event.button !== 0 ||
+          event.ctrlKey ||
+          event.metaKey ||
+          event.shiftKey ||
+          event.altKey
+        )
+          return
+        event.preventDefault()
+        selection.open(game.id, sequence ?? [game.id], event.currentTarget)
+      }}
+      params={{ gameId: game.id }}
+      search={{
+        from: platformId
+          ? 'platform'
+          : collectionId
+            ? 'collection'
+            : location.pathname === '/discover'
+              ? 'discover'
+              : 'library',
+        fromId: platformId ?? collectionId,
+        filters: gallerySearch.parse(location.search),
+      }}
+      className={className}
+    >
+      {content}
     </Link>
   )
 }

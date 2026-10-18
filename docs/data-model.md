@@ -12,6 +12,10 @@
   de jeux facultatif, les placements carte/sidebar, le mode sidebar et les rôles de visuels masqués.
   JSON vide = rendu historique. Les noms catalogue ne sont pas écrasés : le seed conserve les choix
   personnels et le chargement expose les deux identités. Aucun identifiant ni rattachement de jeu ne change.
+  `customization.preset` choisit le modèle de collection ; `scenePreset` règle indépendamment la scène
+  boîte/support de la sidebar du jeu et de la fiche complète. Absent/null = suivre le modèle de collection
+  avec les ajustements historiques, `original` = géométrie d’origine de la plateforme, sinon identifiant
+  d’un modèle standard. Ajout compatible dans le JSON et l’export v8, sans migration.
   `customization.categories` contient un ou plusieurs choix distincts COMPUTER/CONSOLE/HANDHELD ;
   absence = classement historique du catalogue. Un rattachement PC exige COMPUTER.
   Les filtres de Mes plateformes sont indépendants des familles de marques : Consoles regroupe

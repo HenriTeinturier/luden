@@ -828,6 +828,58 @@
   border: 1px solid var(--line);
   border-radius: 12px;
   background: #10172a;
+  max-height: calc(100dvh - var(--header-height, 79px) - 80px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.platform-scene-preset-field,
+.platform-preview-game-field {
+  display: grid;
+  gap: 10px;
+  font-size: 14px;
+}
+.platform-scene-preset-field {
+  margin: 28px 0 20px;
+}
+.platform-scene-preset-field small {
+  color: var(--muted);
+  line-height: 1.6;
+}
+.platform-scene-preset-field select,
+.platform-preview-game-field select {
+  min-width: 0;
+  width: 100%;
+  padding: 12px;
+  color: var(--ink);
+  background: #192139;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+.platform-preset-preview .platform-preview-model {
+  margin-top: -6px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.platform-game-card-preview .game-grid {
+  display: block;
+  width: min(100%, 220px);
+  margin: 0 auto 24px;
+}
+.platform-game-card-preview .game-card {
+  cursor: default;
+}
+.platform-game-card-preview .game-card:hover {
+  transform: none;
+}
+.platform-game-scene-preview {
+  display: flow-root;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.platform-game-scene-preview .scene-identity {
+  left: 12%;
+  right: 12%;
 }
 .platform-preset-preview h3 {
   font-size: 14px;
@@ -890,6 +942,9 @@
   border-radius: 50%;
 }
 @media (max-width: 900px) {
+  .platform-preset-preview {
+    max-height: none;
+  }
   .platform-editor-layout {
     grid-template-columns: minmax(0, 1fr);
   }

@@ -51,6 +51,7 @@ try {
     title: 'Plateforme personnalisée',
     dateLabel: '1998–2002',
     preset: 'jewel-case',
+    scenePreset: 'mini-disc',
     cardEnabled: true,
     card: { logoHeight: 80 },
     sidebarMode: 'composition',

@@ -29,6 +29,9 @@ const placementSchema = z.object({
   backgroundX: z.number().min(0).max(100).default(50),
   backgroundY: z.number().min(0).max(100).default(50),
 })
+const presetSchema = z.enum(
+  Object.keys(presentationPresets) as [PresentationPresetId, ...PresentationPresetId[]],
+)
 export const platformCustomizationSchema = z.object({
   family: z.string().trim().min(1).max(50).nullable().default(null),
   categories: platformCategoriesSchema.nullable().default(null),
@@ -40,8 +43,9 @@ export const platformCustomizationSchema = z.object({
     .regex(/^\d{4}(?:[–-]\d{4})?$/, 'Saisissez une année ou une période, par exemple 1998–2002.')
     .nullable()
     .default(null),
-  preset: z
-    .enum(Object.keys(presentationPresets) as [PresentationPresetId, ...PresentationPresetId[]])
+  preset: presetSchema.nullable().default(null),
+  scenePreset: z
+    .union([presetSchema, z.literal('original')])
     .nullable()
     .default(null),
   cardEnabled: z.boolean().default(false),

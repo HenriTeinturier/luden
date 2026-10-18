@@ -198,6 +198,7 @@ export const presentationPresets = {
 } satisfies Record<string, PresentationPreset>
 
 export type PresentationPresetId = keyof typeof presentationPresets
+export type ScenePresetId = PresentationPresetId | 'original'
 type PresentationChoice = {
   preset: PresentationPresetId
   gallery?: Partial<GalleryPresentation>
@@ -257,7 +258,11 @@ const resolvedPlatforms = new Map(
 )
 
 type PlatformChoice =
-  string | { id: string; customization?: { preset?: PresentationPresetId | null } }
+  | string
+  | {
+      id: string
+      customization?: { preset?: PresentationPresetId | null; scenePreset?: ScenePresetId | null }
+    }
 
 export function platformPresentation(platform: PlatformChoice) {
   if (typeof platform !== 'string' && platform.customization?.preset) {
@@ -272,6 +277,14 @@ export function platformPresentation(platform: PlatformChoice) {
 export function coverFormat(platform: PlatformChoice) {
   const { ratio, wide } = platformPresentation(platform).gallery
   return { ratio, wide }
+}
+
+// An omitted choice follows the existing model, preserving every previously saved presentation.
+export function platformScenePresentation(platform: PlatformChoice) {
+  if (typeof platform === 'string') return platformPresentation(platform)
+  const preset = platform.customization?.scenePreset
+  if (preset === 'original') return platformPresentation(platform.id)
+  return preset ? resolvePresentation({ preset }) : platformPresentation(platform)
 }
 
 export function sceneStyle(scene: SceneGeometry) {

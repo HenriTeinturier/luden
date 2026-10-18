@@ -11,7 +11,14 @@ puis les cadres boîte/support et leurs positions dans la sidebar et la fiche co
 Les ajustements N64, Dreamcast et Xbox sont conservés ; les images restent entières.
 La bibliothèque générale conserve son cadre commun et les préférences de densité restent indépendantes.
 L’éditeur de plateforme permet de sélectionner ces modèles ; « Présentation d’origine » conserve
-les ajustements spécifiques existants. Un schéma montre les proportions de la collection et de la scène.
+les ajustements spécifiques existants. Le format de collection et la scène boîte/support se règlent
+séparément dans Présentation des jeux. Par défaut, la scène suit le modèle de collection ; elle peut
+reprendre la géométrie d’origine ou utiliser un autre modèle. Ce choix s’applique à la sidebar du jeu
+et à sa fiche complète ; l’accueil de la sidebar reste dans son onglet dédié.
+L’aperçu utilise les composants réels de carte et scène, avec un jeu illustré de la plateforme en priorité.
+Le sélecteur permet aussi un exemple d’une autre plateforme (utile pendant la création) ou un schéma
+des proportions sans média. Aucun clic de navigation ni édition du jeu d’exemple ; les choix d’aperçu
+restent locaux au formulaire. La réinitialisation rétablit les deux présentations d’origine.
 
 ## Éditeur commun des plateformes
 

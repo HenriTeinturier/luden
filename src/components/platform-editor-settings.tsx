@@ -1,4 +1,3 @@
-import { type CSSProperties } from 'react'
 import type { Platform } from '../lib/types'
 import { PlatformCategoriesField, PlatformCatalogField } from './platform-classification-fields'
 import { useLibrary } from './ui'
@@ -6,8 +5,8 @@ import { platformReleases } from '../lib/platform-releases'
 import {
   platformPresentation,
   presentationPresets,
-  sceneStyle,
   type PresentationPresetId,
+  type ScenePresetId,
 } from '../lib/presentation'
 import {
   readPlatformCustomization,
@@ -157,11 +156,10 @@ export function PlatformEditorSettings({
   if (section === 'games')
     return (
       <section className="platform-visual-section">
-        <h2>Format des jeux</h2>
+        <h2>Cartes dans la collection</h2>
         <p>
-          Le modèle définit les proportions des cartes de cet univers et la mise en scène
-          boîte/support dans les fiches et la sidebar. La bibliothèque générale conserve son cadre
-          commun.
+          Choisissez les proportions des cartes de cet univers. La bibliothèque générale conserve
+          son cadre commun.
         </p>
         <div className="platform-preset-options">
           <label>
@@ -190,6 +188,34 @@ export function PlatformEditorSettings({
             </label>
           ))}
         </div>
+        <label className="platform-scene-preset-field">
+          <strong>Boîte et support dans la sidebar du jeu</strong>
+          <select
+            value={value.scenePreset ?? ''}
+            onChange={(event) =>
+              onChange({ ...value, scenePreset: (event.target.value as ScenePresetId) || null })
+            }
+          >
+            <option value="">Suivre le modèle de la collection</option>
+            <option value="original">Présentation d’origine de cette plateforme</option>
+            {Object.entries(presentationPresets).map(([id, preset]) => (
+              <option key={id} value={id}>
+                {preset.label} · {preset.example}
+              </option>
+            ))}
+          </select>
+          <small>
+            Un choix distinct permet par exemple une carte verticale avec une boîte et un CD dans la
+            sidebar. Il s’applique également à la fiche complète.
+          </small>
+        </label>
+        <button
+          type="button"
+          className="text-link"
+          onClick={() => onChange({ ...value, preset: null, scenePreset: null })}
+        >
+          Rétablir les deux présentations d’origine
+        </button>
       </section>
     )
   if (section === 'sidebar')
@@ -257,48 +283,5 @@ export function PlatformEditorSettings({
         <PlacementFields value={value.card} onChange={(card) => onChange({ ...value, card })} />
       )}
     </section>
-  )
-}
-
-export function PlatformPresetPreview({ platform }: { platform: Platform }) {
-  const presentation = platformPresentation(platform)
-  const preset = presentationPresets[presentation.preset]
-  return (
-    <div className="platform-preset-preview">
-      <h3>Dans la collection</h3>
-      <div
-        className="preset-cover"
-        style={{ aspectRatio: presentation.gallery.imageRatio ?? presentation.gallery.ratio }}
-      >
-        Boîte / jaquette
-      </div>
-      <p>Titre du jeu</p>
-      <h3>Dans la sidebar du jeu</h3>
-      <div className="preset-scene-frame">
-        <div
-          className={`game-scene without-background ${presentation.gallery.wide ? 'scene-wide-box' : ''}`}
-          style={sceneStyle(presentation.scene) as CSSProperties}
-        >
-          <div className="scene-objects has-support">
-            <div
-              className="scene-box preset-object"
-              style={{ aspectRatio: presentation.gallery.ratio }}
-            >
-              Boîte
-            </div>
-            <div className={`scene-support preset-object preset-support-${preset.support}`}>
-              {preset.support === 'disc' || preset.support === 'mini-disc'
-                ? 'Disque'
-                : preset.support === 'floppy'
-                  ? 'Disquette'
-                  : 'Support'}
-            </div>
-          </div>
-        </div>
-      </div>
-      <p className="field-hint">
-        Schéma des proportions · les visuels de vos jeux restent inchangés.
-      </p>
-    </div>
   )
 }

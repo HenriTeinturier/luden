@@ -1,5 +1,13 @@
 # État courant
 
+## Refonte plateformes — étape 4 : modèles indépendants et aperçus réels — 2026-10-18
+
+- Dans Personnaliser → Présentation des jeux, le format des cartes de collection et la mise en scène boîte/support peuvent être choisis séparément. La sidebar et la fiche complète partagent ce second choix. Options : suivre la collection (défaut compatible), reprendre la présentation d’origine ou choisir un des modèles ; réinitialisation commune disponible.
+- Aperçu avec un jeu de la plateforme, ou un autre jeu de la bibliothèque pour les plateformes vides. Carte et scène réelles, sans navigation ni modification de la fiche d’exemple. Schéma des proportions toujours disponible, notamment sans médias.
+- `customization.scenePreset` ajouté au JSON existant, sans migration. Les anciens réglages restent identiques, y compris les ajustements Xbox/N64/Dreamcast. Bibliothèque générale et accueil de la sidebar inchangés. Export v8 conserve aussi ce choix.
+- Vérifié : TypeScript, lint, 14 tests ciblés, compilation ; sauvegarde/relecture/export dans le script DB/fichiers isolé. Navigateur : aperçu réel, modèles distincts collection/sidebar, absence de navigation dans l’aperçu, schéma et retour à la géométrie Xbox d’origine. Essais non enregistrés sur les plateformes personnelles ; validation esthétique finale par Henri.
+- Suite : retours d’utilisation sur les modèles et ajout des visuels des plateformes encore génériques.
+
 ## Refonte plateformes — étape 3 : création personnelle — 2026-10-18
 
 - « Ajouter une plateforme » remplace l’ajout d’un PC personnel. Deux écrans : identité, marque, année/période, catégories cumulables Ordinateur/Console de salon/Portable et catalogue facultatif ; puis éditeur commun pour logo/fond/machine, modèles de jeux et sidebar. Même format de carte que les plateformes fournies.

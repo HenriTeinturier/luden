@@ -24,6 +24,10 @@ La route plateforme expose les classes de galerie ; `GameScene` transmet la géo
 variables CSS. Les dimensions des scènes ne dépendent plus de sélecteurs CSS par plateforme.
 Les illustrations de machines et l’accueil des univers restent séparés de ces modèles.
 Les choix personnels sont enregistrés dans `Platform.customization` et appliqués par l’éditeur commun.
+`platformScenePresentation` résout le choix distinct `scenePreset` (collection, origine ou modèle)
+pour la sidebar du jeu et la fiche complète. `game-scene.tsx` est partagé par les fiches et l’aperçu
+de modèles ; `GameCard` fournit un mode d’aperçu sans lien ni ouverture de sidebar. Le jeu d’exemple
+reçoit les réglages en mémoire seulement ; aucun changement de fiche ni rattachement enregistré.
 
 Création personnelle : `/platforms/new` → `createPlatformFn` → `server/platforms.ts` → Prisma.
 Un UUID de requête rend la première sauvegarde idempotente. Les données initiales et le catalogue

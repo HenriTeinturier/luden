@@ -17,10 +17,10 @@ import { Confirm, PlatformCard, useLibrary } from './ui'
 import { UniverseSidebar } from './universe-sidebar'
 import {
   PlatformEditorSettings,
-  PlatformPresetPreview,
   editorSections,
   type EditorSection,
 } from './platform-editor-settings'
+import { PlatformPresetPreview } from './platform-preset-preview'
 import { platformAssetKinds, type PlatformCustomization } from '../lib/platform-customization'
 const assetLabels: Record<PlatformVisual['kind'], string> = {
   BANNER: 'Bandeaux',

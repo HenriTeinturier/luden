@@ -63,12 +63,15 @@ test('Les variantes sidebar héritent de la carte, se remplacent et se masquent 
 test('Validation des modèles, placements et défauts indépendants par rôle de visuel', () => {
   for (const value of [
     { preset: 'unknown' },
+    { scenePreset: 'unknown' },
     { card: { hardwareWidth: 200 } },
     { sidebar: { logoHeight: -1 } },
     { dateLabel: 'hier' },
   ])
     assert.equal(platformCustomizationSchema.safeParse(value).success, false)
   assert.equal(readPlatformCustomization({}).sidebar.hardwareWidth, 90)
+  assert.equal(readPlatformCustomization({ preset: 'jewel-case' }).scenePreset, null)
+  assert.equal(readPlatformCustomization({ scenePreset: 'original' }).scenePreset, 'original')
   const parse = (visuals: PlatformVisual[]) =>
     platformVisualsSchema.safeParse({ platformId: 'pc-engine', visuals }).success
   assert.equal(parse([image('LOGO'), image('SIDEBAR_LOGO')]), true)

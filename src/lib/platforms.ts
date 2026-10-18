@@ -1,5 +1,14 @@
 export const platforms = [
   {
+    id: '3do',
+    name: '3DO Interactive Multiplayer',
+    shortName: '3DO',
+    family: '3DO',
+    color: '#a85c48',
+    era: '1993',
+    igdbId: 50,
+  },
+  {
     id: 'pc-engine',
     name: 'PC Engine (CoreGrafx)',
     shortName: 'PC Engine',

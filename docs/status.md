@@ -1,5 +1,11 @@
 # État courant
 
+## Ajout de la 3DO — 2026-10-18
+
+- 3DO Interactive Multiplayer ajoutée au catalogue et à la base locale : famille 3DO, console de salon, catalogue IGDB 50 vérifié via API et année européenne 1994 sourcée dans le référentiel.
+- Carte générique en attendant les visuels d’Henri (logo, fond et console) ; aucun visuel créé. Aucun jeu modifié.
+- Vérifié : TypeScript, lint ciblé, deux tests catalogue/dates/filtres et relecture de la plateforme publiée en base.
+
 ## Visuels PS3, PS4, PS5, Xbox 360, Xbox One et Xbox Series X|S — 2026-10-18
 
 - Dix-huit WebP fournis par Henri importés via le service existant : logo, fond et console pour chacune des six plateformes. Tous les fichiers étaient présents ; aucun visuel créé. Visuels actifs et par défaut, stockés dans le répertoire média configuré hors Git.

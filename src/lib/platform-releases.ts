@@ -3,6 +3,7 @@
 type PlatformRelease = { year: number; region: 'France' | 'Europe' | 'Japon' }
 
 export const platformReleases: Record<string, PlatformRelease | undefined> = {
+  '3do': { year: 1994, region: 'Europe' },
   'pc-engine': { year: 1987, region: 'Japon' },
   'pc-engine-cd': { year: 1988, region: 'Japon' },
   psp: { year: 2005, region: 'Europe' },

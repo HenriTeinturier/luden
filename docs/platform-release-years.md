@@ -44,3 +44,6 @@ Le champ historique `era` reste distinct : il contient des dates mondiales et du
 
 Neo Geo : 1991 désigne la commercialisation européenne ; ne pas confondre avec la mise en
 location japonaise de 1990. Des témoignages d’import français évoquent déjà fin 1990.
+
+3DO : 1994 en Europe, d’après [IGDB](https://www.igdb.com/platforms/3do).
+Catalogue IGDB vérifié via API : `50`, slug `3do` ; lancement initial en 1993.

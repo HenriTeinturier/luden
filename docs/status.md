@@ -1,5 +1,10 @@
 # État courant
 
+## Visuels NES, Wii, Wii U, Switch et Switch 2 — 2026-10-18
+
+- Quinze WebP fournis par Henri importés via le service existant : logo, fond et console pour chacune des cinq plateformes. Visuels actifs et par défaut, stockés dans le répertoire média configuré hors Git.
+- Vérifié : relecture des quinze fichiers et des affectations en base. Aucun changement de code ni de présentation des jeux ; validation esthétique par Henri après actualisation.
+
 ## Visuels Game Boy, PSP et Nintendo DS — 2026-10-18
 
 - Neuf WebP fournis par Henri importés via le service existant : logo, fond et console pour chacune des trois plateformes. Visuels actifs et par défaut, stockés dans le répertoire média configuré hors Git.

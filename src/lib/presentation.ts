@@ -30,7 +30,8 @@ type GalleryPresentation = {
 type PresentationPreset = {
   label: string
   example: string
-  support: 'generic' | 'floppy' | 'cartridge' | 'disc' | 'mini-disc'
+  support: 'generic' | 'floppy' | 'cartridge' | 'disc' | 'mini-disc' | 'umd' | 'card'
+  supportRatio?: string
   gallery: GalleryPresentation
   scene: Partial<SceneGeometry>
 }
@@ -195,6 +196,62 @@ export const presentationPresets = {
     gallery: { ...framed, ratio: '0.62' },
     scene: {},
   },
+  'portable-cartridge-box': {
+    label: 'Boîte verticale et petite cartouche — Game Boy',
+    example: 'Game Boy',
+    support: 'cartridge',
+    supportRatio: '0.88',
+    gallery: { ...framed, ratio: '0.8' },
+    scene: {
+      boxHeight: 128,
+      pairedBoxHeight: 128,
+      pairedBoxWidth: 64,
+      supportWidth: 30,
+      supportHeight: 64,
+      supportMarginLeft: -4,
+      supportOffsetY: '16px',
+      fullBoxWidth: 64,
+      fullSupportWidth: 30,
+      fullSupportHeight: 50,
+      fullSupportMarginLeft: -4,
+    },
+  },
+  'square-card-case': {
+    label: 'Boîtier carré et carte de jeu — Nintendo DS',
+    example: 'Nintendo DS',
+    support: 'card',
+    supportRatio: '0.94',
+    gallery: { ...framed, ratio: '1' },
+    scene: {
+      pairedBoxWidth: 72,
+      supportWidth: 18,
+      supportHeight: 40,
+      supportMarginLeft: -2,
+      supportOffsetY: '16px',
+      fullBoxWidth: 72,
+      fullSupportWidth: 18,
+      fullSupportHeight: 32,
+      fullSupportMarginLeft: -2,
+    },
+  },
+  'portable-umd-case': {
+    label: 'Boîtier étroit et UMD — PSP',
+    example: 'PSP',
+    support: 'umd',
+    supportRatio: '1.1',
+    gallery: { ...framed, ratio: '0.59' },
+    scene: {
+      ...dvdScene,
+      pairedBoxWidth: 54,
+      supportWidth: 32,
+      supportHeight: 60,
+      supportMarginLeft: 2,
+      fullBoxWidth: 54,
+      fullSupportWidth: 32,
+      fullSupportHeight: 48,
+      fullSupportMarginLeft: 2,
+    },
+  },
 } satisfies Record<string, PresentationPreset>
 
 export type PresentationPresetId = keyof typeof presentationPresets
@@ -222,7 +279,9 @@ const platformChoices = {
   switch: { preset: 'slim-case', gallery: { appearance: 'legacy', showEmptyStars: false } },
   'switch-2': { preset: 'slim-case', gallery: { appearance: 'legacy', showEmptyStars: false } },
   gba: { preset: 'standard', gallery: { ratio: '1.42', wide: true } },
-  ds: { preset: 'standard', gallery: { ratio: '1' } },
+  gameboy: { preset: 'portable-cartridge-box' },
+  psp: { preset: 'portable-umd-case' },
+  ds: { preset: 'square-card-case' },
   '3ds': { preset: 'standard', gallery: { ratio: '1' } },
 } satisfies Record<string, PresentationChoice>
 

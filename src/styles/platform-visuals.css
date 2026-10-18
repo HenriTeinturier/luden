@@ -982,6 +982,12 @@
   aspect-ratio: 1;
   border-radius: 50%;
 }
+.preset-scene-frame .preset-support-umd {
+  border-radius: 45% 45% 20% 20%;
+}
+.preset-scene-frame .preset-support-card {
+  border-radius: 3px;
+}
 @media (max-width: 900px) {
   .platform-preset-preview {
     max-height: none;

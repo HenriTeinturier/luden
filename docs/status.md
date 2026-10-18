@@ -1,5 +1,11 @@
 # État courant
 
+## Présentation Game Boy, PSP et Nintendo DS — 2026-10-18
+
+- Trois modèles réutilisables affectés par défaut : boîte verticale et petite cartouche (Game Boy), boîtier étroit et UMD (PSP), boîtier carré et carte de jeu (Nintendo DS). Noms des consoles visibles dans les sélecteurs de création/personnalisation.
+- Galeries encadrées, supports proportionnellement plus petits dans la sidebar et la fiche complète ; schémas sans médias adaptés (cartouche, carte, UMD). Images entières, choix personnalisés conservés. Aucun changement de données, migration ou ajout de visuels de consoles.
+- Vérifié : TypeScript, lint ciblé, 10 tests présentation/personnalisation, compilation et diff. Validation esthétique par Henri.
+
 ## Placement et masquage des cartes de plateformes — 2026-10-18
 
 - Corrigé : masquer un logo, un fond ou une machine déclenchait la mise en page générique, même avec « Personnaliser le placement » décoché. Les cartes illustrées gardent désormais leur géométrie, leur fond et leurs effets propres ; le masquage retire seulement le visuel concerné, sans libellé de remplacement ni déplacement des autres éléments.

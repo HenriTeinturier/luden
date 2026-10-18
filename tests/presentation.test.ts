@@ -5,6 +5,7 @@ import {
   coverFormat,
   platformPresentation,
   platformScenePresentation,
+  presentationPresets,
   resolvePresentation,
   sceneStyle,
 } from '../src/lib/presentation'
@@ -19,6 +20,8 @@ test('catalogue cover formats stay compatible, including unstyled platforms', ()
     ps1: '1',
     dreamcast: '1',
     ds: '1',
+    gameboy: '0.8',
+    psp: '0.59',
     '3ds': '1',
     switch: '0.62',
     'switch-2': '0.62',
@@ -36,6 +39,27 @@ test('catalogue cover formats stay compatible, including unstyled platforms', ()
   // Dreamcast PAL uses its wider frame only in its gallery, with an image.
   assert.equal(platformPresentation('dreamcast').gallery.imageRatio, '1.24')
   assert.equal(platformPresentation('switch').gallery.appearance, 'legacy')
+})
+
+test('handheld models are reusable and keep small supports in both scene sizes', () => {
+  for (const [id, name] of [
+    ['gameboy', 'Game Boy'],
+    ['psp', 'PSP'],
+    ['ds', 'Nintendo DS'],
+  ]) {
+    const presentation = platformPresentation(id)
+    assert.equal(presentation.gallery.appearance, 'framed')
+    assert.ok(presentationPresets[presentation.preset].label.includes(name))
+    assert.deepEqual(resolvePresentation({ preset: presentation.preset }), presentation)
+    assert.deepEqual(platformScenePresentation(id), presentation)
+    assert.ok(presentation.scene.supportWidth < presentation.scene.pairedBoxWidth / 1.5)
+    assert.ok(presentation.scene.fullSupportWidth < presentation.scene.fullBoxWidth / 1.5)
+    const custom = { id, customization: { preset: 'dvd-case' as const } }
+    assert.equal(platformPresentation(custom).preset, 'dvd-case')
+    assert.equal(platformScenePresentation(custom).preset, 'dvd-case')
+  }
+  assert.equal(presentationPresets[platformPresentation('psp').preset].support, 'umd')
+  assert.equal(presentationPresets[platformPresentation('ds').preset].support, 'card')
 })
 
 test('recent scene adjustments and full-view support sizes survive the refactor', () => {

@@ -6,6 +6,12 @@
 affectés aux plateformes existantes en conservant les réglages validés. Grande boîte ordinateur,
 boîte verticale (dont 3:4), boîte horizontale (dont grande cartouche), boîtier vertical/cartouche,
 CD, CD large, DVD, DVD/mini-disque et boîtier étroit ; repli classique pour les plateformes non traitées.
+Game Boy, PSP et Nintendo DS disposent de modèles distincts, portant le nom de la console dans
+le sélecteur : boîte verticale/petite cartouche, boîtier étroit/UMD et boîtier carré/carte de jeu.
+Leurs ratios de galerie indicatifs sont respectivement 0,8, 0,59 et 1 ; les supports sont réduits
+dans les deux tailles de scène. Ces modèles sont réutilisables sur les plateformes personnelles.
+Les choix de présentation déjà enregistrés restent prioritaires ; « Présentation d’origine »
+permet de retrouver ces nouveaux réglages. Aucun visuel de console n’est ajouté par ces modèles.
 Chaque modèle définit les proportions, le style des cartes et les étoiles vides dans la galerie,
 puis les cadres boîte/support et leurs positions dans la sidebar et la fiche complète.
 Les ajustements N64, Dreamcast et Xbox sont conservés ; les images restent entières.

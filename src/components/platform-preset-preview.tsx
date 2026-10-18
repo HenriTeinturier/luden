@@ -111,12 +111,23 @@ export function PlatformPresetPreview({ platform }: { platform: Platform }) {
               <div className="scene-box preset-object" style={{ aspectRatio: scene.gallery.ratio }}>
                 Boîte
               </div>
-              <div className={`scene-support preset-object preset-support-${scenePreset.support}`}>
+              <div
+                className={`scene-support preset-object preset-support-${scenePreset.support}`}
+                style={{
+                  aspectRatio: 'supportRatio' in scenePreset ? scenePreset.supportRatio : undefined,
+                }}
+              >
                 {scenePreset.support === 'disc' || scenePreset.support === 'mini-disc'
                   ? 'Disque'
                   : scenePreset.support === 'floppy'
                     ? 'Disquette'
-                    : 'Support'}
+                    : scenePreset.support === 'umd'
+                      ? 'UMD'
+                      : scenePreset.support === 'card'
+                        ? 'Carte'
+                        : scenePreset.support === 'cartridge'
+                          ? 'Cartouche'
+                          : 'Support'}
               </div>
             </div>
           </div>

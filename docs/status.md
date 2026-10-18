@@ -1,5 +1,10 @@
 # État courant
 
+## Visuels Game Boy, PSP et Nintendo DS — 2026-10-18
+
+- Neuf WebP fournis par Henri importés via le service existant : logo, fond et console pour chacune des trois plateformes. Visuels actifs et par défaut, stockés dans le répertoire média configuré hors Git.
+- Vérifié : relecture des neuf fichiers et des affectations en base. Aucun changement de code ni de présentation des jeux ; validation esthétique par Henri après actualisation.
+
 ## Présentation Game Boy, PSP et Nintendo DS — 2026-10-18
 
 - Trois modèles réutilisables affectés par défaut : boîte verticale et petite cartouche (Game Boy), boîtier étroit et UMD (PSP), boîtier carré et carte de jeu (Nintendo DS). Noms des consoles visibles dans les sélecteurs de création/personnalisation.

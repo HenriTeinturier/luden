@@ -153,7 +153,7 @@ Le formulaire envoie toute la galerie et les liens ; omission conserve l'existan
 La principale peut être de n'importe quelle catégorie. Les cartes utilisent toujours Game.coverId.
 100 images/liens maximum par fiche ; 12 Mo par import. GIF : première image uniquement.
 Les fichiers sont optimisés en WebP, pas archivés dans leur format original ; ratio conservé.
-Les vidéos/sites ne sont jamais téléchargés, seulement liés. Export JSON version 7 inclut les associations, les choix de présentation, les visuels des plateformes et leurs réglages de défilement.
+Les vidéos/sites ne sont jamais téléchargés, seulement liés. Export JSON version 8 inclut les associations, les choix de présentation, les visuels et réglages des plateformes, ainsi que les plateformes personnelles, leurs catégories, leur catalogue associé et leur état de brouillon.
 
 Vérifications : `npm run check` (7 tests ciblés) ; `npx tsx scripts/check-media.ts` pour le parcours DB
 optionnel, avec médias temporaires et nettoyage de ses propres fiches uniquement.

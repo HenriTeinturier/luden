@@ -16,6 +16,8 @@ export const platformVisualsSchema = z
     platformId: platformIdSchema,
     slideshow: platformSlideshowSchema.optional(),
     customization: platformCustomizationSchema.optional(),
+    catalogPlatformId: platformIdSchema.nullable().optional(),
+    publish: z.boolean().optional(),
     visuals: z
       .array(
         z.object({

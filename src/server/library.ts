@@ -9,12 +9,13 @@ import { retainVisuals } from '../lib/game-visuals'
 import { removeUnusedImages } from './media'
 import { organizeGameImages } from './media-organization'
 import { customizePlatform } from '../lib/platform-customization'
+import { accessiblePlatforms } from './platforms'
 
 export async function loadLibrary() {
   const [profile, platforms, machines, games, collections, categories, platformVisuals] =
     await Promise.all([
       db.profile.findUniqueOrThrow({ where: { id: ownerId }, select: { name: true } }),
-      db.platform.findMany({ orderBy: { name: 'asc' } }),
+      db.platform.findMany({ where: accessiblePlatforms, orderBy: { name: 'asc' } }),
       db.machine.findMany({ where: { ownerId }, orderBy: { name: 'asc' } }),
       db.game.findMany({
         where: { ownerId },
@@ -60,7 +61,8 @@ export async function loadLibrary() {
     ])
   return {
     profile,
-    platforms: platforms.map(customizePlatform),
+    platforms: platforms.filter((p) => !p.isDraft).map(customizePlatform),
+    platformDrafts: platforms.filter((p) => p.isDraft).map(customizePlatform),
     platformVisuals: platformVisuals.map((v) => ({ ...v, url: `/platform-media/${v.id}` })),
     machines,
     categories,
@@ -127,7 +129,9 @@ export async function saveGame(input: unknown) {
         .filter((p) => !possessionIds.includes(p.id))
         .flatMap((p) => p.media.map((m) => m.mediaId)) ?? []),
     )
-    await tx.platform.findUniqueOrThrow({ where: { id: fields.platformId } })
+    await tx.platform.findFirstOrThrow({
+      where: { id: fields.platformId, isDraft: false, ...accessiblePlatforms },
+    })
     if (fields.categoryId)
       await tx.gameCategory.findFirstOrThrow({ where: { id: fields.categoryId, ownerId } })
     if (fields.machineId) {
@@ -322,11 +326,11 @@ export async function exportLibrary() {
       db.media.findMany({ where: { ownerId } }),
       db.gameCategory.findMany({ where: { ownerId }, orderBy: { position: 'asc' } }),
       db.platformVisual.findMany({ where: { ownerId }, orderBy: { position: 'asc' } }),
-      db.platform.findMany({ orderBy: { id: 'asc' } }),
+      db.platform.findMany({ where: accessiblePlatforms, orderBy: { id: 'asc' } }),
     ])
   return {
     format: 'luden',
-    version: 7,
+    version: 8,
     exportedAt: new Date().toISOString(),
     profile,
     games,

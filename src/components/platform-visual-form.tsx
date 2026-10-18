@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Link, useRouter } from '@tanstack/react-router'
 import { ArrowLeft, ArrowUp, ArrowDown, ImagePlus, Check, Trash2 } from 'lucide-react'
 import type { Platform } from '../lib/types'
@@ -7,7 +7,12 @@ import {
   withoutPlatformVisual,
   type PlatformVisual,
 } from '../lib/platform-visuals'
-import { savePlatformVisualsFn, deletePlatformVisualFn } from '../server/functions'
+import {
+  savePlatformVisualsFn,
+  deletePlatformVisualFn,
+  deletePersonalPlatformFn,
+} from '../server/functions'
+import { useNotification } from './notifications'
 import { Confirm, PlatformCard, useLibrary } from './ui'
 import { UniverseSidebar } from './universe-sidebar'
 import {
@@ -36,13 +41,19 @@ export function PlatformVisualForm({
   visuals: PlatformVisual[]
 }) {
   const [items, setItems] = useState(visuals)
-  const [section, setSection] = useState<EditorSection>('identity')
+  const [section, setSection] = useState<EditorSection>(platform.isDraft ? 'card' : 'identity')
+  const [catalogPlatformId, setCatalogPlatformId] = useState(platform.catalogPlatformId)
+  const saving = useRef(false)
+  const notify = useNotification()
   const [customization, setCustomization] = useState<PlatformCustomization>(platform.customization)
   const { games } = useLibrary()
   const draftPlatform = {
     ...platform,
     name: customization.title || platform.catalogName,
     shortName: customization.shortName || platform.catalogShortName,
+    family: customization.family || platform.catalogFamily,
+    categories: customization.categories ?? platform.categories,
+    catalogPlatformId,
     customization,
   }
   const orderedItems = items.map((item, position) => ({ ...item, position }))
@@ -69,6 +80,56 @@ export function PlatformVisualForm({
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
   const router = useRouter()
+  async function removePlatform() {
+    if (busy || saving.current) return
+    saving.current = true
+    setBusy(true)
+    setError('')
+    try {
+      const result = await deletePersonalPlatformFn({ data: platform.id })
+      if (!result.ok) throw new Error(result.error)
+      await router.invalidate({ sync: true })
+      await router.navigate({ to: '/platforms' })
+      notify(result.data.warning ?? 'La plateforme personnelle a été supprimée.')
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Suppression impossible.')
+    } finally {
+      saving.current = false
+      setBusy(false)
+    }
+  }
+  async function save(publish: boolean) {
+    if (busy || saving.current) return
+    setError('')
+    setMessage('')
+    const parsed = platformVisualsSchema.safeParse({
+      platformId: platform.id,
+      visuals: items,
+      customization,
+      ...(platform.ownerId ? { catalogPlatformId } : {}),
+      ...(platform.isDraft ? { publish } : {}),
+      slideshow: { enabled: slideshowEnabled, seconds: Number(slideshowSeconds) },
+    })
+    if (!parsed.success) {
+      setError(parsed.error.issues[0].message)
+      return
+    }
+    saving.current = true
+    setBusy(true)
+    try {
+      const result = await savePlatformVisualsFn({ data: parsed.data })
+      if (!result.ok) throw new Error(result.error)
+      await router.invalidate({ sync: true })
+      if (platform.isDraft && !publish) await router.navigate({ to: '/platforms' })
+      else
+        await router.navigate({ to: '/platforms/$platformId', params: { platformId: platform.id } })
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Enregistrement impossible.')
+    } finally {
+      saving.current = false
+      setBusy(false)
+    }
+  }
   async function remove(item: PlatformVisual) {
     if (busy) return
     setBusy(true)
@@ -155,41 +216,31 @@ export function PlatformVisualForm({
   }
   return (
     <div className="page platform-visual-page">
-      <Link to="/platforms/$platformId" params={{ platformId: platform.id }} className="text-link">
-        <ArrowLeft size={16} /> Retour à l’univers
-      </Link>
-      <h1>Personnaliser {platform.name}</h1>
-      <p className="muted">Identité, carte, formats de jeux et visuels de la sidebar.</p>
+      {platform.isDraft ? (
+        <Link to="/platforms" className="text-link">
+          <ArrowLeft size={16} /> Mes plateformes
+        </Link>
+      ) : (
+        <Link
+          to="/platforms/$platformId"
+          params={{ platformId: platform.id }}
+          className="text-link"
+        >
+          <ArrowLeft size={16} /> Retour à l’univers
+        </Link>
+      )}
+      <h1>
+        {platform.isDraft ? 'Finaliser' : 'Personnaliser'} {platform.name}
+      </h1>
+      <p className="muted">
+        {platform.isDraft
+          ? '2. Visuels et présentation · les images sont facultatives et pourront être complétées plus tard.'
+          : 'Identité, carte, formats de jeux et visuels de la sidebar.'}
+      </p>
       <form
-        onSubmit={async (event) => {
+        onSubmit={(event) => {
           event.preventDefault()
-          if (busy) return
-          setError('')
-          setMessage('')
-          const parsed = platformVisualsSchema.safeParse({
-            platformId: platform.id,
-            visuals: items,
-            customization,
-            slideshow: { enabled: slideshowEnabled, seconds: Number(slideshowSeconds) },
-          })
-          if (!parsed.success) {
-            setError(parsed.error.issues[0].message)
-            return
-          }
-          setBusy(true)
-          try {
-            const result = await savePlatformVisualsFn({ data: parsed.data })
-            if (!result.ok) throw new Error(result.error)
-            await router.invalidate({ sync: true })
-            await router.navigate({
-              to: '/platforms/$platformId',
-              params: { platformId: platform.id },
-            })
-          } catch (err) {
-            setError(err instanceof Error ? err.message : 'Enregistrement impossible.')
-          } finally {
-            setBusy(false)
-          }
+          void save(true)
         }}
       >
         <fieldset disabled={busy} className="platform-visual-fields">
@@ -216,6 +267,16 @@ export function PlatformVisualForm({
                 platform={platform}
                 value={customization}
                 onChange={setCustomization}
+                catalogPlatformId={catalogPlatformId}
+                onCatalogChange={(id) => {
+                  setCatalogPlatformId(id)
+                  const categories = customization.categories ?? platform.categories
+                  if (id === 'pc' && !categories.includes('COMPUTER'))
+                    setCustomization((previous) => ({
+                      ...previous,
+                      categories: [...categories, 'COMPUTER'],
+                    }))
+                }}
               />
               {section === 'card' && (
                 <button
@@ -486,11 +547,37 @@ export function PlatformVisualForm({
             Enregistrez pour appliquer l’activation, l’ordre et les images par défaut. Désactiver
             une image ne la supprime pas.
           </p>
-          <button type="submit" className="button">
-            <Check size={17} />
-            {busy ? 'En cours…' : 'Enregistrer la présentation'}
-          </button>
+          <div className="platform-save-actions">
+            <button type="submit" className="button">
+              <Check size={17} />
+              {busy
+                ? 'En cours…'
+                : platform.isDraft
+                  ? 'Créer la plateforme'
+                  : 'Enregistrer la présentation'}
+            </button>
+            {platform.isDraft && (
+              <button type="button" className="button secondary" onClick={() => void save(false)}>
+                Enregistrer le brouillon
+              </button>
+            )}
+          </div>
         </fieldset>
+        {platform.ownerId && (
+          <div className="platform-delete-action">
+            <Confirm
+              title={`Supprimer ${platform.name} ?`}
+              description="Cette plateforme personnelle et ses visuels seront supprimés. La suppression est possible uniquement si elle ne contient aucun jeu. Les fichiers source importés sont conservés."
+              confirmLabel="Supprimer la plateforme"
+              onConfirm={() => void removePlatform()}
+            >
+              <button type="button" disabled={busy} className="text-link danger-text">
+                <Trash2 size={16} />
+                {platform.isDraft ? 'Supprimer ce brouillon' : 'Supprimer cette plateforme'}
+              </button>
+            </Confirm>
+          </div>
+        )}
         {error && (
           <p role="alert" className="form-error">
             {error}

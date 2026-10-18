@@ -17,7 +17,7 @@ les ajustements spécifiques existants. Un schéma montre les proportions de la 
 
 Accessible par le crayon sur les cartes de Mes plateformes ou celui de l’accueil sidebar,
 `/platforms/<id>/edit` propose quatre sections : Identité, Carte, Présentation des jeux et Sidebar.
-Titre, nom court et année/période sont personnalisables ; un champ vide reprend le catalogue.
+Titre, nom court, marque, catégories multiples et année/période sont personnalisables ; un champ d’identité vide reprend sa valeur initiale.
 Les aperçus de carte et d’accueil sidebar utilisent les composants réels, sans enregistrer les brouillons.
 
 Carte : logo, fond et machine PNG/WebP, proportions conservées, placement réglable (tailles, décalages,
@@ -27,7 +27,21 @@ de carte avec variantes facultatives propres à la sidebar et placement séparé
 Chaque rôle permet import, sélection, désactivation, suppression immédiate confirmée, masquage et retour au repli.
 Les images importées sont stockées inactives immédiatement ; les choix et réglages prennent effet à l’enregistrement.
 La bibliothèque générale reprend le logo personnalisé tout en gardant son cadre commun.
-La création de plateformes et les catégories multiples restent l’étape suivante.
+
+## Création de plateformes personnelles
+
+« Ajouter une plateforme » dans Mes plateformes remplace l’ajout d’un PC personnel.
+Premier écran `/platforms/new` : PC personnel/d’époque (Ordinateur et catalogue PC présélectionnés)
+ou autre ordinateur/console, titre obligatoire, nom court, marque, année/période facultatifs,
+cases Ordinateur/Console de salon/Portable cumulables et catalogue de jeux facultatif.
+Second écran : même éditeur que les plateformes fournies, ouvert sur Carte, avec logo/fond/machine,
+modèles de jeux et variantes sidebar. Images facultatives, ajoutables plus tard ; mêmes dimensions
+de cartes et même bibliothèque générale que les autres plateformes. Grande boîte ordinateur
+présélectionnée pour un PC ; modèle du catalogue associé sinon, toujours modifiable.
+Le premier écran enregistre un brouillon, reprenable dans « Créations en cours » ; « Enregistrer
+le brouillon » conserve les réglages sans le rendre disponible pour les jeux. « Créer la plateforme »
+le publie et ouvre son univers. L’éditeur permet ensuite de modifier le catalogue associé, les catégories
+et tous les visuels. Suppression confirmée d’un brouillon ou d’une plateforme personnelle vide uniquement.
 
 Les cartes de plateformes (accueil et Mes plateformes, illustrées ou génériques) affichent
 `année · nombre de jeux` sous le nom, dans le style discret du compteur. Région de sortie en

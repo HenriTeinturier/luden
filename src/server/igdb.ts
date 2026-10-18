@@ -1,6 +1,7 @@
 import { db } from './db'
 import { importImageUrl } from './media'
 import type { ImageInput } from '../lib/media'
+import { accessiblePlatforms } from './platforms'
 
 type IgdbGame = {
   id: number
@@ -63,16 +64,25 @@ async function request<T>(endpoint: string, body: string): Promise<T> {
 }
 
 export async function searchGames(query: string, platformId?: string) {
-  const platform = platformId ? await db.platform.findUnique({ where: { id: platformId } }) : null
+  const platform = platformId
+    ? await db.platform.findFirstOrThrow({
+        where: { id: platformId, isDraft: false, ...accessiblePlatforms },
+        include: { catalogPlatform: true },
+      })
+    : null
+  const igdbPlatformId = platform?.catalogPlatform?.igdbId ?? platform?.igdbId
   const safeQuery = query.replace(/["\\\r\n]/g, ' ').trim()
   const games = await request<IgdbGame[]>(
     'games',
-    `search "${safeQuery}"; fields name,summary,first_release_date,cover.image_id,platforms.name,genres.name,involved_companies.company.name,involved_companies.developer,involved_companies.publisher,release_dates.platform,release_dates.y,release_dates.human,release_dates.date; ${platform?.igdbId ? `where platforms = (${platform.igdbId});` : ''} limit 12;`,
+    `search "${safeQuery}"; fields name,summary,first_release_date,cover.image_id,platforms.name,genres.name,involved_companies.company.name,involved_companies.developer,involved_companies.publisher,release_dates.platform,release_dates.y,release_dates.human,release_dates.date; ${igdbPlatformId ? `where platforms = (${igdbPlatformId});` : ''} limit 12;`,
   )
-  const platforms = await db.platform.findMany({ select: { id: true, igdbId: true } })
+  const platforms = await db.platform.findMany({
+    where: { ownerId: null, isDraft: false },
+    select: { id: true, igdbId: true },
+  })
   return games.map((game) => {
     const dates = (game.release_dates ?? [])
-      .filter((d) => !platform?.igdbId || d.platform === platform.igdbId)
+      .filter((d) => !platform || d.platform === igdbPlatformId)
       .sort((a, b) => (a.date ?? Infinity) - (b.date ?? Infinity))
     const possible = platforms.filter((p) => game.platforms?.some((gp) => gp.id === p.igdbId))
     return {

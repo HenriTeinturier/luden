@@ -1,5 +1,14 @@
 # État courant
 
+## Refonte plateformes — étape 3 : création personnelle — 2026-10-18
+
+- « Ajouter une plateforme » remplace l’ajout d’un PC personnel. Deux écrans : identité, marque, année/période, catégories cumulables Ordinateur/Console de salon/Portable et catalogue facultatif ; puis éditeur commun pour logo/fond/machine, modèles de jeux et sidebar. Même format de carte que les plateformes fournies.
+- PC personnel présélectionné comme ordinateur avec catalogue PC pour IGDB. Jeux, notes et médias restent propres à chaque plateforme. Sans catalogue associé, ajout manuel et recherche globale disponibles. Catégories et marque également modifiables sur les plateformes existantes.
+- Brouillons reprenables depuis « Créations en cours », absents des galeries et des sélecteurs de jeu ; publication atomique avec les réglages. Création idempotente ; suppression des plateformes personnelles vides et de leurs visuels, protégée si des jeux existent. Anciennes Machines conservées pour compatibilité, aucune restante en base locale.
+- Migration additive appliquée (`ownerId`, `catalogPlatformId`, `isDraft`), client Prisma régénéré, export v8. Aucun jeu personnel déplacé ni modifié.
+- Vérifié : TypeScript, lint, 49 tests, compilation, deux scripts DB/fichiers isolés (création simultanée sans doublon, isolation, brouillon, publication, catalogue PC simulé, jeux indépendants, huit rôles de visuels, export et suppression). Navigateur : création, sauvegarde/reprise du brouillon, publication, ouverture de l’univers et préremplissage de l’ajout de jeu ; plateforme temporaire nettoyée.
+- Suite : validation esthétique et création d’une première plateforme avec les visuels choisis par Henri ; ajustements éventuels de l’ergonomie et des modèles.
+
 ## Refonte plateformes — étape 2 : éditeur commun — 2026-10-18
 
 - Éditeur accessible depuis le crayon de chaque carte de Mes plateformes et de la sidebar : identité (titre, nom court, année/période), carte, modèles de jeux et accueil sidebar. Disponible aussi pour toutes les plateformes sans visuels dédiés.
@@ -704,8 +713,8 @@ Ne pas relancer une grande batterie de tests pour des ajustements graphiques min
 ## Limites connues / futures
 
 - Profil local uniquement, aucun partage/auth ; l'application refuse les hôtes non locaux.
-- Catalogue de 30 plateformes fourni ; ajouter d'autres plateformes dans `src/lib/platforms.ts`
-  puis amorcer la base, pas encore d'éditeur de plateformes dans l'interface.
+- Catalogue fourni et plateformes personnelles créables dans Mes plateformes ; éditeur commun
+  pour identité, catégories, visuels et présentation des jeux.
 - Dates de sortie à l'année, période personnelle libre ; éditions détaillées reportées.
 - Les métadonnées IGDB peuvent décrire plusieurs versions : vérification/correction manuelle disponible.
 - Export sans fichiers binaires, pas de réimport ; pas de purge automatique des médias détachés.

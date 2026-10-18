@@ -16,22 +16,31 @@ model Profile {
   media           Media[]
   categories      GameCategory[]
   platformVisuals PlatformVisual[]
+  platforms       Platform[]
   createdAt       DateTime         @default(now())
 }
 
 model Platform {
-  id               String           @id
-  name             String
-  shortName        String
-  family           String
-  color            String
-  era              String
-  igdbId           Int?             @unique
-  games            Game[]
-  visuals          PlatformVisual[]
-  slideshowEnabled Boolean          @default(false)
-  slideshowSeconds Int              @default(8)
-  customization    Json             @default("{}")
+  id                String           @id
+  name              String
+  shortName         String
+  family            String
+  color             String
+  era               String
+  igdbId            Int?             @unique
+  games             Game[]
+  visuals           PlatformVisual[]
+  slideshowEnabled  Boolean          @default(false)
+  slideshowSeconds  Int              @default(8)
+  customization     Json             @default("{}")
+  ownerId           String?
+  owner             Profile?         @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  catalogPlatformId String?
+  catalogPlatform   Platform?        @relation("PlatformCatalog", fields: [catalogPlatformId], references: [id], onDelete: Restrict)
+  personalPlatforms Platform[]       @relation("PlatformCatalog")
+  isDraft           Boolean          @default(false)
+
+  @@index([ownerId, isDraft])
 }
 
 enum PlatformVisualKind {

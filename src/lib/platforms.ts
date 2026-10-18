@@ -301,11 +301,33 @@ export const platforms = [
 const handheldIds = new Set(['gameboy', 'gba', 'ds', '3ds', 'psp'])
 const hybridIds = new Set(['switch', 'switch-2'])
 
-export function matchesPlatformFilter(platform: { id: string; family: string }, filter: string) {
+export const platformCategoryLabels = {
+  COMPUTER: 'Ordinateur',
+  CONSOLE: 'Console de salon',
+  HANDHELD: 'Portable',
+} as const
+export type PlatformCategory = keyof typeof platformCategoryLabels
+export function platformCategories(platform: {
+  id: string
+  family: string
+  categories?: PlatformCategory[]
+}): PlatformCategory[] {
+  if (platform.categories?.length) return platform.categories
+  if (platform.family === 'Ordinateurs') return ['COMPUTER']
+  if (hybridIds.has(platform.id)) return ['CONSOLE', 'HANDHELD']
+  if (handheldIds.has(platform.id)) return ['HANDHELD']
+  return ['CONSOLE']
+}
+
+export function matchesPlatformFilter(
+  platform: { id: string; family: string; categories?: PlatformCategory[] },
+  filter: string,
+) {
   if (filter === 'Toutes') return true
-  if (filter === 'Portables') return handheldIds.has(platform.id) || hybridIds.has(platform.id)
-  if (filter === 'Consoles')
-    return platform.family !== 'Ordinateurs' && !handheldIds.has(platform.id)
+  const categories = platformCategories(platform)
+  if (filter === 'Portables') return categories.includes('HANDHELD')
+  if (filter === 'Consoles') return categories.includes('CONSOLE')
+  if (filter === 'Ordinateurs') return categories.includes('COMPUTER')
   return platform.family === filter
 }
 

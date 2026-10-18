@@ -1,5 +1,15 @@
 import { z } from 'zod'
 import { presentationPresets, type PresentationPresetId } from './presentation'
+import { platformCategories } from './platforms'
+
+export const platformCategoriesSchema = z
+  .array(z.enum(['COMPUTER', 'CONSOLE', 'HANDHELD']))
+  .min(1, 'Choisissez au moins une catégorie.')
+  .max(3)
+  .refine(
+    (values) => new Set(values).size === values.length,
+    'Chaque catégorie ne peut être choisie qu’une fois.',
+  )
 
 export const platformAssetKinds = [
   'LOGO',
@@ -20,6 +30,8 @@ const placementSchema = z.object({
   backgroundY: z.number().min(0).max(100).default(50),
 })
 export const platformCustomizationSchema = z.object({
+  family: z.string().trim().min(1).max(50).nullable().default(null),
+  categories: platformCategoriesSchema.nullable().default(null),
   title: z.string().trim().min(1).max(100).nullable().default(null),
   shortName: z.string().trim().min(1).max(30).nullable().default(null),
   dateLabel: z
@@ -45,7 +57,7 @@ export function readPlatformCustomization(value: unknown): PlatformCustomization
   return parsed.success ? parsed.data : platformCustomizationSchema.parse({})
 }
 export function customizePlatform<
-  T extends { name: string; shortName: string; customization: unknown },
+  T extends { id: string; name: string; shortName: string; family: string; customization: unknown },
 >(platform: T) {
   const { customization: stored, ...catalog } = platform
   const customization = readPlatformCustomization(stored)
@@ -53,6 +65,9 @@ export function customizePlatform<
     ...catalog,
     catalogName: platform.name,
     catalogShortName: platform.shortName,
+    catalogFamily: platform.family,
+    family: customization.family ?? platform.family,
+    categories: customization.categories ?? platformCategories(platform),
     name: customization.title ?? platform.name,
     shortName: customization.shortName ?? platform.shortName,
     customization,

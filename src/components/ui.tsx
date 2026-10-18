@@ -67,10 +67,12 @@ export function PlatformArt({
   platform,
   className = '',
 }: {
-  platform: Pick<Platform, 'id' | 'color'>
+  platform: Pick<Platform, 'id' | 'color'> & Partial<Pick<Platform, 'categories'>>
   className?: string
 }) {
-  const computer = ['pc', 'amiga', 'amstrad', 'atari-st'].includes(platform.id)
+  const computer =
+    platform.categories?.includes('COMPUTER') ??
+    ['pc', 'amiga', 'amstrad', 'atari-st'].includes(platform.id)
   return (
     <div
       className={`platform-art ${computer ? 'computer' : ''} ${className}`}

@@ -106,7 +106,7 @@ try {
   assert.equal(await db.platformVisual.count({ where: { platformId, ownerId } }), 9)
   assert.ok(await readPlatformImage(inactive.id))
   const exported = await exportLibrary()
-  assert.equal(exported.version, 7)
+  assert.equal(exported.version, 8)
   assert.deepEqual(
     exported.platforms.find((p) => p.id === platformId)?.customization,
     customization,

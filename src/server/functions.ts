@@ -4,6 +4,22 @@ import { gameSchema, collectionSchema, quickGameSchema } from '../lib/validation
 import { webUrlSchema } from '../lib/media'
 import { categoriesSchema } from '../lib/categories'
 import { platformVisualsSchema, deletePlatformVisualSchema } from '../lib/platform-visuals'
+import { createPlatformSchema } from '../lib/personal-platforms'
+
+export const createPlatformFn = createServerFn({ method: 'POST' })
+  .validator(createPlatformSchema)
+  .handler(async ({ data }) => {
+    const { mutation } = await import('./request')
+    const { createPlatform } = await import('./platforms')
+    return mutation(() => createPlatform(data))
+  })
+export const deletePersonalPlatformFn = createServerFn({ method: 'POST' })
+  .validator(z.string())
+  .handler(async ({ data }) => {
+    const { mutation } = await import('./request')
+    const { deletePersonalPlatform } = await import('./platforms')
+    return mutation(() => deletePersonalPlatform(data))
+  })
 
 export const deletePlatformVisualFn = createServerFn({ method: 'POST' })
   .validator(deletePlatformVisualSchema)
@@ -77,18 +93,6 @@ export const deleteCollectionFn = createServerFn({ method: 'POST' })
     const { mutation } = await import('./request')
     const { deleteCollection } = await import('./library')
     return mutation(() => deleteCollection(data))
-  })
-export const saveMachineFn = createServerFn({ method: 'POST' })
-  .validator(z.object({ name: z.string().trim().min(1).max(100) }))
-  .handler(async ({ data }) => {
-    const { mutation } = await import('./request')
-    const { db, LOCAL_PROFILE_ID } = await import('./db')
-    return mutation(() =>
-      db.machine.create({
-        data: { name: data.name, ownerId: LOCAL_PROFILE_ID },
-        select: { id: true },
-      }),
-    )
   })
 export const deleteMachineFn = createServerFn({ method: 'POST' })
   .validator(z.string())

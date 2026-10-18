@@ -1,5 +1,7 @@
 import { type CSSProperties } from 'react'
 import type { Platform } from '../lib/types'
+import { PlatformCategoriesField, PlatformCatalogField } from './platform-classification-fields'
+import { useLibrary } from './ui'
 import { platformReleases } from '../lib/platform-releases'
 import {
   platformPresentation,
@@ -64,17 +66,25 @@ export function PlatformEditorSettings({
   platform,
   value,
   onChange,
+  catalogPlatformId,
+  onCatalogChange,
 }: {
   section: EditorSection
   platform: Platform
   value: PlatformCustomization
   onChange: (value: PlatformCustomization) => void
+  catalogPlatformId: string | null
+  onCatalogChange: (id: string | null) => void
 }) {
+  const { platforms } = useLibrary()
   if (section === 'identity')
     return (
       <section className="platform-visual-section platform-identity-fields">
         <h2>Identité de la plateforme</h2>
-        <p>Les champs laissés vides reprennent les valeurs du catalogue.</p>
+        <p>
+          Les champs laissés vides reprennent les valeurs{' '}
+          {platform.ownerId ? 'définies à la création' : 'du catalogue'}.
+        </p>
         <label>
           Titre
           <input
@@ -103,15 +113,44 @@ export function PlatformEditorSettings({
           />
           <small>Une année (1998) ou une période (1998–2002).</small>
         </label>
+        <label>
+          Marque
+          <input
+            maxLength={50}
+            placeholder={platform.catalogFamily}
+            value={value.family ?? ''}
+            onChange={(event) => onChange({ ...value, family: event.target.value || null })}
+          />
+        </label>
+        <PlatformCategoriesField
+          value={value.categories ?? platform.categories}
+          onChange={(categories) => onChange({ ...value, categories })}
+        />
+        {platform.ownerId && (
+          <PlatformCatalogField
+            value={catalogPlatformId}
+            onChange={onCatalogChange}
+            platforms={platforms}
+          />
+        )}
         <p>
-          Catalogue : {platform.catalogName} · {platform.family}
+          {platform.ownerId ? 'Identité initiale' : 'Catalogue'} : {platform.catalogName} ·{' '}
+          {platform.catalogFamily}
         </p>
         <button
           type="button"
           className="text-link"
-          onClick={() => onChange({ ...value, title: null, shortName: null, dateLabel: null })}
+          onClick={() =>
+            onChange({
+              ...value,
+              title: null,
+              shortName: null,
+              dateLabel: platform.ownerId ? platform.era || null : null,
+              family: null,
+            })
+          }
         >
-          Rétablir l’identité du catalogue
+          {platform.ownerId ? 'Rétablir l’identité initiale' : 'Rétablir l’identité du catalogue'}
         </button>
       </section>
     )

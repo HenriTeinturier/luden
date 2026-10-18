@@ -23,7 +23,16 @@ proportions de galerie et leur géométrie boîte/support en sidebar et fiche co
 La route plateforme expose les classes de galerie ; `GameScene` transmet la géométrie via des
 variables CSS. Les dimensions des scènes ne dépendent plus de sélecteurs CSS par plateforme.
 Les illustrations de machines et l’accueil des univers restent séparés de ces modèles.
-Les choix sont encore dans le code : persistance et éditeur prévus à l’étape suivante de la refonte.
+Les choix personnels sont enregistrés dans `Platform.customization` et appliqués par l’éditeur commun.
+
+Création personnelle : `/platforms/new` → `createPlatformFn` → `server/platforms.ts` → Prisma.
+Un UUID de requête rend la première sauvegarde idempotente. Les données initiales et le catalogue
+associé sont créés avec `isDraft=true`, puis l’éditeur existant publie dans la transaction des visuels.
+`loadLibrary` sépare plateformes disponibles et brouillons et filtre les plateformes par propriétaire.
+L’ajout de jeu et la recherche refusent les brouillons et plateformes d’un autre profil.
+IGDB utilise l’identifiant du catalogue associé tout en conservant la plateforme personnelle comme
+destination de la fiche ; aucune copie de jeux du catalogue. `Machine` reste compatible avec les
+anciennes données mais son formulaire et sa fonction de création sont retirés.
 
 Consultation : `GameExplorer` dans le shell conserve la galerie montée et gère sélection/ordre,
 sidebar, fiche et édition. `GameDetails` est partagé avec la route de jeu directe.
@@ -68,7 +77,10 @@ transaction, ainsi que `Platform.customization` (identité affichée, modèles e
 les réglages omis restent intacts et une liste de visuels périmée annule toute la transaction.
 La sidebar restaure l’affiche depuis `luden:platform-poster:v1:<id>` (localStorage)
 après hydratation ; le timer ne tourne que pour deux affiches actives ou plus et un onglet visible.
-Export JSON v7 : personnalisation des plateformes et nouveaux rôles inclus, en plus des réglages de défilement (v6) et des visuels personnels (v5).
+La suppression d’une plateforme personnelle exige l’absence de jeux ; elle retire la ligne et ses
+visuels en transaction, puis les fichiers. Les fichiers sources de l’utilisateur restent intacts.
+Export JSON v8 : plateformes personnelles, propriétaire, catalogue associé, brouillon et catégories,
+en plus des personnalisations et rôles (v7), réglages de défilement (v6) et visuels personnels (v5).
 Pas de copie de la base vivante dans OneDrive ; volume Docker dédié.
 
 ## Futur

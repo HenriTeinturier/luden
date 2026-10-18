@@ -6,7 +6,9 @@ export const Route = createFileRoute('/platforms/$platformId_/edit')({ component
 function EditPlatform() {
   const { platformId } = Route.useParams()
   const library = useLibrary()
-  const platform = library.platforms.find((p) => p.id === platformId)
+  const platform = [...library.platforms, ...library.platformDrafts].find(
+    (p) => p.id === platformId,
+  )
   if (!platform)
     return (
       <div className="empty-state">

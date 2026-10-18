@@ -23,6 +23,7 @@ import { Route as MediaMediaIdRouteImport } from './routes/media.$mediaId'
 import { Route as PlatformMediaVisualIdRouteImport } from './routes/platform-media.$visualId'
 import { Route as PlatformsIndexRouteImport } from './routes/platforms.index'
 import { Route as PlatformsPlatformIdRouteImport } from './routes/platforms.$platformId'
+import { Route as PlatformsNewRouteImport } from './routes/platforms.new'
 import { Route as PlatformsPlatformIdEditRouteImport } from './routes/platforms.$platformId_.edit'
 
 const IndexRoute = IndexRouteImport.update({
@@ -95,6 +96,11 @@ const PlatformsPlatformIdRoute = PlatformsPlatformIdRouteImport.update({
   path: '/platforms/$platformId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PlatformsNewRoute = PlatformsNewRouteImport.update({
+  id: '/platforms/new',
+  path: '/platforms/new',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PlatformsPlatformIdEditRoute = PlatformsPlatformIdEditRouteImport.update({
   id: '/platforms/$platformId_/edit',
   path: '/platforms/$platformId/edit',
@@ -114,6 +120,7 @@ export interface FileRoutesByFullPath {
   '/media/$mediaId': typeof MediaMediaIdRoute
   '/platform-media/$visualId': typeof PlatformMediaVisualIdRoute
   '/platforms/$platformId': typeof PlatformsPlatformIdRoute
+  '/platforms/new': typeof PlatformsNewRoute
   '/collections/': typeof CollectionsIndexRoute
   '/platforms/': typeof PlatformsIndexRoute
   '/platforms/$platformId/edit': typeof PlatformsPlatformIdEditRoute
@@ -131,6 +138,7 @@ export interface FileRoutesByTo {
   '/media/$mediaId': typeof MediaMediaIdRoute
   '/platform-media/$visualId': typeof PlatformMediaVisualIdRoute
   '/platforms/$platformId': typeof PlatformsPlatformIdRoute
+  '/platforms/new': typeof PlatformsNewRoute
   '/collections': typeof CollectionsIndexRoute
   '/platforms': typeof PlatformsIndexRoute
   '/platforms/$platformId/edit': typeof PlatformsPlatformIdEditRoute
@@ -149,6 +157,7 @@ export interface FileRoutesById {
   '/media/$mediaId': typeof MediaMediaIdRoute
   '/platform-media/$visualId': typeof PlatformMediaVisualIdRoute
   '/platforms/$platformId': typeof PlatformsPlatformIdRoute
+  '/platforms/new': typeof PlatformsNewRoute
   '/collections/': typeof CollectionsIndexRoute
   '/platforms/': typeof PlatformsIndexRoute
   '/platforms/$platformId_/edit': typeof PlatformsPlatformIdEditRoute
@@ -168,6 +177,7 @@ export interface FileRouteTypes {
     | '/media/$mediaId'
     | '/platform-media/$visualId'
     | '/platforms/$platformId'
+    | '/platforms/new'
     | '/collections/'
     | '/platforms/'
     | '/platforms/$platformId/edit'
@@ -185,6 +195,7 @@ export interface FileRouteTypes {
     | '/media/$mediaId'
     | '/platform-media/$visualId'
     | '/platforms/$platformId'
+    | '/platforms/new'
     | '/collections'
     | '/platforms'
     | '/platforms/$platformId/edit'
@@ -202,6 +213,7 @@ export interface FileRouteTypes {
     | '/media/$mediaId'
     | '/platform-media/$visualId'
     | '/platforms/$platformId'
+    | '/platforms/new'
     | '/collections/'
     | '/platforms/'
     | '/platforms/$platformId_/edit'
@@ -220,6 +232,7 @@ export interface RootRouteChildren {
   MediaMediaIdRoute: typeof MediaMediaIdRoute
   PlatformMediaVisualIdRoute: typeof PlatformMediaVisualIdRoute
   PlatformsPlatformIdRoute: typeof PlatformsPlatformIdRoute
+  PlatformsNewRoute: typeof PlatformsNewRoute
   CollectionsIndexRoute: typeof CollectionsIndexRoute
   PlatformsIndexRoute: typeof PlatformsIndexRoute
   PlatformsPlatformIdEditRoute: typeof PlatformsPlatformIdEditRoute
@@ -325,6 +338,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlatformsPlatformIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/platforms/new': {
+      id: '/platforms/new'
+      path: '/platforms/new'
+      fullPath: '/platforms/new'
+      preLoaderRoute: typeof PlatformsNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/platforms/$platformId_/edit': {
       id: '/platforms/$platformId_/edit'
       path: '/platforms/$platformId/edit'
@@ -348,6 +368,7 @@ const rootRouteChildren: RootRouteChildren = {
   MediaMediaIdRoute: MediaMediaIdRoute,
   PlatformMediaVisualIdRoute: PlatformMediaVisualIdRoute,
   PlatformsPlatformIdRoute: PlatformsPlatformIdRoute,
+  PlatformsNewRoute: PlatformsNewRoute,
   CollectionsIndexRoute: CollectionsIndexRoute,
   PlatformsIndexRoute: PlatformsIndexRoute,
   PlatformsPlatformIdEditRoute: PlatformsPlatformIdEditRoute,

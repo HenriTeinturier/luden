@@ -12,7 +12,7 @@ Excel/Figma sont des inspirations, jamais un cahier des charges à reproduire.
 - Possessions actuelles/anciennes physiques ou digitales, boutique facultative.
 - Collection réelle : sélection volontaire de possessions actuelles OU anciennes.
 - Collection rêvée : vitrine virtuelle, pas une liste d'achats.
-- Galeries par plateforme, PC personnels, recherche/filtres/vue compacte.
+- Galeries par plateforme, plateformes personnelles (PC d’époque, ordinateur ou console absent du catalogue), recherche/filtres/vue compacte.
 - Ajout manuel et recherche IGDB facultative ; médias locaux et export JSON.
 - Reconstruction manuelle : aucun import Excel.
 

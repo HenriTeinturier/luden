@@ -1,11 +1,19 @@
 # Données et invariants
 
 - Profile : propriétaire local explicite, futur point d'entrée d'authentification.
-- Platform : Switch, PS5, PC, Amiga… identité stable du catalogue.
-  `customization` JSON validé contient les surcharges titre/nom court/année ou période, le modèle
+- Platform : plateforme fournie (Switch, PS5, PC, Amiga…) ou personnelle (`ownerId`, identifiant `custom-<uuid>`).
+  `catalogPlatformId` associe facultativement une plateforme personnelle à une plateforme fournie
+  pour les métadonnées IGDB uniquement. Les fiches gardent leur propre `Game.platformId` : un PC
+  d’époque utilise le catalogue PC sans partager ses jeux, notes ou médias avec les autres PC.
+  L’association ne peut pas viser une autre plateforme personnelle ni la plateforme elle-même.
+  `isDraft` permet de reprendre une création ; un brouillon reste exclu des galeries et de l’ajout de jeux.
+  Publication et réglages sont atomiques. Seules les plateformes personnelles sans jeu peuvent être supprimées.
+  `customization` JSON validé contient les surcharges titre/nom court/marque/année ou période, le modèle
   de jeux facultatif, les placements carte/sidebar, le mode sidebar et les rôles de visuels masqués.
   JSON vide = rendu historique. Les noms catalogue ne sont pas écrasés : le seed conserve les choix
   personnels et le chargement expose les deux identités. Aucun identifiant ni rattachement de jeu ne change.
+  `customization.categories` contient un ou plusieurs choix distincts COMPUTER/CONSOLE/HANDHELD ;
+  absence = classement historique du catalogue. Un rattachement PC exige COMPUTER.
   Les filtres de Mes plateformes sont indépendants des familles de marques : Consoles regroupe
   les consoles de salon et hybrides ; Portables regroupe Game Boy, GBA, DS, 3DS, PSP et les hybrides
   Switch/Switch 2. Les hybrides apparaissent dans les deux filtres, sans dupliquer les plateformes ni les jeux.
@@ -23,7 +31,8 @@
   parcourables manuellement ou automatiquement, défaut en premier dans l’ordre. Ces fichiers sont indépendants des médias de jeux.
   Les autres rôles affichent leur défaut actif, sinon le visuel fourni (carte) ou celui de la carte
   (sidebar). Un rôle explicitement masqué n’affiche aucun visuel, même en présence d’une image active.
-- Machine : PC personnel nommé ; rattachement facultatif d'une fiche PC.
+- Machine : ancien PC personnel nommé ; conservé pour compatibilité des fiches et exports, sans nouvelle création.
+  La base locale ne contenait plus de Machine ni de jeu rattaché lors de l’étape 3 ; aucune migration destructive.
 - Game : fiche personnelle sur UNE plateforme, toutes métadonnées indépendantes. Aucun Game universel imposé.
   `presentation` JSON contient les rôles boîte/support/logo/fond (identifiants de médias déjà attachés
   à cette fiche) et `sidebarCrop` (x/y en %, zoom 1–3). Schéma Zod ; références retirées quand le média

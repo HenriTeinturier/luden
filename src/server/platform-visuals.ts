@@ -4,6 +4,8 @@ import { randomUUID } from 'node:crypto'
 import { db, LOCAL_PROFILE_ID as ownerId } from './db'
 import { prepareImage } from './media'
 import { resolveMediaPath } from './media-path'
+import { accessiblePlatforms, assertCatalogPlatform } from './platforms'
+import { customizePlatform } from '../lib/platform-customization'
 import {
   platformIdSchema,
   platformVisualKind,
@@ -19,7 +21,7 @@ export async function savePlatformImage(
 ) {
   const platformId = platformIdSchema.parse(platform)
   const kind = platformVisualKind.parse(kindInput)
-  await db.platform.findUniqueOrThrow({ where: { id: platformId } })
+  await db.platform.findFirstOrThrow({ where: { id: platformId, ...accessiblePlatforms } })
   const folder =
     kind === 'BANNER' ? 'bandeaux' : kind === 'POSTER' ? 'affiches' : kind.toLowerCase()
   const relative = `plateformes/${platformId}/${folder}/${randomUUID()}.webp`
@@ -63,10 +65,29 @@ export async function savePlatformImage(
 }
 
 export async function savePlatformVisuals(input: unknown) {
-  const { platformId, visuals, slideshow, customization } = platformVisualsSchema.parse(input)
+  const { platformId, visuals, slideshow, customization, catalogPlatformId, publish } =
+    platformVisualsSchema.parse(input)
   await db.$transaction(async (tx) => {
-    await tx.platform.findUniqueOrThrow({ where: { id: platformId } })
     await tx.$queryRaw`SELECT "id" FROM "Platform" WHERE "id" = ${platformId} FOR UPDATE`
+    const platform = await tx.platform.findFirstOrThrow({
+      where: { id: platformId, ...accessiblePlatforms },
+    })
+    if (catalogPlatformId !== undefined && !platform.ownerId)
+      throw new Error('Le catalogue d’une plateforme fournie ne peut pas être modifié.')
+    const categories = customizePlatform({
+      ...platform,
+      customization: customization ?? platform.customization,
+    }).categories
+    await assertCatalogPlatform(
+      tx,
+      catalogPlatformId === undefined ? platform.catalogPlatformId : catalogPlatformId,
+      categories,
+    )
+    if (catalogPlatformId !== undefined || (publish && platform.isDraft))
+      await tx.platform.update({
+        where: { id: platformId },
+        data: { catalogPlatformId, ...(publish ? { isDraft: false } : {}) },
+      })
     if (customization)
       await tx.platform.update({ where: { id: platformId }, data: { customization } })
     if (slideshow)

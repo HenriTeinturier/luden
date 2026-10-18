@@ -22,7 +22,7 @@ const image = (kind: PlatformVisual['kind'], id = kind): PlatformVisual => ({
 })
 
 test('Personnaliser une plateforme conserve son identité catalogue et sa présentation d’origine par défaut', () => {
-  const catalog = { id: 'xbox', name: 'Xbox', shortName: 'Xbox', customization: {} }
+  const catalog = { id: 'xbox', name: 'Xbox', shortName: 'Xbox', family: 'Xbox', customization: {} }
   const original = customizePlatform(catalog)
   assert.equal(original.name, 'Xbox')
   assert.deepEqual(platformPresentation(original), platformPresentation('xbox'))

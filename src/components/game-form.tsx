@@ -12,6 +12,7 @@ import { emptyGame, gameSchema, type GameInput } from '../lib/validation'
 import type { Game } from '../lib/types'
 import { deleteGameFn, saveGameFn, searchIgdbFn } from '../server/functions'
 import { Confirm, PageHeading, useLibrary } from './ui'
+import { metadataPlatformId } from '../lib/personal-platforms'
 
 type SearchResult = Extract<Awaited<ReturnType<typeof searchIgdbFn>>, { ok: true }>['data'][number]
 
@@ -125,7 +126,10 @@ export function GameForm({
         )
       }
       if (key === 'platformId' && selectedResult) {
-        const igdbPlatform = library.platforms.find((p) => p.id === value)?.igdbId
+        const selectedPlatform = library.platforms.find((p) => p.id === value)
+        const igdbPlatform = selectedPlatform
+          ? library.platforms.find((p) => p.id === metadataPlatformId(selectedPlatform))?.igdbId
+          : undefined
         next.releaseYear =
           selectedResult.releases
             .filter((r) => r.platform === igdbPlatform)

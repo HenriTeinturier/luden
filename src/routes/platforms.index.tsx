@@ -1,15 +1,14 @@
-import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react'
-import { Monitor, Plus, ArrowUpRight, Pencil } from 'lucide-react'
-import { PageHeading, PlatformCard, SectionHeading, Modal, useLibrary } from '../components/ui'
-import { saveMachineFn } from '../server/functions'
+import { Plus, Pencil } from 'lucide-react'
+import { PageHeading, PlatformCard, useLibrary } from '../components/ui'
 import { matchesPlatformFilter } from '../lib/platforms'
 const columnsStorageKey = 'luden:platforms:columns:v1'
 const columnOptions = [1, 2, 3, 4]
 
 export const Route = createFileRoute('/platforms/')({ component: Platforms })
 function Platforms() {
-  const { platforms, games, machines } = useLibrary()
+  const { platforms, games, platformDrafts } = useLibrary()
   const [family, setFamily] = useState('Toutes')
   const [columns, setColumns] = useState(2)
   const platformGrid = useRef<HTMLDivElement>(null)
@@ -52,18 +51,42 @@ function Platforms() {
       // Keep the default when browser storage is unavailable.
     }
   }, [])
-  const [open, setOpen] = useState(false)
-  const [name, setName] = useState('')
-  const [error, setError] = useState('')
-  const [busy, setBusy] = useState(false)
-  const router = useRouter()
   const gameCounts = new Map<string, number>()
   for (const game of games) {
     gameCounts.set(game.platformId, (gameCounts.get(game.platformId) ?? 0) + 1)
   }
   return (
     <div className="page platforms-index">
-      <PageHeading title="Les machines de votre histoire" />
+      <PageHeading
+        title="Les machines de votre histoire"
+        action={
+          <Link to="/platforms/new" className="button">
+            <Plus size={18} />
+            Ajouter une plateforme
+          </Link>
+        }
+      />
+      {platformDrafts.length > 0 && (
+        <section className="platform-drafts">
+          <h2>Créations en cours</h2>
+          <p className="muted">
+            Reprenez les visuels et la présentation avant d’ajouter ces plateformes à votre liste.
+          </p>
+          <div>
+            {platformDrafts.map((platform) => (
+              <Link
+                key={platform.id}
+                to="/platforms/$platformId/edit"
+                params={{ platformId: platform.id }}
+                className="button secondary"
+              >
+                <Pencil size={15} />
+                Reprendre {platform.name}
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
       <div className="platforms-toolbar">
         <div className="filter-tabs">
           {[
@@ -71,7 +94,11 @@ function Platforms() {
             'Ordinateurs',
             'Consoles',
             'Portables',
-            ...new Set(platforms.map((p) => p.family).filter((f) => f !== 'Ordinateurs')),
+            ...new Set(
+              platforms
+                .map((p) => p.family)
+                .filter((f) => !['Toutes', 'Ordinateurs', 'Consoles', 'Portables'].includes(f)),
+            ),
           ].map((f) => (
             <button
               key={f}
@@ -124,86 +151,6 @@ function Platforms() {
             </div>
           ))}
       </div>
-      {['Toutes', 'Ordinateurs'].includes(family) && (
-        <>
-          <SectionHeading title="Mes PC, mes repères." />
-          <p className="section-description">
-            Un espace pour chaque PC qui vous a accompagné. Les jeux restent rattachés à la
-            plateforme PC.
-          </p>
-          <div className="machine-grid">
-            {machines.map((m) => (
-              <Link
-                key={m.id}
-                to="/platforms/$platformId"
-                params={{ platformId: 'pc' }}
-                search={{ machine: m.id }}
-                className="machine-card"
-              >
-                <Monitor size={28} strokeWidth={1.2} />
-                <div>
-                  <h3>{m.name}</h3>
-                  <span>{games.filter((g) => g.machineId === m.id).length} jeux</span>
-                </div>
-                <ArrowUpRight size={18} />
-              </Link>
-            ))}
-            <button className="machine-card add-machine" onClick={() => setOpen(true)}>
-              <Plus size={24} />
-              <span>Ajouter un PC personnel</span>
-            </button>
-          </div>
-        </>
-      )}
-      <Modal
-        open={open}
-        onOpenChange={setOpen}
-        title="Un PC de votre histoire"
-        description="Donnez-lui un nom qui vous parle : Mon premier PC, La tour du salon…"
-      >
-        <form
-          onSubmit={async (e) => {
-            e.preventDefault()
-            setBusy(true)
-            setError('')
-            try {
-              const result = await saveMachineFn({ data: { name } })
-              if (!result.ok) setError(result.error)
-              else {
-                await router.invalidate()
-                setOpen(false)
-                setName('')
-              }
-            } catch {
-              setError('Impossible d’enregistrer ce PC.')
-            } finally {
-              setBusy(false)
-            }
-          }}
-        >
-          <label>
-            Nom du PC
-            <input
-              autoFocus
-              required
-              maxLength={100}
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Mon premier PC"
-            />
-          </label>
-          {error && (
-            <p className="form-error" role="alert">
-              {error}
-            </p>
-          )}
-          <div className="dialog-actions">
-            <button className="button" disabled={busy}>
-              {busy ? 'Enregistrement…' : 'Ajouter ce PC'}
-            </button>
-          </div>
-        </form>
-      </Modal>
     </div>
   )
 }

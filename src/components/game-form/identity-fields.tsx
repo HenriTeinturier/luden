@@ -51,7 +51,7 @@ export function IdentityFields({ data, change }: GameFieldsProps) {
           />
         </label>
       </div>
-      {data.platformId === 'pc' && (
+      {data.platformId === 'pc' && library.machines.length > 0 && (
         <label>
           Mon PC
           <select
@@ -65,7 +65,9 @@ export function IdentityFields({ data, change }: GameFieldsProps) {
               </option>
             ))}
           </select>
-          <span className="field-hint">Les PC personnels se créent dans « Mes plateformes ».</span>
+          <span className="field-hint">
+            Anciennes machines conservées. Les nouvelles se créent comme plateformes.
+          </span>
         </label>
       )}
       <label>

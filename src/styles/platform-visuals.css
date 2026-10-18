@@ -643,12 +643,50 @@
 }
 .platform-editor-tabs {
   margin-bottom: 24px;
+  flex-wrap: wrap;
 }
 .platform-editor-layout {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(300px, 1fr);
   gap: 28px;
   align-items: start;
+  scroll-margin-top: calc(var(--header-height, 79px) + 24px);
+}
+.platform-editor-layout:focus {
+  outline: none;
+}
+.platform-creation-review > h2 {
+  margin-top: 0;
+  font-size: 22px;
+}
+.platform-review-section {
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+}
+.platform-review-section h3 {
+  margin: 0;
+  font-size: 16px;
+}
+.platform-review-section dl {
+  display: grid;
+  gap: 12px;
+  margin: 16px 0 0;
+  font-size: 14px;
+}
+.platform-review-section dl > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+}
+.platform-review-section dt {
+  color: var(--muted);
+  flex: 0 0 150px;
+}
+.platform-review-section dd {
+  flex: 1 1 180px;
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
 }
 .platform-editor-controls {
   min-width: 0;

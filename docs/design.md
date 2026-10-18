@@ -34,6 +34,10 @@ de carte avec variantes facultatives propres à la sidebar et placement séparé
 Chaque rôle permet import, sélection, désactivation, suppression immédiate confirmée, masquage et retour au repli.
 Les images importées sont stockées inactives immédiatement ; les choix et réglages prennent effet à l’enregistrement.
 La bibliothèque générale reprend le logo personnalisé tout en gardant son cadre commun.
+Les changements non enregistrés sont protégés à la sortie : confirmation pour les liens et le retour
+du navigateur, alerte native pour fermeture/rechargement. Les imports déjà stockés restent disponibles.
+La protection couvre aussi le premier écran de création ; les opérations en cours empêchent de quitter
+par un lien. Une sauvegarde réussie poursuit normalement la navigation.
 
 ## Création de plateformes personnelles
 
@@ -41,13 +45,19 @@ La bibliothèque générale reprend le logo personnalisé tout en gardant son ca
 Premier écran `/platforms/new` : PC personnel/d’époque (Ordinateur et catalogue PC présélectionnés)
 ou autre ordinateur/console, titre obligatoire, nom court, marque, année/période facultatifs,
 cases Ordinateur/Console de salon/Portable cumulables et catalogue de jeux facultatif.
-Second écran : même éditeur que les plateformes fournies, ouvert sur Carte, avec logo/fond/machine,
-modèles de jeux et variantes sidebar. Images facultatives, ajoutables plus tard ; mêmes dimensions
+Second écran : même éditeur que les plateformes fournies, ouvert sur Carte. Le parcours affiche cinq
+étapes : Identité, Carte, Présentation des jeux, Sidebar et Récapitulatif. Précédent/Suivant et accès
+direct aux étapes conservent les champs en mémoire. Le récapitulatif reprend identité, rubriques,
+catalogue, visuels actifs et modèles, avec retour à chaque section pour correction. Les erreurs
+de date ou de durée ramènent à la section concernée avant de pouvoir valider le récapitulatif.
+Images facultatives, ajoutables plus tard ; mêmes dimensions
 de cartes et même bibliothèque générale que les autres plateformes. Grande boîte ordinateur
 présélectionnée pour un PC ; modèle du catalogue associé sinon, toujours modifiable.
 Le premier écran enregistre un brouillon, reprenable dans « Créations en cours » ; « Enregistrer
-le brouillon » conserve les réglages sans le rendre disponible pour les jeux. « Créer la plateforme »
-le publie et ouvre son univers. L’éditeur permet ensuite de modifier le catalogue associé, les catégories
+le brouillon », disponible à chaque étape, conserve les réglages sans le rendre disponible pour les jeux.
+« Créer la plateforme », uniquement dans le récapitulatif, le publie et ouvre son univers.
+L’éditeur des plateformes publiées garde ses quatre sections et son enregistrement direct.
+Il permet ensuite de modifier le catalogue associé, les catégories
 et tous les visuels. Suppression confirmée d’un brouillon ou d’une plateforme personnelle vide uniquement.
 
 Les cartes de plateformes (accueil et Mes plateformes, illustrées ou génériques) affichent

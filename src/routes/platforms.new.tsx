@@ -9,6 +9,7 @@ import {
 import { createPlatformFn } from '../server/functions'
 import { createPlatformSchema } from '../lib/personal-platforms'
 import type { PlatformCategory } from '../lib/platforms'
+import { useUnsavedChanges } from '../components/use-unsaved-changes'
 
 export const Route = createFileRoute('/platforms/new')({ component: NewPlatform })
 
@@ -26,13 +27,28 @@ function NewPlatform() {
   const [personalPc, setPersonalPc] = useState(true)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
+  const { afterSave, leaveConfirmation } = useUnsavedChanges({
+    dirty: !!(
+      name ||
+      shortName ||
+      family ||
+      dateLabel ||
+      !personalPc ||
+      catalogPlatformId !== 'pc' ||
+      categories.length !== 1 ||
+      categories[0] !== 'COMPUTER'
+    ),
+    busy,
+  })
   return (
     <div className="page platform-new-page">
       <Link to="/platforms" className="text-link">
         <ArrowLeft size={16} /> Mes plateformes
       </Link>
       <h1>Ajouter une plateforme</h1>
-      <p className="muted">1. Identité · 2. Visuels et présentation</p>
+      <p className="muted">
+        Étape 1 sur 5 · Identité, puis carte, présentation des jeux, sidebar et récapitulatif.
+      </p>
       <form
         onSubmit={async (event) => {
           event.preventDefault()
@@ -57,10 +73,12 @@ function NewPlatform() {
           try {
             const result = await createPlatformFn({ data: parsed.data })
             if (!result.ok) throw new Error(result.error)
-            await router.invalidate({ sync: true })
-            await router.navigate({
-              to: '/platforms/$platformId/edit',
-              params: { platformId: result.data.platformId },
+            await afterSave(async () => {
+              await router.invalidate({ sync: true })
+              await router.navigate({
+                to: '/platforms/$platformId/edit',
+                params: { platformId: result.data.platformId },
+              })
             })
           } catch (err) {
             setError(
@@ -167,7 +185,7 @@ function NewPlatform() {
             sidebar. Le brouillon pourra être repris depuis Mes plateformes.
           </p>
           <button type="submit" className="button">
-            {busy ? 'Création du brouillon…' : 'Continuer : visuels et présentation'}
+            {busy ? 'Création du brouillon…' : 'Suivant : carte'}
             <ArrowRight size={17} />
           </button>
         </fieldset>
@@ -177,6 +195,7 @@ function NewPlatform() {
           </p>
         )}
       </form>
+      {leaveConfirmation}
     </div>
   )
 }

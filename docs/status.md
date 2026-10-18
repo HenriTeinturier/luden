@@ -1,5 +1,12 @@
 # État courant
 
+## Refonte plateformes — étape 5 : parcours guidé et récapitulatif — 2026-10-18
+
+- Création en cinq étapes visibles : Identité, Carte, Présentation des jeux, Sidebar, Récapitulatif. Précédent/Suivant, accès direct, corrections depuis le récapitulatif ; champs conservés entre les étapes. Publication uniquement au récapitulatif, images facultatives et brouillon enregistrable partout. L’édition des plateformes publiées reste directe.
+- Protection des réglages non enregistrés dans les deux écrans : rester ou quitter pour la navigation, alerte native au rechargement/fermeture ; navigation après sauvegarde autorisée. Les imports restent immédiatement stockés. Validation du récapitulatif et de la sauvegarde avec retour à l’identité/diaporama en cas de saisie invalide et erreur focalisée.
+- Vérifié : TypeScript, lint, 11 tests ciblés, compilation. Navigateur sur plateforme temporaire : garde du premier écran, progression et retour, modèle conservé, date invalide, garde des réglages, abandon, sauvegarde/reprise du brouillon puis publication sans médias. Relecture en base du brouillon et de la publication ; fixture nettoyée, aucun jeu personnel modifié. Pas de migration ni changement d’export (v8).
+- Suite : refonte fonctionnelle disponible pour une première plateforme réelle ; validation esthétique par Henri et complétion des visuels des plateformes encore génériques.
+
 ## Refonte plateformes — étape 4 : modèles indépendants et aperçus réels — 2026-10-18
 
 - Dans Personnaliser → Présentation des jeux, le format des cartes de collection et la mise en scène boîte/support peuvent être choisis séparément. La sidebar et la fiche complète partagent ce second choix. Options : suivre la collection (défaut compatible), reprendre la présentation d’origine ou choisir un des modèles ; réinitialisation commune disponible.

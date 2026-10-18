@@ -1,6 +1,6 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useRouter } from '@tanstack/react-router'
-import { ArrowLeft, ArrowUp, ArrowDown, ImagePlus, Check, Trash2 } from 'lucide-react'
+import { ArrowLeft, ArrowRight, ArrowUp, ArrowDown, ImagePlus, Check, Trash2 } from 'lucide-react'
 import type { Platform } from '../lib/types'
 import {
   platformVisualsSchema,
@@ -15,13 +15,14 @@ import {
 import { useNotification } from './notifications'
 import { Confirm, PlatformCard, useLibrary } from './ui'
 import { UniverseSidebar } from './universe-sidebar'
-import {
-  PlatformEditorSettings,
-  editorSections,
-  type EditorSection,
-} from './platform-editor-settings'
+import { PlatformEditorSettings, editorSections } from './platform-editor-settings'
 import { PlatformPresetPreview } from './platform-preset-preview'
 import { platformAssetKinds, type PlatformCustomization } from '../lib/platform-customization'
+import { platformEditorSnapshot } from '../lib/platform-editor-state'
+import { PlatformCreationReview } from './platform-creation-review'
+import { useUnsavedChanges } from './use-unsaved-changes'
+const creationSections = { ...editorSections, review: 'Récapitulatif' }
+type CreationSection = keyof typeof creationSections
 const assetLabels: Record<PlatformVisual['kind'], string> = {
   BANNER: 'Bandeaux',
   POSTER: 'Affiches',
@@ -41,7 +42,7 @@ export function PlatformVisualForm({
   visuals: PlatformVisual[]
 }) {
   const [items, setItems] = useState(visuals)
-  const [section, setSection] = useState<EditorSection>(platform.isDraft ? 'card' : 'identity')
+  const [section, setSection] = useState<CreationSection>(platform.isDraft ? 'card' : 'identity')
   const [catalogPlatformId, setCatalogPlatformId] = useState(platform.catalogPlatformId)
   const saving = useRef(false)
   const notify = useNotification()
@@ -80,6 +81,56 @@ export function PlatformVisualForm({
   const [error, setError] = useState('')
   const [message, setMessage] = useState('')
   const router = useRouter()
+  const panelRef = useRef<HTMLDivElement>(null)
+  const errorRef = useRef<HTMLParagraphElement>(null)
+  const sections = platform.isDraft ? creationSections : editorSections
+  const stepKeys = Object.keys(sections) as CreationSection[]
+  const stepIndex = stepKeys.indexOf(section)
+  const dirty =
+    platformEditorSnapshot({
+      customization,
+      catalogPlatformId,
+      slideshowEnabled,
+      slideshowSeconds,
+      visuals: items,
+    }) !== platformEditorSnapshot({ ...platform, visuals })
+  const { afterSave, leaveConfirmation } = useUnsavedChanges({
+    dirty,
+    busy,
+    description:
+      'Les réglages non enregistrés seront perdus. Les images déjà importées restent disponibles.' +
+      (platform.isDraft ? ' Vous pourrez reprendre le dernier brouillon enregistré.' : ''),
+  })
+  useEffect(() => {
+    if (error) errorRef.current?.focus()
+  }, [error])
+
+  function validate(publish: boolean) {
+    const parsed = platformVisualsSchema.safeParse({
+      platformId: platform.id,
+      visuals: items,
+      customization,
+      ...(platform.ownerId ? { catalogPlatformId } : {}),
+      ...(platform.isDraft ? { publish } : {}),
+      slideshow: { enabled: slideshowEnabled, seconds: Number(slideshowSeconds) },
+    })
+    if (!parsed.success) {
+      const issue = parsed.error.issues[0]
+      setError(issue.message)
+      if (issue.path[0] === 'slideshow') setSection('sidebar')
+      else if (issue.path[0] === 'customization') {
+        const field = issue.path[1]
+        setSection(field === 'card' ? 'card' : field === 'sidebar' ? 'sidebar' : 'identity')
+      }
+    }
+    return parsed
+  }
+  function changeSection(next: CreationSection) {
+    if (next === 'review' && !validate(true).success) return
+    setError('')
+    setSection(next)
+    requestAnimationFrame(() => panelRef.current?.focus())
+  }
   async function removePlatform() {
     if (busy || saving.current) return
     saving.current = true
@@ -88,8 +139,10 @@ export function PlatformVisualForm({
     try {
       const result = await deletePersonalPlatformFn({ data: platform.id })
       if (!result.ok) throw new Error(result.error)
-      await router.invalidate({ sync: true })
-      await router.navigate({ to: '/platforms' })
+      await afterSave(async () => {
+        await router.invalidate({ sync: true })
+        await router.navigate({ to: '/platforms' })
+      })
       notify(result.data.warning ?? 'La plateforme personnelle a été supprimée.')
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Suppression impossible.')
@@ -102,27 +155,22 @@ export function PlatformVisualForm({
     if (busy || saving.current) return
     setError('')
     setMessage('')
-    const parsed = platformVisualsSchema.safeParse({
-      platformId: platform.id,
-      visuals: items,
-      customization,
-      ...(platform.ownerId ? { catalogPlatformId } : {}),
-      ...(platform.isDraft ? { publish } : {}),
-      slideshow: { enabled: slideshowEnabled, seconds: Number(slideshowSeconds) },
-    })
-    if (!parsed.success) {
-      setError(parsed.error.issues[0].message)
-      return
-    }
+    const parsed = validate(publish)
+    if (!parsed.success) return
     saving.current = true
     setBusy(true)
     try {
       const result = await savePlatformVisualsFn({ data: parsed.data })
       if (!result.ok) throw new Error(result.error)
-      await router.invalidate({ sync: true })
-      if (platform.isDraft && !publish) await router.navigate({ to: '/platforms' })
-      else
-        await router.navigate({ to: '/platforms/$platformId', params: { platformId: platform.id } })
+      await afterSave(async () => {
+        await router.invalidate({ sync: true })
+        if (platform.isDraft && !publish) await router.navigate({ to: '/platforms' })
+        else
+          await router.navigate({
+            to: '/platforms/$platformId',
+            params: { platformId: platform.id },
+          })
+      })
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Enregistrement impossible.')
     } finally {
@@ -234,50 +282,74 @@ export function PlatformVisualForm({
       </h1>
       <p className="muted">
         {platform.isDraft
-          ? '2. Visuels et présentation · les images sont facultatives et pourront être complétées plus tard.'
+          ? `Étape ${stepIndex + 1} sur ${stepKeys.length} · ${creationSections[section]}. Les images sont facultatives.`
           : 'Identité, carte, formats de jeux et visuels de la sidebar.'}
       </p>
       <form
         onSubmit={(event) => {
           event.preventDefault()
-          void save(true)
+          if (platform.isDraft && section !== 'review') changeSection(stepKeys[stepIndex + 1])
+          else void save(true)
         }}
       >
+        {error && (
+          <p ref={errorRef} tabIndex={-1} role="alert" className="form-error">
+            {error}
+          </p>
+        )}
         <fieldset disabled={busy} className="platform-visual-fields">
           <div
             className="filter-tabs platform-editor-tabs"
             aria-label="Sections de la personnalisation"
           >
-            {Object.entries(editorSections).map(([key, label]) => (
+            {Object.entries(sections).map(([key, label], index) => (
               <button
                 key={key}
                 type="button"
                 aria-pressed={section === key}
+                aria-current={platform.isDraft && section === key ? 'step' : undefined}
                 className={section === key ? 'active' : ''}
-                onClick={() => setSection(key as EditorSection)}
+                onClick={() => changeSection(key as CreationSection)}
               >
-                {label}
+                {platform.isDraft ? `${index + 1}. ${label}` : label}
               </button>
             ))}
           </div>
-          <div className="platform-editor-layout">
+          <div
+            ref={panelRef}
+            tabIndex={-1}
+            aria-label={creationSections[section]}
+            className="platform-editor-layout"
+          >
             <div className="platform-editor-controls">
-              <PlatformEditorSettings
-                section={section}
-                platform={platform}
-                value={customization}
-                onChange={setCustomization}
-                catalogPlatformId={catalogPlatformId}
-                onCatalogChange={(id) => {
-                  setCatalogPlatformId(id)
-                  const categories = customization.categories ?? platform.categories
-                  if (id === 'pc' && !categories.includes('COMPUTER'))
-                    setCustomization((previous) => ({
-                      ...previous,
-                      categories: [...categories, 'COMPUTER'],
-                    }))
-                }}
-              />
+              {section === 'review' ? (
+                <PlatformCreationReview
+                  platform={{
+                    ...draftPlatform,
+                    slideshowEnabled,
+                    slideshowSeconds: Number(slideshowSeconds),
+                  }}
+                  visuals={orderedItems}
+                  onEdit={changeSection}
+                />
+              ) : (
+                <PlatformEditorSettings
+                  section={section}
+                  platform={platform}
+                  value={customization}
+                  onChange={setCustomization}
+                  catalogPlatformId={catalogPlatformId}
+                  onCatalogChange={(id) => {
+                    setCatalogPlatformId(id)
+                    const categories = customization.categories ?? platform.categories
+                    if (id === 'pc' && !categories.includes('COMPUTER'))
+                      setCustomization((previous) => ({
+                        ...previous,
+                        categories: [...categories, 'COMPUTER'],
+                      }))
+                  }}
+                />
+              )}
               {section === 'card' && (
                 <button
                   type="button"
@@ -548,12 +620,27 @@ export function PlatformVisualForm({
             une image ne la supprime pas.
           </p>
           <div className="platform-save-actions">
+            {platform.isDraft && stepIndex > 0 && (
+              <button
+                type="button"
+                className="button secondary"
+                onClick={() => changeSection(stepKeys[stepIndex - 1])}
+              >
+                <ArrowLeft size={17} /> Précédent
+              </button>
+            )}
             <button type="submit" className="button">
-              <Check size={17} />
+              {platform.isDraft && section !== 'review' ? (
+                <ArrowRight size={17} />
+              ) : (
+                <Check size={17} />
+              )}
               {busy
                 ? 'En cours…'
                 : platform.isDraft
-                  ? 'Créer la plateforme'
+                  ? section === 'review'
+                    ? 'Créer la plateforme'
+                    : `Suivant : ${creationSections[stepKeys[stepIndex + 1]]}`
                   : 'Enregistrer la présentation'}
             </button>
             {platform.isDraft && (
@@ -578,13 +665,9 @@ export function PlatformVisualForm({
             </Confirm>
           </div>
         )}
-        {error && (
-          <p role="alert" className="form-error">
-            {error}
-          </p>
-        )}
         {message && <p role="status">{message}</p>}
       </form>
+      {leaveConfirmation}
     </div>
   )
 }

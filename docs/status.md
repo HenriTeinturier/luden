@@ -1,5 +1,10 @@
 # État courant
 
+## Visuels PS3, PS4, PS5, Xbox 360, Xbox One et Xbox Series X|S — 2026-10-18
+
+- Dix-huit WebP fournis par Henri importés via le service existant : logo, fond et console pour chacune des six plateformes. Tous les fichiers étaient présents ; aucun visuel créé. Visuels actifs et par défaut, stockés dans le répertoire média configuré hors Git.
+- Vérifié : relecture des dix-huit fichiers et des affectations en base. Aucun changement de code ni de présentation des jeux ; validation esthétique par Henri après actualisation. Pour les prochains imports, demander à Henri tout visuel manquant au lieu de le créer.
+
 ## Visuels NES, Wii, Wii U, Switch et Switch 2 — 2026-10-18
 
 - Quinze WebP fournis par Henri importés via le service existant : logo, fond et console pour chacune des cinq plateformes. Visuels actifs et par défaut, stockés dans le répertoire média configuré hors Git.

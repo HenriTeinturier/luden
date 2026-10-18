@@ -1,5 +1,10 @@
 # État courant
 
+## Visuels Neo Geo, GBA, 3DS, Sega, NEC, 3DO et PC — 2026-10-18
+
+- 27 WebP fournis par Henri importés : logo, fond et machine pour Neo Geo AES, Game Boy Advance, Nintendo 3DS, Master System, Saturn, PC Engine (CoreGrafx), PC Engine CD (Duo-R), 3DO et PC générique. Tous présents, actifs et par défaut ; fichiers dans le stockage média configuré hors Git.
+- Vérifié : relecture des 27 fichiers et des affectations en base. Aucun visuel créé, aucun jeu ni réglage de présentation modifié. Validation esthétique par Henri après actualisation.
+
 ## Ajout de la 3DO — 2026-10-18
 
 - 3DO Interactive Multiplayer ajoutée au catalogue et à la base locale : famille 3DO, console de salon, catalogue IGDB 50 vérifié via API et année européenne 1994 sourcée dans le référentiel.

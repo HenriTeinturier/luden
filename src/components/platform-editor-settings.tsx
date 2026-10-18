@@ -2,6 +2,8 @@ import type { Platform } from '../lib/types'
 import { PlatformCategoriesField, PlatformCatalogField } from './platform-classification-fields'
 import { useLibrary } from './ui'
 import { platformReleases } from '../lib/platform-releases'
+import { platformArtwork } from '../lib/platform-artwork'
+import { originalCardPlacement } from '../lib/platform-card-layout'
 import {
   platformPresentation,
   presentationPresets,
@@ -275,7 +277,19 @@ export function PlatformEditorSettings({
         <input
           type="checkbox"
           checked={value.cardEnabled}
-          onChange={(event) => onChange({ ...value, cardEnabled: event.target.checked })}
+          onChange={(event) => {
+            const startFromOriginal =
+              event.target.checked &&
+              value.cardLayout !== 'original' &&
+              platformArtwork(platform.id, value, []).illustrated
+            onChange({
+              ...value,
+              cardEnabled: event.target.checked,
+              ...(startFromOriginal
+                ? { cardLayout: 'original', card: originalCardPlacement(platform.id) }
+                : {}),
+            })
+          }}
         />
         Personnaliser le placement
       </label>

@@ -49,6 +49,9 @@ export const platformCustomizationSchema = z.object({
     .nullable()
     .default(null),
   cardEnabled: z.boolean().default(false),
+  // Existing saved free compositions retain their geometry. New customization
+  // of an illustrated card starts from its original, responsive placement.
+  cardLayout: z.enum(['free', 'original']).default('free'),
   card: placementSchema.prefault({}),
   sidebarMode: z.enum(['artwork', 'composition']).default('artwork'),
   sidebar: placementSchema.prefault({ hardwareWidth: 90 }),

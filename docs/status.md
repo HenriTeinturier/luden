@@ -1,5 +1,11 @@
 # État courant
 
+## Placement et masquage des cartes de plateformes — 2026-10-18
+
+- Corrigé : masquer un logo, un fond ou une machine déclenchait la mise en page générique, même avec « Personnaliser le placement » décoché. Les cartes illustrées gardent désormais leur géométrie, leur fond et leurs effets propres ; le masquage retire seulement le visuel concerné, sans libellé de remplacement ni déplacement des autres éléments.
+- L’activation du placement part des valeurs natives et ne change pas l’aperçu. Seuls les réglages modifiés surchargent les styles de la plateforme. Les imports n’activent plus le placement ; rétablissement de la carte d’origine complet. Les compositions libres enregistrées restent compatibles via `customization.cardLayout` (`free` par défaut, `original` pour les nouvelles personnalisations natives), sans migration, export v8 conservé.
+- Vérifié : TypeScript, lint, 8 tests ciblés (invariants sur les 11 cartes illustrées, compatibilité), compilation et sauvegarde/relecture/export via le script DB/fichiers isolé. Navigateur Atari ST : rectangles logo/machine/titre et fond identiques avant/après activation ; chaque masquage ne change que sa visibilité ; largeur du logo modifiable seule et retour à l’origine exact. Essais non enregistrés, aucun jeu ni visuel personnel modifié.
+
 ## Refonte plateformes — étape 5 : parcours guidé et récapitulatif — 2026-10-18
 
 - Création en cinq étapes visibles : Identité, Carte, Présentation des jeux, Sidebar, Récapitulatif. Précédent/Suivant, accès direct, corrections depuis le récapitulatif ; champs conservés entre les étapes. Publication uniquement au récapitulatif, images facultatives et brouillon enregistrable partout. L’édition des plateformes publiées reste directe.

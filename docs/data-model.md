@@ -12,6 +12,10 @@
   de jeux facultatif, les placements carte/sidebar, le mode sidebar et les rôles de visuels masqués.
   JSON vide = rendu historique. Les noms catalogue ne sont pas écrasés : le seed conserve les choix
   personnels et le chargement expose les deux identités. Aucun identifiant ni rattachement de jeu ne change.
+  `customization.cardLayout` distingue `original` (ajustements ciblés du placement natif des cartes illustrées)
+  et `free` (composition libre, défaut compatible avec les réglages précédemment enregistrés).
+  `cardEnabled` active les réglages de placement uniquement ; importer ou masquer un visuel ne l’active pas.
+  Les sources d’images et leur visibilité sont distinctes pour conserver les cadres lors d’un masquage.
   `customization.preset` choisit le modèle de collection ; `scenePreset` règle indépendamment la scène
   boîte/support de la sidebar du jeu et de la fiche complète. Absent/null = suivre le modèle de collection
   avec les ajustements historiques, `original` = géométrie d’origine de la plateforme, sinon identifiant

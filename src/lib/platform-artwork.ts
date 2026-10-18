@@ -34,15 +34,19 @@ export function platformArtwork(
     customization.hiddenAssets.includes(kind)
       ? undefined
       : (activePlatformVisuals(visuals, kind)[0]?.url ?? fallback)
+  const logoSource = activePlatformVisuals(visuals, 'LOGO')[0]?.url ?? defaults.LOGO
+  const hardwareSource = activePlatformVisuals(visuals, 'HARDWARE')[0]?.url ?? defaults.HARDWARE
   const logo = resolve('LOGO', defaults.LOGO)
   const background = resolve('BACKGROUND', defaults.BACKGROUND)
   const hardware = resolve('HARDWARE', defaults.HARDWARE)
   return {
     illustrated: !!base,
     customCard:
-      customization.cardEnabled ||
-      visuals.some((v) => v.active && ['LOGO', 'BACKGROUND', 'HARDWARE'].includes(v.kind)) ||
-      customization.hiddenAssets.some((kind) => !kind.startsWith('SIDEBAR_')),
+      (customization.cardEnabled && customization.cardLayout === 'free') ||
+      (!base &&
+        visuals.some((v) => v.active && ['LOGO', 'BACKGROUND', 'HARDWARE'].includes(v.kind))),
+    logoSource,
+    hardwareSource,
     logo,
     background,
     hardware,

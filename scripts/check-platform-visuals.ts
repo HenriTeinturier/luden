@@ -53,6 +53,7 @@ try {
     preset: 'jewel-case',
     scenePreset: 'mini-disc',
     cardEnabled: true,
+    cardLayout: 'original',
     card: { logoHeight: 80 },
     sidebarMode: 'composition',
   })

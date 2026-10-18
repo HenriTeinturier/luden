@@ -79,6 +79,8 @@ Les réglages `Platform.slideshowEnabled/slideshowSeconds` sont sauvegardés dan
 transaction, ainsi que `Platform.customization` (identité affichée, modèles et placement des visuels).
 `platform-customization.ts` valide les réglages, `platform-artwork.ts` résout les priorités des images ;
 les réglages omis restent intacts et une liste de visuels périmée annule toute la transaction.
+`platform-card-layout.ts` fournit les valeurs de départ des contrôles natifs et leurs seules surcharges
+modifiées. Les styles historiques restent appliqués lors d’un masquage ou d’un remplacement d’image.
 La sidebar restaure l’affiche depuis `luden:platform-poster:v1:<id>` (localStorage)
 après hydratation ; le timer ne tourne que pour deux affiches actives ou plus et un onglet visible.
 La suppression d’une plateforme personnelle exige l’absence de jeux ; elle retire la ligne et ses

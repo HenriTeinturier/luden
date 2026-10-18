@@ -19,6 +19,7 @@ import { PlatformEditorSettings, editorSections } from './platform-editor-settin
 import { PlatformPresetPreview } from './platform-preset-preview'
 import { platformAssetKinds, type PlatformCustomization } from '../lib/platform-customization'
 import { platformEditorSnapshot } from '../lib/platform-editor-state'
+import { originalCardPlacement } from '../lib/platform-card-layout'
 import { PlatformCreationReview } from './platform-creation-review'
 import { useUnsavedChanges } from './use-unsaved-changes'
 const creationSections = { ...editorSections, review: 'Récapitulatif' }
@@ -251,7 +252,6 @@ export function PlatformVisualForm({
         if (single)
           setCustomization((previous) => ({
             ...previous,
-            cardEnabled: previous.cardEnabled || !kind.startsWith('SIDEBAR_'),
             hiddenAssets: previous.hiddenAssets.filter((k) => k !== kind),
           }))
       }
@@ -365,6 +365,7 @@ export function PlatformVisualForm({
                     setCustomization((previous) => ({
                       ...previous,
                       cardEnabled: false,
+                      card: originalCardPlacement(platform.id),
                       hiddenAssets: previous.hiddenAssets.filter((k) => k.startsWith('SIDEBAR_')),
                     }))
                   }}
@@ -423,7 +424,7 @@ export function PlatformVisualForm({
                     )}
                     {!group.length && (
                       <p className="field-hint">
-                        Aucune image ajoutée. L’identité de la plateforme sert de remplacement.
+                        Aucune image importée. Le visuel d’origine est utilisé s’il existe.
                       </p>
                     )}
                     <div

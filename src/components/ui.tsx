@@ -12,6 +12,7 @@ import { gallerySearch } from '../lib/gallery'
 import { mediaImageSources } from '../lib/image-variants'
 import { useGameSelection } from './game-selection'
 import { platformArtwork, artworkStyle } from '../lib/platform-artwork'
+import { originalCardStyles } from '../lib/platform-card-layout'
 import type { PlatformVisual } from '../lib/platform-visuals'
 import { readPlatformCustomization } from '../lib/platform-customization'
 
@@ -135,6 +136,11 @@ export function PlatformCard({
   const release = platformReleases[platform.id]
   const date = platform.customization.dateLabel ?? release?.year
   const className = `platform-card ${artwork.customCard ? 'platform-card-custom' : artwork.illustrated ? `platform-card-${platform.id}` : ''}`
+  const nativeStyles =
+    platform.customization.cardEnabled && !artwork.customCard
+      ? originalCardStyles(platform.id, platform.customization.card)
+      : null
+  const hidden = platform.customization.hiddenAssets
   const style = {
     '--platform-color': platform.color,
     ...(artwork.customCard
@@ -144,23 +150,48 @@ export function PlatformCard({
             : readPlatformCustomization({}).card,
           artwork.background,
         )
-      : {}),
+      : {
+          ...(artwork.illustrated || hidden.includes('BACKGROUND')
+            ? {
+                backgroundImage: artwork.background
+                  ? `url(${JSON.stringify(artwork.background)})`
+                  : 'none',
+              }
+            : {}),
+          ...nativeStyles?.background,
+        }),
   } as CSSProperties
   const content = (
     <>
       <div className="platform-card-top">
-        {artwork.logo ? (
-          <img className="platform-card-logo" src={artwork.logo} alt="" />
+        {artwork.logoSource ? (
+          <img
+            className={`platform-card-logo ${hidden.includes('LOGO') ? 'platform-asset-hidden' : ''}`}
+            src={artwork.logoSource}
+            alt=""
+            style={nativeStyles?.logo}
+          />
         ) : (
-          <span>{platform.family}</span>
+          <span className={hidden.includes('LOGO') ? 'platform-asset-hidden' : undefined}>
+            {platform.family}
+          </span>
         )}
         <ArrowUpRight size={18} />
       </div>
-      {artwork.hardware ? (
-        <img className="platform-card-console" src={artwork.hardware} alt="" loading="lazy" />
-      ) : !platform.customization.hiddenAssets.includes('HARDWARE') ? (
-        <PlatformArt platform={platform} />
-      ) : null}
+      {artwork.hardwareSource ? (
+        <img
+          className={`platform-card-console ${hidden.includes('HARDWARE') ? 'platform-asset-hidden' : ''}`}
+          src={artwork.hardwareSource}
+          alt=""
+          loading="lazy"
+          style={nativeStyles?.hardware}
+        />
+      ) : (
+        <PlatformArt
+          platform={platform}
+          className={hidden.includes('HARDWARE') ? 'platform-asset-hidden' : ''}
+        />
+      )}
       <div className="platform-card-bottom">
         <h3>{platform.name}</h3>
         <span>

@@ -29,6 +29,11 @@ Les aperçus de carte et d’accueil sidebar utilisent les composants réels, sa
 
 Carte : logo, fond et machine PNG/WebP, proportions conservées, placement réglable (tailles, décalages,
 cadrage du fond). Les mises en page existantes restent intactes par défaut ; retour à la carte d’origine disponible.
+Sur une carte illustrée, activer « Personnaliser le placement » part des réglages d’origine et ne déplace
+aucun élément. Seuls les paramètres modifiés remplacent le CSS de la plateforme ; dimensions maximales,
+alignements et adaptations mobiles restent natifs pour les autres. Masquer un visuel conserve sa place
+et ne le remplace pas par un libellé ; remplacer une image ne déclenche plus de composition générique.
+Les compositions libres déjà enregistrées conservent leur géométrie.
 Sidebar : bandeau/affiches avec défilement existant, ou composition logo/fond/machine reprenant les images
 de carte avec variantes facultatives propres à la sidebar et placement séparé.
 Chaque rôle permet import, sélection, désactivation, suppression immédiate confirmée, masquage et retour au repli.

@@ -562,6 +562,9 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
+.platform-asset-hidden {
+  visibility: hidden;
+}
 .platform-card-custom .platform-card-logo {
   position: absolute;
   left: 24px;

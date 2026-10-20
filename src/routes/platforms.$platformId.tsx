@@ -36,7 +36,7 @@ function PlatformPage() {
   const ownedCount = chosen.filter((g) => g.possessions.some((p) => p.state === 'CURRENT')).length
   return (
     <div
-      className={`page platform-page platform-${platformId} gallery-${gallery.appearance} ${gallery.wide && gallery.appearance !== 'legacy' ? 'gallery-wide' : ''} ${gallery.imageRatio ? 'gallery-image-ratio' : ''}`}
+      className={`page platform-page platform-${platformId} gallery-${gallery.appearance} ${gallery.wide && gallery.appearance !== 'legacy' ? 'gallery-wide' : ''} ${gallery.naturalImageHeight ? 'gallery-natural-height' : ''} ${gallery.imageRatio ? 'gallery-image-ratio' : ''}`}
       style={{ '--gallery-image-ratio': gallery.imageRatio } as CSSProperties}
       data-presentation={presentation.preset}
     >

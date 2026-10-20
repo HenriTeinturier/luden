@@ -25,6 +25,7 @@ type GalleryPresentation = {
   appearance: 'legacy' | 'framed' | 'boxed'
   showEmptyStars: boolean
   imageRatio?: string
+  naturalImageHeight?: boolean
 }
 
 type PresentationPreset = {
@@ -221,7 +222,7 @@ export const presentationPresets = {
     example: 'Nintendo DS',
     support: 'card',
     supportRatio: '0.94',
-    gallery: { ...framed, ratio: '1' },
+    gallery: { ...framed, ratio: '1', naturalImageHeight: true },
     scene: {
       pairedBoxWidth: 72,
       supportWidth: 18,

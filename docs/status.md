@@ -1,5 +1,11 @@
 # État courant
 
+## Galerie DS sans espace sous les boîtes — 2026-10-21
+
+- Le modèle réutilisable Nintendo DS adapte la hauteur de sa galerie aux proportions réelles des images. Le titre et les étoiles suivent directement la boîte, sans cadre carré vide en dessous ni recadrage. Cartes de hauteurs variables ; repli carré sans image.
+- Même rendu dans l’aperçu de l’éditeur. Aucun nouveau modèle nécessaire ; scènes boîte/support et bibliothèque générale conservées. Validation esthétique par Henri.
+- Vérifié : TypeScript, lint ciblé, cinq tests de présentation et diff.
+
 ## Visuels Neo Geo, GBA, 3DS, Sega, NEC, 3DO et PC — 2026-10-18
 
 - 27 WebP fournis par Henri importés : logo, fond et machine pour Neo Geo AES, Game Boy Advance, Nintendo 3DS, Master System, Saturn, PC Engine (CoreGrafx), PC Engine CD (Duo-R), 3DO et PC générique. Tous présents, actifs et par défaut ; fichiers dans le stockage média configuré hors Git.

@@ -42,6 +42,13 @@
   display: block;
   height: 100%;
 }
+.gallery-natural-height .game-grid .game-cover:has(> img) {
+  aspect-ratio: auto;
+}
+.gallery-natural-height .game-grid .game-cover > img {
+  display: block;
+  height: auto;
+}
 @media (max-width: 720px) {
   :is(.platforms-index .platform-grid, .home-platforms) {
     grid-template-columns: minmax(0, 1fr);

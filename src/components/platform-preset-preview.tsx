@@ -72,7 +72,7 @@ export function PlatformPresetPreview({ platform }: { platform: Platform }) {
       <p className="platform-preview-model">{presentationPresets[presentation.preset].label}</p>
       {game ? (
         <div
-          className={`platform-game-card-preview gallery-${presentation.gallery.appearance} ${presentation.gallery.imageRatio ? 'gallery-image-ratio' : ''}`}
+          className={`platform-game-card-preview gallery-${presentation.gallery.appearance} ${presentation.gallery.naturalImageHeight ? 'gallery-natural-height' : ''} ${presentation.gallery.imageRatio ? 'gallery-image-ratio' : ''}`}
           style={{ '--gallery-image-ratio': presentation.gallery.imageRatio } as CSSProperties}
           data-presentation={presentation.preset}
         >

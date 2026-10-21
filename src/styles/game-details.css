@@ -88,6 +88,18 @@
   font-size: 13px;
   container-type: inline-size;
 }
+.library-card-rating {
+  container-type: inline-size;
+  padding-top: 4px;
+}
+.library-card-rating .star,
+.library-card-rating .star svg {
+  width: clamp(8px, 12cqi, 22px);
+  height: clamp(8px, 12cqi, 22px);
+}
+.library-card-rating .stars small {
+  display: none;
+}
 .card-desire .editable-stars .star,
 .card-desire .editable-stars .star svg {
   width: clamp(8px, 12cqi, 22px);

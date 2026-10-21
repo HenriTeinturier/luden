@@ -8,6 +8,7 @@ import { playStatuses } from '../lib/platforms'
 import { platformReleases } from '../lib/platform-releases'
 import { Stars } from './rating'
 import { CardDesire } from './card-desire'
+import { sidebarRatingKind } from '../lib/sidebar-rating'
 import { coverFormat, platformPresentation } from '../lib/presentation'
 import { gallerySearch } from '../lib/gallery'
 import { mediaImageSources } from '../lib/image-variants'
@@ -292,6 +293,9 @@ export function GameCard({
   const rating = game.experience?.rating
   const { platformId, collectionId } = useParams({ strict: false })
   const location = useLocation()
+  const libraryCard = !preview && location.pathname.replace(/\/$/, '') === '/library'
+  const ratingKind = sidebarRatingKind(game)
+  const showDesire = libraryCard ? ratingKind === 'desire' : editDesire
   const simpleCard =
     !preview && ['/library', '/discover'].includes(location.pathname.replace(/\/$/, ''))
   const platformLogo = simpleCard
@@ -329,6 +333,12 @@ export function GameCard({
           {game.releaseYear ? <span className="game-platform-year">{game.releaseYear}</span> : null}
         </span>
         <h3 title={game.title}>{game.title}</h3>
+        {libraryCard && ratingKind === 'rating' && (
+          <div className="library-card-rating">
+            <span className="rating-caption">Ma note{rating == null ? ' · à noter' : ''}</span>
+            <Stars value={rating} showEmpty />
+          </div>
+        )}
         {!simpleCard && (
           <>
             <Stars
@@ -394,7 +404,7 @@ export function GameCard({
       {content}
     </Link>
   )
-  return editDesire ? (
+  return showDesire ? (
     <div className="discovery-game">
       {card}
       <CardDesire game={game} />

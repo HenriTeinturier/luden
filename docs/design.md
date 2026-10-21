@@ -599,3 +599,9 @@ aucune note d’expérience ni statut n’est modifié. Les flammes roses et le 
 sur les cartes Mes envies. Un souvenir non joué sans envie active n’affiche aucune étoile ;
 s’il rejoint Mes envies, son envie est visible. Un jeu joué garde sa note même s’il est souvenir
 ou dans Mes envies. Aucune valeur existante n’est effacée lorsque l’affichage change.
+
+Dans toutes les vues de Ma bibliothèque, les cartes affichent aussi cet indicateur : étoiles jaunes
+Ma note pour les jeux joués, flammes roses modifiables Envie de jouer pour les non joués ; aucun
+indicateur pour un souvenir non joué hors envies. La note non renseignée reste représentée par
+cinq étoiles vides et « à noter ». La note se modifie dans la sidebar ; les flammes restent
+modifiables directement sur les cartes. Un seul indicateur par carte de bibliothèque.

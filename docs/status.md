@@ -1,5 +1,10 @@
 # État courant
 
+## Notes et envies sur les cartes de Ma bibliothèque — 2026-10-21
+
+- Dans toutes les vues de Ma bibliothèque, chaque carte suit la sidebar : étoiles jaunes Ma note si joué, flammes roses modifiables Envie de jouer si non joué, aucun indicateur pour un souvenir non joué hors envies. Notes non renseignées affichées vides.
+- Grille et liste concernées ; mêmes données que la sidebar, sans confusion ni doublon entre note et envie. Validation visuelle par Henri.
+
 ## Flammes pour les envies, étoiles pour les notes — 2026-10-21
 
 - Les envies utilisent désormais cinq flammes roses dans les cartes et la sidebar, avec un fond teinté autour du contrôle. Les notes d’expérience gardent les étoiles jaunes. Libellés et annonces accessibles distinguent flammes d’envie et étoiles de note.

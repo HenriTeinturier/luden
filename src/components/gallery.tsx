@@ -2,6 +2,7 @@ import { coverFormat } from '../lib/presentation'
 import { useMatch, useNavigate, useRouter, useSearch } from '@tanstack/react-router'
 import {
   Search,
+  PackageCheck,
   LayoutGrid,
   List,
   SlidersHorizontal,
@@ -14,7 +15,7 @@ import {
 import { MegastarTrophy } from './megastar-trophy'
 import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties } from 'react'
 import { useGameSelection } from './game-selection'
-import { filterGames, type GallerySearch } from '../lib/gallery'
+import { filterGames, galleryFilters, toggleGalleryScope, type GallerySearch } from '../lib/gallery'
 import {
   galleryCardPositions,
   galleryKeyboardNeighbor,
@@ -41,7 +42,7 @@ const serverDesktop = () => false
 export function Gallery({
   games,
   platformLocked = false,
-  defaultScope = 'all',
+  defaultScope = 'played',
   discovery = false,
 }: {
   games: Game[]
@@ -51,14 +52,7 @@ export function Gallery({
 }) {
   const library = useLibrary()
   const search = useSearch({ strict: false }) as GallerySearch
-  const filters = discovery
-    ? {
-        ...search,
-        scope: 'discover' as const,
-        favorite: false,
-        owned: search.scope === 'owned' ? ('current' as const) : search.owned,
-      }
-    : { ...search, scope: search.scope ?? defaultScope }
+  const filters = galleryFilters(search, defaultScope, discovery)
   const visible = filterGames(games, filters)
   const navigate = useNavigate()
   const router = useRouter()
@@ -266,27 +260,19 @@ export function Gallery({
   return (
     <>
       <div className="gallery-toolbar gallery-toolbar-scoped">
-        <div className="platform-scope" role="group" aria-label="Jeux à afficher">
+        <div
+          className={`platform-scope ${discovery ? '' : 'gallery-scopes'}`}
+          role="group"
+          aria-label="Vue des jeux"
+        >
           {discovery ? (
             <>
               <button
                 type="button"
-                aria-pressed={!filters.owned || filters.owned === 'all'}
-                onClick={() => update({ scope: 'discover', status: '', owned: 'all' })}
+                aria-pressed={true}
+                onClick={() => update({ scope: 'discover', status: '' })}
               >
                 À découvrir
-              </button>
-              <button
-                type="button"
-                aria-pressed={filters.owned === 'current'}
-                onClick={() =>
-                  update({
-                    scope: 'discover',
-                    owned: filters.owned === 'current' ? 'all' : 'current',
-                  })
-                }
-              >
-                Possédés
               </button>
               <button
                 type="button"
@@ -311,36 +297,54 @@ export function Gallery({
               [
                 ['played', 'Joués'],
                 ['discover', 'À découvrir'],
-                ['owned', 'Possédés'],
-                ['all', 'Tous mes jeux'],
+                ['all', 'Tous'],
               ] as const
             ).map(([scope, label]) => (
               <button
                 key={scope}
                 type="button"
                 aria-pressed={filters.scope === scope}
-                onClick={() => update({ scope, status: '', owned: 'all' })}
+                title={
+                  scope === 'all'
+                    ? 'Tous les jeux, y compris ceux ni joués ni à découvrir'
+                    : undefined
+                }
+                onClick={() => update(toggleGalleryScope(filters, scope))}
               >
                 {label}
               </button>
             ))
           )}
         </div>
-        {!discovery && (
-          <div className="platform-scope">
+        <div className="gallery-refinements" role="group" aria-label="Filtres cumulables">
+          <span className="gallery-refinements-label">Affiner</span>
+          <button
+            type="button"
+            className="gallery-filter-switch"
+            role="switch"
+            aria-checked={filters.owned === 'current'}
+            title="Limiter la vue aux jeux possédés actuellement"
+            onClick={() => update({ owned: filters.owned === 'current' ? 'all' : 'current' })}
+          >
+            <PackageCheck size={18} aria-hidden="true" />
+            Possédés
+            <span className="filter-switch-track" aria-hidden="true" />
+          </button>
+          {!discovery && (
             <button
               type="button"
-              className="favorites-filter"
-              aria-label="Megastar — filtrer mes jeux cultes favoris"
-              title="Afficher uniquement mes jeux Megastar (favoris)"
-              aria-pressed={filters.favorite ?? false}
+              className="gallery-filter-switch megastar-switch"
+              role="switch"
+              aria-checked={filters.favorite ?? false}
+              title="Limiter la vue aux jeux Megastar (favoris)"
               onClick={() => update({ favorite: !filters.favorite })}
             >
               <MegastarTrophy />
-              <span>Megastar</span>
+              Megastar
+              <span className="filter-switch-track" aria-hidden="true" />
             </button>
-          </div>
-        )}
+          )}
+        </div>
         <div className="filter-search">
           <Search size={17} />
           <input
@@ -489,7 +493,7 @@ export function Gallery({
                   machine: '',
                   favorite: false,
                   owned: 'all',
-                  scope: discovery ? 'discover' : 'all',
+                  scope: discovery ? 'discover' : 'played',
                 })
               }
             >

@@ -19,6 +19,31 @@ export const gallerySearch = z.object({
   favorite: z.boolean().optional(),
 })
 export type GallerySearch = z.infer<typeof gallerySearch>
+
+// Old links used possession as a view. Preserve their selection as All + Owned.
+export function galleryFilters(
+  search: GallerySearch,
+  defaultScope: GallerySearch['scope'] = 'played',
+  discovery = false,
+): GallerySearch {
+  return {
+    ...search,
+    scope: discovery
+      ? 'discover'
+      : search.scope === 'owned'
+        ? 'all'
+        : (search.scope ?? defaultScope),
+    owned: search.scope === 'owned' ? 'current' : search.owned,
+    favorite: discovery ? false : search.favorite,
+  }
+}
+
+export function toggleGalleryScope(
+  filters: GallerySearch,
+  scope: 'played' | 'discover' | 'all',
+): GallerySearch {
+  return { ...filters, scope: filters.scope === scope ? 'played' : scope, status: '' }
+}
 export const gameReturnSearch = z.object({
   from: z.enum(['library', 'platform', 'collection', 'discover']).optional().catch(undefined),
   fromId: z.string().optional().catch(undefined),

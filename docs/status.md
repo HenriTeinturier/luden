@@ -1,5 +1,12 @@
 # État courant
 
+## Vues et filtres cumulables des galeries — 2026-10-21
+
+- Groupe relié Joués / À découvrir / Tous ; second clic sur À découvrir ou Tous revient à Joués. Bibliothèque et collections démarrent sur Joués sans préférence enregistrée, comme les plateformes.
+- Possédés et Megastar côte à côte sous « Affiner », présentés en interrupteurs cumulables. Changer de vue conserve ces filtres ; désactiver Possédés conserve la vue. Découverte conserve son périmètre et son filtre Possédés indépendant.
+- Tous garde tous les jeux, y compris ni joués ni à découvrir ; ces deux états peuvent se recouper. Ancienne vue Possédés traduite en Tous + Possédés, préférences existantes conservées.
+- Vérifié : TypeScript, lint ciblé, treize tests galerie/préférences et diff. Validation visuelle par Henri.
+
 ## Découverte sans bandeau — 2026-10-21
 
 - Bandeau explicatif « Une envie de jouer… » retiré de À découvrir et styles inutilisés supprimés. Vérifié : formatage, lint ciblé et diff.

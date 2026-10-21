@@ -182,6 +182,89 @@
   padding: 7px 12px;
   font-size: 13px;
 }
+.gallery-toolbar-scoped .gallery-scopes {
+  gap: 0;
+  flex-wrap: nowrap;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  padding: 3px;
+  background: var(--paper);
+}
+.gallery-toolbar-scoped .gallery-scopes button {
+  border-color: transparent;
+  border-radius: 6px;
+  background: transparent;
+}
+.gallery-toolbar-scoped .gallery-scopes button[aria-pressed='true'] {
+  background: var(--active-background);
+  border-color: var(--blue);
+}
+.gallery-refinements {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.gallery-refinements-label {
+  font-size: 11px;
+  color: var(--muted);
+  margin-inline: 4px;
+}
+.gallery-filter-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 38px;
+  padding: 7px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-soft);
+  font-size: 13px;
+  white-space: nowrap;
+}
+.gallery-filter-switch .megastar-trophy {
+  width: 18px;
+  height: 18px;
+}
+.gallery-filter-switch:hover {
+  background: var(--surface-hover);
+}
+.gallery-filter-switch[aria-checked='true'] {
+  color: var(--blue);
+  border-color: currentColor;
+  background: var(--active-background);
+}
+.megastar-switch[aria-checked='true'] {
+  color: #c5b5ff;
+  background: #35245b;
+}
+.filter-switch-track {
+  width: 24px;
+  height: 14px;
+  border-radius: 999px;
+  background: var(--muted);
+  padding: 2px;
+}
+.filter-switch-track::before {
+  content: '';
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--paper);
+}
+[aria-checked='true'] > .filter-switch-track {
+  background: currentColor;
+}
+[aria-checked='true'] > .filter-switch-track::before {
+  transform: translateX(10px);
+}
+.gallery-filter-switch:focus-visible,
+.gallery-scopes button:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
 .gallery-toolbar-scoped .filter-search {
   flex: 1 1 140px;
   min-width: 120px;

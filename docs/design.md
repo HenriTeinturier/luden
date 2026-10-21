@@ -437,14 +437,17 @@ marges habituelles. La barre de filtres compacte reste placée sous les statisti
 le souvenir complet reste dans la fiche. Les images choisies par l’utilisateur restent nécessaires :
 aucune conversion automatique d’une jaquette IGDB en boîte PAL.
 
-À l’entrée, afficher les jeux joués. Les boutons permettent de voir aussi les jeux à découvrir,
-possédés actuellement ou tous les jeux personnels SNES. L’état est conservé dans l’URL ;
-un accès sans préférence mémorisée repart sur Joués, pour toutes les plateformes.
-La même barre est utilisée dans toutes les galeries, collections comprises. Bibliothèque et
-collections partent sur Tous mes jeux ; Découverte sur À découvrir, avec possibilité de changer
-de vue. Dans une collection, les boutons filtrent uniquement ses jeux. Les préférences navigateur
-restent propres à chaque galerie dans localStorage : portée (Joués / À découvrir / Possédés /
-Tous mes jeux), Megastar, tri, regroupement, grille/liste, colonnes et filtres avancés.
+Sans préférence enregistrée, bibliothèque, plateformes et collections démarrent sur Joués.
+Trois boutons reliés composent le choix de vue : Joués, À découvrir, Tous. Un second clic sur
+À découvrir ou Tous revient à Joués. Tous inclut aussi les jeux ni joués ni marqués à découvrir ;
+les deux premiers ensembles peuvent se recouper. Les jeux d’une collection restent seuls concernés.
+À côté, sous « Affiner », Possédés et Megastar sont des interrupteurs indépendants et cumulables.
+Changer de vue conserve leur état ; désactiver Possédés retire uniquement le filtre de possession.
+Les filtres avancés de possession restent synchronisés. Réinitialiser revient à Joués sans filtres.
+Découverte reste limitée à À découvrir, avec Possédés indépendant et sans Megastar.
+L’état reste dans l’URL et dans les préférences propres à chaque galerie : vue, possession, Megastar,
+tri, regroupement, grille/liste, colonnes et filtres avancés. Les anciens liens/préférences avec
+la vue Possédés correspondent désormais à Tous + possession actuelle.
 La recherche textuelle reste temporaire. Un lien avec des choix explicites reste prioritaire ;
 un retour sans filtres, même sur la plateforme courante, restaure ses préférences.
 Filtres de portée, Megastar, recherche et réglages occupent une
@@ -547,7 +550,7 @@ avec les marges adaptatives habituelles et la place réservée à la sidebar lor
 
 La page reste limitée aux jeux marqués à découvrir/rejouer. Raccourcis : À découvrir,
 Possédés (possession actuelle dans cette sélection), Par envie ↓ (note décroissante,
-notes non précisées en dernier ; un second clic rétablit Derniers ajouts / modifiés). Joués, Tous mes jeux et Megastar restent dans les autres bibliothèques.
+notes non précisées en dernier ; un second clic rétablit Derniers ajouts / modifiés). Joués, Tous et Megastar restent dans les autres bibliothèques.
 Chaque carte, en galerie comme en vue compacte, affiche Mon envie avec des étoiles modifiables
 par demi-points, au pointeur ou au clavier, et un bouton d’effacement. Le contrôle est séparé du
 lien vers la fiche. Sauvegarde immédiate, blocage pendant l’enregistrement, erreur visible en cas

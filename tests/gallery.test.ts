@@ -1,6 +1,12 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { filterGames, gallerySearch, gameReturnSearch } from '../src/lib/gallery'
+import {
+  filterGames,
+  gallerySearch,
+  gameReturnSearch,
+  galleryFilters,
+  toggleGalleryScope,
+} from '../src/lib/gallery'
 import type { Game } from '../src/lib/types'
 
 test('Les envies décroissantes gardent zéro avant les notes absentes et respectent la possession', () => {
@@ -103,4 +109,77 @@ test('Les liens de fiche conservent le mélange ; une graine absente ou invalide
       defaultOrder,
     )
   }
+})
+
+test('Les vues reviennent à Joués sans modifier les filtres cumulables', () => {
+  assert.equal(galleryFilters({}).scope, 'played')
+  const base = galleryFilters({ owned: 'current', favorite: true, q: 'Mario', sort: 'title' })
+  for (const scope of ['played', 'discover', 'all'] as const) {
+    const selected = toggleGalleryScope(base, scope)
+    assert.equal(selected.scope, scope)
+    assert.equal(selected.owned, 'current')
+    assert.equal(selected.favorite, true)
+    assert.equal(selected.q, 'Mario')
+    assert.equal(selected.sort, 'title')
+    assert.equal(toggleGalleryScope(selected, scope).scope, 'played')
+  }
+})
+
+test('Les anciennes vues Possédés deviennent Tous avec le filtre de possession', () => {
+  assert.deepEqual(galleryFilters({ scope: 'owned', favorite: true }), {
+    scope: 'all',
+    owned: 'current',
+    favorite: true,
+  })
+  assert.deepEqual(galleryFilters({ scope: 'owned', favorite: true }, 'discover', true), {
+    scope: 'discover',
+    owned: 'current',
+    favorite: false,
+  })
+})
+
+test('Possédés et Megastar se cumulent dans chaque vue ; Tous inclut les jeux sans expérience ni envie', () => {
+  const games = [
+    {
+      id: 'played',
+      experience: { status: 'PLAYED' },
+      discover: false,
+      favorite: true,
+      possessions: [{ state: 'CURRENT' }],
+    },
+    {
+      id: 'discover',
+      experience: null,
+      discover: true,
+      favorite: true,
+      possessions: [{ state: 'CURRENT' }],
+    },
+    {
+      id: 'neither',
+      experience: null,
+      discover: false,
+      favorite: true,
+      possessions: [{ state: 'CURRENT' }],
+    },
+    { id: 'unowned', experience: null, discover: true, favorite: true, possessions: [] },
+    {
+      id: 'not-favorite',
+      experience: null,
+      discover: true,
+      favorite: false,
+      possessions: [{ state: 'CURRENT' }],
+    },
+  ] as Game[]
+  const base = { owned: 'current' as const, favorite: true, sort: 'title' as const }
+  // Use identical timestamps to keep fixture insertion order.
+  const fixtures = games.map((game) => ({ ...game, updatedAt: '2026-10-21' }))
+  const ids = (scope: 'played' | 'discover' | 'all') =>
+    filterGames(fixtures, { ...base, sort: 'recent', scope }).map((game) => game.id)
+  assert.deepEqual(ids('played'), ['played'])
+  assert.deepEqual(ids('discover'), ['discover'])
+  assert.deepEqual(ids('all'), ['played', 'discover', 'neither'])
+  assert.deepEqual(
+    filterGames(fixtures, { scope: 'discover', favorite: true }).map((game) => game.id),
+    ['discover', 'unowned'],
+  )
 })

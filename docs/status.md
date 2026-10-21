@@ -1,5 +1,11 @@
 # État courant
 
+## Raccourcis du header — 2026-10-21
+
+- Paramètres réduit à son icône avec nom accessible et infobulle.
+- Raccourcis : cinq plateformes avec le plus de jeux, puis les deux dernières actives, sans doublons (sept maximum). Le menu Mes univers garde tous les univers contenant des jeux.
+- Activité basée sur `updatedAt` des jeux ; suppressions et départs vers une autre plateforme détectés depuis la dernière bibliothèque observée et mémorisés dans le localStorage du navigateur. Une suppression du dernier jeu reste visible dans les récents. Les suppressions antérieures à ce suivi ne sont pas récupérables.
+
 ## Galerie de jeux de la vue d’ensemble — 2026-10-21
 
 - Jusqu’à 12 jeux au lieu de 5 dans la section histoire/aventure, grille responsive remplissant le même conteneur que les plateformes.

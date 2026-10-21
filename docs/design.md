@@ -1,5 +1,11 @@
 # Direction graphique actuelle
 
+Le header affiche les cinq univers les plus fournis puis les deux derniers actifs, sans
+doublons (sept raccourcis maximum). Le menu Mes univers conserve la liste complète des univers
+contenant des jeux. Paramètres utilise uniquement une icône nommée et une infobulle.
+Les dates des jeux déterminent l’activité ; les suppressions détectées depuis la dernière visite
+sont datées à leur constat et mémorisées localement dans `luden:universe-activity:v1`.
+
 La section histoire/aventure de la vue d’ensemble affiche jusqu’à 12 jeux dans une grille
 responsive occupant la largeur du conteneur des plateformes. Ses cartes réutilisent la
 présentation classique de la bibliothèque (jaquette entière dans une zone commune,

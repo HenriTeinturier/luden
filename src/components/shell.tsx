@@ -20,6 +20,11 @@ import { useEffect, useRef, useState, type ReactNode } from 'react'
 import type { Library } from '../lib/types'
 import { FormActionContext, type FormAction } from './form-action'
 import { GameExplorer } from './game-explorer'
+import {
+  universeShortcuts,
+  updateUniverseActivity,
+  type UniverseActivity,
+} from '../lib/universe-shortcuts'
 
 const navigation = [
   { to: '/', label: 'Vue d’ensemble', icon: Home },
@@ -55,6 +60,43 @@ export function Shell({ children, library }: { children: ReactNode; library: Lib
   )
   const universes =
     library?.platforms.filter((p) => library.games.some((g) => g.platformId === p.id)) ?? []
+  const [universeActivity, setUniverseActivity] = useState<UniverseActivity | null>(null)
+  const activityRef = useRef<UniverseActivity | null>(null)
+  useEffect(() => {
+    if (!library) return
+    const key = 'luden:universe-activity:v1'
+    if (!activityRef.current) {
+      try {
+        const saved = JSON.parse(localStorage.getItem(key) ?? 'null')
+        if (
+          saved &&
+          typeof saved.games === 'object' &&
+          saved.games !== null &&
+          typeof saved.changed === 'object' &&
+          saved.changed !== null &&
+          Object.values(saved.games).every((value) => typeof value === 'string') &&
+          Object.values(saved.changed).every(
+            (value) => typeof value === 'number' && Number.isFinite(value),
+          )
+        ) {
+          activityRef.current = saved
+        }
+      } catch {
+        /* Storage is optional. */
+      }
+    }
+    const next = updateUniverseActivity(library.games, activityRef.current, Date.now())
+    activityRef.current = next
+    setUniverseActivity(next)
+    try {
+      localStorage.setItem(key, JSON.stringify(next))
+    } catch {
+      /* Storage is optional. */
+    }
+  }, [library])
+  const shortcuts = library
+    ? universeShortcuts(library.platforms, library.games, universeActivity?.changed ?? {})
+    : []
   return (
     <FormActionContext.Provider value={setFormAction}>
       <div className="app-shell horizontal-shell">
@@ -135,10 +177,11 @@ export function Shell({ children, library }: { children: ReactNode; library: Lib
               <div className="header-account">
                 <Link
                   to="/settings"
+                  aria-label="Paramètres"
+                  title="Paramètres"
                   className={`nav-item ${pathname === '/settings' ? 'active' : ''}`}
                 >
                   <Settings2 size={18} />
-                  Paramètres
                 </Link>
                 <div className="profile-chip">
                   <span className="avatar">
@@ -151,9 +194,9 @@ export function Shell({ children, library }: { children: ReactNode; library: Lib
                 </div>
               </div>
             </div>
-            {universes.length > 0 && (
+            {shortcuts.length > 0 && (
               <nav className="universe-shortcuts" aria-label="Accès direct aux univers">
-                {universes.map((platform) => (
+                {shortcuts.map((platform) => (
                   <Link
                     key={platform.id}
                     to="/platforms/$platformId"

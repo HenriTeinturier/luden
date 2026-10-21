@@ -42,14 +42,23 @@ export function Gallery({
   games,
   platformLocked = false,
   defaultScope = 'all',
+  discovery = false,
 }: {
   games: Game[]
+  discovery?: boolean
   platformLocked?: boolean
   defaultScope?: GallerySearch['scope']
 }) {
   const library = useLibrary()
   const search = useSearch({ strict: false }) as GallerySearch
-  const filters = { ...search, scope: search.scope ?? defaultScope }
+  const filters = discovery
+    ? {
+        ...search,
+        scope: 'discover' as const,
+        favorite: false,
+        owned: search.scope === 'owned' ? ('current' as const) : search.owned,
+      }
+    : { ...search, scope: search.scope ?? defaultScope }
   const visible = filterGames(games, filters)
   const navigate = useNavigate()
   const router = useRouter()
@@ -191,7 +200,7 @@ export function Gallery({
   }, [pathname, search, navigate, defaultScope, router])
   const [advanced, setAdvanced] = useState(false)
   const update = (patch: Partial<GallerySearch>) => {
-    const next = { ...search, scope: filters.scope, ...patch }
+    const next = { ...filters, ...patch }
     saveGalleryPreferences(pathname, next)
     void navigate({ to: '.', search: next, replace: true, resetScroll: false })
   }
@@ -258,37 +267,80 @@ export function Gallery({
     <>
       <div className="gallery-toolbar gallery-toolbar-scoped">
         <div className="platform-scope" role="group" aria-label="Jeux à afficher">
-          {(
-            [
-              ['played', 'Joués'],
-              ['discover', 'À découvrir'],
-              ['owned', 'Possédés'],
-              ['all', 'Tous mes jeux'],
-            ] as const
-          ).map(([scope, label]) => (
+          {discovery ? (
+            <>
+              <button
+                type="button"
+                aria-pressed={!filters.owned || filters.owned === 'all'}
+                onClick={() => update({ scope: 'discover', status: '', owned: 'all' })}
+              >
+                À découvrir
+              </button>
+              <button
+                type="button"
+                aria-pressed={filters.owned === 'current'}
+                onClick={() =>
+                  update({
+                    scope: 'discover',
+                    owned: filters.owned === 'current' ? 'all' : 'current',
+                  })
+                }
+              >
+                Possédés
+              </button>
+              <button
+                type="button"
+                aria-pressed={filters.sort === 'desire'}
+                title={
+                  filters.sort === 'desire'
+                    ? 'Revenir aux derniers ajouts / modifiés'
+                    : 'Classer par note d’envie décroissante'
+                }
+                onClick={() =>
+                  update({
+                    sort: filters.sort === 'desire' ? 'recent' : 'desire',
+                    randomSeed: undefined,
+                  })
+                }
+              >
+                Par envie ↓
+              </button>
+            </>
+          ) : (
+            (
+              [
+                ['played', 'Joués'],
+                ['discover', 'À découvrir'],
+                ['owned', 'Possédés'],
+                ['all', 'Tous mes jeux'],
+              ] as const
+            ).map(([scope, label]) => (
+              <button
+                key={scope}
+                type="button"
+                aria-pressed={filters.scope === scope}
+                onClick={() => update({ scope, status: '', owned: 'all' })}
+              >
+                {label}
+              </button>
+            ))
+          )}
+        </div>
+        {!discovery && (
+          <div className="platform-scope">
             <button
-              key={scope}
               type="button"
-              aria-pressed={filters.scope === scope}
-              onClick={() => update({ scope, status: '', owned: 'all' })}
+              className="favorites-filter"
+              aria-label="Megastar — filtrer mes jeux cultes favoris"
+              title="Afficher uniquement mes jeux Megastar (favoris)"
+              aria-pressed={filters.favorite ?? false}
+              onClick={() => update({ favorite: !filters.favorite })}
             >
-              {label}
+              <MegastarTrophy />
+              <span>Megastar</span>
             </button>
-          ))}
-        </div>
-        <div className="platform-scope">
-          <button
-            type="button"
-            className="favorites-filter"
-            aria-label="Megastar — filtrer mes jeux cultes favoris"
-            title="Afficher uniquement mes jeux Megastar (favoris)"
-            aria-pressed={filters.favorite ?? false}
-            onClick={() => update({ favorite: !filters.favorite })}
-          >
-            <MegastarTrophy />
-            <span>Megastar</span>
-          </button>
-        </div>
+          </div>
+        )}
         <div className="filter-search">
           <Search size={17} />
           <input
@@ -437,7 +489,7 @@ export function Gallery({
                   machine: '',
                   favorite: false,
                   owned: 'all',
-                  scope: 'all',
+                  scope: discovery ? 'discover' : 'all',
                 })
               }
             >
@@ -483,14 +535,16 @@ export function Gallery({
             <option value="past">Possédés autrefois</option>
             <option value="none">Aucune possession</option>
           </select>
-          <label className="check-inline">
-            <input
-              type="checkbox"
-              checked={filters.favorite ?? false}
-              onChange={(e) => update({ favorite: e.target.checked })}
-            />
-            Coups de cœur
-          </label>
+          {!discovery && (
+            <label className="check-inline">
+              <input
+                type="checkbox"
+                checked={filters.favorite ?? false}
+                onChange={(e) => update({ favorite: e.target.checked })}
+              />
+              Coups de cœur
+            </label>
+          )}
         </div>
       )}
       {visible.length ? (
@@ -523,6 +577,7 @@ export function Gallery({
                     game={game}
                     compact={filters.view === 'list'}
                     sequence={sequence}
+                    editDesire={discovery}
                   />
                 ))}
               </div>

@@ -7,6 +7,7 @@ import type { Game, Platform } from '../lib/types'
 import { playStatuses } from '../lib/platforms'
 import { platformReleases } from '../lib/platform-releases'
 import { Stars } from './rating'
+import { CardDesire } from './card-desire'
 import { coverFormat, platformPresentation } from '../lib/presentation'
 import { gallerySearch } from '../lib/gallery'
 import { mediaImageSources } from '../lib/image-variants'
@@ -278,10 +279,12 @@ export function GameCard({
   compact = false,
   sequence,
   preview = false,
+  editDesire = false,
 }: {
   game: Game
   compact?: boolean
   sequence?: string[]
+  editDesire?: boolean
   preview?: boolean
 }) {
   const selection = useGameSelection()
@@ -356,7 +359,7 @@ export function GameCard({
     </>
   )
   if (preview) return <div className={className}>{content}</div>
-  return (
+  const card = (
     <Link
       to="/games/$gameId"
       data-game-id={game.id}
@@ -391,7 +394,16 @@ export function GameCard({
       {content}
     </Link>
   )
+  return editDesire ? (
+    <div className="discovery-game">
+      {card}
+      <CardDesire game={game} />
+    </div>
+  ) : (
+    card
+  )
 }
+
 export function EmptyState({
   title = 'Tout commence par un jeu.',
   description = 'Un souvenir d’enfance, votre dernière aventure ou un jeu qui vous intrigue. À vous d’écrire la première page.',

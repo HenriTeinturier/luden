@@ -5,7 +5,9 @@ export function EditableStars({
   value,
   disabled,
   onChange,
+  label = 'Ma note',
 }: {
+  label?: string
   value: number | null
   disabled: boolean
   onChange: (value: number | null) => void
@@ -20,13 +22,13 @@ export function EditableStars({
   }
   return (
     <div className="editable-rating">
-      <span className="rating-caption">{value === null ? 'Ma note · à noter' : 'Ma note'}</span>
+      <span className="rating-caption">{value === null ? `${label} · à noter` : label}</span>
       <div className="editable-rating-controls">
         <div
           className="editable-stars"
           role="slider"
           tabIndex={disabled ? -1 : 0}
-          aria-label="Ma note sur 5"
+          aria-label={`${label} sur 5`}
           aria-valuemin={0}
           aria-valuemax={5}
           aria-valuenow={value ?? 0}
@@ -78,8 +80,8 @@ export function EditableStars({
         <button
           type="button"
           className="rating-clear"
-          aria-label="Effacer ma note"
-          title="Effacer ma note"
+          aria-label={`Effacer : ${label}`}
+          title={`Effacer : ${label}`}
           disabled={disabled || value === null}
           onClick={() => onChange(null)}
         >

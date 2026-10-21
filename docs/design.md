@@ -539,3 +539,13 @@ la scène suit ce décalage. Le cadre du CD passe de 94 % à 80 % de la hauteur 
 (réduction d’environ 15 %) pour que son diamètre reste inférieur à la hauteur du boîtier.
 Le CD est remonté de 20 % de son cadre pour aligner approximativement son centre
 avec celui de la boîte, en conservant sa taille et le placement de la boîte.
+
+## Envies dans À découvrir
+
+La page reste limitée aux jeux marqués à découvrir/rejouer. Raccourcis : À découvrir,
+Possédés (possession actuelle dans cette sélection), Par envie ↓ (note décroissante,
+notes non précisées en dernier ; un second clic rétablit Derniers ajouts / modifiés). Joués, Tous mes jeux et Megastar restent dans les autres bibliothèques.
+Chaque carte, en galerie comme en vue compacte, affiche Mon envie avec des étoiles modifiables
+par demi-points, au pointeur ou au clavier, et un bouton d’effacement. Le contrôle est séparé du
+lien vers la fiche. Sauvegarde immédiate, blocage pendant l’enregistrement, erreur visible en cas
+d’échec ; les données et le classement sont rafraîchis après sauvegarde.

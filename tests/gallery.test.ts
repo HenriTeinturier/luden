@@ -3,6 +3,28 @@ import assert from 'node:assert/strict'
 import { filterGames, gallerySearch, gameReturnSearch } from '../src/lib/gallery'
 import type { Game } from '../src/lib/types'
 
+test('Les envies décroissantes gardent zéro avant les notes absentes et respectent la possession', () => {
+  const games = [null, 0, 4.5, 2, 5].map(
+    (desire, index) =>
+      ({
+        id: String(index),
+        desire,
+        discover: index !== 4,
+        possessions: index === 3 ? [] : [{ state: 'CURRENT' }],
+      }) as Game,
+  )
+  const filters = { scope: 'discover' as const, sort: 'desire' as const, owned: 'current' as const }
+  assert.deepEqual(
+    filterGames(games, filters).map((game) => game.id),
+    ['2', '1', '0'],
+  )
+  const updated = games.map((game) => (game.id === '1' ? { ...game, desire: 5 } : game))
+  assert.deepEqual(
+    filterGames(updated, filters).map((game) => game.id),
+    ['1', '2', '0'],
+  )
+})
+
 test('Les vues plateforme distinguent expérience, découverte et possession', () => {
   const games = [null, 'UNPLAYED', 'PLAYED', 'PLAYING', 'FINISHED', 'ABANDONED'].map(
     (status, index) =>

@@ -1,5 +1,11 @@
 # État courant
 
+## À découvrir : envies modifiables et tri rapide — 2026-10-21
+
+- Note d’envie affichée sur chaque carte, en galerie et en vue compacte : étoiles cliquables par demi-points, clavier et effacement. Enregistrement immédiat ; reclassement après sauvegarde si le tri par envie est actif.
+- Bouton « Par envie ↓ » activable/désactivable (second clic : tri récent) ; retrait des raccourcis Joués, Tous mes jeux et Megastar sur cette page. Possédés filtre les jeux à découvrir possédés actuellement ; réinitialiser conserve le périmètre découverte, y compris avec d’anciennes préférences.
+- Vérifié : TypeScript, lint ciblé, dix tests de galerie/préférences, compilation et diff. Validation visuelle par Henri.
+
 ## Galerie DS sans espace sous les boîtes — 2026-10-21
 
 - Le modèle réutilisable Nintendo DS adapte la hauteur de sa galerie aux proportions réelles des images. Le titre et les étoiles suivent directement la boîte, sans cadre carré vide en dessous ni recadrage. Cartes de hauteurs variables ; repli carré sans image.

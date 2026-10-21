@@ -319,17 +319,6 @@ export function Gallery({
             ))
           )}
         </div>
-        {!discovery && (sortingCount > 0 || filters.scope === 'unassigned') && (
-          <button
-            type="button"
-            className="gallery-sorting-link"
-            aria-pressed={filters.scope === 'unassigned'}
-            title="Jeux ni joués ni dans mes envies, possédés ou non. Le compteur inclut tous les jeux à trier de cette galerie avant les autres filtres."
-            onClick={() => update(toggleGalleryScope(filters, 'unassigned'))}
-          >
-            À trier · {sortingCount}
-          </button>
-        )}
         <div className="gallery-refinements" role="group" aria-label="Filtres cumulables">
           <span className="gallery-refinements-label">Affiner</span>
           <button
@@ -359,6 +348,17 @@ export function Gallery({
             </button>
           )}
         </div>
+        {!discovery && (sortingCount > 0 || filters.scope === 'unassigned') && (
+          <button
+            type="button"
+            className="gallery-sorting-link"
+            aria-pressed={filters.scope === 'unassigned'}
+            title="Jeux ni joués ni dans mes envies, possédés ou non. Le compteur inclut tous les jeux à trier de cette galerie avant les autres filtres."
+            onClick={() => update(toggleGalleryScope(filters, 'unassigned'))}
+          >
+            À trier · {sortingCount}
+          </button>
+        )}
         <div className="filter-search">
           <Search size={17} />
           <input

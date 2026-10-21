@@ -563,7 +563,7 @@ statut Non joué) et n’est pas dans Mes envies. Possession, catégorie de rang
 ne changent pas cette sélection. Joués et Mes envies restent indépendants : un jeu joué peut être
 une envie de rejouer. Tous contient tous les jeux, y compris ceux à trier.
 
-Un accès secondaire « À trier · N » apparaît à côté du groupe de vues dans les bibliothèques,
+Un accès secondaire « À trier · N » apparaît à droite de Megastar dans les bibliothèques,
 plateformes et collections contenant des jeux concernés. Le compteur porte sur les jeux de cette
 galerie avant les autres filtres. Possédés, Megastar et recherche restent cumulables avec cette vue.
 Un second clic revient à Joués. Si le dernier jeu sort de la sélection, l’accès actif reste visible

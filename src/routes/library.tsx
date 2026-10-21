@@ -11,7 +11,7 @@ function Library() {
   return (
     <div className="page library-page">
       <h1 className="sr-only">Ma bibliothèque</h1>
-      <Gallery games={games} />
+      <Gallery games={games} showStats />
     </div>
   )
 }

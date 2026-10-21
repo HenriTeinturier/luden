@@ -13,6 +13,7 @@ import {
   X,
 } from 'lucide-react'
 import { MegastarTrophy } from './megastar-trophy'
+import { GalleryStats } from './gallery-stats'
 import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties } from 'react'
 import { useGameSelection } from './game-selection'
 import {
@@ -50,9 +51,11 @@ export function Gallery({
   platformLocked = false,
   defaultScope = 'played',
   discovery = false,
+  showStats = false,
 }: {
   games: Game[]
   discovery?: boolean
+  showStats?: boolean
   platformLocked?: boolean
   defaultScope?: GallerySearch['scope']
 }) {
@@ -266,6 +269,7 @@ export function Gallery({
   const sequence = groups.flatMap((group) => group.games.map((game) => game.id))
   return (
     <>
+      {showStats && <GalleryStats games={visible} />}
       <div className="gallery-toolbar gallery-toolbar-scoped">
         <div
           className={`platform-scope ${discovery ? '' : 'gallery-scopes'}`}

@@ -569,3 +569,11 @@ galerie avant les autres filtres. Possédés, Megastar et recherche restent cumu
 Un second clic revient à Joués. Si le dernier jeu sort de la sélection, l’accès actif reste visible
 à zéro pour permettre de quitter la vue ; il disparaît ensuite. Vue mémorisée et conservée au retour
 de fiche. La page Mes envies ne propose pas cet accès puisqu’elle est réservée aux envies.
+
+## Statistiques de Ma bibliothèque
+
+Au-dessus des filtres, quatre cartes reprennent le bandeau des plateformes : jeux affichés,
+jeux joués, Megastar et jeux possédés actuellement. Tous les compteurs portent sur la sélection
+filtrée (vue, recherche, plateforme, possession, Megastar et filtres avancés). Les pourcentages
+utilisent le nombre de jeux affichés comme dénominateur ; sélection vide : zéro et 0 %.
+Le tri et le regroupement ne changent pas ces statistiques. L’ancien titre introductif reste masqué.

@@ -1,5 +1,10 @@
 # État courant
 
+## Statistiques filtrées de Ma bibliothèque — 2026-10-21
+
+- Bandeau de quatre statistiques reprenant le visuel des plateformes : jeux affichés, joués, Megastar et possédés actuellement. Compteurs et pourcentages recalculés sur les jeux visibles après tous les filtres, y compris recherche et À trier ; sélection vide à zéro.
+- Bandeau compact au-dessus des filtres, sans rétablir l’ancien titre d’introduction. Vérifié : TypeScript, lint ciblé et diff. Validation visuelle par Henri.
+
 ## Espacement supérieur de Ma bibliothèque — 2026-10-21
 
 - Barre de filtres à 20 px sous la navigation, comme l’espacement compact des galeries plateforme. Suppression du cumul de padding de page et de marge de barre après le retrait du titre.

@@ -1,5 +1,10 @@
 # État courant
 
+## Flammes pour les envies, étoiles pour les notes — 2026-10-21
+
+- Les envies utilisent désormais cinq flammes roses dans les cartes et la sidebar, avec un fond teinté autour du contrôle. Les notes d’expérience gardent les étoiles jaunes. Libellés et annonces accessibles distinguent flammes d’envie et étoiles de note.
+- Demi-points, clavier, effacement et sauvegarde inchangés. Aucune donnée modifiée. Validation visuelle par Henri.
+
 ## Note et envie distinctes dans la sidebar — 2026-10-21
 
 - Jeu joué : Ma note en étoiles jaunes, confirmation existante conservée. Jeu non joué : Envie de jouer en étoiles roses avec icône étincelles, sauvegarde directe de l’envie sans modifier l’expérience ni le statut.

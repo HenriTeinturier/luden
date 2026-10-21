@@ -2265,6 +2265,17 @@ kbd {
 .desire-rating .editable-stars:focus-visible {
   outline-color: #ffacd2;
 }
+.desire-rating .editable-rating-controls {
+  width: fit-content;
+  max-width: 100%;
+  padding: 2px 6px;
+  border: 1px solid #ffacd229;
+  border-radius: 10px;
+  background: #ff80b50b;
+}
+.desire-rating .star > span {
+  filter: drop-shadow(0 0 3px #ff80b540);
+}
 .sidebar-souvenir-caption {
   display: inline-flex;
   align-items: center;

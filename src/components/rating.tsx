@@ -1,5 +1,5 @@
 import { useState, type PointerEvent } from 'react'
-import { Star, X, Sparkles } from 'lucide-react'
+import { Star, X, Flame } from 'lucide-react'
 
 export function EditableStars({
   value,
@@ -25,7 +25,7 @@ export function EditableStars({
   return (
     <div className={`editable-rating ${kind === 'desire' ? 'desire-rating' : ''}`}>
       <span className="rating-caption">
-        {kind === 'desire' && <Sparkles size={13} aria-hidden="true" />}
+        {kind === 'desire' && <Flame size={13} aria-hidden="true" />}
         {value === null ? `${label} · ${kind === 'desire' ? 'à préciser' : 'à noter'}` : label}
       </span>
       <div className="editable-rating-controls">
@@ -42,10 +42,14 @@ export function EditableStars({
               ? kind === 'desire'
                 ? 'Envie non précisée'
                 : 'Sans note'
-              : `${value.toLocaleString('fr-FR')} sur 5 étoiles`
+              : `${value.toLocaleString('fr-FR')} sur 5 ${kind === 'desire' ? 'flammes d’envie' : 'étoiles'}`
           }
           aria-disabled={disabled}
-          title="Noter par demi-étoiles · flèches au clavier · Suppr pour effacer"
+          title={
+            kind === 'desire'
+              ? 'Régler l’envie par demi-flammes · flèches au clavier · Suppr pour effacer'
+              : 'Noter par demi-étoiles · flèches au clavier · Suppr pour effacer'
+          }
           onPointerMove={(event) => {
             if (!disabled) setPreview(pointerValue(event))
           }}
@@ -84,7 +88,7 @@ export function EditableStars({
             )
           }}
         >
-          <Stars value={preview ?? value ?? 0} />
+          <Stars value={preview ?? value ?? 0} kind={kind} />
         </div>
         <button
           type="button"
@@ -104,24 +108,29 @@ export function EditableStars({
 export function Stars({
   value,
   showEmpty = false,
+  kind = 'rating',
 }: {
   value: number | null | undefined
+  kind?: 'rating' | 'desire'
   showEmpty?: boolean
 }) {
+  const Icon = kind === 'desire' ? Flame : Star
   if (value == null && !showEmpty) return <span className="unrated">Pas encore noté</span>
   return (
     <span
       className="stars"
       role="img"
       aria-label={
-        value == null ? 'Pas encore noté' : `${value.toLocaleString('fr-FR')} sur 5 étoiles`
+        value == null
+          ? 'Pas encore noté'
+          : `${value.toLocaleString('fr-FR')} sur 5 ${kind === 'desire' ? 'flammes d’envie' : 'étoiles'}`
       }
     >
       {[1, 2, 3, 4, 5].map((n) => (
         <span className="star" key={n}>
-          <Star size={18} />
+          <Icon size={18} />
           <span style={{ width: `${Math.max(0, Math.min(1, (value ?? 0) - n + 1)) * 100}%` }}>
-            <Star size={18} fill="currentColor" />
+            <Icon size={18} fill="currentColor" />
           </span>
         </span>
       ))}

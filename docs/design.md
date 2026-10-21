@@ -593,9 +593,9 @@ retirée par Réinitialiser. Tous inclut les souvenirs ; À trier et son compteu
 ## Étoiles dans la sidebar
 
 Les jeux joués affichent Ma note en jaune, avec la confirmation de modification habituelle.
-Les jeux non joués affichent Envie de jouer en rose, accompagnée d’étincelles et du libellé
-« à préciser » en l’absence de valeur. Modifier ces étoiles sauvegarde seulement `Game.desire` ;
-aucune note d’expérience ni statut n’est modifié. La palette rose et le libellé sont aussi utilisés
+Les jeux non joués affichent Envie de jouer avec cinq flammes roses sur fond teinté et le libellé
+« à préciser » en l’absence de valeur. Modifier ces flammes sauvegarde seulement `Game.desire` ;
+aucune note d’expérience ni statut n’est modifié. Les flammes roses et le libellé sont aussi utilisés
 sur les cartes Mes envies. Un souvenir non joué sans envie active n’affiche aucune étoile ;
 s’il rejoint Mes envies, son envie est visible. Un jeu joué garde sa note même s’il est souvenir
 ou dans Mes envies. Aucune valeur existante n’est effacée lorsque l’affichage change.

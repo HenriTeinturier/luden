@@ -1,5 +1,10 @@
 # État courant
 
+## Bibliothèque et découverte pleine largeur — 2026-10-21
+
+- Ma bibliothèque et À découvrir utilisent toute la largeur disponible, sans plafond de 1540 px. Marges adaptatives et place de la sidebar conservées.
+- Vérifié : formatage et diff CSS/documentation. Validation visuelle par Henri.
+
 ## À découvrir : envies modifiables et tri rapide — 2026-10-21
 
 - Note d’envie affichée sur chaque carte, en galerie et en vue compacte : étoiles cliquables par demi-points, clavier et effacement. Enregistrement immédiat ; reclassement après sauvegarde si le tri par envie est actif.

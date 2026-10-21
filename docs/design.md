@@ -542,6 +542,9 @@ avec celui de la boîte, en conservant sa taille et le placement de la boîte.
 
 ## Envies dans À découvrir
 
+Ma bibliothèque et À découvrir utilisent toute la largeur disponible, sans plafond de 1540 px,
+avec les marges adaptatives habituelles et la place réservée à la sidebar lorsqu’elle est ouverte.
+
 La page reste limitée aux jeux marqués à découvrir/rejouer. Raccourcis : À découvrir,
 Possédés (possession actuelle dans cette sélection), Par envie ↓ (note décroissante,
 notes non précisées en dernier ; un second clic rétablit Derniers ajouts / modifiés). Joués, Tous mes jeux et Megastar restent dans les autres bibliothèques.

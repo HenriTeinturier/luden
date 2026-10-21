@@ -338,6 +338,10 @@ main:focus {
   max-width: 1540px;
   margin: auto;
 }
+.page.library-page,
+.page.discovery-page {
+  max-width: none;
+}
 .page-heading {
   display: flex;
   justify-content: space-between;

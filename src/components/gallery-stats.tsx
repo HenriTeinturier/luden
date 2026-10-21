@@ -1,5 +1,5 @@
-import { CirclePlay, Gamepad2, ShieldCheck } from 'lucide-react'
-import { hasPlayed } from '../lib/gallery'
+import { CirclePlay, Gamepad2, ShieldCheck, Sparkles, Inbox } from 'lucide-react'
+import { hasPlayed, needsSorting } from '../lib/gallery'
 import type { Game } from '../lib/types'
 import { MegastarTrophy } from './megastar-trophy'
 
@@ -13,10 +13,10 @@ export function GalleryStats({ games }: { games: Game[] }) {
       tone: 'played',
     },
     {
-      label: 'Megastar',
-      count: games.filter((game) => game.favorite).length,
-      icon: MegastarTrophy,
-      tone: 'favorites',
+      label: 'Mes envies',
+      count: games.filter((game) => game.discover).length,
+      icon: Sparkles,
+      tone: 'desire',
     },
     {
       label: 'jeux possédés',
@@ -26,10 +26,22 @@ export function GalleryStats({ games }: { games: Game[] }) {
       icon: ShieldCheck,
       tone: 'owned',
     },
+    {
+      label: 'Megastar',
+      count: games.filter((game) => game.favorite).length,
+      icon: MegastarTrophy,
+      tone: 'favorites',
+    },
+    {
+      label: 'À trier',
+      count: games.filter(needsSorting).length,
+      icon: Inbox,
+      tone: 'sorting',
+    },
   ]
   return (
     <section
-      className="platform-overview"
+      className="platform-overview library-overview"
       aria-label="Statistiques des jeux affichés"
       aria-live="polite"
       aria-atomic="true"
@@ -39,7 +51,9 @@ export function GalleryStats({ games }: { games: Game[] }) {
           const percent = games.length ? Math.round((count / games.length) * 100) : 0
           return (
             <div key={tone} className={`platform-overview-stat stat-${tone}`}>
-              <Icon size={29} aria-hidden="true" />
+              <span className="library-stat-icon" aria-hidden="true">
+                <Icon size={25} />
+              </span>
               <div>
                 <dt>{label}</dt>
                 <dd>

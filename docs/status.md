@@ -1,5 +1,10 @@
 # État courant
 
+## Six indicateurs dans Ma bibliothèque — 2026-10-21
+
+- Jeux affichés, Joués, Mes envies, Possédés, Megastar et À trier, tous calculés sur la sélection filtrée. Mes envies utilise des étincelles roses ; À trier une corbeille de réception ambrée. Icônes sur pastilles colorées avec léger relief.
+- Six cartes sur grand écran, puis trois, deux ou une colonne selon la largeur disponible. Vérifié : TypeScript, lint ciblé et diff. Validation visuelle par Henri.
+
 ## Statistiques filtrées de Ma bibliothèque — 2026-10-21
 
 - Bandeau de quatre statistiques reprenant le visuel des plateformes : jeux affichés, joués, Megastar et possédés actuellement. Compteurs et pourcentages recalculés sur les jeux visibles après tous les filtres, y compris recherche et À trier ; sélection vide à zéro.

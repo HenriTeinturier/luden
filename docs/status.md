@@ -1,5 +1,11 @@
 # État courant
 
+## Affinage des thèmes Mes envies — 2026-10-21
+
+- Thème 1 : suppression de la marge autour de la jaquette, cadre fin de 1 px comme les univers.
+- Thème 2 : flammes agrandies jusqu’à 26 px, alignées à droite, sans fond ni flou. Survol avec bordure de 1 px couleur `--muted` ; sélection des deux thèmes identique aux univers (contour, halo et fond).
+- Vérification du formatage et du diff CSS ; validation visuelle par Henri.
+
 ## Thèmes et flammes de Mes envies — 2026-10-21
 
 - Thème 1 : cadre et marges affinés, flammes rapprochées du titre, déplacement léger de toute la carte au survol avec contour. Les cinq flammes restent modifiables ; croix d’effacement retirée uniquement sur cette page.

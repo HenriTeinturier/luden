@@ -4,9 +4,12 @@
 
 Mes envies propose aussi les deux thèmes, avec une préférence indépendante. Son thème 1
 utilise des marges réduites, un cadre fin et un léger déplacement de la carte entière au survol,
-contrôle d’envie inclus. Les flammes sont rapprochées du titre, sans croix d’effacement.
+contrôle d’envie inclus. La jaquette n’a pas de marge extérieure, avec un cadre de 1 px.
+Les flammes sont rapprochées du titre, sans croix d’effacement.
 Son thème 2 reprend les boîtes libres avec les cinq flammes interactives en haut à droite
-sur fond translucide flouté ; en liste elles restent sous le titre. La saisie par demi-flammes
+sans fond ni flou, agrandies jusqu’à 26 px et alignées à droite ; en liste elles restent sous le titre.
+Survol : contour de 1 px couleur `--muted`, comme les univers. Les deux thèmes reprennent
+leur sélection (contour bleu clair, halo et fond). La saisie par demi-flammes
 et au clavier est conservée. Les autres emplacements gardent leur bouton d’effacement.
 
 La barre de filtres propose « Thème 1 · Classique » (défaut, présentation existante)

@@ -169,29 +169,29 @@
   grid-template-columns: repeat(auto-fill, minmax(205px, 1fr));
 }
 /* A shared display case keeps the library and discovery galleries aligned. */
-:is(.library-page, .discovery-page) .game-grid {
+:is(.library-page, .discovery-page, .home-recent) .game-grid {
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr));
   align-items: stretch;
 }
-:is(.library-page, .discovery-page) .game-grid .game-card {
+:is(.library-page, .discovery-page, .home-recent) .game-grid .game-card {
   grid-column: auto;
 }
-:is(.library-page, .discovery-page) .game-grid .game-cover {
+:is(.library-page, .discovery-page, .home-recent) .game-grid .game-cover {
   aspect-ratio: 1;
   padding: 8px;
 }
-:is(.library-page, .discovery-page) .game-card-info {
+:is(.library-page, .discovery-page, .home-recent) .game-card-info {
   min-width: 0;
 }
-:is(.library-page, .discovery-page) .game-grid .game-card-info {
+:is(.library-page, .discovery-page, .home-recent) .game-grid .game-card-info {
   display: grid;
   grid-template-rows: 36px 20px;
   gap: 8px;
 }
-:is(.library-page, .discovery-page) .game-grid .game-platform {
+:is(.library-page, .discovery-page, .home-recent) .game-grid .game-platform {
   margin: 0;
 }
-:is(.library-page, .discovery-page) .game-card h3 {
+:is(.library-page, .discovery-page, .home-recent) .game-card h3 {
   margin: 0;
   line-height: 20px;
   display: block;
@@ -200,11 +200,11 @@
   text-overflow: ellipsis;
   overflow: hidden;
 }
-:is(.library-page, .discovery-page) .game-platform {
+:is(.library-page, .discovery-page, .home-recent) .game-platform {
   justify-content: space-between;
   gap: 8px;
 }
-:is(.library-page, .discovery-page) .game-platform-name {
+:is(.library-page, .discovery-page, .home-recent) .game-platform-name {
   flex: 0 1 140px;
   height: 36px;
   color: var(--ink);
@@ -220,22 +220,22 @@
   object-fit: contain;
   object-position: left center;
 }
-:is(.library-page, .discovery-page) .game-platform-name > span {
+:is(.library-page, .discovery-page, .home-recent) .game-platform-name > span {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-:is(.library-page, .discovery-page) .game-platform-year {
+:is(.library-page, .discovery-page, .home-recent) .game-platform-year {
   flex-shrink: 0;
   color: var(--text-soft);
   font-size: 11px;
   font-variant-numeric: tabular-nums;
 }
-:is(.library-page, .discovery-page) .game-platform-year::before {
+:is(.library-page, .discovery-page, .home-recent) .game-platform-year::before {
   content: none;
 }
 @media (max-width: 700px) {
-  :is(.library-page, .discovery-page) .game-grid {
+  :is(.library-page, .discovery-page, .home-recent) .game-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

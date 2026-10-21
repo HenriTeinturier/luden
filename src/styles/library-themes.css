@@ -1,33 +1,41 @@
 /* Shared free-box layout for the library and wishlist. */
-.library-page [data-library-theme='1'] .discovery-game {
+.home-recent .game-grid.home-games {
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+  align-items: stretch;
+  gap: 24px;
+}
+:is(.library-page, .home-recent) [data-library-theme='1'] .discovery-game {
   border: 1px solid var(--line);
   overflow: visible;
   transition:
     transform 0.18s,
     border-color 0.18s;
 }
-.library-page [data-library-theme='1'] .discovery-game:hover,
-.library-page [data-library-theme='1'] .discovery-game:focus-within {
+:is(.library-page, .home-recent) [data-library-theme='1'] .discovery-game:hover,
+:is(.library-page, .home-recent) [data-library-theme='1'] .discovery-game:focus-within {
   transform: translateY(-3px);
   border-color: var(--muted);
 }
-.library-page [data-library-theme='1'] .discovery-game .game-card {
+:is(.library-page, .home-recent) [data-library-theme='1'] .discovery-game .game-card {
   flex: none;
   padding: 0;
   background: transparent;
 }
-.library-page [data-library-theme='1'] .game-grid .game-cover {
+:is(.library-page, .home-recent) [data-library-theme='1'] .game-grid .game-cover {
   padding: 0;
   border-radius: 9px 9px 0 0;
 }
-.library-page [data-library-theme='1'] .discovery-game .game-card-info {
+:is(.library-page, .home-recent) [data-library-theme='1'] .discovery-game .game-card-info {
   padding: 6px 10px 0;
 }
-.library-page [data-library-theme='1'] .discovery-game .library-card-rating {
+:is(.library-page, .home-recent) [data-library-theme='1'] .discovery-game .library-card-rating {
   padding: 3px 10px 8px;
   min-height: 0;
 }
-.library-page [data-library-theme='1'] .discovery-game:has(.game-card[aria-current='true']) {
+:is(.library-page, .home-recent)
+  [data-library-theme='1']
+  .discovery-game:has(.game-card[aria-current='true']) {
   border-color: #85cbff;
   outline: 3px solid #85cbff;
   outline-offset: 3px;
@@ -36,19 +44,22 @@
     0 0 30px #48a8ff45;
   background: #273553;
 }
-.library-page [data-library-theme='1'] .game-card[aria-current='true'] {
+:is(.library-page, .home-recent) [data-library-theme='1'] .game-card[aria-current='true'] {
   outline: none;
   box-shadow: none;
 }
-.library-page [data-library-theme='1'] .game-card[aria-current='true'] .game-card-info {
+:is(.library-page, .home-recent)
+  [data-library-theme='1']
+  .game-card[aria-current='true']
+  .game-card-info {
   background: linear-gradient(115deg, #34466f, #302b52);
 }
 @media (prefers-reduced-motion: reduce) {
-  .library-page [data-library-theme='1'] .discovery-game {
+  :is(.library-page, .home-recent) [data-library-theme='1'] .discovery-game {
     transition: none;
   }
-  .library-page [data-library-theme='1'] .discovery-game:hover,
-  .library-page [data-library-theme='1'] .discovery-game:focus-within {
+  :is(.library-page, .home-recent) [data-library-theme='1'] .discovery-game:hover,
+  :is(.library-page, .home-recent) [data-library-theme='1'] .discovery-game:focus-within {
     transform: none;
   }
 }

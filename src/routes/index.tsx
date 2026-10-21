@@ -9,6 +9,8 @@ function Home() {
   const { games, platforms, collections } = useLibrary()
   const playing = games.filter((g) => g.experience?.status === 'PLAYING')
   const memories = games.filter((g) => g.experience?.memory)
+  const recentGames = (playing.length ? playing : games).slice(0, 12)
+  const recentSequence = recentGames.map((game) => game.id)
   const chosen = [...platforms].sort(
     (a, b) =>
       games.filter((g) => g.platformId === b.id).length -
@@ -103,23 +105,21 @@ function Home() {
         ))}
       </div>
       {games.length > 0 ? (
-        <>
+        <section className="home-recent">
           <SectionHeading
             title={
               playing.length ? 'L’aventure continue.' : 'Les dernières pages de votre histoire.'
             }
             to="/library"
           />
-          <div className="game-grid home-games">
-            {(playing.length ? playing : games).slice(0, 5).map((g) => (
-              <GameCard
-                key={g.id}
-                game={g}
-                sequence={(playing.length ? playing : games).slice(0, 5).map((item) => item.id)}
-              />
-            ))}
+          <div data-library-theme="1">
+            <div className="game-grid home-games">
+              {recentGames.map((g) => (
+                <GameCard key={g.id} game={g} sequence={recentSequence} overview />
+              ))}
+            </div>
           </div>
-        </>
+        </section>
       ) : (
         <section className="first-page">
           <div className="first-page-art">

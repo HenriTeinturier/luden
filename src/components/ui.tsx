@@ -299,6 +299,7 @@ export function GameCard({
   preview = false,
   editDesire = false,
   theme = '1',
+  overview = false,
 }: {
   game: Game
   compact?: boolean
@@ -306,13 +307,14 @@ export function GameCard({
   editDesire?: boolean
   preview?: boolean
   theme?: '1' | '2'
+  overview?: boolean
 }) {
   const selection = useGameSelection()
   const { platformVisuals } = useLibrary()
   const rating = game.experience?.rating
   const { platformId, collectionId } = useParams({ strict: false })
   const location = useLocation()
-  const libraryCard = !preview && location.pathname.replace(/\/$/, '') === '/library'
+  const libraryCard = !preview && (overview || location.pathname.replace(/\/$/, '') === '/library')
   const discoveryCard = !preview && location.pathname.replace(/\/$/, '') === '/discover'
   const ratingKind = sidebarRatingKind(game)
   const freeBoxes = libraryCard && theme === '2'
@@ -323,7 +325,8 @@ export function GameCard({
       : `${ratingKind === 'desire' ? 'Envie de jouer' : 'Ma note'} : ${badgeValue == null ? 'non renseignée' : `${badgeValue.toLocaleString('fr-FR')} sur 5`}`
   const showDesire = libraryCard ? ratingKind === 'desire' : editDesire
   const simpleCard =
-    !preview && ['/library', '/discover'].includes(location.pathname.replace(/\/$/, ''))
+    !preview &&
+    (overview || ['/library', '/discover'].includes(location.pathname.replace(/\/$/, '')))
   const platformLogo = simpleCard
     ? platformArtwork(
         game.platformId,

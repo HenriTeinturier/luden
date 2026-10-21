@@ -1,5 +1,12 @@
 # Direction graphique actuelle
 
+La section histoire/aventure de la vue d’ensemble affiche jusqu’à 12 jeux dans une grille
+responsive occupant la largeur du conteneur des plateformes. Ses cartes réutilisent la
+présentation classique de la bibliothèque (jaquette entière dans une zone commune,
+logo et année, titre, indicateur en lecture seule, cadre fin et interactions homogènes).
+L’accueil ne propose pas de sélecteur de thème. Les textes de souvenir restent dans les fiches
+et dans la citation dédiée de l’accueil.
+
 Dans la vue Mes envies des univers plateforme, les cinq flammes restent directement
 modifiables sans croix d’effacement. Les marges sous le titre sont supprimées pour
 rapprocher le contrôle de la ligne du titre, sans changer les autres vues.

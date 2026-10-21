@@ -1,5 +1,11 @@
 # État courant
 
+## Galerie de jeux de la vue d’ensemble — 2026-10-21
+
+- Jusqu’à 12 jeux au lieu de 5 dans la section histoire/aventure, grille responsive remplissant le même conteneur que les plateformes.
+- Cartes homogènes inspirées du thème 1 : cadre fin, zone de jaquette commune, logo/année, titre et indicateur rapproché en lecture seule. Survol et sélection communs ; aucun sélecteur de thème sur l’accueil.
+- TypeScript et lint ciblé vérifiés ; validation visuelle par Henri.
+
 ## États du thème 2 de Ma bibliothèque — 2026-10-21
 
 - Survol harmonisé avec les autres cartes : bordure discrète de 1 px couleur `--muted`, sans halo bleu au survol.

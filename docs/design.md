@@ -7,7 +7,8 @@ utilise des marges réduites, un cadre fin et un léger déplacement de la carte
 contrôle d’envie inclus. La jaquette n’a pas de marge extérieure, avec un cadre de 1 px.
 Les flammes sont rapprochées du titre, sans croix d’effacement.
 Son thème 2 reprend les boîtes libres avec les cinq flammes interactives en haut à droite
-sans fond ni flou, agrandies jusqu’à 26 px et alignées à droite ; en liste elles restent sous le titre.
+sur fond sombre à 35 % d’opacité avec flou léger de 4 px, agrandies jusqu’à 26 px et alignées
+en haut à droite sans marge supérieure ; en liste elles restent sous le titre.
 Survol : contour de 1 px couleur `--muted`, comme les univers. Les deux thèmes reprennent
 leur sélection (contour bleu clair, halo et fond). La saisie par demi-flammes
 et au clavier est conservée. Les autres emplacements gardent leur bouton d’effacement.

@@ -195,7 +195,10 @@
   width: min(160px, calc(100% - 12px));
   padding: 0;
   border: 0;
-  background: transparent;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--paper) 35%, transparent);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 .discovery-page [data-library-theme='2'] .card-desire .editable-rating-controls {
   justify-content: flex-end;

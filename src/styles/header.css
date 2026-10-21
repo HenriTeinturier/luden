@@ -236,6 +236,15 @@
 }
 .universe-links .platform-nav {
   border-radius: 5px;
+  min-height: 42px;
+}
+.universe-menu-logo {
+  display: block;
+  width: 140px;
+  max-width: 100%;
+  height: 26px;
+  object-fit: contain;
+  object-position: left center;
 }
 .universe-links .platform-nav:hover {
   background: var(--elevated);

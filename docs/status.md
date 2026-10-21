@@ -1,5 +1,10 @@
 # État courant
 
+## Logos dans le menu Mes univers — 2026-10-21
+
+- Logos de plateforme à la place des textes et pastilles du menu déroulant, proportions conservées. Logos personnalisés prioritaires ; nom court en repli sans logo.
+- Nom complet en infobulle et nom accessible sur chaque lien. Raccourcis directs inchangés. TypeScript et lint ciblé vérifiés ; validation visuelle par Henri.
+
 ## Raccourcis du header — 2026-10-21
 
 - Paramètres réduit à son icône avec nom accessible et infobulle.

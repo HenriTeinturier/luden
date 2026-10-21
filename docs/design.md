@@ -1,5 +1,9 @@
 # Direction graphique actuelle
 
+Le menu déroulant Mes univers affiche les logos des plateformes (personnalisés prioritaires)
+dans une zone de 140 × 26 px, sans déformation. Le nom complet reste accessible et en infobulle ;
+sans logo, le nom court sert de repli. Les raccourcis directs du header restent textuels.
+
 Le header affiche les cinq univers les plus fournis puis les deux derniers actifs, sans
 doublons (sept raccourcis maximum). Le menu Mes univers conserve la liste complète des univers
 contenant des jeux. Paramètres utilise uniquement une icône nommée et une infobulle.

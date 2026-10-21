@@ -20,6 +20,7 @@ import { useEffect, useRef, useState, type ReactNode } from 'react'
 import type { Library } from '../lib/types'
 import { FormActionContext, type FormAction } from './form-action'
 import { GameExplorer } from './game-explorer'
+import { platformArtwork } from '../lib/platform-artwork'
 import {
   universeShortcuts,
   updateUniverseActivity,
@@ -59,7 +60,16 @@ export function Shell({ children, library }: { children: ReactNode; library: Lib
     (platform) => pathname.replace(/\/$/, '') === `/platforms/${platform.id}`,
   )
   const universes =
-    library?.platforms.filter((p) => library.games.some((g) => g.platformId === p.id)) ?? []
+    library?.platforms
+      .filter((p) => library.games.some((g) => g.platformId === p.id))
+      .map((p) => ({
+        ...p,
+        menuLogo: platformArtwork(
+          p.id,
+          p.customization,
+          library.platformVisuals.filter((v) => v.platformId === p.id),
+        ).logo,
+      })) ?? []
   const [universeActivity, setUniverseActivity] = useState<UniverseActivity | null>(null)
   const activityRef = useRef<UniverseActivity | null>(null)
   useEffect(() => {
@@ -160,13 +170,18 @@ export function Shell({ children, library }: { children: ReactNode; library: Lib
                           to="/platforms/$platformId"
                           params={{ platformId: p.id }}
                           className="platform-nav"
+                          title={p.name}
+                          aria-label={p.name}
                           onClick={(event) => {
                             const menu = event.currentTarget.closest('details')
                             if (menu) menu.open = false
                           }}
                         >
-                          <span className="color-dot" style={{ background: p.color }} />
-                          {p.shortName}
+                          {p.menuLogo ? (
+                            <img className="universe-menu-logo" src={p.menuLogo} alt="" />
+                          ) : (
+                            p.shortName
+                          )}
                         </Link>
                       ))}
                     </div>

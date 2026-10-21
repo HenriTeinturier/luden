@@ -1,5 +1,9 @@
 # Direction graphique actuelle
 
+Dans la vue Mes envies des univers plateforme, les cinq flammes restent directement
+modifiables sans croix d’effacement. Les marges sous le titre sont supprimées pour
+rapprocher le contrôle de la ligne du titre, sans changer les autres vues.
+
 ## Thèmes de Ma bibliothèque
 
 Mes envies propose aussi les deux thèmes, avec une préférence indépendante. Son thème 1

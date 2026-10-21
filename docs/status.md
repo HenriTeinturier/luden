@@ -1,5 +1,10 @@
 # État courant
 
+## Flammes Mes envies dans les univers — 2026-10-21
+
+- Croix d’effacement retirée des cartes de la vue Mes envies des plateformes. Modification à la volée et clavier conservés.
+- Suppression des marges cumulées sous le titre et rapprochement du contrôle de flammes. Ajustement limité aux cartes d’envie des univers.
+
 ## Affinage des thèmes Mes envies — 2026-10-21
 
 - Flammes du thème 2 placées sous le titre à gauche, sans fond ni flou, réduites de 26 à 22 px maximum. Les cinq flammes restent modifiables en grille et en liste.

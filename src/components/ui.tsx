@@ -460,10 +460,10 @@ export function GameCard({
     </Link>
   )
   return !freeBoxes && (showDesire || libraryCard) ? (
-    <div className="discovery-game">
+    <div className={`discovery-game${platformId && showDesire ? ' platform-desire-card' : ''}`}>
       {card}
       {showDesire && !libraryCard ? (
-        <CardDesire game={game} showClear={!discoveryCard} />
+        <CardDesire game={game} showClear={!discoveryCard && !platformId} />
       ) : (
         <div className={`library-card-rating${ratingKind === 'desire' ? ' desire-rating' : ''}`}>
           {ratingKind === 'souvenir' ? (

@@ -1,5 +1,10 @@
 # État courant
 
+## Espacement supérieur de Ma bibliothèque — 2026-10-21
+
+- Barre de filtres à 20 px sous la navigation, comme l’espacement compact des galeries plateforme. Suppression du cumul de padding de page et de marge de barre après le retrait du titre.
+- Vérifié : formatage et diff CSS. Validation visuelle par Henri.
+
 ## Étoiles d’envie dans toutes les vues Mes envies — 2026-10-21
 
 - Sélectionner Mes envies affiche les étoiles d’envie modifiables sur les cartes des bibliothèques, plateformes et collections, en grille et en liste, comme sur la page dédiée. Les autres vues les masquent.

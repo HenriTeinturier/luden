@@ -1,5 +1,12 @@
 # État courant
 
+## Mes envies et jeux à trier — 2026-10-21
+
+- À découvrir renommé Mes envies dans la navigation, la page, les galeries, l’accueil et les contrôles des fiches/formulaires. Envie de jouer/rejouer indépendante de l’expérience ; URL `/discover` conservée.
+- Accès secondaire À trier avec compteur dans bibliothèque, plateformes et collections : jeux ni joués ni dans les envies, possédés ou non. Tous les inclut toujours. Possédés/Megastar restent cumulables ; compteur avant filtres, accès masqué si vide sauf vue active.
+- Marquer une expérience jouée ou ajouter aux envies retire automatiquement le jeu de À trier. Aucun changement de données ou migration.
+- Vérifié : TypeScript, lint ciblé, quinze tests galerie/préférences et diff. Validation visuelle par Henri.
+
 ## Vues et filtres cumulables des galeries — 2026-10-21
 
 - Groupe relié Joués / À découvrir / Tous ; second clic sur À découvrir ou Tous revient à Joués. Bibliothèque et collections démarrent sur Joués sans préférence enregistrée, comme les plateformes.

@@ -15,7 +15,13 @@ import {
 import { MegastarTrophy } from './megastar-trophy'
 import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties } from 'react'
 import { useGameSelection } from './game-selection'
-import { filterGames, galleryFilters, toggleGalleryScope, type GallerySearch } from '../lib/gallery'
+import {
+  filterGames,
+  galleryFilters,
+  toggleGalleryScope,
+  needsSorting,
+  type GallerySearch,
+} from '../lib/gallery'
 import {
   galleryCardPositions,
   galleryKeyboardNeighbor,
@@ -54,6 +60,7 @@ export function Gallery({
   const search = useSearch({ strict: false }) as GallerySearch
   const filters = galleryFilters(search, defaultScope, discovery)
   const visible = filterGames(games, filters)
+  const sortingCount = games.filter(needsSorting).length
   const navigate = useNavigate()
   const router = useRouter()
   const pathname = useMatch({ strict: false, select: (match) => match.pathname })
@@ -272,7 +279,7 @@ export function Gallery({
                 aria-pressed={true}
                 onClick={() => update({ scope: 'discover', status: '' })}
               >
-                À découvrir
+                Mes envies
               </button>
               <button
                 type="button"
@@ -296,7 +303,7 @@ export function Gallery({
             (
               [
                 ['played', 'Joués'],
-                ['discover', 'À découvrir'],
+                ['discover', 'Mes envies'],
                 ['all', 'Tous'],
               ] as const
             ).map(([scope, label]) => (
@@ -304,11 +311,7 @@ export function Gallery({
                 key={scope}
                 type="button"
                 aria-pressed={filters.scope === scope}
-                title={
-                  scope === 'all'
-                    ? 'Tous les jeux, y compris ceux ni joués ni à découvrir'
-                    : undefined
-                }
+                title={scope === 'all' ? 'Tous les jeux, y compris ceux à trier' : undefined}
                 onClick={() => update(toggleGalleryScope(filters, scope))}
               >
                 {label}
@@ -316,6 +319,17 @@ export function Gallery({
             ))
           )}
         </div>
+        {!discovery && (sortingCount > 0 || filters.scope === 'unassigned') && (
+          <button
+            type="button"
+            className="gallery-sorting-link"
+            aria-pressed={filters.scope === 'unassigned'}
+            title="Jeux ni joués ni dans mes envies, possédés ou non. Le compteur inclut tous les jeux à trier de cette galerie avant les autres filtres."
+            onClick={() => update(toggleGalleryScope(filters, 'unassigned'))}
+          >
+            À trier · {sortingCount}
+          </button>
+        )}
         <div className="gallery-refinements" role="group" aria-label="Filtres cumulables">
           <span className="gallery-refinements-label">Affiner</span>
           <button

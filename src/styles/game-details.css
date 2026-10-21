@@ -205,6 +205,25 @@
   flex-wrap: wrap;
   gap: 6px;
 }
+.gallery-sorting-link {
+  padding: 7px 9px;
+  border: 1px dashed var(--muted);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-soft);
+  font-size: 12px;
+  white-space: nowrap;
+}
+.gallery-sorting-link:hover,
+.gallery-sorting-link[aria-pressed='true'] {
+  border-color: var(--blue);
+  color: var(--blue);
+  background: var(--active-background);
+}
+.gallery-sorting-link:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
 .gallery-refinements-label {
   font-size: 11px;
   color: var(--muted);

@@ -66,7 +66,7 @@ function Home() {
           {
             icon: Compass,
             value: games.filter((g) => g.discover).length,
-            label: 'aventures à découvrir',
+            label: 'envies de jouer',
             to: '/discover',
           },
           {

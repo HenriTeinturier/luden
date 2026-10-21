@@ -12,7 +12,7 @@ function Discover() {
     <div className="page discovery-page">
       <PageHeading
         eyebrow="LA CURIOSITÉ N’A PAS D’ÂGE"
-        title="La prochaine aventure."
+        title="Mes envies."
         description="À essayer, à explorer ou à rejouer. Suivez votre envie, sans obligation de finir."
       />
       <Gallery games={games} defaultScope="discover" discovery />

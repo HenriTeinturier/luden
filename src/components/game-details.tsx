@@ -306,13 +306,11 @@ function QuickExperience({
               type="button"
               className="sidebar-discover"
               aria-pressed={game.discover}
-              title={
-                game.discover ? 'Retirer des jeux à découvrir' : 'Ajouter aux jeux à découvrir'
-              }
+              title={game.discover ? 'Retirer de mes envies' : 'Ajouter à mes envies'}
               onClick={() => void update({ discover: !game.discover })}
             >
               <Sparkles size={16} />
-              <span>{game.discover ? 'À découvrir' : 'Envie de découvrir'}</span>
+              <span>{game.discover ? 'Dans mes envies' : 'Ajouter à mes envies'}</span>
               {game.discover && <Check size={12} aria-hidden="true" />}
             </button>
             <div className="sidebar-memberships" aria-label="Mes collections">
@@ -509,7 +507,8 @@ function QuickExperience({
             aria-pressed={game.discover}
             onClick={() => void update({ discover: !game.discover })}
           >
-            <Sparkles size={16} />À découvrir / rejouer
+            <Sparkles size={16} />
+            Dans mes envies
           </button>
         </div>
         {game.discover && (

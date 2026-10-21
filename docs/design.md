@@ -282,7 +282,7 @@ reste entière pour la scène large. Format de création conseillé : 2560 × 14
 
 ## Bibliothèque et découverte toutes plateformes
 
-Dans « Ma bibliothèque » et « À découvrir », la grille utilise une carte par colonne pour toutes les plateformes,
+Dans « Ma bibliothèque » et « Mes envies », la grille utilise une carte par colonne pour toutes les plateformes,
 y compris les boîtes horizontales. Chaque jaquette est centrée dans un cadre carré avec 8 px
 de marge, entièrement visible et sans déformation. Colonnes automatiques de 200 px minimum,
 deux sur mobile ; le réglage manuel de densité reste prioritaire. Sous la jaquette, seuls le
@@ -438,13 +438,13 @@ le souvenir complet reste dans la fiche. Les images choisies par l’utilisateur
 aucune conversion automatique d’une jaquette IGDB en boîte PAL.
 
 Sans préférence enregistrée, bibliothèque, plateformes et collections démarrent sur Joués.
-Trois boutons reliés composent le choix de vue : Joués, À découvrir, Tous. Un second clic sur
-À découvrir ou Tous revient à Joués. Tous inclut aussi les jeux ni joués ni marqués à découvrir ;
+Trois boutons reliés composent le choix de vue : Joués, Mes envies, Tous. Un second clic sur
+Mes envies ou Tous revient à Joués. Tous inclut aussi les jeux ni joués ni dans les envies ;
 les deux premiers ensembles peuvent se recouper. Les jeux d’une collection restent seuls concernés.
 À côté, sous « Affiner », Possédés et Megastar sont des interrupteurs indépendants et cumulables.
 Changer de vue conserve leur état ; désactiver Possédés retire uniquement le filtre de possession.
 Les filtres avancés de possession restent synchronisés. Réinitialiser revient à Joués sans filtres.
-Découverte reste limitée à À découvrir, avec Possédés indépendant et sans Megastar.
+La page Mes envies reste limitée aux envies, avec Possédés indépendant et sans Megastar.
 L’état reste dans l’URL et dans les préférences propres à chaque galerie : vue, possession, Megastar,
 tri, regroupement, grille/liste, colonnes et filtres avancés. Les anciens liens/préférences avec
 la vue Possédés correspondent désormais à Tous + possession actuelle.
@@ -531,7 +531,7 @@ Les galeries PS2, GameCube et Xbox utilisent des boîtes verticales (ratio 0,71)
 des boîtiers dont le cadre suit le ratio des boîtes PAL (1,24) pour éviter les bandes vides
 (cadre carré en l’absence d’image). Les images restent entières, sans déformation. Les univers affichent
 le titre sur une ligne et les étoiles dessous, y compris sans note. Dans Ma bibliothèque
-et À découvrir, les cartes communes conservent leur cadre carré avec image entière,
+et Mes envies, les cartes communes conservent leur cadre carré avec image entière,
 le logo de la console, le titre du jeu et son année lorsqu’elle est renseignée.
 Les scènes de consultation associent boîte et disque ; le mini-disque GameCube dispose
 d’un cadre plus petit. Filtres, densité, préférences, édition et imports restent communs.
@@ -543,15 +543,29 @@ la scène suit ce décalage. Le cadre du CD passe de 94 % à 80 % de la hauteur 
 Le CD est remonté de 20 % de son cadre pour aligner approximativement son centre
 avec celui de la boîte, en conservant sa taille et le placement de la boîte.
 
-## Envies dans À découvrir
+## Envies dans Mes envies
 
-Ma bibliothèque et À découvrir utilisent toute la largeur disponible, sans plafond de 1540 px,
+Ma bibliothèque et Mes envies utilisent toute la largeur disponible, sans plafond de 1540 px,
 avec les marges adaptatives habituelles et la place réservée à la sidebar lorsqu’elle est ouverte.
 
-La page reste limitée aux jeux marqués à découvrir/rejouer. Raccourcis : À découvrir,
+La page reste limitée aux jeux présents dans les envies de jouer/rejouer. Raccourcis : Mes envies,
 Possédés (possession actuelle dans cette sélection), Par envie ↓ (note décroissante,
 notes non précisées en dernier ; un second clic rétablit Derniers ajouts / modifiés). Joués, Tous et Megastar restent dans les autres bibliothèques.
 Chaque carte, en galerie comme en vue compacte, affiche Mon envie avec des étoiles modifiables
 par demi-points, au pointeur ou au clavier, et un bouton d’effacement. Le contrôle est séparé du
 lien vers la fiche. Sauvegarde immédiate, blocage pendant l’enregistrement, erreur visible en cas
 d’échec ; les données et le classement sont rafraîchis après sauvegarde.
+
+## Jeux à trier
+
+Un jeu est automatiquement « À trier » s’il n’a aucune expérience jouée (expérience absente ou
+statut Non joué) et n’est pas dans Mes envies. Possession, catégorie de rangement et note d’envie
+ne changent pas cette sélection. Joués et Mes envies restent indépendants : un jeu joué peut être
+une envie de rejouer. Tous contient tous les jeux, y compris ceux à trier.
+
+Un accès secondaire « À trier · N » apparaît à côté du groupe de vues dans les bibliothèques,
+plateformes et collections contenant des jeux concernés. Le compteur porte sur les jeux de cette
+galerie avant les autres filtres. Possédés, Megastar et recherche restent cumulables avec cette vue.
+Un second clic revient à Joués. Si le dernier jeu sort de la sélection, l’accès actif reste visible
+à zéro pour permettre de quitter la vue ; il disparaît ensuite. Vue mémorisée et conservée au retour
+de fiche. La page Mes envies ne propose pas cet accès puisqu’elle est réservée aux envies.

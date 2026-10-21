@@ -388,7 +388,7 @@ export function GameForm({
                 checked={data.discover}
                 onChange={(e) => change('discover', e.target.checked)}
               />
-              À découvrir ou à rejouer
+              Dans mes envies (jouer ou rejouer)
             </label>
             {data.discover && (
               <label>

@@ -84,3 +84,12 @@ test('Le mélange mémorisé est restauré et la graine du lien reste prioritair
     randomSeed: 67890,
   })
 })
+
+test('La vue À trier se restaure et laisse la priorité aux choix explicites', () => {
+  const saved = JSON.stringify({ scope: 'unassigned', owned: 'current' })
+  assert.deepEqual(restoreGalleryPreferences(saved, {}), { scope: 'unassigned', owned: 'current' })
+  assert.deepEqual(restoreGalleryPreferences(saved, { scope: 'all' }), {
+    scope: 'all',
+    owned: 'current',
+  })
+})

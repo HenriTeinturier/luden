@@ -6,7 +6,7 @@ export const gallerySearch = z.object({
   platform: z.string().optional(),
   machine: z.string().optional(),
   status: z.string().optional(),
-  scope: z.enum(['all', 'played', 'discover', 'owned']).optional(),
+  scope: z.enum(['all', 'played', 'discover', 'owned', 'unassigned']).optional(),
   sort: z.enum(['recent', 'title', 'rating', 'year', 'desire', 'random']).optional(),
   randomSeed: z.number().int().min(0).max(0xffffffff).optional().catch(undefined),
   view: z.enum(['grid', 'list']).optional(),
@@ -40,7 +40,7 @@ export function galleryFilters(
 
 export function toggleGalleryScope(
   filters: GallerySearch,
-  scope: 'played' | 'discover' | 'all',
+  scope: 'played' | 'discover' | 'all' | 'unassigned',
 ): GallerySearch {
   return { ...filters, scope: filters.scope === scope ? 'played' : scope, status: '' }
 }
@@ -51,6 +51,10 @@ export const gameReturnSearch = z.object({
 })
 export function hasPlayed(game: Game) {
   return Boolean(game.experience && game.experience.status !== 'UNPLAYED')
+}
+
+export function needsSorting(game: Game) {
+  return !hasPlayed(game) && !game.discover
 }
 
 // Stable per-game ranks preserve relative order through filtering, edits and return navigation.
@@ -81,6 +85,7 @@ export function filterGames(games: Game[], filters: GallerySearch) {
       (!filters.status || (g.experience?.status ?? 'UNPLAYED') === filters.status) &&
       (filters.scope !== 'played' || hasPlayed(g)) &&
       (filters.scope !== 'discover' || g.discover) &&
+      (filters.scope !== 'unassigned' || needsSorting(g)) &&
       (filters.scope !== 'owned' || g.possessions.some((p) => p.state === 'CURRENT')) &&
       (!filters.favorite || g.favorite) &&
       (!filters.owned ||

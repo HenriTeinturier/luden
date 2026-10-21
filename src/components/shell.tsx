@@ -25,7 +25,7 @@ const navigation = [
   { to: '/', label: 'Vue d’ensemble', icon: Home },
   { to: '/library', label: 'Ma bibliothèque', icon: BookOpen },
   { to: '/platforms', label: 'Mes plateformes', icon: Gamepad2 },
-  { to: '/discover', label: 'À découvrir', icon: Compass },
+  { to: '/discover', label: 'Mes envies', icon: Compass },
   { to: '/collections', label: 'Mes collections', icon: Layers3 },
 ] as const
 

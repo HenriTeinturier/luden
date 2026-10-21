@@ -6,6 +6,7 @@ import {
   gameReturnSearch,
   galleryFilters,
   toggleGalleryScope,
+  needsSorting,
 } from '../src/lib/gallery'
 import type { Game } from '../src/lib/types'
 
@@ -182,4 +183,51 @@ test('Possédés et Megastar se cumulent dans chaque vue ; Tous inclut les jeux 
     filterGames(fixtures, { scope: 'discover', favorite: true }).map((game) => game.id),
     ['discover', 'unowned'],
   )
+})
+
+test('À trier ignore possession, catégorie et note d’envie ; Tous conserve ces jeux', () => {
+  const games = [
+    {
+      id: 'owned',
+      experience: null,
+      discover: false,
+      possessions: [{ state: 'CURRENT' }],
+      categoryId: 'action',
+      desire: 4,
+    },
+    { id: 'unowned', experience: { status: 'UNPLAYED' }, discover: false, possessions: [] },
+    { id: 'wish', experience: null, discover: true, possessions: [] },
+    { id: 'played', experience: { status: 'PLAYED' }, discover: false, possessions: [] },
+    { id: 'replay', experience: { status: 'FINISHED' }, discover: true, possessions: [] },
+  ].map((game) => ({ ...game, updatedAt: '2026-10-21' })) as Game[]
+  const ids = (items: Game[]) => items.map((game) => game.id)
+  assert.deepEqual(ids(games.filter(needsSorting)), ['owned', 'unowned'])
+  assert.deepEqual(ids(filterGames(games, { scope: 'unassigned' })), ['owned', 'unowned'])
+  assert.deepEqual(ids(filterGames(games, { scope: 'unassigned', owned: 'current' })), ['owned'])
+  assert.deepEqual(ids(filterGames(games, { scope: 'all' })), ids(games))
+  assert.deepEqual(
+    ids(
+      filterGames(
+        games.map((game) => (game.id === 'owned' ? { ...game, discover: true } : game)),
+        { scope: 'unassigned' },
+      ),
+    ),
+    ['unowned'],
+  )
+  assert.deepEqual(
+    ids(
+      filterGames(
+        games.map((game) =>
+          game.id === 'unowned' ? ({ ...game, experience: { status: 'PLAYED' } } as Game) : game,
+        ),
+        { scope: 'unassigned' },
+      ),
+    ),
+    ['owned'],
+  )
+  const filters = gallerySearch.parse({ scope: 'unassigned', favorite: true, owned: 'current' })
+  assert.equal(gameReturnSearch.parse({ filters }).filters?.scope, 'unassigned')
+  assert.equal(toggleGalleryScope(filters, 'unassigned').scope, 'played')
+  assert.equal(toggleGalleryScope(filters, 'unassigned').favorite, true)
+  assert.equal(toggleGalleryScope(filters, 'unassigned').owned, 'current')
 })

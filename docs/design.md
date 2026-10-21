@@ -13,6 +13,8 @@ dans les deux tailles de scène. Ces modèles sont réutilisables sur les platef
 Dans la galerie du modèle DS, les images utilisent leur hauteur naturelle : le titre suit
 directement la boîte sans bande vide. Le ratio carré reste le repli sans image ; les cartes
 peuvent avoir des hauteurs différentes. L’aperçu de l’éditeur utilise le même comportement.
+Le modèle DS évite `sizes="auto"` sur les images : le confinement de taille du navigateur
+imposait une hauteur de repli de 150 px et créait des marges latérales. Les boîtes occupent toute la largeur.
 Les choix de présentation déjà enregistrés restent prioritaires ; « Présentation d’origine »
 permet de retrouver ces nouveaux réglages. Aucun visuel de console n’est ajouté par ces modèles.
 Chaque modèle définit les proportions, le style des cartes et les étoiles vides dans la galerie,

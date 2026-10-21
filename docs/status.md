@@ -1,5 +1,10 @@
 # État courant
 
+## Galerie DS sans marges latérales — 2026-10-21
+
+- Suppression du dimensionnement `sizes="auto"` pour le modèle à hauteur naturelle DS : il imposait une hauteur de repli de 150 px. Images entières sur toute la largeur, hauteur proportionnelle et titre directement dessous.
+- Vérification ciblée TypeScript/lint et contrôle des dimensions dans le navigateur.
+
 ## Flammes en lecture seule dans Ma bibliothèque — 2026-10-21
 
 - Les cartes affichent les flammes sans modification directe ni croix d’effacement. L’édition reste disponible dans la sidebar et sur la page Mes envies.

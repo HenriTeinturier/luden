@@ -255,6 +255,11 @@ export function Cover({
   ratio?: string
 }) {
   const [failedUrl, setFailedUrl] = useState<string | null>(null)
+  // Auto sizes applies size containment, which forces a 150px fallback height
+  // on images whose frame deliberately follows their natural proportions.
+  const imageSizes = platformPresentation(game.platform).gallery.naturalImageHeight
+    ? sizes.replace(/^auto\s*,\s*/, '')
+    : sizes
   return (
     <div
       className={`game-cover ${className}`}
@@ -269,7 +274,7 @@ export function Cover({
         <img
           {...(original
             ? { src: game.coverUrl }
-            : mediaImageSources(game.coverUrl, game.cover?.width, sizes))}
+            : mediaImageSources(game.coverUrl, game.cover?.width, imageSizes))}
           alt={`Jaquette de ${game.title}`}
           loading="lazy"
           onError={() => setFailedUrl(game.coverUrl)}

@@ -1,5 +1,11 @@
 # État courant
 
+## Cartes classiques de Ma bibliothèque — 2026-10-21
+
+- Thème 1 : jaquettes sans marge extérieure, cadre fin de 1 px, indicateurs rapprochés du titre sans hauteur de pied superflue.
+- Toute la carte se décale légèrement au survol avec bordure discrète ; sélection identique aux univers (contour bleu clair, halo et fond). Thème 2 inchangé.
+- Diff et formatage CSS vérifiés ; validation visuelle par Henri.
+
 ## Flammes Mes envies dans les univers — 2026-10-21
 
 - Croix d’effacement retirée des cartes de la vue Mes envies des plateformes. Modification à la volée et clavier conservés.

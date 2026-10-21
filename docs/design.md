@@ -6,6 +6,11 @@ rapprocher le contrôle de la ligne du titre, sans changer les autres vues.
 
 ## Thèmes de Ma bibliothèque
 
+Le thème 1 de Ma bibliothèque utilise un cadre de 1 px et des jaquettes sans marge
+extérieure. Flammes, notes et souvenir suivent directement le titre. Le survol déplace
+toute la carte de 3 px vers le haut avec bordure discrète ; la sélection reprend le
+contour bleu clair, le halo et le fond des univers. Les indicateurs restent en lecture seule.
+
 Mes envies propose aussi les deux thèmes, avec une préférence indépendante. Son thème 1
 utilise des marges réduites, un cadre fin et un léger déplacement de la carte entière au survol,
 contrôle d’envie inclus. La jaquette n’a pas de marge extérieure, avec un cadre de 1 px.

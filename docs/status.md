@@ -1,5 +1,11 @@
 # État courant
 
+## Cadre Game Boy ajusté à la boîte — 2026-10-21
+
+- Le modèle Game Boy utilise la hauteur naturelle de l’image : suppression du vide sous Tetris, sans découpe ni déformation. Ratio 0,8 conservé sans image.
+- DS inchangée : les différences de proportions viennent des visuels encore à remplacer par l’utilisateur.
+- Dimensions du cadre et de l’image vérifiées dans le navigateur ; TypeScript et lint ciblé validés.
+
 ## Galerie DS sans marges latérales — 2026-10-21
 
 - Suppression du dimensionnement `sizes="auto"` pour le modèle à hauteur naturelle DS : il imposait une hauteur de repli de 150 px. Images entières sur toute la largeur, hauteur proportionnelle et titre directement dessous.

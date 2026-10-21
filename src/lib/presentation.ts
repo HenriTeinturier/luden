@@ -202,7 +202,7 @@ export const presentationPresets = {
     example: 'Game Boy',
     support: 'cartridge',
     supportRatio: '0.88',
-    gallery: { ...framed, ratio: '0.8' },
+    gallery: { ...framed, ratio: '0.8', naturalImageHeight: true },
     scene: {
       boxHeight: 128,
       pairedBoxHeight: 128,

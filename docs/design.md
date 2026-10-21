@@ -10,11 +10,12 @@ Game Boy, PSP et Nintendo DS disposent de modèles distincts, portant le nom de 
 le sélecteur : boîte verticale/petite cartouche, boîtier étroit/UMD et boîtier carré/carte de jeu.
 Leurs ratios de galerie indicatifs sont respectivement 0,8, 0,59 et 1 ; les supports sont réduits
 dans les deux tailles de scène. Ces modèles sont réutilisables sur les plateformes personnelles.
-Dans la galerie du modèle DS, les images utilisent leur hauteur naturelle : le titre suit
+Dans les galeries des modèles DS et Game Boy, les images utilisent leur hauteur naturelle : le titre suit
 directement la boîte sans bande vide. Le ratio carré reste le repli sans image ; les cartes
 peuvent avoir des hauteurs différentes. L’aperçu de l’éditeur utilise le même comportement.
-Le modèle DS évite `sizes="auto"` sur les images : le confinement de taille du navigateur
+Ces modèles évitent `sizes="auto"` sur les images : le confinement de taille du navigateur
 imposait une hauteur de repli de 150 px et créait des marges latérales. Les boîtes occupent toute la largeur.
+Game Boy conserve le ratio 0,8 uniquement en repli sans image ; le cadre ne laisse plus de vide sous les boîtes plus larges.
 Les choix de présentation déjà enregistrés restent prioritaires ; « Présentation d’origine »
 permet de retrouver ces nouveaux réglages. Aucun visuel de console n’est ajouté par ces modèles.
 Chaque modèle définit les proportions, le style des cartes et les étoiles vides dans la galerie,

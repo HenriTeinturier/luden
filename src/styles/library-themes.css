@@ -188,20 +188,15 @@
   height: 20px;
 }
 .discovery-page [data-library-theme='2'] .discovery-game .card-desire {
-  position: absolute;
-  top: 0;
-  right: 6px;
-  z-index: 4;
-  width: min(160px, calc(100% - 12px));
+  position: static;
+  width: min(150px, 100%);
+  margin: 4px 0 0;
   padding: 0;
   border: 0;
-  border-radius: 4px;
-  background: color-mix(in srgb, var(--paper) 35%, transparent);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  background: transparent;
 }
 .discovery-page [data-library-theme='2'] .card-desire .editable-rating-controls {
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: flex-start;
   min-height: 0;
 }
@@ -211,8 +206,8 @@
 }
 .discovery-page [data-library-theme='2'] .card-desire .editable-stars .star,
 .discovery-page [data-library-theme='2'] .card-desire .editable-stars .star svg {
-  width: clamp(12px, 17cqi, 26px);
-  height: clamp(12px, 17cqi, 26px);
+  width: clamp(12px, 15cqi, 22px);
+  height: clamp(12px, 15cqi, 22px);
 }
 .discovery-page
   [data-library-theme]
@@ -220,11 +215,6 @@
   .game-card[aria-current='true']
   .game-card-info {
   background: linear-gradient(115deg, #34466f, #302b52);
-}
-/* In list view keep the full control below the title, clear of the text. */
-.discovery-page [data-library-theme='2'] .game-list .card-desire {
-  position: static;
-  margin: 4px 0 0 auto;
 }
 @media (prefers-reduced-motion: reduce) {
   .discovery-page .discovery-game {

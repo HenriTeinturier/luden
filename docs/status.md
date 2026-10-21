@@ -2,12 +2,10 @@
 
 ## Affinage des thèmes Mes envies — 2026-10-21
 
-- Fond des flammes du thème 2 rétabli à 35 % d’opacité (65 % transparent), avec flou léger de 4 px pour leur lisibilité ; position haute conservée.
-
-- Flammes du thème 2 calées en haut du cadre invisible : `top: 0`, sans marge/padding supérieur ni centrage vertical ajoutant du vide.
+- Flammes du thème 2 placées sous le titre à gauche, sans fond ni flou, réduites de 26 à 22 px maximum. Les cinq flammes restent modifiables en grille et en liste.
 
 - Thème 1 : suppression de la marge autour de la jaquette, cadre fin de 1 px comme les univers.
-- Thème 2 : flammes agrandies jusqu’à 26 px, alignées à droite, sans fond ni flou. Survol avec bordure de 1 px couleur `--muted` ; sélection des deux thèmes identique aux univers (contour, halo et fond).
+- Thème 2 : survol avec bordure de 1 px couleur `--muted` ; sélection des deux thèmes identique aux univers (contour, halo et fond).
 - Vérification du formatage et du diff CSS ; validation visuelle par Henri.
 
 ## Thèmes et flammes de Mes envies — 2026-10-21

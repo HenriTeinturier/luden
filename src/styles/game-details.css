@@ -100,6 +100,16 @@
 .library-card-rating .stars small {
   display: none;
 }
+.library-card-rating .rating-caption,
+.card-desire .desire-rating .rating-caption {
+  display: none;
+}
+.card-desire .desire-rating .editable-rating-controls {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
 .card-desire .editable-stars .star,
 .card-desire .editable-stars .star svg {
   width: clamp(8px, 12cqi, 22px);

@@ -1,5 +1,10 @@
 # État courant
 
+## Indicateurs de cartes allégés — 2026-10-21
+
+- Cartes : étoiles et flammes sans les libellés Ma note / Envie de jouer ; cadre et fond autour du contrôle d’envie retirés. Libellés de sidebar et noms accessibles conservés.
+- Vérifié : formatage et diff CSS. Validation visuelle par Henri.
+
 ## Notes et envies sur les cartes de Ma bibliothèque — 2026-10-21
 
 - Dans toutes les vues de Ma bibliothèque, chaque carte suit la sidebar : étoiles jaunes Ma note si joué, flammes roses modifiables Envie de jouer si non joué, aucun indicateur pour un souvenir non joué hors envies. Notes non renseignées affichées vides.

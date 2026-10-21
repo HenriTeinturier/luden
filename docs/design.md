@@ -605,3 +605,6 @@ Ma note pour les jeux joués, flammes roses modifiables Envie de jouer pour les 
 indicateur pour un souvenir non joué hors envies. La note non renseignée reste représentée par
 cinq étoiles vides et « à noter ». La note se modifie dans la sidebar ; les flammes restent
 modifiables directement sur les cartes. Un seul indicateur par carte de bibliothèque.
+
+Sur les cartes, seuls les symboles sont visibles : pas de libellé Ma note ou Envie de jouer,
+ni de cadre/fond autour des flammes. Les noms accessibles et les libellés de sidebar restent présents.

@@ -1,5 +1,10 @@
 # État courant
 
+## Repère Souvenir turquoise — 2026-10-21
+
+- Texte et marque-page Souvenir en turquoise, avec graisse légèrement renforcée et remplissage discret de l’icône dans les cartes. Même teinte pour la mention de sidebar ; hauteur et alignement conservés.
+- Vérifié : formatage et diff CSS. Validation visuelle par Henri.
+
 ## Alignement des notes et envies en bibliothèque — 2026-10-21
 
 - Étoiles, flammes et repère Souvenir placés dans un pied de carte commun, hors du lien, avec mêmes marges et hauteur réservée. Alignement vertical identique quelle que soit la présence du bouton d’effacement des flammes.

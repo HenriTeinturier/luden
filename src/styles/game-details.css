@@ -110,12 +110,14 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: var(--muted);
+  color: #79ddd0;
+  font-weight: 600;
   font-size: 12px;
   line-height: 22px;
 }
 .game-card-souvenir svg {
-  color: #bba7dc;
+  color: currentColor;
+  fill: #79ddd024;
 }
 .library-card-rating .star,
 .library-card-rating .star svg {
@@ -2327,6 +2329,7 @@ kbd {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  color: var(--muted);
+  color: #79ddd0;
+  font-weight: 600;
   font-size: 13px;
 }

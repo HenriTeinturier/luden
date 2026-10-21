@@ -806,12 +806,6 @@ input[type='radio'] {
 .collection-detail small {
   color: var(--muted);
 }
-.discovery-note {
-  background: var(--surface-hover);
-  border-color: var(--border-strong);
-  color: var(--yellow);
-  font-size: 12px;
-}
 .game-about > p:not(.field-hint) {
   color: var(--muted);
 }

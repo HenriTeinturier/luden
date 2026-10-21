@@ -336,22 +336,6 @@
   margin: auto;
   color: #86946c;
 }
-.discovery-note {
-  background: #ecefdf;
-  border: 1px solid #e3e7d3;
-  border-radius: 7px;
-  font-size: 11px;
-  color: #7c8865;
-  padding: 17px 20px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 15px 0 25px;
-}
-.discovery-note strong {
-  margin-left: auto;
-  font-weight: 500;
-}
 .filter-tabs {
   display: flex;
   gap: 7px;

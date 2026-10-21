@@ -1,5 +1,9 @@
 # État courant
 
+## Découverte sans bandeau — 2026-10-21
+
+- Bandeau explicatif « Une envie de jouer… » retiré de À découvrir et styles inutilisés supprimés. Vérifié : formatage, lint ciblé et diff.
+
 ## Bibliothèque et découverte pleine largeur — 2026-10-21
 
 - Ma bibliothèque et À découvrir utilisent toute la largeur disponible, sans plafond de 1540 px. Marges adaptatives et place de la sidebar conservées.

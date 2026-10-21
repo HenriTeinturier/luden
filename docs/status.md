@@ -2,6 +2,8 @@
 
 ## Affinage des thèmes Mes envies — 2026-10-21
 
+- Flammes du thème 2 calées en haut du cadre invisible : `top: 0`, sans marge/padding supérieur ni centrage vertical ajoutant du vide.
+
 - Thème 1 : suppression de la marge autour de la jaquette, cadre fin de 1 px comme les univers.
 - Thème 2 : flammes agrandies jusqu’à 26 px, alignées à droite, sans fond ni flou. Survol avec bordure de 1 px couleur `--muted` ; sélection des deux thèmes identique aux univers (contour, halo et fond).
 - Vérification du formatage et du diff CSS ; validation visuelle par Henri.

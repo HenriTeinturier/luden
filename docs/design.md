@@ -608,3 +608,9 @@ modifiables directement sur les cartes. Un seul indicateur par carte de biblioth
 
 Sur les cartes, seuls les symboles sont visibles : pas de libellé Ma note ou Envie de jouer,
 ni de cadre/fond autour des flammes. Les noms accessibles et les libellés de sidebar restent présents.
+
+Dans les galeries plateforme et collection, la ligne sous le titre affiche les flammes roses
+si l’envie est renseignée pour un jeu non joué ou sans note. Un souvenir sans note ni envie
+porte un marque-page et « Souvenir ». La ligne réserve au moins 22 px, comme les notes, afin
+de conserver la hauteur du pied de carte. Le contrôle d’envie éditable remplace cette ligne
+lorsqu’il est présent, sans répéter les étoiles.

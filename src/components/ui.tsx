@@ -1,6 +1,16 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import * as AlertDialog from '@radix-ui/react-alert-dialog'
-import { X, ArrowUpRight, Plus, Gamepad2, Monitor, Disc3, Cloud, Clock3 } from 'lucide-react'
+import {
+  X,
+  ArrowUpRight,
+  Plus,
+  Gamepad2,
+  Monitor,
+  Disc3,
+  Cloud,
+  Clock3,
+  Bookmark,
+} from 'lucide-react'
 import { Link, useLoaderData, useParams, useLocation } from '@tanstack/react-router'
 import { useState, type CSSProperties, type ReactNode } from 'react'
 import type { Game, Platform } from '../lib/types'
@@ -341,13 +351,28 @@ export function GameCard({
         )}
         {!simpleCard && (
           <>
-            <Stars
-              value={rating}
-              showEmpty={
-                platformPresentation(platformId || preview ? game.platform : '').gallery
-                  .showEmptyStars
-              }
-            />
+            {!showDesire && (
+              <div className="game-card-indicator">
+                {ratingKind === 'souvenir' ||
+                (game.souvenir && rating == null && game.desire == null) ? (
+                  <span className="game-card-souvenir">
+                    <Bookmark size={18} aria-hidden="true" /> Souvenir
+                  </span>
+                ) : game.desire != null && (ratingKind === 'desire' || rating == null) ? (
+                  <span className="desire-rating">
+                    <Stars value={game.desire} kind="desire" />
+                  </span>
+                ) : (
+                  <Stars
+                    value={rating}
+                    showEmpty={
+                      platformPresentation(platformId || preview ? game.platform : '').gallery
+                        .showEmptyStars
+                    }
+                  />
+                )}
+              </div>
+            )}
             <div className="game-card-bottom">
               <span>{playStatuses[game.experience?.status ?? 'UNPLAYED']}</span>
               <span className="possession-icons">

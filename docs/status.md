@@ -1,5 +1,11 @@
 # État courant
 
+## Indicateurs des cartes plateforme — 2026-10-21
+
+- Les cartes plateforme et collection affichent les flammes roses lorsqu’une envie est renseignée pour un jeu non joué ou sans note. Les notes d’expérience gardent les étoiles jaunes.
+- Un souvenir sans note ni envie affiche un marque-page et Souvenir ; ligne commune de 22 px minimum pour préserver la hauteur du pied de carte. L’édition d’envie existante dans Mes envies ne double plus l’indicateur de note.
+- Validation visuelle par Henri.
+
 ## Indicateurs de cartes allégés — 2026-10-21
 
 - Cartes : étoiles et flammes sans les libellés Ma note / Envie de jouer ; cadre et fond autour du contrôle d’envie retirés. Libellés de sidebar et noms accessibles conservés.

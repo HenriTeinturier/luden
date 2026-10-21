@@ -92,6 +92,22 @@
   container-type: inline-size;
   padding-top: 4px;
 }
+.game-card-indicator {
+  display: flex;
+  align-items: center;
+  min-height: 22px;
+}
+.game-card-souvenir {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 22px;
+}
+.game-card-souvenir svg {
+  color: #bba7dc;
+}
 .library-card-rating .star,
 .library-card-rating .star svg {
   width: clamp(8px, 12cqi, 22px);

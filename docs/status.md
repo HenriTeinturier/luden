@@ -1,5 +1,10 @@
 # État courant
 
+## États du thème 2 de Ma bibliothèque — 2026-10-21
+
+- Survol harmonisé avec les autres cartes : bordure discrète de 1 px couleur `--muted`, sans halo bleu au survol.
+- Sélection identique aux univers et au thème 1 : contour bleu clair, halo et fond. Diff et formatage CSS vérifiés.
+
 ## Cartes classiques de Ma bibliothèque — 2026-10-21
 
 - Thème 1 : jaquettes sans marge extérieure, cadre fin de 1 px, indicateurs rapprochés du titre sans hauteur de pied superflue.

@@ -28,7 +28,8 @@ Le thème 2 retire les cadres au repos et aligne le bas des boîtes entières su
 invisible commune. Une pastille floutée en haut à droite affiche une flamme ou une étoile
 avec la valeur, ou le marque-page Souvenir ; un tiret signale une valeur non renseignée.
 Logo et année occupent un bandeau léger, séparé du titre par un trait. Survol et focus
-affichent un cadre bleu Luden ; la sélection ajoute un fond bleu discret et un halo.
+affichent une bordure discrète de 1 px couleur `--muted` ; la sélection reprend
+le contour bleu clair, le fond et le halo des univers et du thème 1.
 Megastar reste visible en haut à gauche. La vue compacte reprend le même habillage.
 
 ## Modèles de présentation des jeux

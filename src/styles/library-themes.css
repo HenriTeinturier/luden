@@ -72,7 +72,7 @@
 
 :is(.library-page, .discovery-page) [data-library-theme='2'] .game-card {
   background: transparent;
-  border: 2px solid transparent;
+  border: 1px solid transparent;
   border-radius: 7px;
   padding: 6px;
   box-shadow: none;
@@ -81,16 +81,21 @@
 }
 :is(.library-page, .discovery-page) [data-library-theme='2'] .game-card:hover,
 :is(.library-page, .discovery-page) [data-library-theme='2'] .game-card:focus-visible {
-  border-color: var(--blue);
-  background: color-mix(in srgb, var(--blue) 6%, transparent);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--blue) 15%, transparent);
+  border-color: var(--muted);
+  background: transparent;
+  box-shadow: none;
 }
 :is(.library-page, .discovery-page) [data-library-theme='2'] .game-card[aria-current='true'] {
-  border-color: var(--blue);
-  background: color-mix(in srgb, var(--blue) 12%, transparent);
+  border-color: #85cbff;
+  outline: 3px solid #85cbff;
+  outline-offset: 3px;
+  background: #273553;
   box-shadow:
-    0 0 0 2px color-mix(in srgb, var(--blue) 32%, transparent),
-    0 0 18px #48a8ff26;
+    0 0 0 7px #48a8ff20,
+    0 0 30px #48a8ff45;
+}
+.library-page [data-library-theme='2'] .game-card[aria-current='true'] .game-card-info {
+  background: linear-gradient(115deg, #34466f, #302b52);
 }
 :is(.library-page, .discovery-page) [data-library-theme='2'] .game-card .game-card-info {
   background: transparent;

@@ -572,9 +572,10 @@ de fiche. La page Mes envies ne propose pas cet accès puisqu’elle est réserv
 
 ## Statistiques de Ma bibliothèque
 
-Au-dessus des filtres, six cartes affichent : jeux affichés, jeux joués, Mes envies, jeux possédés
-actuellement, Megastar et À trier. Icônes dans des pastilles colorées, étincelles roses pour les envies
-et corbeille de réception ambrée pour À trier. Grille de six, trois, deux ou une colonne selon la place. Tous les compteurs portent sur la sélection
-filtrée (vue, recherche, plateforme, possession, Megastar et filtres avancés). Les pourcentages
-utilisent le nombre de jeux affichés comme dénominateur ; sélection vide : zéro et 0 %.
-Le tri et le regroupement ne changent pas ces statistiques. L’ancien titre introductif reste masqué.
+Au-dessus des filtres, six cartes affichent : jeux dans ma bibliothèque, jeux joués, Mes envies,
+jeux possédés actuellement, Megastar et À trier. Icônes dans des pastilles colorées, étincelles roses
+pour les envies et corbeille de réception ambrée pour À trier. Grille de six, trois, deux ou une
+colonne selon la place. Tous les compteurs portent sur la bibliothèque complète, indépendamment
+des filtres, de la recherche, du tri et du regroupement. Les pourcentages utilisent le total de la
+bibliothèque ; bibliothèque vide : zéro et 0 %. Une modification des jeux actualise les totaux.
+La barre de filtres indique séparément « N jeux affichés sur T ». L’ancien titre introductif reste masqué.

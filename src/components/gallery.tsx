@@ -269,7 +269,7 @@ export function Gallery({
   const sequence = groups.flatMap((group) => group.games.map((game) => game.id))
   return (
     <>
-      {showStats && <GalleryStats games={visible} />}
+      {showStats && <GalleryStats games={games} />}
       <div className="gallery-toolbar gallery-toolbar-scoped">
         <div
           className={`platform-scope ${discovery ? '' : 'gallery-scopes'}`}
@@ -494,8 +494,9 @@ export function Gallery({
             aria-label={`${visible.length} jeux affichés sur ${games.length}`}
             title={`${visible.length} jeux affichés sur ${games.length}`}
           >
-            {visible.length}
-            {filtered ? ` / ${games.length}` : ' jeux'}
+            {showStats
+              ? `${visible.length} jeux affichés sur ${games.length}`
+              : `${visible.length}${filtered ? ` / ${games.length}` : ' jeux'}`}
           </span>
           {filtered && (
             <button

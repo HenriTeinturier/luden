@@ -1,5 +1,10 @@
 # État courant
 
+## Bandeau global de Ma bibliothèque — 2026-10-21
+
+- Les six indicateurs et leurs pourcentages portent désormais sur toute la bibliothèque, indépendamment de la recherche et des filtres. Ils restent actualisés après modification des jeux.
+- La barre de filtres affiche « N jeux affichés sur T ». Première statistique renommée « jeux dans ma bibliothèque ». Validation visuelle par Henri.
+
 ## Tous en première position et par défaut — 2026-10-21
 
 - Ordre des vues : Tous, Joués, Mes envies dans bibliothèque, plateformes et collections. Tous sélectionné sans préférence enregistrée ; dernier état localStorage et choix explicites dans l’URL restent prioritaires. La page Mes envies conserve son périmètre.

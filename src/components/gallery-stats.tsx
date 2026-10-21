@@ -5,7 +5,7 @@ import { MegastarTrophy } from './megastar-trophy'
 
 export function GalleryStats({ games }: { games: Game[] }) {
   const stats = [
-    { label: 'jeux affichés', count: games.length, icon: Gamepad2, tone: 'library' },
+    { label: 'jeux dans ma bibliothèque', count: games.length, icon: Gamepad2, tone: 'library' },
     {
       label: 'jeux joués',
       count: games.filter(hasPlayed).length,
@@ -42,7 +42,7 @@ export function GalleryStats({ games }: { games: Game[] }) {
   return (
     <section
       className="platform-overview library-overview"
-      aria-label="Statistiques des jeux affichés"
+      aria-label="Statistiques de toute ma bibliothèque"
       aria-live="polite"
       aria-atomic="true"
     >
@@ -61,7 +61,7 @@ export function GalleryStats({ games }: { games: Game[] }) {
                   {tone !== 'library' && (
                     <span
                       className="platform-stat-percent"
-                      aria-label={`${percent} % des jeux affichés`}
+                      aria-label={`${percent} % de ma bibliothèque`}
                     >
                       {percent}%
                     </span>

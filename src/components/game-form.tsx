@@ -63,6 +63,7 @@ export function GameForm({
             position,
           })),
           discover: game.discover,
+          souvenir: game.souvenir,
           desire: game.desire,
           favorite: game.favorite,
           experience: game.experience
@@ -390,6 +391,17 @@ export function GameForm({
               />
               Dans mes envies (jouer ou rejouer)
             </label>
+            <label className="check-inline">
+              <input
+                type="checkbox"
+                checked={data.souvenir ?? false}
+                onChange={(e) => change('souvenir', e.target.checked)}
+              />
+              Souvenir
+            </label>
+            <p className="field-hint">
+              Un jeu à garder en mémoire, même sans y avoir joué ni vouloir y jouer.
+            </p>
             {data.discover && (
               <label>
                 Mon envie /5

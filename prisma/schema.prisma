@@ -102,6 +102,7 @@ model Game {
   igdbId       Int?
   sourceUrl    String?
   discover     Boolean           @default(false)
+  souvenir     Boolean           @default(false)
   desire       Float?
   favorite     Boolean           @default(false)
   presentation Json              @default("{}")

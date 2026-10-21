@@ -75,3 +75,13 @@ Les médias et notes personnels ne sont jamais mutualisés entre profils.
 `Game.categoryId` référence facultativement une `GameCategory` du même propriétaire.
 Les catégories ont un nom et un ordre personnalisables, indépendants des genres IGDB.
 Voir `docs/categories.md` pour l’affichage et la migration additive.
+
+## Jeux conservés en souvenir
+
+`Game.souvenir` est un booléen indépendant (false par défaut), distinct du texte
+`Experience.memory`. Il n’impose ni partie jouée, ni possession, ni envie actuelle. Il peut rester
+coché si le jeu rejoint ensuite les envies ou est joué. Un jeu souvenir ne fait plus partie de
+À trier ; décocher le réintègre s’il n’est ni joué ni dans les envies.
+Migration additive `20261021180000_game_souvenir`. Export JSON v9 avec le champ pour chaque jeu.
+Sauvegarde complète : omettre ce champ préserve sa valeur existante pour les anciens clients ;
+la création utilise le défaut en base. Les contrôles actuels envoient la valeur explicite.

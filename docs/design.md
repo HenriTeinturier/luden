@@ -559,7 +559,7 @@ d’échec ; les données et le classement sont rafraîchis après sauvegarde.
 ## Jeux à trier
 
 Un jeu est automatiquement « À trier » s’il n’a aucune expérience jouée (expérience absente ou
-statut Non joué) et n’est pas dans Mes envies. Possession, catégorie de rangement et note d’envie
+statut Non joué) et n’est ni dans Mes envies ni marqué Souvenir. Possession, catégorie de rangement et note d’envie
 ne changent pas cette sélection. Joués et Mes envies restent indépendants : un jeu joué peut être
 une envie de rejouer. Tous contient tous les jeux, y compris ceux à trier.
 
@@ -579,3 +579,13 @@ colonne selon la place. Tous les compteurs portent sur la bibliothèque complèt
 des filtres, de la recherche, du tri et du regroupement. Les pourcentages utilisent le total de la
 bibliothèque ; bibliothèque vide : zéro et 0 %. Une modification des jeux actualise les totaux.
 La barre de filtres indique séparément « N jeux affichés sur T ». L’ancien titre introductif reste masqué.
+
+## Souvenirs
+
+Le marquage Souvenir se règle dans la sidebar du jeu, la fiche complète et le formulaire
+création/édition. Il signifie conserver le jeu en mémoire, même sans y avoir joué ni vouloir y jouer.
+Il ne modifie pas les souvenirs écrits, les envies, la possession ou l’expérience.
+Pas de bouton principal supplémentaire : « Souvenirs uniquement » se trouve dans les filtres
+avancés et se combine avec la vue et les autres filtres. Pour retrouver tous les souvenirs, choisir
+Tous puis activer ce filtre. Préférence mémorisée par galerie, conservée au retour de fiche et
+retirée par Réinitialiser. Tous inclut les souvenirs ; À trier et son compteur les excluent.

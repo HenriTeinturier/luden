@@ -330,7 +330,7 @@ export async function exportLibrary() {
     ])
   return {
     format: 'luden',
-    version: 8,
+    version: 9,
     exportedAt: new Date().toISOString(),
     profile,
     games,

@@ -1,5 +1,11 @@
 # État courant
 
+## Jeux conservés en souvenir — 2026-10-21
+
+- Marquage Souvenir indépendant dans sidebar, fiche complète et formulaire. Filtre avancé Souvenirs uniquement mémorisé et cumulable ; pas de bouton principal supplémentaire. Tous les conserve, À trier les exclut automatiquement, ainsi que son compteur et la statistique globale.
+- Migration additive `20261021180000_game_souvenir` appliquée, client Prisma régénéré. Défaut false pour les jeux existants ; export JSON v9. Anciennes sauvegardes omettant le champ conservent sa valeur.
+- Vérifié : TypeScript, lint ciblé, 21 tests, compilation et sauvegarde/relecture/export sur fiche temporaire isolée puis supprimée. Aucun jeu personnel modifié. Serveur local redémarré, réponse HTTP 200 vérifiée. Validation visuelle par Henri.
+
 ## Bandeau global de Ma bibliothèque — 2026-10-21
 
 - Les six indicateurs et leurs pourcentages portent désormais sur toute la bibliothèque, indépendamment de la recherche et des filtres. Ils restent actualisés après modification des jeux.

@@ -264,6 +264,7 @@ export function Gallery({
     filters.status ||
     filters.machine ||
     filters.favorite ||
+    filters.souvenir ||
     (filters.owned && filters.owned !== 'all'),
   )
   const sequence = groups.flatMap((group) => group.games.map((game) => game.id))
@@ -357,7 +358,7 @@ export function Gallery({
             type="button"
             className="gallery-sorting-link"
             aria-pressed={filters.scope === 'unassigned'}
-            title="Jeux ni joués ni dans mes envies, possédés ou non. Le compteur inclut tous les jeux à trier de cette galerie avant les autres filtres."
+            title="Jeux ni joués, ni dans mes envies, ni gardés en souvenir, possédés ou non. Le compteur inclut tous les jeux à trier de cette galerie avant les autres filtres."
             onClick={() => update(toggleGalleryScope(filters, 'unassigned'))}
           >
             À trier · {sortingCount}
@@ -511,6 +512,7 @@ export function Gallery({
                   status: '',
                   machine: '',
                   favorite: false,
+                  souvenir: false,
                   owned: 'all',
                   scope: discovery ? 'discover' : 'all',
                 })
@@ -558,6 +560,14 @@ export function Gallery({
             <option value="past">Possédés autrefois</option>
             <option value="none">Aucune possession</option>
           </select>
+          <label className="check-inline">
+            <input
+              type="checkbox"
+              checked={filters.souvenir ?? false}
+              onChange={(e) => update({ souvenir: e.target.checked })}
+            />
+            Souvenirs uniquement
+          </label>
           {!discovery && (
             <label className="check-inline">
               <input

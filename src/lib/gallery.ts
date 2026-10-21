@@ -17,6 +17,7 @@ export const gallerySearch = z.object({
   group: z.enum(['none', 'category']).optional(),
   owned: z.enum(['all', 'current', 'past', 'none']).optional(),
   favorite: z.boolean().optional(),
+  souvenir: z.boolean().optional(),
 })
 export type GallerySearch = z.infer<typeof gallerySearch>
 
@@ -54,7 +55,7 @@ export function hasPlayed(game: Game) {
 }
 
 export function needsSorting(game: Game) {
-  return !hasPlayed(game) && !game.discover
+  return !hasPlayed(game) && !game.discover && !game.souvenir
 }
 
 // Stable per-game ranks preserve relative order through filtering, edits and return navigation.
@@ -88,6 +89,7 @@ export function filterGames(games: Game[], filters: GallerySearch) {
       (filters.scope !== 'unassigned' || needsSorting(g)) &&
       (filters.scope !== 'owned' || g.possessions.some((p) => p.state === 'CURRENT')) &&
       (!filters.favorite || g.favorite) &&
+      (!filters.souvenir || g.souvenir) &&
       (!filters.owned ||
         filters.owned === 'all' ||
         (filters.owned === 'none'

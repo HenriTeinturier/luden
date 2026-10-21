@@ -29,6 +29,7 @@ export const gameSchema = z.object({
   presentation: presentationSchema.optional(),
   links: z.array(gameLinkSchema).max(100).optional(),
   discover: z.boolean().default(false),
+  souvenir: z.boolean().optional(),
   desire: score(5).default(null),
   favorite: z.boolean().default(false),
   experience: z.object({
@@ -49,6 +50,7 @@ export const quickGameSchema = z
     id: z.string().min(1),
     favorite: z.boolean().optional(),
     discover: z.boolean().optional(),
+    souvenir: z.boolean().optional(),
     owned: z.boolean().optional(),
     desire: score(5).optional(),
     status: gameSchema.shape.experience.shape.status.optional(),
@@ -86,6 +88,7 @@ export const emptyGame: GameInput = {
   media: [],
   links: [],
   discover: false,
+  souvenir: false,
   desire: null,
   favorite: false,
   experience: { status: 'UNPLAYED', rating: null, memory: '', period: '' },

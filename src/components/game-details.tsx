@@ -21,6 +21,7 @@ import {
   Pencil,
   Heart,
   Sparkles,
+  Bookmark,
   Disc3,
   Cloud,
   Images,
@@ -313,6 +314,17 @@ function QuickExperience({
               <span>{game.discover ? 'Dans mes envies' : 'Ajouter à mes envies'}</span>
               {game.discover && <Check size={12} aria-hidden="true" />}
             </button>
+            <button
+              type="button"
+              className="sidebar-discover"
+              aria-pressed={game.souvenir}
+              title="Garder ce jeu en souvenir, indépendamment des envies et de la possession"
+              onClick={() => void update({ souvenir: !game.souvenir })}
+            >
+              <Bookmark size={16} fill={game.souvenir ? 'currentColor' : 'none'} />
+              <span>Souvenir</span>
+              {game.souvenir && <Check size={12} aria-hidden="true" />}
+            </button>
             <div className="sidebar-memberships" aria-label="Mes collections">
               <Layers size={14} aria-hidden="true" />
               <span>Collections</span>
@@ -511,6 +523,17 @@ function QuickExperience({
             Dans mes envies
           </button>
         </div>
+        <label className="check-inline">
+          <input
+            type="checkbox"
+            checked={game.souvenir}
+            onChange={(e) => void update({ souvenir: e.target.checked })}
+          />
+          Souvenir
+        </label>
+        <p className="field-hint">
+          Garder ce jeu en mémoire, même sans y avoir joué ni vouloir y jouer.
+        </p>
         {game.discover && (
           <label className="quick-status">
             Mon envie

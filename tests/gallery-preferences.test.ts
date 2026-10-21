@@ -93,3 +93,9 @@ test('La vue À trier se restaure et laisse la priorité aux choix explicites', 
     owned: 'current',
   })
 })
+
+test('Le filtre Souvenirs est mémorisé et sa désactivation explicite reste prioritaire', () => {
+  const saved = JSON.stringify({ scope: 'all', souvenir: true })
+  assert.equal(restoreGalleryPreferences(saved, {}).souvenir, true)
+  assert.equal(restoreGalleryPreferences(saved, { souvenir: false }).souvenir, false)
+})

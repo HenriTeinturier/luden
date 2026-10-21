@@ -1,7 +1,7 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import path from 'node:path'
-import { gameSchema, emptyGame, assertRealCollection } from '../src/lib/validation'
+import { gameSchema, emptyGame, assertRealCollection, quickGameSchema } from '../src/lib/validation'
 import { resolveMediaPath } from '../src/server/media-path'
 
 test('Une envie et une collection rêvée ne nécessitent pas de possession ni de partie jouée', () => {
@@ -52,4 +52,24 @@ test('Les chemins de médias restent dans la racine choisie, jamais absolus ou t
   }
   assert.throws(() => resolveMediaPath('', 'games/cover.webp'))
   assert.throws(() => resolveMediaPath('relative', 'games/cover.webp'))
+})
+
+test('Souvenir est indépendant de l’expérience, des envies et de la possession', () => {
+  const game = gameSchema.parse({
+    ...emptyGame,
+    title: 'Un souvenir',
+    platformId: 'amiga',
+    souvenir: true,
+  })
+  assert.equal(game.souvenir, true)
+  assert.equal(game.discover, false)
+  assert.equal(game.experience.status, 'UNPLAYED')
+  assert.deepEqual(game.possessions, [])
+  assert.deepEqual(quickGameSchema.parse({ id: 'test', souvenir: false }), {
+    id: 'test',
+    souvenir: false,
+  })
+  const { souvenir: omitted, ...legacy } = game
+  assert.equal(omitted, true)
+  assert.equal(gameSchema.parse(legacy).souvenir, undefined)
 })

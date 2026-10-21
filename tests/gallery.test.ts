@@ -231,3 +231,29 @@ test('À trier ignore possession, catégorie et note d’envie ; Tous conserve c
   assert.equal(toggleGalleryScope(filters, 'unassigned').favorite, true)
   assert.equal(toggleGalleryScope(filters, 'unassigned').owned, 'current')
 })
+
+test('Les souvenirs sortent de À trier, restent dans Tous et se filtrent indépendamment', () => {
+  const games = [
+    { id: 'souvenir', souvenir: true, discover: false, experience: null, possessions: [] },
+    { id: 'sorting', souvenir: false, discover: false, experience: null, possessions: [] },
+    { id: 'wish', souvenir: true, discover: true, experience: null, possessions: [] },
+    {
+      id: 'played',
+      souvenir: true,
+      discover: false,
+      experience: { status: 'PLAYED' },
+      possessions: [{ state: 'CURRENT' }],
+    },
+  ].map((game) => ({ ...game, updatedAt: '2026-10-21' })) as Game[]
+  const ids = (filters: Parameters<typeof filterGames>[1]) =>
+    filterGames(games, filters).map((game) => game.id)
+  assert.deepEqual(ids({ scope: 'unassigned' }), ['sorting'])
+  assert.deepEqual(ids({ scope: 'all' }), ['souvenir', 'sorting', 'wish', 'played'])
+  assert.deepEqual(ids({ scope: 'all', souvenir: true }), ['souvenir', 'wish', 'played'])
+  assert.deepEqual(ids({ scope: 'discover', souvenir: true }), ['wish'])
+  assert.deepEqual(ids({ souvenir: true, owned: 'current' }), ['played'])
+  assert.equal(needsSorting({ ...games[0], souvenir: false }), true)
+  const filters = gallerySearch.parse({ souvenir: true })
+  assert.equal(gameReturnSearch.parse({ filters }).filters?.souvenir, true)
+  assert.equal(toggleGalleryScope(filters, 'played').souvenir, true)
+})

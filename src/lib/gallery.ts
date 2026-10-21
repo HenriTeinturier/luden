@@ -10,6 +10,7 @@ export const gallerySearch = z.object({
   sort: z.enum(['recent', 'title', 'rating', 'year', 'desire', 'random']).optional(),
   randomSeed: z.number().int().min(0).max(0xffffffff).optional().catch(undefined),
   view: z.enum(['grid', 'list']).optional(),
+  theme: z.enum(['1', '2']).optional().catch(undefined),
   columns: z
     .union([z.literal('auto'), z.number().int().min(4).max(10)])
     .optional()

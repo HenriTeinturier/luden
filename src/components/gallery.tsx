@@ -463,6 +463,16 @@ export function Gallery({
               <List size={17} />
             </button>
           </div>
+          {pathname.replace(/\/$/, '') === '/library' && (
+            <select
+              aria-label="Thème visuel de la bibliothèque"
+              value={filters.theme ?? '1'}
+              onChange={(event) => update({ theme: event.target.value as '1' | '2' })}
+            >
+              <option value="1">Thème 1 · Classique</option>
+              <option value="2">Thème 2 · Boîtes libres</option>
+            </select>
+          )}
           <label
             className="gallery-density"
             title="Jaquettes par ligne : 4 à 10 avec la sidebar, 2 de plus sans elle. Ctrl + molette sur les jaquettes pour ajuster."
@@ -581,7 +591,7 @@ export function Gallery({
         </div>
       )}
       {visible.length ? (
-        <div className="gallery-groups" ref={gallery}>
+        <div className="gallery-groups" data-library-theme={filters.theme ?? '1'} ref={gallery}>
           {groups.map((group) => (
             <section key={group.id} className="gallery-category" aria-label={group.name || 'Jeux'}>
               {grouping === 'category' && (
@@ -611,6 +621,7 @@ export function Gallery({
                     compact={filters.view === 'list'}
                     sequence={sequence}
                     editDesire={filters.scope === 'discover'}
+                    theme={filters.theme}
                   />
                 ))}
               </div>

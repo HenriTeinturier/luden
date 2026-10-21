@@ -10,6 +10,8 @@ import {
   Cloud,
   Clock3,
   Bookmark,
+  Flame,
+  Star,
 } from 'lucide-react'
 import { Link, useLoaderData, useParams, useLocation } from '@tanstack/react-router'
 import { useState, type CSSProperties, type ReactNode } from 'react'
@@ -296,12 +298,14 @@ export function GameCard({
   sequence,
   preview = false,
   editDesire = false,
+  theme = '1',
 }: {
   game: Game
   compact?: boolean
   sequence?: string[]
   editDesire?: boolean
   preview?: boolean
+  theme?: '1' | '2'
 }) {
   const selection = useGameSelection()
   const { platformVisuals } = useLibrary()
@@ -310,6 +314,12 @@ export function GameCard({
   const location = useLocation()
   const libraryCard = !preview && location.pathname.replace(/\/$/, '') === '/library'
   const ratingKind = sidebarRatingKind(game)
+  const freeBoxes = libraryCard && theme === '2'
+  const badgeValue = ratingKind === 'desire' ? game.desire : rating
+  const badgeLabel =
+    ratingKind === 'souvenir'
+      ? 'Souvenir'
+      : `${ratingKind === 'desire' ? 'Envie de jouer' : 'Ma note'} : ${badgeValue == null ? 'non renseignée' : `${badgeValue.toLocaleString('fr-FR')} sur 5`}`
   const showDesire = libraryCard ? ratingKind === 'desire' : editDesire
   const simpleCard =
     !preview && ['/library', '/discover'].includes(location.pathname.replace(/\/$/, ''))
@@ -325,6 +335,26 @@ export function GameCard({
     <>
       <div className="cover-frame">
         <Cover game={game} />
+        {freeBoxes && (
+          <span
+            className={`library-theme-badge ${ratingKind}`}
+            title={badgeLabel}
+            aria-label={badgeLabel}
+          >
+            {ratingKind === 'souvenir' ? (
+              <Bookmark size={16} aria-hidden="true" />
+            ) : (
+              <>
+                {ratingKind === 'desire' ? (
+                  <Flame size={16} aria-hidden="true" />
+                ) : (
+                  <Star size={16} aria-hidden="true" />
+                )}
+                <span>{badgeValue == null ? '—' : badgeValue.toLocaleString('fr-FR')}</span>
+              </>
+            )}
+          </span>
+        )}
         {game.favorite && (
           <span className="favorite-badge">
             <img src="/megastar.webp" alt="Megastar — Jeu culte" width={400} height={394} />
@@ -428,7 +458,7 @@ export function GameCard({
       {content}
     </Link>
   )
-  return showDesire || libraryCard ? (
+  return !freeBoxes && (showDesire || libraryCard) ? (
     <div className="discovery-game">
       {card}
       {showDesire && !libraryCard ? (

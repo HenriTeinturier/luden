@@ -1,5 +1,11 @@
 # État courant
 
+## Deux thèmes pour Ma bibliothèque — 2026-10-21
+
+- Sélecteur dans la barre de filtres : thème 1 Classique (affichage existant par défaut), thème 2 Boîtes libres. Choix mémorisé avec les préférences de bibliothèque et conservé dans l’URL.
+- Thème 2 : aucun cadre au repos, boîtes entières alignées par le bas, note/envie/souvenir en pastille translucide floutée en haut à droite, logo et année sur fond léger puis séparation et titre. Megastar à gauche pour éviter la pastille.
+- Encadrement bleu au survol, au focus clavier et à la sélection ; présentation compacte également adaptée. Univers plateforme inchangés. Validation visuelle par Henri.
+
 ## Cadre Game Boy ajusté à la boîte — 2026-10-21
 
 - Le modèle Game Boy utilise la hauteur naturelle de l’image : suppression du vide sous Tetris, sans découpe ni déformation. Ratio 0,8 conservé sans image.

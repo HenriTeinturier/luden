@@ -1,0 +1,99 @@
+/* Theme 2 is scoped to Ma bibliothèque; theme 1 keeps the existing cards. */
+.library-page [data-library-theme='2'] .game-card {
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: 7px;
+  padding: 6px;
+  box-shadow: none;
+  outline: none;
+  transform: none;
+}
+.library-page [data-library-theme='2'] .game-card:hover,
+.library-page [data-library-theme='2'] .game-card:focus-visible {
+  border-color: var(--blue);
+  background: color-mix(in srgb, var(--blue) 6%, transparent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--blue) 15%, transparent);
+}
+.library-page [data-library-theme='2'] .game-card[aria-current='true'] {
+  border-color: var(--blue);
+  background: color-mix(in srgb, var(--blue) 12%, transparent);
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--blue) 32%, transparent),
+    0 0 18px #48a8ff26;
+}
+.library-page [data-library-theme='2'] .game-card .game-card-info {
+  background: transparent;
+  padding: 5px 0 0;
+}
+.library-page [data-library-theme='2'] .game-grid .game-card-info {
+  grid-template-rows: 29px 28px;
+  gap: 0;
+}
+.library-page [data-library-theme='2'] .game-card .game-cover {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+}
+.library-page [data-library-theme='2'] .game-grid .game-cover {
+  aspect-ratio: 1.25;
+}
+.library-page [data-library-theme='2'] .game-cover img {
+  object-fit: contain;
+  object-position: center bottom;
+}
+.library-page [data-library-theme='2'] .game-platform {
+  background: color-mix(in srgb, var(--ink) 5%, transparent);
+  border-bottom: 1px solid var(--border-strong);
+  padding: 3px 4px;
+  margin: 0;
+  min-width: 0;
+}
+.library-page [data-library-theme='2'] .game-platform-name {
+  height: 22px;
+  font-size: 11px;
+}
+.library-page [data-library-theme='2'] .game-platform-logo {
+  height: 20px;
+}
+.library-page [data-library-theme='2'] .game-card h3 {
+  padding: 7px 2px 0;
+  font-size: 12px;
+}
+.library-page [data-library-theme='2'] .library-theme-badge {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 5px;
+  border: 1px solid #ffffff24;
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--elevated) 65%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--yellow);
+  font-size: 12px;
+  line-height: 18px;
+  font-variant-numeric: tabular-nums;
+}
+.library-page [data-library-theme='2'] .library-theme-badge svg {
+  fill: currentColor;
+}
+.library-page [data-library-theme='2'] .library-theme-badge.desire {
+  color: #f5a3d0;
+}
+.library-page [data-library-theme='2'] .library-theme-badge.souvenir {
+  color: #79ddd0;
+}
+.library-page [data-library-theme='2'] .library-theme-badge.souvenir svg {
+  fill: #79ddd024;
+}
+.library-page [data-library-theme='2'] .favorite-badge {
+  top: 3px;
+  left: 3px;
+  right: auto;
+  width: clamp(24px, 24%, 48px);
+}

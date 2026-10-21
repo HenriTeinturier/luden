@@ -1,5 +1,17 @@
 # Direction graphique actuelle
 
+## Thèmes de Ma bibliothèque
+
+La barre de filtres propose « Thème 1 · Classique » (défaut, présentation existante)
+et « Thème 2 · Boîtes libres ». Le choix est mémorisé par les préférences de galerie,
+avec priorité au paramètre `theme` de l’URL. Il ne change pas les univers plateforme.
+Le thème 2 retire les cadres au repos et aligne le bas des boîtes entières sur une ligne
+invisible commune. Une pastille floutée en haut à droite affiche une flamme ou une étoile
+avec la valeur, ou le marque-page Souvenir ; un tiret signale une valeur non renseignée.
+Logo et année occupent un bandeau léger, séparé du titre par un trait. Survol et focus
+affichent un cadre bleu Luden ; la sélection ajoute un fond bleu discret et un halo.
+Megastar reste visible en haut à gauche. La vue compacte reprend le même habillage.
+
 ## Modèles de présentation des jeux
 
 Étape 1 de la refonte des plateformes : modèles communs dans `src/lib/presentation.ts`,

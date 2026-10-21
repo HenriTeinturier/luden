@@ -186,7 +186,7 @@ function PlatformPage() {
           ))}
         </div>
       )}
-      <Gallery games={chosen} platformLocked defaultScope="played" />
+      <Gallery games={chosen} platformLocked />
     </div>
   )
 }

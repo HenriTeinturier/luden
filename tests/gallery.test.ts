@@ -112,8 +112,8 @@ test('Les liens de fiche conservent le mélange ; une graine absente ou invalide
   }
 })
 
-test('Les vues reviennent à Joués sans modifier les filtres cumulables', () => {
-  assert.equal(galleryFilters({}).scope, 'played')
+test('Les vues reviennent à Tous sans modifier les filtres cumulables', () => {
+  assert.equal(galleryFilters({}).scope, 'all')
   const base = galleryFilters({ owned: 'current', favorite: true, q: 'Mario', sort: 'title' })
   for (const scope of ['played', 'discover', 'all'] as const) {
     const selected = toggleGalleryScope(base, scope)
@@ -122,7 +122,7 @@ test('Les vues reviennent à Joués sans modifier les filtres cumulables', () =>
     assert.equal(selected.favorite, true)
     assert.equal(selected.q, 'Mario')
     assert.equal(selected.sort, 'title')
-    assert.equal(toggleGalleryScope(selected, scope).scope, 'played')
+    assert.equal(toggleGalleryScope(selected, scope).scope, 'all')
   }
 })
 
@@ -227,7 +227,7 @@ test('À trier ignore possession, catégorie et note d’envie ; Tous conserve c
   )
   const filters = gallerySearch.parse({ scope: 'unassigned', favorite: true, owned: 'current' })
   assert.equal(gameReturnSearch.parse({ filters }).filters?.scope, 'unassigned')
-  assert.equal(toggleGalleryScope(filters, 'unassigned').scope, 'played')
+  assert.equal(toggleGalleryScope(filters, 'unassigned').scope, 'all')
   assert.equal(toggleGalleryScope(filters, 'unassigned').favorite, true)
   assert.equal(toggleGalleryScope(filters, 'unassigned').owned, 'current')
 })

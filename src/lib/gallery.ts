@@ -23,7 +23,7 @@ export type GallerySearch = z.infer<typeof gallerySearch>
 // Old links used possession as a view. Preserve their selection as All + Owned.
 export function galleryFilters(
   search: GallerySearch,
-  defaultScope: GallerySearch['scope'] = 'played',
+  defaultScope: GallerySearch['scope'] = 'all',
   discovery = false,
 ): GallerySearch {
   return {
@@ -42,7 +42,7 @@ export function toggleGalleryScope(
   filters: GallerySearch,
   scope: 'played' | 'discover' | 'all' | 'unassigned',
 ): GallerySearch {
-  return { ...filters, scope: filters.scope === scope ? 'played' : scope, status: '' }
+  return { ...filters, scope: filters.scope === scope ? 'all' : scope, status: '' }
 }
 export const gameReturnSearch = z.object({
   from: z.enum(['library', 'platform', 'collection', 'discover']).optional().catch(undefined),

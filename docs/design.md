@@ -437,13 +437,13 @@ marges habituelles. La barre de filtres compacte reste placée sous les statisti
 le souvenir complet reste dans la fiche. Les images choisies par l’utilisateur restent nécessaires :
 aucune conversion automatique d’une jaquette IGDB en boîte PAL.
 
-Sans préférence enregistrée, bibliothèque, plateformes et collections démarrent sur Joués.
-Trois boutons reliés composent le choix de vue : Joués, Mes envies, Tous. Un second clic sur
-Mes envies ou Tous revient à Joués. Tous inclut aussi les jeux ni joués ni dans les envies ;
+Sans préférence enregistrée, bibliothèque, plateformes et collections démarrent sur Tous.
+Trois boutons reliés composent le choix de vue : Tous, Joués, Mes envies. Un second clic sur
+Joués ou Mes envies revient à Tous. Tous inclut aussi les jeux ni joués ni dans les envies ;
 les deux premiers ensembles peuvent se recouper. Les jeux d’une collection restent seuls concernés.
 À côté, sous « Affiner », Possédés et Megastar sont des interrupteurs indépendants et cumulables.
 Changer de vue conserve leur état ; désactiver Possédés retire uniquement le filtre de possession.
-Les filtres avancés de possession restent synchronisés. Réinitialiser revient à Joués sans filtres.
+Les filtres avancés de possession restent synchronisés. Réinitialiser revient à Tous sans filtres.
 La page Mes envies reste limitée aux envies, avec Possédés indépendant et sans Megastar.
 L’état reste dans l’URL et dans les préférences propres à chaque galerie : vue, possession, Megastar,
 tri, regroupement, grille/liste, colonnes et filtres avancés. Les anciens liens/préférences avec
@@ -566,7 +566,7 @@ une envie de rejouer. Tous contient tous les jeux, y compris ceux à trier.
 Un accès secondaire « À trier · N » apparaît à droite de Megastar dans les bibliothèques,
 plateformes et collections contenant des jeux concernés. Le compteur porte sur les jeux de cette
 galerie avant les autres filtres. Possédés, Megastar et recherche restent cumulables avec cette vue.
-Un second clic revient à Joués. Si le dernier jeu sort de la sélection, l’accès actif reste visible
+Un second clic revient à Tous. Si le dernier jeu sort de la sélection, l’accès actif reste visible
 à zéro pour permettre de quitter la vue ; il disparaît ensuite. Vue mémorisée et conservée au retour
 de fiche. La page Mes envies ne propose pas cet accès puisqu’elle est réservée aux envies.
 

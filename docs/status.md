@@ -1,5 +1,10 @@
 # État courant
 
+## Tous en première position et par défaut — 2026-10-21
+
+- Ordre des vues : Tous, Joués, Mes envies dans bibliothèque, plateformes et collections. Tous sélectionné sans préférence enregistrée ; dernier état localStorage et choix explicites dans l’URL restent prioritaires. La page Mes envies conserve son périmètre.
+- Désactiver une vue ou réinitialiser les filtres revient à Tous. Possédés/Megastar restent indépendants lors du changement de vue.
+
 ## Six indicateurs dans Ma bibliothèque — 2026-10-21
 
 - Jeux affichés, Joués, Mes envies, Possédés, Megastar et À trier, tous calculés sur la sélection filtrée. Mes envies utilise des étincelles roses ; À trier une corbeille de réception ambrée. Icônes sur pastilles colorées avec léger relief.

@@ -49,7 +49,7 @@ const serverDesktop = () => false
 export function Gallery({
   games,
   platformLocked = false,
-  defaultScope = 'played',
+  defaultScope = 'all',
   discovery = false,
   showStats = false,
 }: {
@@ -306,9 +306,9 @@ export function Gallery({
           ) : (
             (
               [
+                ['all', 'Tous'],
                 ['played', 'Joués'],
                 ['discover', 'Mes envies'],
-                ['all', 'Tous'],
               ] as const
             ).map(([scope, label]) => (
               <button
@@ -511,7 +511,7 @@ export function Gallery({
                   machine: '',
                   favorite: false,
                   owned: 'all',
-                  scope: discovery ? 'discover' : 'played',
+                  scope: discovery ? 'discover' : 'all',
                 })
               }
             >

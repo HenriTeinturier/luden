@@ -589,3 +589,13 @@ Pas de bouton principal supplémentaire : « Souvenirs uniquement » se trouve d
 avancés et se combine avec la vue et les autres filtres. Pour retrouver tous les souvenirs, choisir
 Tous puis activer ce filtre. Préférence mémorisée par galerie, conservée au retour de fiche et
 retirée par Réinitialiser. Tous inclut les souvenirs ; À trier et son compteur les excluent.
+
+## Étoiles dans la sidebar
+
+Les jeux joués affichent Ma note en jaune, avec la confirmation de modification habituelle.
+Les jeux non joués affichent Envie de jouer en rose, accompagnée d’étincelles et du libellé
+« à préciser » en l’absence de valeur. Modifier ces étoiles sauvegarde seulement `Game.desire` ;
+aucune note d’expérience ni statut n’est modifié. La palette rose et le libellé sont aussi utilisés
+sur les cartes Mes envies. Un souvenir non joué sans envie active n’affiche aucune étoile ;
+s’il rejoint Mes envies, son envie est visible. Un jeu joué garde sa note même s’il est souvenir
+ou dans Mes envies. Aucune valeur existante n’est effacée lorsque l’affichage change.

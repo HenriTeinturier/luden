@@ -1,5 +1,11 @@
 # État courant
 
+## Note et envie distinctes dans la sidebar — 2026-10-21
+
+- Jeu joué : Ma note en étoiles jaunes, confirmation existante conservée. Jeu non joué : Envie de jouer en étoiles roses avec icône étincelles, sauvegarde directe de l’envie sans modifier l’expérience ni le statut.
+- Souvenir non joué sans envie active : aucune étoile, mention Souvenir. S’il est aussi dans Mes envies, les étoiles d’envie restent disponibles ; un jeu joué conserve toujours sa note.
+- Même couleur et libellé pour les étoiles d’envie des cartes. Vérifié : TypeScript, lint ciblé, test des états joué/non joué/souvenir/envie et diff. Validation visuelle par Henri.
+
 ## Jeux conservés en souvenir — 2026-10-21
 
 - Marquage Souvenir indépendant dans sidebar, fiche complète et formulaire. Filtre avancé Souvenirs uniquement mémorisé et cumulable ; pas de bouton principal supplémentaire. Tous les conserve, À trier les exclut automatiquement, ainsi que son compteur et la statistique globale.

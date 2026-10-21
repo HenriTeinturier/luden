@@ -41,6 +41,7 @@ import { mediaCategories } from '../lib/media'
 import { mediaImageSources } from '../lib/image-variants'
 import { playStatuses } from '../lib/platforms'
 import { hasPlayed } from '../lib/gallery'
+import { sidebarRatingKind } from '../lib/sidebar-rating'
 import { quickUpdateGameFn, deleteGameFn } from '../server/functions'
 import { GameScene } from './game-scene'
 import { Confirm, Modal, useLibrary } from './ui'
@@ -220,6 +221,7 @@ function QuickExperience({
   if (compact) {
     const owned = game.possessions.some((p) => p.state === 'CURRENT')
     const played = hasPlayed(game)
+    const ratingKind = sidebarRatingKind(game)
     const physical = game.possessions.some((p) => p.state === 'CURRENT' && p.format === 'PHYSICAL')
     const digital = game.possessions.some((p) => p.state === 'CURRENT' && p.format === 'DIGITAL')
     const possessionLabel = owned
@@ -234,11 +236,27 @@ function QuickExperience({
       <section className="sidebar-experience" aria-label="Mon expérience">
         <fieldset disabled={busy || disabled}>
           <div className="sidebar-rating">
-            <EditableStars
-              value={game.experience?.rating ?? null}
-              disabled={busy || disabled}
-              onChange={setProposedRating}
-            />
+            {ratingKind === 'rating' ? (
+              <EditableStars
+                key="rating"
+                value={game.experience?.rating ?? null}
+                disabled={busy || disabled}
+                onChange={setProposedRating}
+              />
+            ) : ratingKind === 'desire' ? (
+              <EditableStars
+                key="desire"
+                kind="desire"
+                label="Envie de jouer"
+                value={game.desire}
+                disabled={busy || disabled}
+                onChange={(desire) => void update({ desire })}
+              />
+            ) : (
+              <span className="sidebar-souvenir-caption">
+                <Bookmark size={16} aria-hidden="true" /> Souvenir
+              </span>
+            )}
             <button
               type="button"
               className={`sidebar-megastar ${game.favorite ? 'is-favorite' : ''}`}

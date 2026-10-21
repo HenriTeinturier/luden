@@ -28,7 +28,8 @@ export function CardDesire({ game }: { game: Game }) {
   return (
     <div className="card-desire" role="group" aria-label={`Envie de jouer à ${game.title}`}>
       <EditableStars
-        label="Mon envie"
+        label="Envie de jouer"
+        kind="desire"
         value={game.desire}
         disabled={busy}
         onChange={(value) => void save(value)}

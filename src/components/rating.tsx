@@ -1,12 +1,14 @@
 import { useState, type PointerEvent } from 'react'
-import { Star, X } from 'lucide-react'
+import { Star, X, Sparkles } from 'lucide-react'
 
 export function EditableStars({
   value,
   disabled,
   onChange,
   label = 'Ma note',
+  kind = 'rating',
 }: {
+  kind?: 'rating' | 'desire'
   label?: string
   value: number | null
   disabled: boolean
@@ -21,8 +23,11 @@ export function EditableStars({
     )
   }
   return (
-    <div className="editable-rating">
-      <span className="rating-caption">{value === null ? `${label} · à noter` : label}</span>
+    <div className={`editable-rating ${kind === 'desire' ? 'desire-rating' : ''}`}>
+      <span className="rating-caption">
+        {kind === 'desire' && <Sparkles size={13} aria-hidden="true" />}
+        {value === null ? `${label} · ${kind === 'desire' ? 'à préciser' : 'à noter'}` : label}
+      </span>
       <div className="editable-rating-controls">
         <div
           className="editable-stars"
@@ -33,7 +38,11 @@ export function EditableStars({
           aria-valuemax={5}
           aria-valuenow={value ?? 0}
           aria-valuetext={
-            value === null ? 'Sans note' : `${value.toLocaleString('fr-FR')} sur 5 étoiles`
+            value === null
+              ? kind === 'desire'
+                ? 'Envie non précisée'
+                : 'Sans note'
+              : `${value.toLocaleString('fr-FR')} sur 5 étoiles`
           }
           aria-disabled={disabled}
           title="Noter par demi-étoiles · flèches au clavier · Suppr pour effacer"

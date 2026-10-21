@@ -2247,3 +2247,28 @@ kbd {
     height: 24px;
   }
 }
+
+/* Desire is a future intention, visually distinct from the yellow experience rating. */
+.desire-rating .stars,
+.desire-rating .star > span {
+  color: #ffacd2;
+}
+.desire-rating .star {
+  color: #79536b;
+}
+.desire-rating .rating-caption {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #ffacd2;
+}
+.desire-rating .editable-stars:focus-visible {
+  outline-color: #ffacd2;
+}
+.sidebar-souvenir-caption {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 13px;
+}

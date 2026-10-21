@@ -595,7 +595,7 @@ export function Gallery({
                     game={game}
                     compact={filters.view === 'list'}
                     sequence={sequence}
-                    editDesire={discovery}
+                    editDesire={filters.scope === 'discover'}
                   />
                 ))}
               </div>

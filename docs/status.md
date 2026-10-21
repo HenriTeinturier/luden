@@ -1,5 +1,10 @@
 # État courant
 
+## Étoiles d’envie dans toutes les vues Mes envies — 2026-10-21
+
+- Sélectionner Mes envies affiche les étoiles d’envie modifiables sur les cartes des bibliothèques, plateformes et collections, en grille et en liste, comme sur la page dédiée. Les autres vues les masquent.
+- Vérifié : lint ciblé et diff. Validation visuelle par Henri.
+
 ## Bibliothèque sans introduction — 2026-10-21
 
 - Bloc titre, surtitre et description retiré de Ma bibliothèque : accès direct aux filtres et aux jeux. Titre accessible conservé pour les lecteurs d’écran.

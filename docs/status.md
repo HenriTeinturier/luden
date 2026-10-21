@@ -1,5 +1,10 @@
 # État courant
 
+## Bibliothèque sans introduction — 2026-10-21
+
+- Bloc titre, surtitre et description retiré de Ma bibliothèque : accès direct aux filtres et aux jeux. Titre accessible conservé pour les lecteurs d’écran.
+- Vérifié : formatage, lint ciblé et diff. Validation visuelle par Henri.
+
 ## Mes envies et jeux à trier — 2026-10-21
 
 - À découvrir renommé Mes envies dans la navigation, la page, les galeries, l’accueil et les contrôles des fiches/formulaires. Envie de jouer/rejouer indépendante de l’expérience ; URL `/discover` conservée.

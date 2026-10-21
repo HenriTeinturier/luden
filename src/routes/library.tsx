@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { PageHeading, useLibrary } from '../components/ui'
+import { useLibrary } from '../components/ui'
 import { Gallery } from '../components/gallery'
 import { gallerySearch } from '../lib/gallery'
 export const Route = createFileRoute('/library')({
@@ -10,11 +10,7 @@ function Library() {
   const { games } = useLibrary()
   return (
     <div className="page library-page">
-      <PageHeading
-        eyebrow="TOUS VOS UNIVERS"
-        title="Ma bibliothèque."
-        description="Joués, possédés ou simplement rêvés. Chaque jeu a sa place."
-      />
+      <h1 className="sr-only">Ma bibliothèque</h1>
       <Gallery games={games} />
     </div>
   )

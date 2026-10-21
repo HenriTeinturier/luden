@@ -426,14 +426,16 @@ export function GameCard({
   return showDesire || libraryCard ? (
     <div className="discovery-game">
       {card}
-      {showDesire ? (
+      {showDesire && !libraryCard ? (
         <CardDesire game={game} />
       ) : (
-        <div className="library-card-rating">
+        <div className={`library-card-rating${ratingKind === 'desire' ? ' desire-rating' : ''}`}>
           {ratingKind === 'souvenir' ? (
             <span className="game-card-souvenir">
               <Bookmark size={18} aria-hidden="true" /> Souvenir
             </span>
+          ) : ratingKind === 'desire' ? (
+            <Stars value={game.desire} kind="desire" showEmpty />
           ) : (
             <Stars value={rating} showEmpty />
           )}

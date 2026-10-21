@@ -1,5 +1,10 @@
 # État courant
 
+## Flammes en lecture seule dans Ma bibliothèque — 2026-10-21
+
+- Les cartes affichent les flammes sans modification directe ni croix d’effacement. L’édition reste disponible dans la sidebar et sur la page Mes envies.
+- Hauteur et couleurs des indicateurs conservées. Validation visuelle par Henri.
+
 ## Repère Souvenir turquoise — 2026-10-21
 
 - Texte et marque-page Souvenir en turquoise, avec graisse légèrement renforcée et remplissage discret de l’icône dans les cartes. Même teinte pour la mention de sidebar ; hauteur et alignement conservés.

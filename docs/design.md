@@ -601,10 +601,11 @@ s’il rejoint Mes envies, son envie est visible. Un jeu joué garde sa note mê
 ou dans Mes envies. Aucune valeur existante n’est effacée lorsque l’affichage change.
 
 Dans toutes les vues de Ma bibliothèque, les cartes affichent aussi cet indicateur : étoiles jaunes
-Ma note pour les jeux joués, flammes roses modifiables Envie de jouer pour les non joués ; aucun
-indicateur pour un souvenir non joué hors envies. La note non renseignée reste représentée par
-cinq étoiles vides et « à noter ». La note se modifie dans la sidebar ; les flammes restent
-modifiables directement sur les cartes. Un seul indicateur par carte de bibliothèque.
+pour les jeux joués, flammes roses pour les non joués et marque-page Souvenir pour les souvenirs
+non joués hors envies. Les valeurs non renseignées restent représentées par cinq symboles vides.
+Dans Ma bibliothèque, étoiles et flammes sont en lecture seule, sans croix d’effacement ;
+la modification se fait dans la sidebar. La page Mes envies conserve l’édition directe des flammes.
+Un seul indicateur par carte de bibliothèque.
 
 Sur les cartes, seuls les symboles sont visibles : pas de libellé Ma note ou Envie de jouer,
 ni de cadre/fond autour des flammes. Les noms accessibles et les libellés de sidebar restent présents.

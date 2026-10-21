@@ -1,5 +1,10 @@
 # État courant
 
+## Alignement des notes et envies en bibliothèque — 2026-10-21
+
+- Étoiles, flammes et repère Souvenir placés dans un pied de carte commun, hors du lien, avec mêmes marges et hauteur réservée. Alignement vertical identique quelle que soit la présence du bouton d’effacement des flammes.
+- Vérification TypeScript et lint ciblé ; validation visuelle par Henri.
+
 ## Indicateurs des cartes plateforme — 2026-10-21
 
 - Les cartes plateforme et collection affichent les flammes roses lorsqu’une envie est renseignée pour un jeu non joué ou sans note. Les notes d’expérience gardent les étoiles jaunes.

@@ -343,12 +343,6 @@ export function GameCard({
           {game.releaseYear ? <span className="game-platform-year">{game.releaseYear}</span> : null}
         </span>
         <h3 title={game.title}>{game.title}</h3>
-        {libraryCard && ratingKind === 'rating' && (
-          <div className="library-card-rating">
-            <span className="rating-caption">Ma note{rating == null ? ' · à noter' : ''}</span>
-            <Stars value={rating} showEmpty />
-          </div>
-        )}
         {!simpleCard && (
           <>
             {!showDesire && (
@@ -429,10 +423,22 @@ export function GameCard({
       {content}
     </Link>
   )
-  return showDesire ? (
+  return showDesire || libraryCard ? (
     <div className="discovery-game">
       {card}
-      <CardDesire game={game} />
+      {showDesire ? (
+        <CardDesire game={game} />
+      ) : (
+        <div className="library-card-rating">
+          {ratingKind === 'souvenir' ? (
+            <span className="game-card-souvenir">
+              <Bookmark size={18} aria-hidden="true" /> Souvenir
+            </span>
+          ) : (
+            <Stars value={rating} showEmpty />
+          )}
+        </div>
+      )}
     </div>
   ) : (
     card

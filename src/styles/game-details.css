@@ -90,7 +90,16 @@
 }
 .library-card-rating {
   container-type: inline-size;
-  padding-top: 4px;
+  padding: 4px 13px 12px;
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+}
+.card-desire .editable-rating-controls {
+  min-height: 32px;
+}
+.library-card-rating .stars {
+  display: flex;
 }
 .game-card-indicator {
   display: flex;

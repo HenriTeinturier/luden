@@ -463,9 +463,9 @@ export function Gallery({
               <List size={17} />
             </button>
           </div>
-          {pathname.replace(/\/$/, '') === '/library' && (
+          {['/library', '/discover'].includes(pathname.replace(/\/$/, '')) && (
             <select
-              aria-label="Thème visuel de la bibliothèque"
+              aria-label="Thème visuel de la galerie"
               value={filters.theme ?? '1'}
               onChange={(event) => update({ theme: event.target.value as '1' | '2' })}
             >

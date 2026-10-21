@@ -2,6 +2,13 @@
 
 ## Thèmes de Ma bibliothèque
 
+Mes envies propose aussi les deux thèmes, avec une préférence indépendante. Son thème 1
+utilise des marges réduites, un cadre fin et un léger déplacement de la carte entière au survol,
+contrôle d’envie inclus. Les flammes sont rapprochées du titre, sans croix d’effacement.
+Son thème 2 reprend les boîtes libres avec les cinq flammes interactives en haut à droite
+sur fond translucide flouté ; en liste elles restent sous le titre. La saisie par demi-flammes
+et au clavier est conservée. Les autres emplacements gardent leur bouton d’effacement.
+
 La barre de filtres propose « Thème 1 · Classique » (défaut, présentation existante)
 et « Thème 2 · Boîtes libres ». Le choix est mémorisé par les préférences de galerie,
 avec priorité au paramètre `theme` de l’URL. Il ne change pas les univers plateforme.

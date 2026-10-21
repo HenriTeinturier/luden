@@ -1,5 +1,11 @@
 # État courant
 
+## Thèmes et flammes de Mes envies — 2026-10-21
+
+- Thème 1 : cadre et marges affinés, flammes rapprochées du titre, déplacement léger de toute la carte au survol avec contour. Les cinq flammes restent modifiables ; croix d’effacement retirée uniquement sur cette page.
+- Thème 2 disponible dans la barre de filtres, mémorisé indépendamment de Ma bibliothèque : boîtes libres, logo/année et séparation, cinq flammes interactives sur fond translucide flouté en haut à droite. En liste, contrôle sous le titre pour éviter les chevauchements.
+- Saisie par demi-flammes et clavier conservée. TypeScript et lint ciblé vérifiés ; validation visuelle par Henri.
+
 ## Deux thèmes pour Ma bibliothèque — 2026-10-21
 
 - Sélecteur dans la barre de filtres : thème 1 Classique (affichage existant par défaut), thème 2 Boîtes libres. Choix mémorisé avec les préférences de bibliothèque et conservé dans l’URL.

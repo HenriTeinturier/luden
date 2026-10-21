@@ -4,7 +4,7 @@ import type { Game } from '../lib/types'
 import { EditableStars } from './rating'
 import { quickUpdateGameFn } from '../server/functions'
 
-export function CardDesire({ game }: { game: Game }) {
+export function CardDesire({ game, showClear = true }: { game: Game; showClear?: boolean }) {
   const router = useRouter()
   const saving = useRef(false)
   const [busy, setBusy] = useState(false)
@@ -30,6 +30,7 @@ export function CardDesire({ game }: { game: Game }) {
       <EditableStars
         label="Envie de jouer"
         kind="desire"
+        showClear={showClear}
         value={game.desire}
         disabled={busy}
         onChange={(value) => void save(value)}

@@ -7,7 +7,9 @@ export function EditableStars({
   onChange,
   label = 'Ma note',
   kind = 'rating',
+  showClear = true,
 }: {
+  showClear?: boolean
   kind?: 'rating' | 'desire'
   label?: string
   value: number | null
@@ -90,16 +92,18 @@ export function EditableStars({
         >
           <Stars value={preview ?? value ?? 0} kind={kind} />
         </div>
-        <button
-          type="button"
-          className="rating-clear"
-          aria-label={`Effacer : ${label}`}
-          title={`Effacer : ${label}`}
-          disabled={disabled || value === null}
-          onClick={() => onChange(null)}
-        >
-          <X size={13} />
-        </button>
+        {showClear && (
+          <button
+            type="button"
+            className="rating-clear"
+            aria-label={`Effacer : ${label}`}
+            title={`Effacer : ${label}`}
+            disabled={disabled || value === null}
+            onClick={() => onChange(null)}
+          >
+            <X size={13} />
+          </button>
+        )}
       </div>
     </div>
   )

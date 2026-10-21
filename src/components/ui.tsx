@@ -313,6 +313,7 @@ export function GameCard({
   const { platformId, collectionId } = useParams({ strict: false })
   const location = useLocation()
   const libraryCard = !preview && location.pathname.replace(/\/$/, '') === '/library'
+  const discoveryCard = !preview && location.pathname.replace(/\/$/, '') === '/discover'
   const ratingKind = sidebarRatingKind(game)
   const freeBoxes = libraryCard && theme === '2'
   const badgeValue = ratingKind === 'desire' ? game.desire : rating
@@ -462,7 +463,7 @@ export function GameCard({
     <div className="discovery-game">
       {card}
       {showDesire && !libraryCard ? (
-        <CardDesire game={game} />
+        <CardDesire game={game} showClear={!discoveryCard} />
       ) : (
         <div className={`library-card-rating${ratingKind === 'desire' ? ' desire-rating' : ''}`}>
           {ratingKind === 'souvenir' ? (

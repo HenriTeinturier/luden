@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode, type CSSProperties } from 'react'
 import { useLocation, useNavigate } from '@tanstack/react-router'
+import { ChevronRight } from 'lucide-react'
 import type { Library } from '../lib/types'
 import { GameSelectionContext } from './game-selection'
 import { GameDetails, GameNavigation, useGameKeys } from './game-details'
@@ -30,6 +31,7 @@ export function GameExplorer({
   const [hidingUniverse, setHidingUniverse] = useState(false)
   const [hidingGame, setHidingGame] = useState(false)
   const [homeColumns, setHomeColumns] = useState<number | undefined>()
+  const collapseUniverseOnClose = useRef(false)
   const previousMode = useRef<'sidebar' | 'full'>('sidebar')
   const scroll = useRef(0)
   const mobileLibraryScroll = useRef(0)
@@ -145,7 +147,8 @@ export function GameExplorer({
       setSelection(null)
       setHidingGame(false)
       setHomeColumns(undefined)
-      setUniverseVisit({ pathname: location.pathname, hidden: false })
+      setUniverseVisit({ pathname: location.pathname, hidden: collapseUniverseOnClose.current })
+      collapseUniverseOnClose.current = false
       restoreLibrary(true)
     }, duration)
     return () => clearTimeout(timer)
@@ -213,6 +216,7 @@ export function GameExplorer({
             : undefined,
         open: (id, sequence) => {
           if (busy) return
+          collapseUniverseOnClose.current = false
           if (!game && location.pathname === '/') {
             const grid = document.querySelector('.home-games')
             if (grid) setHomeColumns(getComputedStyle(grid).gridTemplateColumns.split(' ').length)
@@ -233,6 +237,21 @@ export function GameExplorer({
         <div className="library-content" hidden={Boolean(game) && mode !== 'sidebar'}>
           {children}
         </div>
+        {((game && mode === 'sidebar') || showUniverse) && (
+          <button
+            type="button"
+            className="sidebar-collapse-tab"
+            aria-label="Replier la sidebar"
+            title="Replier la sidebar"
+            disabled={busy || hidingGame || hidingUniverse}
+            onClick={() => {
+              collapseUniverseOnClose.current = true
+              close()
+            }}
+          >
+            <ChevronRight size={19} aria-hidden="true" />
+          </button>
+        )}
         {showUniverse && universe && (
           <UniverseSidebar
             key={universe.id}

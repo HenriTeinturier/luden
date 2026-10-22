@@ -1,5 +1,11 @@
 # État courant
 
+## Languette de repli de la sidebar — 2026-10-22
+
+- Petite languette violette à chevron sur le bord gauche du panneau, à mi-hauteur de la zone visible sur ordinateur. Replie entièrement la sidebar avec l’animation existante, y compris dans un univers.
+- Flèche de retour supérieure conservée avec son comportement précédent. Focus clavier visible, bouton désactivé pendant sauvegarde/fermeture ; masqué en vue mobile pleine largeur.
+- TypeScript et lint ciblé vérifiés ; validation visuelle par Henri.
+
 ## Animation de la fiche latérale et stabilité de l’accueil — 2026-10-22
 
 - Fiche sidebar : entrée depuis la droite et sortie vers la droite en 280 ms. Maintien du panneau pendant la fermeture, interactions désactivées pendant la sortie ; mouvement réduit respecté.

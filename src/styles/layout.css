@@ -345,9 +345,6 @@ main:focus {
 .page.library-page {
   padding-top: 20px;
 }
-.library-page > .gallery-toolbar {
-  margin-top: 0;
-}
 .page-heading {
   display: flex;
   justify-content: space-between;

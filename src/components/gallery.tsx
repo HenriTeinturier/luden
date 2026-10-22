@@ -1,35 +1,17 @@
 import { coverFormat } from '../lib/presentation'
 import { useMatch, useNavigate, useRouter, useSearch } from '@tanstack/react-router'
-import {
-  Search,
-  PackageCheck,
-  LayoutGrid,
-  List,
-  SlidersHorizontal,
-  Columns3,
-  PanelRightOpen,
-  RotateCcw,
-  Shuffle,
-  X,
-} from 'lucide-react'
-import { MegastarTrophy } from './megastar-trophy'
+import { LibraryToolbar } from './library-toolbar'
+import { GalleryToolbar } from './gallery-toolbar'
 import { GalleryStats } from './gallery-stats'
 import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties } from 'react'
 import { useGameSelection } from './game-selection'
-import {
-  filterGames,
-  galleryFilters,
-  toggleGalleryScope,
-  needsSorting,
-  type GallerySearch,
-} from '../lib/gallery'
+import { filterGames, galleryFilters, cleanLibrarySearch, type GallerySearch } from '../lib/gallery'
 import {
   galleryCardPositions,
   galleryKeyboardNeighbor,
   stepGalleryColumns,
 } from '../lib/gallery-navigation'
 import type { Game } from '../lib/types'
-import { playStatuses } from '../lib/platforms'
 import { EmptyState, GameCard, useLibrary } from './ui'
 import { groupByCategory } from '../lib/categories'
 import {
@@ -61,12 +43,42 @@ export function Gallery({
 }) {
   const library = useLibrary()
   const search = useSearch({ strict: false }) as GallerySearch
-  const filters = galleryFilters(search, defaultScope, discovery)
-  const visible = filterGames(games, filters)
-  const sortingCount = games.filter(needsSorting).length
+  const [query, setQuery] = useState(search.q ?? '')
+  const editingQuery = useRef(false)
+  const normalized = showStats ? cleanLibrarySearch(search) : search
+  const filters = galleryFilters(
+    { ...normalized, q: showStats ? query : normalized.q },
+    defaultScope,
+    discovery,
+  )
+  const visible = filterGames(games, filters, showStats)
   const navigate = useNavigate()
   const router = useRouter()
   const pathname = useMatch({ strict: false, select: (match) => match.pathname })
+  useEffect(() => {
+    if (!editingQuery.current) setQuery(search.q ?? '')
+  }, [search.q, pathname])
+  useEffect(() => {
+    if (!showStats || !editingQuery.current) return
+    if (query === (search.q ?? '')) {
+      editingQuery.current = false
+      return
+    }
+    // Cards react synchronously; only URL updates are debounced.
+    const timer = window.setTimeout(() => {
+      void navigate({
+        to: '.',
+        search: cleanLibrarySearch({ ...search, q: query }),
+        replace: true,
+        resetScroll: false,
+      })
+    }, 150)
+    return () => window.clearTimeout(timer)
+  }, [query, search, showStats, navigate])
+  function changeQuery(value: string) {
+    editingQuery.current = true
+    setQuery(value)
+  }
   const selection = useGameSelection()
   const desktop = useSyncExternalStore(subscribeDesktop, isDesktop, serverDesktop)
   const columnBonus = desktop && selection?.sidebarVisible === false ? 2 : 0
@@ -189,6 +201,7 @@ export function Gallery({
       const restored = restoreGalleryPreferences(
         localStorage.getItem(galleryPreferenceKey(pathname)),
         search,
+        showStats,
       )
       saveGalleryPreferences(pathname, { ...restored, scope: restored.scope ?? defaultScope })
       if (
@@ -201,10 +214,13 @@ export function Gallery({
     } catch {
       // Browser storage is optional, including during private browsing.
     }
-  }, [pathname, search, navigate, defaultScope, router])
-  const [advanced, setAdvanced] = useState(false)
+  }, [pathname, search, navigate, defaultScope, router, showStats])
   const update = (patch: Partial<GallerySearch>) => {
-    const next = { ...filters, ...patch }
+    if (patch.q !== undefined) {
+      editingQuery.current = false
+      setQuery(patch.q)
+    }
+    const next = showStats ? cleanLibrarySearch({ ...filters, ...patch }) : { ...filters, ...patch }
     saveGalleryPreferences(pathname, next)
     void navigate({ to: '.', search: next, replace: true, resetScroll: false })
   }
@@ -270,325 +286,32 @@ export function Gallery({
   const sequence = groups.flatMap((group) => group.games.map((game) => game.id))
   return (
     <>
-      {showStats && <GalleryStats games={games} onSelect={update} />}
-      <div className="gallery-toolbar gallery-toolbar-scoped">
-        <div
-          className={`platform-scope ${discovery ? '' : 'gallery-scopes'}`}
-          role="group"
-          aria-label="Vue des jeux"
-        >
-          {discovery ? (
-            <>
-              <button
-                type="button"
-                aria-pressed={true}
-                onClick={() => update({ scope: 'discover', status: '' })}
-              >
-                Mes envies
-              </button>
-              <button
-                type="button"
-                aria-pressed={filters.sort === 'desire'}
-                title={
-                  filters.sort === 'desire'
-                    ? 'Revenir aux derniers ajouts / modifiés'
-                    : 'Classer par note d’envie décroissante'
-                }
-                onClick={() =>
-                  update({
-                    sort: filters.sort === 'desire' ? 'recent' : 'desire',
-                    randomSeed: undefined,
-                  })
-                }
-              >
-                Par envie ↓
-              </button>
-            </>
-          ) : (
-            (
-              [
-                ['all', 'Tous'],
-                ['played', 'Joués'],
-                ['discover', 'Mes envies'],
-              ] as const
-            ).map(([scope, label]) => (
-              <button
-                key={scope}
-                type="button"
-                aria-pressed={filters.scope === scope}
-                title={scope === 'all' ? 'Tous les jeux, y compris ceux à trier' : undefined}
-                onClick={() => update(toggleGalleryScope(filters, scope))}
-              >
-                {label}
-              </button>
-            ))
-          )}
-        </div>
-        <div className="gallery-refinements" role="group" aria-label="Filtres cumulables">
-          <span className="gallery-refinements-label">Affiner</span>
-          <button
-            type="button"
-            className="gallery-filter-switch"
-            role="switch"
-            aria-checked={filters.owned === 'current'}
-            title="Limiter la vue aux jeux possédés actuellement"
-            onClick={() => update({ owned: filters.owned === 'current' ? 'all' : 'current' })}
-          >
-            <PackageCheck size={18} aria-hidden="true" />
-            Possédés
-            <span className="filter-switch-track" aria-hidden="true" />
-          </button>
-          {!discovery && (
-            <button
-              type="button"
-              className="gallery-filter-switch megastar-switch"
-              role="switch"
-              aria-checked={filters.favorite ?? false}
-              title="Limiter la vue aux jeux Megastar (favoris)"
-              onClick={() => update({ favorite: !filters.favorite })}
-            >
-              <MegastarTrophy />
-              Megastar
-              <span className="filter-switch-track" aria-hidden="true" />
-            </button>
-          )}
-        </div>
-        {!discovery && (sortingCount > 0 || filters.scope === 'unassigned') && (
-          <button
-            type="button"
-            className="gallery-sorting-link"
-            aria-pressed={filters.scope === 'unassigned'}
-            title="Jeux ni joués, ni dans mes envies, ni gardés en souvenir, possédés ou non. Le compteur inclut tous les jeux à trier de cette galerie avant les autres filtres."
-            onClick={() => update(toggleGalleryScope(filters, 'unassigned'))}
-          >
-            À trier · {sortingCount}
-          </button>
-        )}
-        <div className="filter-search">
-          <Search size={17} />
-          <input
-            aria-label="Filtrer les jeux"
-            placeholder="Rechercher…"
-            title="Rechercher un titre, un souvenir ou un genre"
-            value={filters.q ?? ''}
-            onChange={(e) => update({ q: e.target.value })}
-          />
-          {filters.q && (
-            <button
-              className="icon-button"
-              aria-label="Effacer la recherche"
-              onClick={() => update({ q: '' })}
-            >
-              <X size={14} />
-            </button>
-          )}
-        </div>
-        <div className="gallery-controls">
-          <select
-            aria-label="Regrouper les jeux"
-            value={grouping}
-            onChange={(e) => update({ group: e.target.value as GallerySearch['group'] })}
-          >
-            <option value="none">Sans regroupement</option>
-            <option value="category">Par catégorie</option>
-          </select>
-          {!platformLocked && (
-            <select
-              aria-label="Filtrer par plateforme"
-              value={filters.platform ?? ''}
-              onChange={(e) => update({ platform: e.target.value })}
-            >
-              <option value="">Toutes les plateformes</option>
-              {library.platforms
-                .filter((p) => games.some((g) => g.platformId === p.id))
-                .map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.name}
-                  </option>
-                ))}
-            </select>
-          )}
-          <div className="gallery-sort">
-            <select
-              aria-label="Trier les jeux"
-              value={filters.sort ?? 'recent'}
-              onChange={(e) => {
-                if (e.target.value === 'random') reshuffle()
-                else
-                  update({ sort: e.target.value as GallerySearch['sort'], randomSeed: undefined })
-              }}
-            >
-              <option value="recent">Derniers ajouts / modifiés</option>
-              <option value="title">Titre A → Z</option>
-              <option value="rating">Ma note</option>
-              <option value="year">Année de sortie</option>
-              <option value="desire">Mon envie</option>
-              <option value="random">Aléatoire</option>
-            </select>
-            {filters.sort === 'random' && (
-              <button
-                className="icon-button"
-                aria-label="Remélanger les jeux"
-                title="Remélanger les jeux"
-                disabled={visible.length < 2}
-                onClick={reshuffle}
-              >
-                <Shuffle size={17} />
-              </button>
-            )}
-          </div>
-          <button
-            className={`icon-button ${advanced ? 'selected' : ''}`}
-            aria-label="Afficher les filtres"
-            aria-expanded={advanced}
-            onClick={() => setAdvanced(!advanced)}
-          >
-            <SlidersHorizontal size={17} />
-          </button>
-          <div className="view-toggle">
-            <button
-              className={!filters.view || filters.view === 'grid' ? 'selected' : ''}
-              aria-label="Vue galerie"
-              aria-pressed={filters.view !== 'list'}
-              onClick={() => update({ view: 'grid' })}
-            >
-              <LayoutGrid size={16} />
-            </button>
-            <button
-              className={filters.view === 'list' ? 'selected' : ''}
-              aria-label="Vue compacte"
-              aria-pressed={filters.view === 'list'}
-              onClick={() => update({ view: 'list' })}
-            >
-              <List size={17} />
-            </button>
-          </div>
-          {['/library', '/discover'].includes(pathname.replace(/\/$/, '')) && (
-            <select
-              aria-label="Thème visuel de la galerie"
-              value={filters.theme ?? '1'}
-              onChange={(event) => update({ theme: event.target.value as '1' | '2' })}
-            >
-              <option value="1">Thème 1 · Classique</option>
-              <option value="2">Thème 2 · Boîtes libres</option>
-            </select>
-          )}
-          <label
-            className="gallery-density"
-            title="Jaquettes par ligne : 4 à 10 avec la sidebar, 2 de plus sans elle. Ctrl + molette sur les jaquettes pour ajuster."
-          >
-            <Columns3 size={16} aria-hidden="true" />
-            <select
-              aria-label="Jaquettes par ligne"
-              value={displayedColumns}
-              disabled={filters.view === 'list'}
-              onChange={(e) =>
-                update({
-                  columns:
-                    e.target.value === 'auto' ? 'auto' : Number(e.target.value) - columnBonus,
-                })
-              }
-            >
-              <option value="auto">Auto</option>
-              {Array.from({ length: 7 }, (_, i) => i + 4 + columnBonus).map((count) => (
-                <option key={count} value={count}>
-                  {count}
-                </option>
-              ))}
-            </select>
-          </label>
-        </div>
-        <div className="gallery-results">
-          <span
-            aria-live="polite"
-            aria-atomic="true"
-            aria-label={`${visible.length} jeux affichés sur ${games.length}`}
-            title={`${visible.length} jeux affichés sur ${games.length}`}
-          >
-            {showStats
-              ? `${visible.length} jeux affichés sur ${games.length}`
-              : `${visible.length}${filtered ? ` / ${games.length}` : ' jeux'}`}
-          </span>
-          {filtered && (
-            <button
-              type="button"
-              className="icon-button gallery-reset"
-              aria-label="Réinitialiser les filtres"
-              title="Réinitialiser les filtres"
-              onClick={() =>
-                update({
-                  q: '',
-                  platform: '',
-                  status: '',
-                  machine: '',
-                  favorite: false,
-                  souvenir: false,
-                  owned: 'all',
-                  scope: discovery ? 'discover' : 'all',
-                })
-              }
-            >
-              <RotateCcw size={16} aria-hidden="true" />
-            </button>
-          )}
-          {selection?.reopenSidebar && (
-            <button
-              id="reopen-sidebar"
-              type="button"
-              className="sidebar-reopen"
-              aria-label="Afficher la sidebar de l’univers"
-              title="Afficher la sidebar de l’univers · Flèches : parcourir les jeux · Entrée sur une jaquette : ouvrir sa fiche"
-              onClick={selection.reopenSidebar}
-            >
-              <PanelRightOpen size={17} aria-hidden="true" />
-              Sidebar
-            </button>
-          )}
-        </div>
-      </div>
-      {advanced && (
-        <div className="advanced-filters">
-          <select
-            aria-label="Statut de jeu"
-            value={filters.status ?? ''}
-            onChange={(e) => update({ status: e.target.value })}
-          >
-            <option value="">Tous les statuts</option>
-            {Object.entries(playStatuses).map(([value, label]) => (
-              <option key={value} value={value}>
-                {label}
-              </option>
-            ))}
-          </select>
-          <select
-            aria-label="Possession"
-            value={filters.owned ?? 'all'}
-            onChange={(e) => update({ owned: e.target.value as GallerySearch['owned'] })}
-          >
-            <option value="all">Toutes les possessions</option>
-            <option value="current">Possédés actuellement</option>
-            <option value="past">Possédés autrefois</option>
-            <option value="none">Aucune possession</option>
-          </select>
-          <label className="check-inline">
-            <input
-              type="checkbox"
-              checked={filters.souvenir ?? false}
-              onChange={(e) => update({ souvenir: e.target.checked })}
-            />
-            Souvenirs uniquement
-          </label>
-          {!discovery && (
-            <label className="check-inline">
-              <input
-                type="checkbox"
-                checked={filters.favorite ?? false}
-                onChange={(e) => update({ favorite: e.target.checked })}
-              />
-              Coups de cœur
-            </label>
-          )}
-        </div>
+      {showStats && <GalleryStats games={games} filters={filters} onSelect={update} />}
+      {showStats ? (
+        <LibraryToolbar
+          games={games}
+          filters={filters}
+          update={update}
+          onQueryChange={changeQuery}
+          displayedColumns={displayedColumns}
+          columnBonus={columnBonus}
+          visibleCount={visible.length}
+          reshuffle={reshuffle}
+        />
+      ) : (
+        <GalleryToolbar
+          games={games}
+          filters={filters}
+          update={update}
+          discovery={discovery}
+          platformLocked={platformLocked}
+          pathname={pathname}
+          displayedColumns={displayedColumns}
+          columnBonus={columnBonus}
+          visibleCount={visible.length}
+          filtered={filtered}
+          reshuffle={reshuffle}
+        />
       )}
       {visible.length ? (
         <div className="gallery-groups" data-library-theme={filters.theme ?? '1'} ref={gallery}>

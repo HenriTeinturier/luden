@@ -1,9 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useLibrary } from '../components/ui'
 import { Gallery } from '../components/gallery'
-import { gallerySearch } from '../lib/gallery'
+import { librarySearch } from '../lib/gallery'
 export const Route = createFileRoute('/library')({
-  validateSearch: (input) => gallerySearch.parse(input),
+  validateSearch: (input) => librarySearch.parse(input),
   component: Library,
 })
 function Library() {

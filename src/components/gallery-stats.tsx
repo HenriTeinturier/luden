@@ -1,14 +1,16 @@
 import { CirclePlay, Gamepad2, ShieldCheck, Sparkles, Inbox } from 'lucide-react'
-import { hasPlayed, needsSorting, type GallerySearch } from '../lib/gallery'
+import { hasPlayed, needsSorting, librarySelection, type GallerySearch } from '../lib/gallery'
 import type { Game } from '../lib/types'
 import { MegastarTrophy } from './megastar-trophy'
 
 export function GalleryStats({
   games,
   onSelect,
+  filters,
 }: {
   games: Game[]
   onSelect: (filters: Partial<GallerySearch>) => void
+  filters: GallerySearch
 }) {
   const stats = [
     { label: 'jeux dans ma bibliothèque', count: games.length, icon: Gamepad2, tone: 'library' },
@@ -60,13 +62,11 @@ export function GalleryStats({
               key={tone}
               type="button"
               className={`platform-overview-stat stat-${tone}`}
+              aria-pressed={librarySelection(filters) === tone}
               onClick={() =>
                 onSelect({
                   q: '',
                   platform: '',
-                  machine: '',
-                  status: '',
-                  souvenir: false,
                   scope:
                     tone === 'played'
                       ? 'played'

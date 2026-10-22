@@ -1,5 +1,14 @@
 # Direction graphique actuelle
 
+Ma bibliothèque : les six cartes de statistiques sont les seuls sélecteurs de périmètre,
+avec un état bleu persistant pour la sélection active. Sous elles, une ligne sans encadré
+réunit recherche dans cette vue, plateforme, tri et Présentation. Ce dernier menu contient
+uniquement le thème (Classique/Vitrine) et les colonnes ; Ctrl + molette reste disponible.
+La recherche filtre à chaque frappe dans le titre (sous-chaîne, sans casse ni accents) ;
+seule la synchronisation URL attend 150 ms. Le nombre de résultats apparaît uniquement
+pendant une recherche. La bibliothèque ne propose plus de liste, regroupement ni filtres
+avancés et ignore ces anciennes préférences. Les autres galeries gardent leurs contrôles.
+
 Dans l’encart souvenir de l’accueil, Revoir ce souvenir est un bouton pleine largeur placé
 immédiatement sous l’intitulé, avant le titre du jeu, sa boîte et la citation.
 

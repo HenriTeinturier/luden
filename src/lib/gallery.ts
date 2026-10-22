@@ -7,7 +7,7 @@ export const gallerySearch = z.object({
   machine: z.string().optional(),
   status: z.string().optional(),
   scope: z.enum(['all', 'played', 'discover', 'owned', 'unassigned']).optional(),
-  sort: z.enum(['recent', 'title', 'rating', 'year', 'desire', 'random']).optional(),
+  sort: z.enum(['recent', 'title', 'platform', 'rating', 'year', 'desire', 'random']).optional(),
   randomSeed: z.number().int().min(0).max(0xffffffff).optional().catch(undefined),
   view: z.enum(['grid', 'list']).optional(),
   theme: z.enum(['1', '2']).optional().catch(undefined),
@@ -21,6 +21,40 @@ export const gallerySearch = z.object({
   souvenir: z.boolean().optional(),
 })
 export type GallerySearch = z.infer<typeof gallerySearch>
+
+// Library controls have a deliberately smaller contract than universe/collection galleries.
+// Whitelisting also retires old URL and localStorage filters instead of leaving them active.
+export function cleanLibrarySearch(search: GallerySearch): GallerySearch {
+  const owned =
+    search.scope === 'owned'
+      ? 'current'
+      : search.owned === 'current'
+        ? 'current'
+        : search.owned === 'all'
+          ? 'all'
+          : undefined
+  return {
+    q: search.q,
+    platform: search.platform,
+    scope: search.favorite || owned === 'current' ? 'all' : search.scope,
+    owned: search.favorite ? 'all' : owned,
+    favorite: search.favorite,
+    sort: search.sort,
+    randomSeed: search.randomSeed,
+    theme: search.theme,
+    columns: search.columns,
+  }
+}
+export const librarySearch = gallerySearch.transform(cleanLibrarySearch)
+
+export function librarySelection(filters: GallerySearch) {
+  if (filters.favorite) return 'favorites'
+  if (filters.owned === 'current' || filters.scope === 'owned') return 'owned'
+  if (filters.scope === 'played') return 'played'
+  if (filters.scope === 'discover') return 'desire'
+  if (filters.scope === 'unassigned') return 'sorting'
+  return 'library'
+}
 
 // Old links used possession as a view. Preserve their selection as All + Owned.
 export function galleryFilters(
@@ -70,7 +104,7 @@ function randomRank(id: string, seed: number) {
   return (hash ^ (hash >>> 16)) >>> 0
 }
 
-export function filterGames(games: Game[], filters: GallerySearch) {
+export function filterGames(games: Game[], filters: GallerySearch, titleOnly = false) {
   const normalize = (s: string) =>
     s
       .normalize('NFD')
@@ -80,8 +114,10 @@ export function filterGames(games: Game[], filters: GallerySearch) {
     (g) =>
       (!filters.q ||
         normalize(
-          `${g.title} ${g.developer} ${g.genres.join(' ')} ${g.experience?.memory ?? ''}`,
-        ).includes(normalize(filters.q))) &&
+          titleOnly
+            ? g.title
+            : `${g.title} ${g.developer} ${g.genres.join(' ')} ${g.experience?.memory ?? ''}`,
+        ).includes(normalize(filters.q.trim()))) &&
       (!filters.platform || g.platformId === filters.platform) &&
       (!filters.machine || g.machineId === filters.machine) &&
       (!filters.status || (g.experience?.status ?? 'UNPLAYED') === filters.status) &&
@@ -109,6 +145,10 @@ export function filterGames(games: Game[], filters: GallerySearch) {
       .map(({ game }) => game)
   }
   return filtered.sort((a, b) => {
+    if (filters.sort === 'platform')
+      return (
+        a.platform.name.localeCompare(b.platform.name, 'fr') || a.title.localeCompare(b.title, 'fr')
+      )
     if (filters.sort === 'title') return a.title.localeCompare(b.title, 'fr')
     if (filters.sort === 'rating')
       return (b.experience?.rating ?? -1) - (a.experience?.rating ?? -1)

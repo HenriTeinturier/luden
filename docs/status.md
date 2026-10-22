@@ -1,5 +1,12 @@
 # État courant
 
+## Commandes de bibliothèque simplifiées — 2026-10-22
+
+- Les six compteurs du haut pilotent seuls le périmètre (Tous, Joués, Envies, Possédés, Megastar, À trier), avec état actif bleu persistant et `aria-pressed`.
+- Ligne sans encadré : recherche locale instantanée dans le titre, plateforme, tri (dont plateforme), menu Présentation (Classique/Vitrine et colonnes). Compteur de résultats uniquement pendant une recherche ; Ctrl + molette conservé.
+- Contrat URL et préférences propres à Ma bibliothèque : anciens réglages liste, regroupement, statut détaillé, machine, souvenirs et possession passée retirés. Les contrôles encore employés par les autres galeries sont isolés dans GalleryToolbar ; aucune simple dissimulation CSS.
+- TypeScript, lint ciblé et tests de filtrage/préférences/navigation validés. Vérification navigateur : `mick` retrouve Epic Mickey et les deux autres titres Mickey sans validation ; Megastar affiche son état actif et neutralise la recherche.
+
 ## Accès au souvenir de l’accueil — 2026-10-22
 
 - Le lien Revoir ce souvenir devient un bouton pleine largeur, immédiatement sous l’intitulé de l’encart, avant le titre du jeu, la boîte et la citation. L’ouverture dans la sidebar est conservée.

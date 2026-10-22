@@ -1,5 +1,11 @@
 # Direction graphique actuelle
 
+À partir de 1 100 px de contenu disponible, le souvenir de l’accueil occupe un encadré
+à droite des jeux récents (75/25, gouttière de 40 px). Aligné sur le haut des cartes, il
+conserve sa hauteur naturelle : jaquette entière, citation, titre et lien vers la fiche.
+Fond légèrement contrasté et bordure discrète. Sur écran étroit, il suit la galerie ;
+sans souvenir, celle-ci garde toute la largeur.
+
 L’accueil utilise un conteneur centré de 2 000 px maximum avec marges latérales de 24 à 64 px.
 Au-delà de 1 400 px de largeur intérieure, le haut se compose de deux colonnes 45/55 :
 introduction illustrée et statistiques en 2 × 2 à gauche, quatre plateformes en 2 × 2 à droite.

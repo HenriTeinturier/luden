@@ -1,5 +1,11 @@
 # État courant
 
+## Souvenir à côté des jeux récents — 2026-10-22
+
+- Encadré souvenir à droite de la galerie : petite jaquette entière, citation, titre et lien ouvrant la fiche/sidebar. Largeurs 75/25 avec 40 px d’espace, alignement sur le haut des cartes et hauteur naturelle.
+- Sous 1 100 px de contenu disponible, le souvenir revient sous les jeux. Sans souvenir, la galerie conserve toute la largeur.
+- TypeScript et lint ciblé vérifiés ; validation visuelle par Henri.
+
 ## Accueil élargi et aéré — 2026-10-22
 
 - Contenu centré jusqu’à 2 000 px, marges latérales confortables. À partir de 1 400 px de contenu disponible : introduction et statistiques à gauche (45 %), quatre plateformes à droite (55 %).

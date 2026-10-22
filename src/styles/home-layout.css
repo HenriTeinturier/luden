@@ -22,13 +22,65 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 20px;
 }
-.home-page .home-recent,
-.home-page .first-page {
+.home-stories {
   margin-top: 56px;
 }
+.home-page .home-recent,
+.home-page .first-page {
+  margin-top: 0;
+  min-width: 0;
+}
 .home-page .memory-quote {
-  margin-top: 56px;
-  padding: 48px 24px;
+  margin-top: 32px;
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: linear-gradient(145deg, var(--surface), var(--sidebar-background));
+  text-align: left;
+  min-width: 0;
+}
+.home-page .memory-quote .memory-cover {
+  width: 130px;
+  height: 140px;
+  margin: 24px 0;
+  background: transparent;
+  border-radius: 0;
+}
+.home-page .memory-quote blockquote {
+  font-size: 21px;
+  line-height: 1.6;
+  margin: 0 0 24px;
+  overflow-wrap: anywhere;
+}
+.home-page .memory-quote a {
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+}
+.home-page .memory-quote a small {
+  display: block;
+  margin-top: 6px;
+  color: var(--blue);
+  font-size: 11px;
+}
+@container home (min-width: 1100px) {
+  .home-stories.has-memory {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(260px, 1fr);
+    gap: 0 40px;
+    align-items: start;
+  }
+  .home-stories.has-memory .home-recent {
+    display: contents;
+  }
+  .home-stories.has-memory .section-heading {
+    grid-column: 1 / -1;
+  }
+  .home-stories.has-memory .memory-quote {
+    grid-column: 2;
+    grid-row: 2;
+    margin-top: 0;
+  }
 }
 @container home (min-width: 1400px) {
   .home-top {
@@ -109,9 +161,7 @@
     grid-template-columns: minmax(0, 1fr);
     gap: 16px;
   }
-  .home-page .home-recent,
-  .home-page .first-page,
-  .home-page .memory-quote {
+  .home-stories {
     margin-top: 36px;
   }
 }

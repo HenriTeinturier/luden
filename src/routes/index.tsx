@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { ArrowUpRight, Plus, ArrowRight, Heart, BookOpen, Compass, Layers3 } from 'lucide-react'
-import { SectionHeading, PlatformCard, GameCard, useLibrary } from '../components/ui'
+import { SectionHeading, PlatformCard, GameCard, Cover, useLibrary } from '../components/ui'
 import { useGameSelection } from '../components/game-selection'
 
 export const Route = createFileRoute('/')({ component: Home })
@@ -37,10 +37,8 @@ function Home() {
                 <em>Et tant d’histoires.</em>
               </h1>
               <p>
-                La première console. Une nuit à finir un niveau.{' '}
-                <br />
-                Un monde qu’on n’a jamais vraiment quitté.{' '}
-                <br />
+                La première console. Une nuit à finir un niveau. <br />
+                Un monde qu’on n’a jamais vraiment quitté. <br />
                 Gardez une place pour tous ces moments.
               </p>
               <Link to={games.length ? '/library' : '/games/new'} className="button light">
@@ -110,72 +108,81 @@ function Home() {
           </div>
         </section>
       </div>
-      {games.length > 0 ? (
-        <section className="home-recent">
-          <SectionHeading
-            title={
-              playing.length ? 'L’aventure continue.' : 'Les dernières pages de votre histoire.'
-            }
-            to="/library"
-          />
-          <div data-library-theme="1">
-            <div className="game-grid home-games">
-              {recentGames.map((g) => (
-                <GameCard key={g.id} game={g} sequence={recentSequence} overview />
-              ))}
+      <div className={`home-stories${memories.length ? ' has-memory' : ''}`}>
+        {games.length > 0 ? (
+          <section className="home-recent">
+            <SectionHeading
+              title={
+                playing.length ? 'L’aventure continue.' : 'Les dernières pages de votre histoire.'
+              }
+              to="/library"
+            />
+            <div data-library-theme="1">
+              <div className="game-grid home-games">
+                {recentGames.map((g) => (
+                  <GameCard key={g.id} game={g} sequence={recentSequence} overview />
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
-      ) : (
-        <section className="first-page">
-          <div className="first-page-art">
-            <BookOpen size={38} strokeWidth={1} />
-            <span>01</span>
-          </div>
-          <div>
-            <span className="eyebrow">UNE PREMIÈRE PAGE À ÉCRIRE</span>
-            <h2>Par quel jeu tout a commencé ?</h2>
-            <p>Pas besoin de tout remplir. Un titre, une plateforme, et votre histoire commence.</p>
-          </div>
-          <Link to="/games/new" className="button secondary">
-            <Plus size={17} />
-            Ajouter un jeu
-          </Link>
-        </section>
-      )}
-      {memories.length > 0 && (
-        <section className="memory-quote">
-          <span className="eyebrow">UN SOUVENIR À REVISITER</span>
-          <blockquote>
-            « {memories[0].experience!.memory.slice(0, 280)}
-            {memories[0].experience!.memory.length > 280 ? '…' : ''} »
-          </blockquote>
-          <Link
-            to="/games/$gameId"
-            params={{ gameId: memories[0].id }}
-            data-game-id={memories[0].id}
-            onClick={(event) => {
-              if (
-                !selection ||
-                event.button !== 0 ||
-                event.ctrlKey ||
-                event.metaKey ||
-                event.shiftKey ||
-                event.altKey
-              )
-                return
-              event.preventDefault()
-              selection.open(
-                memories[0].id,
-                memories.map((game) => game.id),
-                event.currentTarget,
-              )
-            }}
-          >
-            {memories[0].title} <ArrowRight size={16} />
-          </Link>
-        </section>
-      )}
+          </section>
+        ) : (
+          <section className="first-page">
+            <div className="first-page-art">
+              <BookOpen size={38} strokeWidth={1} />
+              <span>01</span>
+            </div>
+            <div>
+              <span className="eyebrow">UNE PREMIÈRE PAGE À ÉCRIRE</span>
+              <h2>Par quel jeu tout a commencé ?</h2>
+              <p>
+                Pas besoin de tout remplir. Un titre, une plateforme, et votre histoire commence.
+              </p>
+            </div>
+            <Link to="/games/new" className="button secondary">
+              <Plus size={17} />
+              Ajouter un jeu
+            </Link>
+          </section>
+        )}
+        {memories.length > 0 && (
+          <aside className="memory-quote" aria-label="Un souvenir à revisiter">
+            <span className="eyebrow">UN SOUVENIR À REVISITER</span>
+            <Cover game={memories[0]} className="memory-cover" sizes="160px" />
+            <blockquote>
+              « {memories[0].experience!.memory.slice(0, 280)}
+              {memories[0].experience!.memory.length > 280 ? '…' : ''} »
+            </blockquote>
+            <Link
+              to="/games/$gameId"
+              params={{ gameId: memories[0].id }}
+              data-game-id={memories[0].id}
+              onClick={(event) => {
+                if (
+                  !selection ||
+                  event.button !== 0 ||
+                  event.ctrlKey ||
+                  event.metaKey ||
+                  event.shiftKey ||
+                  event.altKey
+                )
+                  return
+                event.preventDefault()
+                selection.open(
+                  memories[0].id,
+                  memories.map((game) => game.id),
+                  event.currentTarget,
+                )
+              }}
+            >
+              <span>
+                {memories[0].title}
+                <small>Revoir ce souvenir</small>
+              </span>{' '}
+              <ArrowRight size={16} />
+            </Link>
+          </aside>
+        )}
+      </div>
     </div>
   )
 }

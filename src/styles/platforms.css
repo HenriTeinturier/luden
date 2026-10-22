@@ -587,7 +587,7 @@
 .platform-overview-stat.stat-favorites {
   --stat-color: #d6b6ff;
 }
-.platform-overview-stat.stat-favorites dt {
+.platform-overview-stat.stat-favorites :is(dt, .library-stat-label) {
   color: #d6b6ff;
 }
 .platform-overview-stat > .megastar-trophy {
@@ -607,12 +607,12 @@
   flex: 1;
   min-width: 0;
 }
-.platform-overview-stat dt {
+.platform-overview-stat :is(dt, .library-stat-label) {
   color: #a7aec8;
   font-size: 12px;
   line-height: 1.4;
 }
-.platform-overview-stat dd {
+.platform-overview-stat :is(dd, .library-stat-value) {
   order: -1;
   display: flex;
   align-items: center;

@@ -1,9 +1,15 @@
 import { CirclePlay, Gamepad2, ShieldCheck, Sparkles, Inbox } from 'lucide-react'
-import { hasPlayed, needsSorting } from '../lib/gallery'
+import { hasPlayed, needsSorting, type GallerySearch } from '../lib/gallery'
 import type { Game } from '../lib/types'
 import { MegastarTrophy } from './megastar-trophy'
 
-export function GalleryStats({ games }: { games: Game[] }) {
+export function GalleryStats({
+  games,
+  onSelect,
+}: {
+  games: Game[]
+  onSelect: (filters: Partial<GallerySearch>) => void
+}) {
   const stats = [
     { label: 'jeux dans ma bibliothèque', count: games.length, icon: Gamepad2, tone: 'library' },
     {
@@ -46,17 +52,40 @@ export function GalleryStats({ games }: { games: Game[] }) {
       aria-live="polite"
       aria-atomic="true"
     >
-      <dl className="platform-overview-stats">
+      <div className="platform-overview-stats">
         {stats.map(({ label, count, icon: Icon, tone }) => {
           const percent = games.length ? Math.round((count / games.length) * 100) : 0
           return (
-            <div key={tone} className={`platform-overview-stat stat-${tone}`}>
+            <button
+              key={tone}
+              type="button"
+              className={`platform-overview-stat stat-${tone}`}
+              onClick={() =>
+                onSelect({
+                  q: '',
+                  platform: '',
+                  machine: '',
+                  status: '',
+                  souvenir: false,
+                  scope:
+                    tone === 'played'
+                      ? 'played'
+                      : tone === 'desire'
+                        ? 'discover'
+                        : tone === 'sorting'
+                          ? 'unassigned'
+                          : 'all',
+                  owned: tone === 'owned' ? 'current' : 'all',
+                  favorite: tone === 'favorites',
+                })
+              }
+            >
               <span className="library-stat-icon" aria-hidden="true">
                 <Icon size={25} />
               </span>
               <div>
-                <dt>{label}</dt>
-                <dd>
+                <span className="library-stat-label">{label}</span>
+                <span className="library-stat-value">
                   <strong>{count}</strong>
                   {tone !== 'library' && (
                     <span
@@ -66,12 +95,12 @@ export function GalleryStats({ games }: { games: Game[] }) {
                       {percent}%
                     </span>
                   )}
-                </dd>
+                </span>
               </div>
-            </div>
+            </button>
           )
         })}
-      </dl>
+      </div>
     </section>
   )
 }

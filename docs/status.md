@@ -1,5 +1,11 @@
 # État courant
 
+## Compteurs de bibliothèque cliquables — 2026-10-22
+
+- Les six compteurs ouvrent respectivement Tous, Joués, Mes envies, Tous + Possédés, Tous + Megastar et À trier. Les autres filtres de contenu sont neutralisés ; présentation et tri conservés via les préférences existantes.
+- Boutons utilisables au clavier, même fond de survol et chiffre bleu que les statistiques de l’accueil. Compteurs toujours calculés sur toute la bibliothèque.
+- TypeScript et lint ciblé vérifiés.
+
 ## Destinations des compteurs de l’accueil — 2026-10-22
 
 - Jeux dans votre histoire ouvre Ma bibliothèque sur Tous ; Envies de jouer ouvre Ma bibliothèque sur Mes envies. Les autres filtres de contenu sont neutralisés, comme pour Megastar, sans modifier thème/densité/tri.

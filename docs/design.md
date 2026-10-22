@@ -1,5 +1,10 @@
 # Direction graphique actuelle
 
+Les six statistiques de Ma bibliothèque sont des raccourcis : Tous, Joués, Mes envies,
+Tous + Possédés, Tous + Megastar et À trier. Chaque clic remet à zéro les autres filtres
+de contenu sans changer la présentation. Survol et focus reprennent le fond et le chiffre
+bleu des compteurs de l’accueil ; les statistiques restent globales.
+
 Les compteurs Jeux dans votre histoire et Envies de jouer ouvrent Ma bibliothèque,
 respectivement sur Tous et Mes envies, sans filtres de contenu supplémentaires mémorisés.
 Les préférences de présentation restent conservées.

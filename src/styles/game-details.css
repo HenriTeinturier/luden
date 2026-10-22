@@ -6,6 +6,22 @@
 .library-overview .platform-overview-stat {
   gap: 12px;
   padding: 14px;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.library-overview .platform-overview-stat:hover,
+.library-overview .platform-overview-stat:focus-visible {
+  background: var(--surface-hover);
+}
+.library-overview .platform-overview-stat:hover strong,
+.library-overview .platform-overview-stat:focus-visible strong {
+  color: var(--blue);
+}
+.library-overview .platform-overview-stat:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
 }
 .library-overview .stat-library {
   --stat-color: #83baff;

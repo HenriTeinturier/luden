@@ -270,7 +270,7 @@ export function Gallery({
   const sequence = groups.flatMap((group) => group.games.map((game) => game.id))
   return (
     <>
-      {showStats && <GalleryStats games={games} />}
+      {showStats && <GalleryStats games={games} onSelect={update} />}
       <div className="gallery-toolbar gallery-toolbar-scoped">
         <div
           className={`platform-scope ${discovery ? '' : 'gallery-scopes'}`}

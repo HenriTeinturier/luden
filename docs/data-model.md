@@ -88,6 +88,6 @@ la création utilise le défaut en base. Les contrôles actuels envoient la vale
 
 ## Visibilité dans Mes plateformes
 
-`Platform.customization.hiddenFromPlatforms` (booléen, défaut false) masque uniquement
-la carte sur l’index des plateformes. Le catalogue chargé, les jeux et leurs rattachements
+`Platform.customization.hiddenFromPlatforms` (booléen, défaut false) masque
+la carte sur l’index des plateformes et dans l’encadré des plateformes de l’accueil, ainsi que l’entrée du menu Mes univers et les raccourcis du header. Le catalogue chargé, les jeux et leurs rattachements
 ne sont pas filtrés. Le réglage se modifie depuis Paramètres et reste conservé par l’éditeur visuel.

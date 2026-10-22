@@ -61,7 +61,10 @@ export function Shell({ children, library }: { children: ReactNode; library: Lib
   )
   const universes =
     library?.platforms
-      .filter((p) => library.games.some((g) => g.platformId === p.id))
+      .filter(
+        (p) =>
+          !p.customization.hiddenFromPlatforms && library.games.some((g) => g.platformId === p.id),
+      )
       .map((p) => ({
         ...p,
         menuLogo: platformArtwork(
@@ -105,7 +108,11 @@ export function Shell({ children, library }: { children: ReactNode; library: Lib
     }
   }, [library])
   const shortcuts = library
-    ? universeShortcuts(library.platforms, library.games, universeActivity?.changed ?? {})
+    ? universeShortcuts(
+        library.platforms.filter((p) => !p.customization.hiddenFromPlatforms),
+        library.games,
+        universeActivity?.changed ?? {},
+      )
     : []
   return (
     <FormActionContext.Provider value={setFormAction}>

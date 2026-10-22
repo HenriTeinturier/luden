@@ -22,7 +22,10 @@ function Home() {
   const memories = games.filter((g) => g.experience?.memory)
   const recentGames = (playing.length ? playing : games).slice(0, 12)
   const recentSequence = recentGames.map((game) => game.id)
-  const chosen = [...platforms].sort(
+  const visiblePlatforms = platforms.filter(
+    (platform) => !platform.customization.hiddenFromPlatforms,
+  )
+  const chosen = [...visiblePlatforms].sort(
     (a, b) =>
       games.filter((g) => g.platformId === b.id).length -
         games.filter((g) => g.platformId === a.id).length ||
@@ -31,7 +34,7 @@ function Home() {
   const shown = games.length
     ? chosen.slice(0, 4)
     : ['switch', 'ps5', 'pc', 'amiga']
-        .map((id) => platforms.find((p) => p.id === id)!)
+        .map((id) => visiblePlatforms.find((p) => p.id === id)!)
         .filter(Boolean)
   return (
     <div className="page home-page">
@@ -123,6 +126,12 @@ function Home() {
               />
             ))}
           </div>
+          {shown.length === 0 && (
+            <p className="field-hint">
+              Aucune plateforme affichée.{' '}
+              <Link to="/settings">Choisir les plateformes à afficher</Link>
+            </p>
+          )}
         </section>
       </div>
       <div className={`home-stories${memories.length ? ' has-memory' : ''}`}>

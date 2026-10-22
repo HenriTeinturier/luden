@@ -1,5 +1,11 @@
 # État courant
 
+## Masquage des plateformes sur l’accueil et dans le header — 2026-10-22
+
+- L’encadré des plateformes de l’accueil exclut aussi les plateformes masquées dans les paramètres, y compris les suggestions sans jeux. Les quatre places sont attribuées aux plateformes visibles selon le classement habituel.
+- Le menu Mes univers et les raccourcis du header excluent également les plateformes masquées. Le classement des raccourcis porte sur les plateformes visibles ; les accès directs aux univers restent utilisables.
+- Bibliothèque et collections inchangées. TypeScript et lint ciblé vérifiés.
+
 ## Affichage des plateformes depuis les paramètres — 2026-10-22
 
 - Section Plateformes affichées dans Paramètres : cases à cocher avec nombre de jeux, enregistrement immédiat et réversible. Toutes visibles par défaut.

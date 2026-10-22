@@ -32,8 +32,9 @@ export function PlatformVisibilitySettings() {
     <section className="settings-section">
       <h2>Plateformes affichées</h2>
       <p>
-        Cochez les plateformes à afficher dans « Mes plateformes ». Vos jeux restent dans la
-        bibliothèque et les collections, même si leur plateforme est masquée.
+        Cochez les plateformes à afficher dans « Mes plateformes », sur l’accueil et dans le header
+        (menu « Mes univers » et raccourcis). Vos jeux restent dans la bibliothèque et les
+        collections, même si leur plateforme est masquée.
       </p>
       <div className="platform-visibility-options">
         {platforms.map((platform) => {

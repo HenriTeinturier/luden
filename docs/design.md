@@ -1,8 +1,8 @@
 # Direction graphique actuelle
 
-Paramètres → Plateformes affichées permet de cocher les cartes visibles dans Mes plateformes,
+Paramètres → Plateformes affichées permet de cocher les plateformes visibles dans Mes plateformes, l’encadré de l’accueil, le menu Mes univers et les raccourcis du header,
 avec sauvegarde immédiate et possibilité de réafficher chaque plateforme. Le réglage ne filtre
-ni les jeux, ni les collections, ni les menus ou l’accueil ; aucune suppression.
+ni les jeux, ni les collections, ni les accès directs aux univers ; aucune suppression.
 
 Les six statistiques de Ma bibliothèque sont des raccourcis : Tous, Joués, Mes envies,
 Tous + Possédés, Tous + Megastar et À trier. Chaque clic remet à zéro les autres filtres

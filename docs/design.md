@@ -1,5 +1,10 @@
 # Direction graphique actuelle
 
+Le souvenir de l’accueil possède un titre de section « Souvenir à la une. », aligné avec
+celui des derniers jeux et de même style. Le bouton reste en tête de carte. Sous le titre
+du jeu, la boîte et la citation ambrée se placent côte à côte à partir de 300 px de largeur
+intérieure, et s’empilent en dessous. L’encart et son titre disparaissent avec la sidebar.
+
 Ma bibliothèque : les six cartes de statistiques sont les seuls sélecteurs de périmètre,
 avec un état bleu persistant pour la sélection active. Sous elles, une ligne sans encadré
 réunit recherche dans cette vue, plateforme, tri et Présentation. Ce dernier menu contient

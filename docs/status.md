@@ -1,5 +1,10 @@
 # État courant
 
+## Souvenir à la une sur l’accueil — 2026-10-22
+
+- Titre Souvenir à la une aligné sur celui des derniers jeux, avec la même typographie, à la place de Tout parcourir lorsque l’encart est présent.
+- Bouton conservé en tête de carte ; titre et boîte rapprochés. Citation à droite de la boîte dès que l’espace intérieur atteint 300 px, sinon dessous ; fond ambré et liseré doré repris de la sidebar.
+
 ## Icônes des compteurs de bibliothèque — 2026-10-22
 
 - Tous les jeux : livre ouvert, cohérent avec Ma bibliothèque dans le menu ; Jeux joués : manette ; Mes envies : flamme. Couleurs et comportements conservés.

@@ -107,7 +107,7 @@ function Home() {
               title={
                 playing.length ? 'L’aventure continue.' : 'Les dernières pages de votre histoire.'
               }
-              to="/library"
+              to={memories.length ? undefined : '/library'}
             />
             <div data-library-theme="1">
               <div className="game-grid home-games">
@@ -137,40 +137,44 @@ function Home() {
           </section>
         )}
         {memories.length > 0 && (
-          <aside className="memory-quote" aria-label="Un souvenir à revisiter">
-            <span className="eyebrow">UN SOUVENIR À REVISITER</span>
-            <Link
-              className="button memory-open"
-              to="/games/$gameId"
-              params={{ gameId: memories[0].id }}
-              data-game-id={memories[0].id}
-              onClick={(event) => {
-                if (
-                  !selection ||
-                  event.button !== 0 ||
-                  event.ctrlKey ||
-                  event.metaKey ||
-                  event.shiftKey ||
-                  event.altKey
-                )
-                  return
-                event.preventDefault()
-                selection.open(
-                  memories[0].id,
-                  memories.map((game) => game.id),
-                  event.currentTarget,
-                )
-              }}
-            >
-              Revoir ce souvenir
-              <ArrowRight size={16} />
-            </Link>
-            <strong className="memory-game-title">{memories[0].title}</strong>
-            <Cover game={memories[0]} className="memory-cover" sizes="160px" />
-            <blockquote>
-              « {memories[0].experience!.memory.slice(0, 280)}
-              {memories[0].experience!.memory.length > 280 ? '…' : ''} »
-            </blockquote>
+          <aside className="home-memory" aria-label="Souvenir à la une">
+            <SectionHeading title="Souvenir à la une." />
+            <div className="memory-quote">
+              <Link
+                className="button memory-open"
+                to="/games/$gameId"
+                params={{ gameId: memories[0].id }}
+                data-game-id={memories[0].id}
+                onClick={(event) => {
+                  if (
+                    !selection ||
+                    event.button !== 0 ||
+                    event.ctrlKey ||
+                    event.metaKey ||
+                    event.shiftKey ||
+                    event.altKey
+                  )
+                    return
+                  event.preventDefault()
+                  selection.open(
+                    memories[0].id,
+                    memories.map((game) => game.id),
+                    event.currentTarget,
+                  )
+                }}
+              >
+                Revoir ce souvenir
+                <ArrowRight size={16} />
+              </Link>
+              <strong className="memory-game-title">{memories[0].title}</strong>
+              <div className="memory-content">
+                <Cover game={memories[0]} className="memory-cover" sizes="160px" />
+                <blockquote>
+                  « {memories[0].experience!.memory.slice(0, 280)}
+                  {memories[0].experience!.memory.length > 280 ? '…' : ''} »
+                </blockquote>
+              </div>
+            </div>
           </aside>
         )}
       </div>

@@ -1,5 +1,10 @@
 # Direction graphique actuelle
 
+Sur ordinateur, le footer se place sous la colonne de contenu de GameExplorer. La sidebar
+et sa languette couvrent les lignes contenu et footer : elles restent calées sous le header
+jusqu’au bas de l’écran, même à la fin du défilement. Sans sidebar, le footer reprend toute
+la largeur. Sur mobile, il reste après le contenu et le panneau.
+
 Paramètres → Plateformes affichées permet de cocher les plateformes visibles dans Mes plateformes, l’encadré de l’accueil, le menu Mes univers et les raccourcis du header,
 avec sauvegarde immédiate et possibilité de réafficher chaque plateforme. Le réglage ne filtre
 ni les jeux, ni les collections, ni les accès directs aux univers ; aucune suppression.

@@ -1,5 +1,11 @@
 # État courant
 
+## Footer à gauche de la sidebar — 2026-10-22
+
+- Le footer appartient à la grille commune de GameExplorer : sur ordinateur, il reste sous le contenu à gauche et la sidebar couvre les deux lignes de la grille. Le panneau et sa languette ne remontent plus à l’arrivée au footer.
+- Comportement commun aux fiches de jeux et accueils d’univers ; footer pleine largeur sans sidebar et en vue complète/édition. Sur mobile, l’univers reste au-dessus du contenu et le footer en dernier.
+- TypeScript et lint ciblé vérifiés.
+
 ## Masquage des plateformes sur l’accueil et dans le header — 2026-10-22
 
 - L’encadré des plateformes de l’accueil exclut aussi les plateformes masquées dans les paramètres, y compris les suggestions sans jeux. Les quatre places sont attribuées aux plateformes visibles selon le classement habituel.

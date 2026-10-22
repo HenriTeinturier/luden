@@ -16,9 +16,11 @@ import {
 export function GameExplorer({
   children,
   library,
+  footer,
 }: {
   children: ReactNode
   library: Library | null
+  footer: ReactNode
 }) {
   const location = useLocation()
   const navigate = useNavigate()
@@ -328,6 +330,7 @@ export function GameExplorer({
             </section>
           )
         )}
+        {footer}
       </div>
     </GameSelectionContext.Provider>
   )

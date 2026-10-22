@@ -286,22 +286,28 @@ export function Shell({ children, library }: { children: ReactNode; library: Lib
         </header>
         <div className="workspace">
           <main id="main" tabIndex={-1}>
-            <GameExplorer library={library}>{children}</GameExplorer>
-          </main>
-          <footer className="footer">
-            <div className="local-note">
-              <span className="live-dot" />
-              Un espace rien qu’à vous<small>Vos jeux. Vos souvenirs. Chez vous.</small>
-            </div>
+            <GameExplorer
+              library={library}
+              footer={
+                <footer className="footer" role="contentinfo">
+                  <div className="local-note">
+                    <span className="live-dot" />
+                    Un espace rien qu’à vous<small>Vos jeux. Vos souvenirs. Chez vous.</small>
+                  </div>
 
-            <span>
-              luden<span className="brand-dot">.</span>{' '}
-              <span>Une vie de jeux, une collection de souvenirs.</span>
-            </span>
-            <span>
-              <Sparkles size={12} /> Édition personnelle · v0.1
-            </span>
-          </footer>
+                  <span>
+                    luden<span className="brand-dot">.</span>{' '}
+                    <span>Une vie de jeux, une collection de souvenirs.</span>
+                  </span>
+                  <span>
+                    <Sparkles size={12} /> Édition personnelle · v0.1
+                  </span>
+                </footer>
+              }
+            >
+              {children}
+            </GameExplorer>
+          </main>
         </div>
       </div>
     </FormActionContext.Provider>

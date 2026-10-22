@@ -1,5 +1,10 @@
 # État courant
 
+## Accès au souvenir de l’accueil — 2026-10-22
+
+- Le lien Revoir ce souvenir devient un bouton pleine largeur, immédiatement sous l’intitulé de l’encart, avant le titre du jeu, la boîte et la citation. L’ouverture dans la sidebar est conservée.
+- TypeScript et lint ciblé vérifiés.
+
 ## Plateformes de l’accueil configurables — 2026-10-22
 
 - Paramètres → Plateformes sur l’accueil : Auto retient les six plateformes visibles avec le plus de jeux ; Manuel propose quatre choix initiaux, puis ajout, retrait et réorganisation sans doublons. Préférence locale `luden:home-platforms:v1`, synchronisée entre onglets ; plateformes masquées ignorées sans effacer les choix.

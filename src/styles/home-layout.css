@@ -171,16 +171,26 @@
   margin: 0 0 24px;
   overflow-wrap: anywhere;
 }
-.home-page .memory-quote a {
-  color: var(--ink);
+.home-page .memory-quote .memory-open {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin: 16px 0;
+  background: #8060d8;
+  border-color: #ae91fb;
+  box-shadow: 0 2px 0 #493177;
+  color: #fff;
   font-size: 13px;
   font-weight: 600;
 }
-.home-page .memory-quote a small {
+.home-page .memory-quote .memory-open:hover {
+  background: #9170e7;
+  color: #fff;
+}
+.home-page .memory-game-title {
   display: block;
-  margin-top: 6px;
-  color: var(--blue);
-  font-size: 11px;
+  font-size: 14px;
+  overflow-wrap: anywhere;
 }
 @container home (min-width: 1100px) {
   .home-stories.has-memory {

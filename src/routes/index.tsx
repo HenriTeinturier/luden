@@ -139,12 +139,8 @@ function Home() {
         {memories.length > 0 && (
           <aside className="memory-quote" aria-label="Un souvenir à revisiter">
             <span className="eyebrow">UN SOUVENIR À REVISITER</span>
-            <Cover game={memories[0]} className="memory-cover" sizes="160px" />
-            <blockquote>
-              « {memories[0].experience!.memory.slice(0, 280)}
-              {memories[0].experience!.memory.length > 280 ? '…' : ''} »
-            </blockquote>
             <Link
+              className="button memory-open"
               to="/games/$gameId"
               params={{ gameId: memories[0].id }}
               data-game-id={memories[0].id}
@@ -166,12 +162,15 @@ function Home() {
                 )
               }}
             >
-              <span>
-                {memories[0].title}
-                <small>Revoir ce souvenir</small>
-              </span>{' '}
+              Revoir ce souvenir
               <ArrowRight size={16} />
             </Link>
+            <strong className="memory-game-title">{memories[0].title}</strong>
+            <Cover game={memories[0]} className="memory-cover" sizes="160px" />
+            <blockquote>
+              « {memories[0].experience!.memory.slice(0, 280)}
+              {memories[0].experience!.memory.length > 280 ? '…' : ''} »
+            </blockquote>
           </aside>
         )}
       </div>

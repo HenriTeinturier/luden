@@ -1,5 +1,8 @@
 # Direction graphique actuelle
 
+Dans l’encart souvenir de l’accueil, Revoir ce souvenir est un bouton pleine largeur placé
+immédiatement sous l’intitulé, avant le titre du jeu, sa boîte et la citation.
+
 Paramètres → Plateformes sur l’accueil propose Auto (les six plateformes visibles avec le plus
 de jeux) et Manuel (choix ordonnés, ajoutables et réorganisables). La préférence est conservée
 dans ce navigateur. Les plateformes masquées restent exclues des deux modes.

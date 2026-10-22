@@ -372,3 +372,51 @@
   outline: none;
   box-shadow: none;
 }
+
+/* A sibling button avoids nesting an editing action inside the game link. */
+.game-card-entry {
+  position: relative;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.game-card-entry > .game-card {
+  width: 100%;
+  flex: 1;
+}
+.game-card-edit {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  z-index: 5;
+  color: #eef0ff;
+  background: #0c1121ee;
+  border: 1px solid #ffffff33;
+  border-radius: 8px;
+  opacity: 0;
+  pointer-events: none;
+}
+.game-card-entry:hover > .game-card-edit,
+.game-card-entry:focus-within > .game-card-edit {
+  opacity: 1;
+  pointer-events: auto;
+}
+.game-card-edit:hover,
+.game-card-edit:focus-visible {
+  background: var(--surface-hover);
+  color: var(--blue);
+  border-color: var(--blue);
+}
+.game-card-edit:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+.game-card-entry .card-desire {
+  padding-right: 40px;
+}
+@media (hover: none) {
+  .game-card-edit {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}

@@ -2,6 +2,7 @@ import * as Dialog from '@radix-ui/react-dialog'
 import * as AlertDialog from '@radix-ui/react-alert-dialog'
 import {
   X,
+  Pencil,
   ArrowUpRight,
   Plus,
   Gamepad2,
@@ -462,9 +463,31 @@ export function GameCard({
       {content}
     </Link>
   )
+  const canEdit =
+    !overview &&
+    !preview &&
+    Boolean(selection) &&
+    (Boolean(platformId) || libraryCard || discoveryCard)
+  const editButton = canEdit ? (
+    <button
+      type="button"
+      className="game-card-edit icon-button"
+      title={`Modifier ${game.title}`}
+      aria-label={`Modifier ${game.title}`}
+      onClick={(event) => {
+        event.stopPropagation()
+        selection?.open(game.id, sequence ?? [game.id], event.currentTarget, 'edit')
+      }}
+    >
+      <Pencil size={16} aria-hidden="true" />
+    </button>
+  ) : null
   return !freeBoxes && (showDesire || libraryCard) ? (
-    <div className={`discovery-game${platformId && showDesire ? ' platform-desire-card' : ''}`}>
+    <div
+      className={`discovery-game${canEdit ? ' game-card-entry' : ''}${platformId && showDesire ? ' platform-desire-card' : ''}`}
+    >
       {card}
+      {editButton}
       {showDesire && !libraryCard ? (
         <CardDesire game={game} showClear={!discoveryCard && !platformId} />
       ) : (
@@ -480,6 +503,11 @@ export function GameCard({
           )}
         </div>
       )}
+    </div>
+  ) : canEdit ? (
+    <div className="game-card-entry">
+      {card}
+      {editButton}
     </div>
   ) : (
     card

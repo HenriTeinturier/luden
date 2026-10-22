@@ -216,7 +216,7 @@ export function GameExplorer({
                 )
               }
             : undefined,
-        open: (id, sequence) => {
+        open: (id, sequence, _trigger, requestedMode) => {
           if (busy) return
           collapseUniverseOnClose.current = false
           if (!game && location.pathname === '/') {
@@ -229,6 +229,10 @@ export function GameExplorer({
           mobileLibraryScroll.current = window.scrollY
           setSelection({ id, ids: sequence.length ? sequence : [id], location: locationKey })
           resetView()
+          if (requestedMode === 'edit') {
+            previousMode.current = 'sidebar'
+            setMode('edit')
+          }
         },
       }}
     >

@@ -1,5 +1,11 @@
 # État courant
 
+## Modification directe depuis les cartes de jeux — 2026-10-22
+
+- Crayon en bas à droite dans Ma bibliothèque, Mes envies et les univers, dans les deux thèmes. Visible au survol/focus et en permanence sur écran tactile ; fond sombre, survol bleu.
+- Bouton distinct du lien de consultation, ouvrant directement le formulaire existant via GameExplorer. Séquence de navigation et retour à la sidebar conservés ; espace réservé à côté des flammes éditables.
+- TypeScript et lint ciblé validés.
+
 ## Survol du bouton de modification des plateformes — 2026-10-22
 
 - Le bouton crayon garde un fond sombre au survol, avec icône et bordure bleues. Même traitement au focus clavier, avec contour visible ; remplacement ciblé du fond clair hérité des boutons génériques.

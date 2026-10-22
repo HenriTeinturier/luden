@@ -989,37 +989,16 @@
 .platforms-toolbar .filter-tabs {
   margin-bottom: 0;
 }
-.platforms-columns {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-left: auto;
-  font-size: 12px;
-  color: var(--text-soft);
-}
-.platforms-columns select {
-  width: 72px;
-  min-height: 36px;
-  padding: 6px 10px;
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  background: var(--surface);
-  color: var(--ink);
-}
-.platforms-columns select:focus-visible {
-  outline: 2px solid var(--blue);
-  outline-offset: 2px;
-}
 .platforms-index .platform-grid {
-  gap: 17px;
+  gap: 24px 28px;
   grid-template-columns: repeat(
     auto-fill,
     minmax(
       min(
         100%,
         max(
-          280px,
-          calc((100% - (var(--platform-columns, 2) - 1) * 17px) / var(--platform-columns, 2))
+          320px,
+          calc((100% - (var(--platform-columns, 2) - 1) * 28px) / var(--platform-columns, 2))
         )
       ),
       1fr
@@ -1069,4 +1048,49 @@
   .platform-card-dreamcast .platform-card-logo {
     height: 80px;
   }
+}
+
+/* Keep the platform catalogue airy without changing custom artwork. */
+.platforms-index .platform-grid .platform-card {
+  height: 236px;
+}
+.platforms-index .platform-grid .platform-card:hover,
+.platforms-index .platform-grid .platform-card:focus-visible {
+  border-color: var(--blue);
+  transform: translateY(-3px);
+}
+.platforms-toolbar .filter-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.platforms-toolbar .filter-tabs button {
+  border-radius: 8px;
+}
+.platforms-toolbar .filter-tabs button.active {
+  color: var(--blue);
+  border-color: var(--blue);
+  background: var(--surface-hover);
+}
+@media (max-width: 720px) {
+  .platforms-index .platform-grid .platform-card {
+    height: 190px;
+  }
+  .platforms-toolbar .library-tool-actions {
+    margin-left: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .platforms-index .platform-card {
+    transition: none;
+  }
+}
+
+.page.platforms-index {
+  padding-top: 24px;
+}
+.platforms-toolbar .platform-add {
+  padding: 10px 12px;
+  font-size: 12px;
+  white-space: nowrap;
 }

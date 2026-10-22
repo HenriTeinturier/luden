@@ -1,5 +1,10 @@
 # Direction graphique actuelle
 
+Mes plateformes : pas de titre visuel répété sous la navigation. Une ligne légère réunit
+Toutes/Ordinateurs/Consoles/Portables, constructeur, tri, Présentation (colonnes Auto ou 1–4)
+et Ajouter une plateforme. Familles et catégories reflètent les plateformes personnalisées.
+Espacement de grille 24 × 28 px, hauteur des cartes 236 px sur ordinateur et 190 px sur mobile.
+
 Le souvenir de l’accueil possède un titre de section « Souvenir à la une. », aligné avec
 celui des derniers jeux et de même style. Le bouton reste en tête de carte. Sous le titre
 du jeu, la boîte et la citation ambrée se placent côte à côte à partir de 300 px de largeur

@@ -1,5 +1,11 @@
 # État courant
 
+## Mes plateformes harmonisées — 2026-10-22
+
+- Haut compact sans titre répété : catégories, constructeur, tri, Présentation et ajout sur une ligne adaptable. Grille plus aérée, cartes légèrement moins hautes, quatre colonnes en Auto sur grand écran ; choix de densité enregistré et Ctrl + molette conservé.
+- Types et familles combinables, issus des métadonnées personnalisées ; créations, brouillons et accès de modification conservés. Tri par nombre de jeux, nom, année affichée (date personnalisée prioritaire), ou dernière modification des jeux présents.
+- Typecheck, lint ciblé et sept tests existants de plateformes personnelles/personnalisation validés.
+
 ## Icône des jeux possédés — 2026-10-22
 
 - Le compteur Jeux possédés utilise une boîte cochée (PackageCheck) à la place du bouclier, avec le turquoise existant.

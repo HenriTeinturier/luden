@@ -104,7 +104,7 @@ export function GameExplorer({
   }, [universe, platforms, mode, busy, hidingUniverse, navigate])
   useEffect(() => {
     if (!hidingUniverse || !showUniverse) return
-    const duration = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 280
+    const duration = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 360
     const timer = setTimeout(() => {
       setUniverseVisit({ pathname: location.pathname, hidden: true })
       setHidingUniverse(false)
@@ -142,7 +142,7 @@ export function GameExplorer({
   }
   useEffect(() => {
     if (!hidingGame) return
-    const duration = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 280
+    const duration = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 360
     const timer = setTimeout(() => {
       setSelection(null)
       setHidingGame(false)

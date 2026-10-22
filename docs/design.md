@@ -5,7 +5,8 @@ permet de replier entièrement le panneau. Elle reste à mi-hauteur de la zone v
 hors du contenu défilant. La flèche de retour en haut à droite conserve son comportement,
 notamment le retour à l’accueil d’un univers. La languette est masquée sur mobile.
 
-La fiche latérale entre depuis la droite et en sort en 280 ms, avec désactivation des
+La fiche latérale et le panneau univers entrent depuis la droite et en sortent en 360 ms
+à vitesse constante (interpolation linéaire), avec désactivation des
 interactions pendant la fermeture et respect de la préférence de mouvement réduit.
 Sur l’accueil, le souvenir se masque pendant son ouverture. Le nombre de colonnes des jeux
 récents est capturé avant ouverture et conservé sur ordinateur ; les cartes occupent

@@ -1,5 +1,9 @@
 # État courant
 
+## Vitesse régulière de la sidebar — 2026-10-22
+
+- Entrée et sortie des panneaux jeu/univers en 360 ms, interpolation linéaire pour supprimer le départ rapide et le ralentissement marqué en fin de course. Délais de fermeture synchronisés ; mouvement réduit conservé.
+
 ## Languette de repli de la sidebar — 2026-10-22
 
 - Petite languette violette à chevron sur le bord gauche du panneau, à mi-hauteur de la zone visible sur ordinateur. Replie entièrement la sidebar avec l’animation existante, y compris dans un univers.

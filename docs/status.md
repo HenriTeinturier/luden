@@ -1,5 +1,11 @@
 # État courant
 
+## Affichage des plateformes depuis les paramètres — 2026-10-22
+
+- Section Plateformes affichées dans Paramètres : cases à cocher avec nombre de jeux, enregistrement immédiat et réversible. Toutes visibles par défaut.
+- `Platform.customization.hiddenFromPlatforms` filtre uniquement Mes plateformes. Bibliothèque, collections, accueil, menus, accès aux univers et jeux conservés. Aucun changement de schéma ni migration.
+- L’éditeur de plateforme préserve le choix courant de visibilité, y compris si son formulaire était déjà ouvert. TypeScript, lint ciblé et test de compatibilité vérifiés.
+
 ## Compteurs de bibliothèque cliquables — 2026-10-22
 
 - Les six compteurs ouvrent respectivement Tous, Joués, Mes envies, Tous + Possédés, Tous + Megastar et À trier. Les autres filtres de contenu sont neutralisés ; présentation et tri conservés via les préférences existantes.

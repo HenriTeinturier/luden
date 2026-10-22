@@ -9,6 +9,30 @@ import { platformPresentation } from '../lib/presentation'
 
 export const accessiblePlatforms = { OR: [{ ownerId: null }, { ownerId }] }
 
+export async function setPlatformVisibility({
+  platformId,
+  visible,
+}: {
+  platformId: string
+  visible: boolean
+}) {
+  await db.$transaction(async (tx) => {
+    await tx.$queryRaw`SELECT "id" FROM "Platform" WHERE "id" = ${platformId} FOR UPDATE`
+    const platform = await tx.platform.findFirstOrThrow({
+      where: { id: platformId, isDraft: false, ...accessiblePlatforms },
+    })
+    await tx.platform.update({
+      where: { id: platformId },
+      data: {
+        customization: {
+          ...readPlatformCustomization(platform.customization),
+          hiddenFromPlatforms: !visible,
+        },
+      },
+    })
+  })
+}
+
 export async function assertCatalogPlatform(
   tx: Prisma.TransactionClient,
   id: string | null,

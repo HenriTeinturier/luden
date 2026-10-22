@@ -33,6 +33,7 @@ const presetSchema = z.enum(
   Object.keys(presentationPresets) as [PresentationPresetId, ...PresentationPresetId[]],
 )
 export const platformCustomizationSchema = z.object({
+  hiddenFromPlatforms: z.boolean().default(false),
   family: z.string().trim().min(1).max(50).nullable().default(null),
   categories: platformCategoriesSchema.nullable().default(null),
   title: z.string().trim().min(1).max(100).nullable().default(null),

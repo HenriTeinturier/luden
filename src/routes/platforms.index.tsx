@@ -130,7 +130,7 @@ function Platforms() {
         style={{ '--platform-columns': columns } as CSSProperties}
       >
         {platforms
-          .filter((p) => matchesPlatformFilter(p, family))
+          .filter((p) => !p.customization.hiddenFromPlatforms && matchesPlatformFilter(p, family))
           .sort(
             (a, b) =>
               (gameCounts.get(b.id) ?? 0) - (gameCounts.get(a.id) ?? 0) ||
@@ -151,6 +151,12 @@ function Platforms() {
             </div>
           ))}
       </div>
+      {platforms.every((p) => p.customization.hiddenFromPlatforms) && platforms.length > 0 && (
+        <p className="field-hint">
+          Toutes les plateformes sont masquées.{' '}
+          <Link to="/settings">Choisir les plateformes à afficher</Link>
+        </p>
+      )}
     </div>
   )
 }

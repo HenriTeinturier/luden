@@ -5,7 +5,7 @@ import { db, LOCAL_PROFILE_ID as ownerId } from './db'
 import { prepareImage } from './media'
 import { resolveMediaPath } from './media-path'
 import { accessiblePlatforms, assertCatalogPlatform } from './platforms'
-import { customizePlatform } from '../lib/platform-customization'
+import { customizePlatform, readPlatformCustomization } from '../lib/platform-customization'
 import {
   platformIdSchema,
   platformVisualKind,
@@ -89,7 +89,16 @@ export async function savePlatformVisuals(input: unknown) {
         data: { catalogPlatformId, ...(publish ? { isDraft: false } : {}) },
       })
     if (customization)
-      await tx.platform.update({ where: { id: platformId }, data: { customization } })
+      await tx.platform.update({
+        where: { id: platformId },
+        data: {
+          customization: {
+            ...customization,
+            hiddenFromPlatforms: readPlatformCustomization(platform.customization)
+              .hiddenFromPlatforms,
+          },
+        },
+      })
     if (slideshow)
       await tx.platform.update({
         where: { id: platformId },

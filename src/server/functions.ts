@@ -6,6 +6,14 @@ import { categoriesSchema } from '../lib/categories'
 import { platformVisualsSchema, deletePlatformVisualSchema } from '../lib/platform-visuals'
 import { createPlatformSchema } from '../lib/personal-platforms'
 
+export const setPlatformVisibilityFn = createServerFn({ method: 'POST' })
+  .validator(z.object({ platformId: z.string().min(1), visible: z.boolean() }))
+  .handler(async ({ data }) => {
+    const { mutation } = await import('./request')
+    const { setPlatformVisibility } = await import('./platforms')
+    return mutation(() => setPlatformVisibility(data))
+  })
+
 export const createPlatformFn = createServerFn({ method: 'POST' })
   .validator(createPlatformSchema)
   .handler(async ({ data }) => {

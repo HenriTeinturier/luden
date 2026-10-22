@@ -1,0 +1,117 @@
+.page.home-page {
+  max-width: 2000px;
+  padding: 48px clamp(24px, 4vw, 64px) 64px;
+  container: home / inline-size;
+}
+.home-top {
+  display: grid;
+  gap: 48px;
+}
+.home-intro,
+.home-universes {
+  min-width: 0;
+}
+.home-page .stats-row {
+  margin: 20px 0 0;
+}
+.home-page .section-heading {
+  margin-top: 0;
+  margin-bottom: 22px;
+}
+.home-page .home-platforms {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+.home-page .home-recent,
+.home-page .first-page {
+  margin-top: 56px;
+}
+.home-page .memory-quote {
+  margin-top: 56px;
+  padding: 48px 24px;
+}
+@container home (min-width: 1400px) {
+  .home-top {
+    grid-template-columns: minmax(0, 45fr) minmax(0, 55fr);
+    gap: 48px;
+    align-items: stretch;
+  }
+  .home-intro {
+    display: flex;
+    flex-direction: column;
+  }
+  .home-page .hero {
+    flex: 1;
+    min-height: 340px;
+  }
+  .home-page .hero-copy {
+    padding: 32px 0 32px 32px;
+    flex: 1;
+    min-width: 0;
+  }
+  .home-page .hero h1 {
+    font-size: clamp(32px, 2.5cqi, 44px);
+    letter-spacing: -1.5px;
+  }
+  .home-page .hero p {
+    font-size: 12px;
+  }
+  .home-page .hero p br {
+    display: none;
+  }
+  .home-page .hero-art {
+    width: 34%;
+    min-width: 0;
+    height: auto;
+    padding: 16px;
+    align-self: center;
+  }
+  .home-page .hero-art-caption {
+    display: none;
+  }
+  .home-page .stats-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .home-page .stat {
+    padding: 18px;
+  }
+  .home-page .stat:nth-child(3) {
+    border-left: 0;
+  }
+  .home-page .stat:nth-child(n + 3) {
+    border-top: 1px solid var(--line);
+  }
+  .home-page .stat div > span {
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  .home-universes {
+    display: flex;
+    flex-direction: column;
+  }
+  .home-page .home-platforms {
+    flex: 1;
+    grid-auto-rows: 1fr;
+  }
+  .home-page .home-platforms .platform-card {
+    height: auto;
+    min-height: 220px;
+  }
+}
+@media (max-width: 700px) {
+  .page.home-page {
+    padding: 24px 18px 40px;
+  }
+  .home-top {
+    gap: 32px;
+  }
+  .home-page .home-platforms {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+  .home-page .home-recent,
+  .home-page .first-page,
+  .home-page .memory-quote {
+    margin-top: 36px;
+  }
+}

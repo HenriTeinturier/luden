@@ -1,5 +1,12 @@
 # Direction graphique actuelle
 
+L’accueil utilise un conteneur centré de 2 000 px maximum avec marges latérales de 24 à 64 px.
+Au-delà de 1 400 px de largeur intérieure, le haut se compose de deux colonnes 45/55 :
+introduction illustrée et statistiques en 2 × 2 à gauche, quatre plateformes en 2 × 2 à droite.
+Les jeux récents suivent sur toute la largeur du contenu, puis la citation. Espacements entre
+grands blocs de 48 à 56 px. Une container query rétablit la composition verticale lorsque
+l’espace manque, notamment avec une sidebar ouverte ; sur mobile, les plateformes s’empilent.
+
 Le menu déroulant Mes univers affiche les logos des plateformes (personnalisés prioritaires)
 dans une zone de 140 × 26 px, sans déformation. Le nom complet reste accessible et en infobulle ;
 sans logo, le nom court sert de repli. Les raccourcis directs du header restent textuels.

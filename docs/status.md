@@ -1,5 +1,11 @@
 # État courant
 
+## Accueil élargi et aéré — 2026-10-22
+
+- Contenu centré jusqu’à 2 000 px, marges latérales confortables. À partir de 1 400 px de contenu disponible : introduction et statistiques à gauche (45 %), quatre plateformes à droite (55 %).
+- Statistiques en 2 × 2 dans cette composition, illustration réduite, jeux récents sur toute la largeur en dessous puis souvenir isolé. Espacements de 48 à 56 px entre grands blocs.
+- Retour à une colonne selon la largeur réelle du contenu, y compris avec la sidebar ; plateformes empilées sur mobile. TypeScript et lint ciblé vérifiés ; validation visuelle par Henri.
+
 ## Logos dans le menu Mes univers — 2026-10-21
 
 - Logos de plateforme à la place des textes et pastilles du menu déroulant, proportions conservées. Logos personnalisés prioritaires ; nom court en repli sans logo.

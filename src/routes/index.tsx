@@ -23,86 +23,92 @@ function Home() {
         .map((id) => platforms.find((p) => p.id === id)!)
         .filter(Boolean)
   return (
-    <div className="page">
-      <section className="hero">
-        <div className="hero-copy">
-          <span className="hero-kicker">
-            <span /> PRESS START · REPRENDRE SES SOUVENIRS
-          </span>
-          <h1>
-            Une vie de jeux.
-            <br />
-            <em>Et tant d’histoires.</em>
-          </h1>
-          <p>
-            La première console. Une nuit à finir un niveau.
-            <br />
-            Un monde qu’on n’a jamais vraiment quitté.
-            <br />
-            Gardez une place pour tous ces moments.
-          </p>
-          <Link to={games.length ? '/library' : '/games/new'} className="button light">
-            {games.length ? 'Parcourir mes souvenirs' : 'Commencer mon histoire'}
-            <ArrowUpRight size={17} />
-          </Link>
-        </div>
-        <div className="hero-art arcade-art" aria-hidden="true">
-          <img src="/arcade-room.svg" alt="" />
-          <span className="hero-art-caption">PLAYER 01 · TOUJOURS UNE PARTIE EN MÉMOIRE</span>
-        </div>
-      </section>
-      <div className="stats-row">
-        {[
-          {
-            icon: BookOpen,
-            value: games.length,
-            label: 'jeux dans votre histoire',
-            to: '/library',
-          },
-          {
-            icon: Heart,
-            value: games.filter((g) => g.favorite).length,
-            label: 'coups de cœur',
-            to: '/library',
-          },
-          {
-            icon: Compass,
-            value: games.filter((g) => g.discover).length,
-            label: 'envies de jouer',
-            to: '/discover',
-          },
-          {
-            icon: Layers3,
-            value: collections.length,
-            label: 'collections à parcourir',
-            to: '/collections',
-          },
-        ].map((stat) => (
-          <Link key={stat.label} to={stat.to} className="stat">
-            <span className="stat-icon">
-              <stat.icon size={20} strokeWidth={1.5} />
-            </span>
-            <div>
-              <strong>{stat.value.toString().padStart(2, '0')}</strong>
-              <span>{stat.label}</span>
+    <div className="page home-page">
+      <div className="home-top">
+        <div className="home-intro">
+          <section className="hero">
+            <div className="hero-copy">
+              <span className="hero-kicker">
+                <span /> PRESS START · REPRENDRE SES SOUVENIRS
+              </span>
+              <h1>
+                Une vie de jeux.
+                <br />
+                <em>Et tant d’histoires.</em>
+              </h1>
+              <p>
+                La première console. Une nuit à finir un niveau.{' '}
+                <br />
+                Un monde qu’on n’a jamais vraiment quitté.{' '}
+                <br />
+                Gardez une place pour tous ces moments.
+              </p>
+              <Link to={games.length ? '/library' : '/games/new'} className="button light">
+                {games.length ? 'Parcourir mes souvenirs' : 'Commencer mon histoire'}
+                <ArrowUpRight size={17} />
+              </Link>
             </div>
-            <ArrowUpRight size={15} />
-          </Link>
-        ))}
-      </div>
-      <SectionHeading
-        title="À chaque machine, son univers."
-        to="/platforms"
-        label="Toutes les plateformes"
-      />
-      <div className="platform-grid home-platforms">
-        {shown.map((p) => (
-          <PlatformCard
-            key={p.id}
-            platform={p}
-            count={games.filter((g) => g.platformId === p.id).length}
+            <div className="hero-art arcade-art" aria-hidden="true">
+              <img src="/arcade-room.svg" alt="" />
+              <span className="hero-art-caption">PLAYER 01 · TOUJOURS UNE PARTIE EN MÉMOIRE</span>
+            </div>
+          </section>
+          <div className="stats-row">
+            {[
+              {
+                icon: BookOpen,
+                value: games.length,
+                label: 'jeux dans votre histoire',
+                to: '/library',
+              },
+              {
+                icon: Heart,
+                value: games.filter((g) => g.favorite).length,
+                label: 'coups de cœur',
+                to: '/library',
+              },
+              {
+                icon: Compass,
+                value: games.filter((g) => g.discover).length,
+                label: 'envies de jouer',
+                to: '/discover',
+              },
+              {
+                icon: Layers3,
+                value: collections.length,
+                label: 'collections à parcourir',
+                to: '/collections',
+              },
+            ].map((stat) => (
+              <Link key={stat.label} to={stat.to} className="stat">
+                <span className="stat-icon">
+                  <stat.icon size={20} strokeWidth={1.5} />
+                </span>
+                <div>
+                  <strong>{stat.value.toString().padStart(2, '0')}</strong>
+                  <span>{stat.label}</span>
+                </div>
+                <ArrowUpRight size={15} />
+              </Link>
+            ))}
+          </div>
+        </div>
+        <section className="home-universes" aria-label="Vos univers">
+          <SectionHeading
+            title="À chaque machine, son univers."
+            to="/platforms"
+            label="Toutes les plateformes"
           />
-        ))}
+          <div className="platform-grid home-platforms">
+            {shown.map((p) => (
+              <PlatformCard
+                key={p.id}
+                platform={p}
+                count={games.filter((g) => g.platformId === p.id).length}
+              />
+            ))}
+          </div>
+        </section>
       </div>
       {games.length > 0 ? (
         <section className="home-recent">

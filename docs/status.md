@@ -1,5 +1,10 @@
 # État courant
 
+## Destinations des compteurs de l’accueil — 2026-10-22
+
+- Jeux dans votre histoire ouvre Ma bibliothèque sur Tous ; Envies de jouer ouvre Ma bibliothèque sur Mes envies. Les autres filtres de contenu sont neutralisés, comme pour Megastar, sans modifier thème/densité/tri.
+- TypeScript et lint ciblé vérifiés.
+
 ## Raccourci Megastar de l’accueil — 2026-10-22
 
 - « coups de cœur » remplacé par « Megastar » avec une icône trophée. Le raccourci ouvre Ma bibliothèque sur Tous + Megastar actif, en neutralisant les autres filtres mémorisés ; thème, densité et tri conservés.

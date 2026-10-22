@@ -3,6 +3,17 @@ import { ArrowUpRight, Plus, ArrowRight, Trophy, BookOpen, Compass, Layers3 } fr
 import { SectionHeading, PlatformCard, GameCard, Cover, useLibrary } from '../components/ui'
 import { useGameSelection } from '../components/game-selection'
 
+const allLibraryGames = {
+  scope: 'all' as const,
+  favorite: false,
+  owned: 'all' as const,
+  souvenir: false,
+  platform: '',
+  machine: '',
+  status: '',
+  q: '',
+}
+
 export const Route = createFileRoute('/')({ component: Home })
 function Home() {
   const selection = useGameSelection()
@@ -58,6 +69,7 @@ function Home() {
                 value: games.length,
                 label: 'jeux dans votre histoire',
                 to: '/library',
+                search: allLibraryGames,
               },
               {
                 icon: Trophy,
@@ -65,21 +77,16 @@ function Home() {
                 label: 'Megastar',
                 to: '/library',
                 search: {
-                  scope: 'all' as const,
+                  ...allLibraryGames,
                   favorite: true,
-                  owned: 'all' as const,
-                  souvenir: false,
-                  platform: '',
-                  machine: '',
-                  status: '',
-                  q: '',
                 },
               },
               {
                 icon: Compass,
                 value: games.filter((g) => g.discover).length,
                 label: 'envies de jouer',
-                to: '/discover',
+                to: '/library',
+                search: { ...allLibraryGames, scope: 'discover' as const },
               },
               {
                 icon: Layers3,

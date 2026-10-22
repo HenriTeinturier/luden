@@ -1,5 +1,9 @@
 # Direction graphique actuelle
 
+Les compteurs Jeux dans votre histoire et Envies de jouer ouvrent Ma bibliothèque,
+respectivement sur Tous et Mes envies, sans filtres de contenu supplémentaires mémorisés.
+Les préférences de présentation restent conservées.
+
 La statistique Megastar de l’accueil ouvre la bibliothèque sur Tous avec Megastar actif.
 Les autres filtres de contenu sont explicitement neutralisés pour afficher tous les jeux
 concernés, sans modifier les préférences de présentation.

@@ -1,5 +1,9 @@
 # Direction graphique actuelle
 
+La statistique Megastar de l’accueil ouvre la bibliothèque sur Tous avec Megastar actif.
+Les autres filtres de contenu sont explicitement neutralisés pour afficher tous les jeux
+concernés, sans modifier les préférences de présentation.
+
 Sur ordinateur, une languette violette de 28 × 52 px sur le bord gauche de la sidebar
 permet de replier entièrement le panneau. Elle reste à mi-hauteur de la zone visible,
 hors du contenu défilant. La flèche de retour en haut à droite conserve son comportement,

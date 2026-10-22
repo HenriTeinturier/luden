@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { ArrowUpRight, Plus, ArrowRight, Heart, BookOpen, Compass, Layers3 } from 'lucide-react'
+import { ArrowUpRight, Plus, ArrowRight, Trophy, BookOpen, Compass, Layers3 } from 'lucide-react'
 import { SectionHeading, PlatformCard, GameCard, Cover, useLibrary } from '../components/ui'
 import { useGameSelection } from '../components/game-selection'
 
@@ -60,10 +60,20 @@ function Home() {
                 to: '/library',
               },
               {
-                icon: Heart,
+                icon: Trophy,
                 value: games.filter((g) => g.favorite).length,
-                label: 'coups de cœur',
+                label: 'Megastar',
                 to: '/library',
+                search: {
+                  scope: 'all' as const,
+                  favorite: true,
+                  owned: 'all' as const,
+                  souvenir: false,
+                  platform: '',
+                  machine: '',
+                  status: '',
+                  q: '',
+                },
               },
               {
                 icon: Compass,
@@ -78,7 +88,7 @@ function Home() {
                 to: '/collections',
               },
             ].map((stat) => (
-              <Link key={stat.label} to={stat.to} className="stat">
+              <Link key={stat.label} to={stat.to} search={stat.search} className="stat">
                 <span className="stat-icon">
                   <stat.icon size={20} strokeWidth={1.5} />
                 </span>

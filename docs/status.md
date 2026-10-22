@@ -1,5 +1,10 @@
 # État courant
 
+## Raccourci Megastar de l’accueil — 2026-10-22
+
+- « coups de cœur » remplacé par « Megastar » avec une icône trophée. Le raccourci ouvre Ma bibliothèque sur Tous + Megastar actif, en neutralisant les autres filtres mémorisés ; thème, densité et tri conservés.
+- TypeScript et lint ciblé vérifiés.
+
 ## Vitesse régulière de la sidebar — 2026-10-22
 
 - Entrée et sortie des panneaux jeu/univers en 360 ms, interpolation linéaire pour supprimer le départ rapide et le ralentissement marqué en fin de course. Délais de fermeture synchronisés ; mouvement réduit conservé.

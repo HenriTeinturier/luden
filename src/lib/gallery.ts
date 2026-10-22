@@ -47,6 +47,17 @@ export function cleanLibrarySearch(search: GallerySearch): GallerySearch {
 }
 export const librarySearch = gallerySearch.transform(cleanLibrarySearch)
 
+export function cleanUniverseSearch(search: GallerySearch): GallerySearch {
+  const clean = cleanLibrarySearch(search)
+  delete clean.platform
+  return {
+    ...clean,
+    machine: search.machine,
+    sort: search.sort === 'platform' ? 'title' : search.sort,
+  }
+}
+export const universeSearch = gallerySearch.transform(cleanUniverseSearch)
+
 export function cleanDiscoverySearch(search: GallerySearch): GallerySearch {
   return {
     q: search.q,

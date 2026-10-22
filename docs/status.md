@@ -1,5 +1,11 @@
 # État courant
 
+## Univers harmonisés — 2026-10-22
+
+- Six compteurs cliquables (Tous, Joués, Envies, Possédés, Megastar, À trier), actifs et accessibles même avec la sidebar repliée. Même interaction que la bibliothèque, avec chiffres limités à la plateforme.
+- Recherche instantanée dans les titres, tri et Présentation (Classique/Vitrine, colonnes). Suppression de l’ancienne barre et de la bannière masquée du composant ; commandes avancées conservées pour les collections seulement.
+- Préférences par univers nettoyées des anciens filtres, regroupement et liste. Choix des machines PC conservé. Navigation des fiches directes cohérente ; visuels personnalisés et édition des flammes préservés.
+
 ## Mes envies harmonisées — 2026-10-22
 
 - Suppression du titre répété et de la barre encadrée. Recherche locale instantanée dans le titre, plateformes présentes dans les envies, tri et Présentation (Classique/Vitrine, colonnes).

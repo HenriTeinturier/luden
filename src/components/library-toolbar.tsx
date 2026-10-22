@@ -6,6 +6,7 @@ import type { GallerySearch } from '../lib/gallery'
 export function LibraryToolbar({
   games,
   discovery = false,
+  platformLocked = false,
   filters,
   update,
   onQueryChange,
@@ -14,6 +15,7 @@ export function LibraryToolbar({
   visibleCount,
   reshuffle,
 }: {
+  platformLocked?: boolean
   discovery?: boolean
   games: Game[]
   filters: GallerySearch
@@ -32,7 +34,9 @@ export function LibraryToolbar({
         <input
           type="search"
           aria-label="Rechercher dans cette vue"
-          placeholder="Rechercher dans cette vue…"
+          placeholder={
+            platformLocked ? 'Rechercher dans cet univers…' : 'Rechercher dans cette vue…'
+          }
           value={filters.q ?? ''}
           onChange={(event) => onQueryChange(event.target.value)}
         />
@@ -53,20 +57,22 @@ export function LibraryToolbar({
         </span>
       )}
       <div className="library-tool-actions">
-        <select
-          aria-label="Filtrer par plateforme"
-          value={filters.platform ?? ''}
-          onChange={(event) => update({ platform: event.target.value })}
-        >
-          <option value="">Toutes les plateformes</option>
-          {platforms
-            .filter((p) => games.some((g) => g.platformId === p.id))
-            .map((p) => (
-              <option key={p.id} value={p.id}>
-                {p.name}
-              </option>
-            ))}
-        </select>
+        {!platformLocked && (
+          <select
+            aria-label="Filtrer par plateforme"
+            value={filters.platform ?? ''}
+            onChange={(event) => update({ platform: event.target.value })}
+          >
+            <option value="">Toutes les plateformes</option>
+            {platforms
+              .filter((p) => games.some((g) => g.platformId === p.id))
+              .map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.name}
+                </option>
+              ))}
+          </select>
+        )}
         <select
           aria-label="Trier les jeux"
           value={filters.sort ?? 'recent'}
@@ -78,7 +84,7 @@ export function LibraryToolbar({
         >
           <option value="recent">Tri : Récent</option>
           <option value="title">Tri : Titre A → Z</option>
-          <option value="platform">Tri : Plateforme</option>
+          {!platformLocked && <option value="platform">Tri : Plateforme</option>}
           {!discovery && <option value="rating">Tri : Note</option>}
           <option value="year">Tri : Année</option>
           <option value="desire">Tri : Envie</option>

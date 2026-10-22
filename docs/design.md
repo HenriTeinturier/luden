@@ -1,5 +1,10 @@
 # Direction graphique actuelle
 
+Les univers reprennent les six compteurs de sélection de la bibliothèque, calculés sur leur
+plateforme, puis la recherche locale, le tri et Présentation. Aucun sélecteur de plateforme
+redondant ; les machines PC restent accessibles. Les deux thèmes sont disponibles avec les
+préférences propres à chaque univers, et sans répéter le logo de plateforme sur les cartes.
+
 Mes envies reprend la ligne légère de Ma bibliothèque, sans titre répété : recherche locale
 instantanée, plateformes, tri et Présentation. Le tri par envie décroissante est le défaut,
 les choix mémorisés restent prioritaires. Le compteur apparaît seulement pendant une recherche.

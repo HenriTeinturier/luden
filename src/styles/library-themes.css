@@ -81,7 +81,7 @@
   padding-top: 3px;
 }
 
-:is(.library-page, .discovery-page) [data-library-theme='2'] .game-card {
+:is(.library-page, .discovery-page, .platform-page) [data-library-theme='2'] .game-card {
   background: transparent;
   border: 1px solid transparent;
   border-radius: 7px;
@@ -90,13 +90,17 @@
   outline: none;
   transform: none;
 }
-:is(.library-page, .discovery-page) [data-library-theme='2'] .game-card:hover,
-:is(.library-page, .discovery-page) [data-library-theme='2'] .game-card:focus-visible {
+:is(.library-page, .discovery-page, .platform-page) [data-library-theme='2'] .game-card:hover,
+:is(.library-page, .discovery-page, .platform-page)
+  [data-library-theme='2']
+  .game-card:focus-visible {
   border-color: var(--muted);
   background: transparent;
   box-shadow: none;
 }
-:is(.library-page, .discovery-page) [data-library-theme='2'] .game-card[aria-current='true'] {
+:is(.library-page, .discovery-page, .platform-page)
+  [data-library-theme='2']
+  .game-card[aria-current='true'] {
   border-color: #85cbff;
   outline: 3px solid #85cbff;
   outline-offset: 3px;
@@ -108,46 +112,58 @@
 .library-page [data-library-theme='2'] .game-card[aria-current='true'] .game-card-info {
   background: linear-gradient(115deg, #34466f, #302b52);
 }
-:is(.library-page, .discovery-page) [data-library-theme='2'] .game-card .game-card-info {
+:is(.library-page, .discovery-page, .platform-page)
+  [data-library-theme='2']
+  .game-card
+  .game-card-info {
   background: transparent;
   padding: 5px 0 0;
 }
-:is(.library-page, .discovery-page) [data-library-theme='2'] .game-grid .game-card-info {
+:is(.library-page, .discovery-page, .platform-page)
+  [data-library-theme='2']
+  .game-grid
+  .game-card-info {
   grid-template-rows: 29px 28px;
   gap: 0;
 }
-:is(.library-page, .discovery-page) [data-library-theme='2'] .game-card .game-cover {
+:is(.library-page, .discovery-page, .platform-page)
+  [data-library-theme='2']
+  .game-card
+  .game-cover {
   background: transparent;
   border: 0;
   border-radius: 0;
   padding: 0;
 }
-:is(.library-page, .discovery-page) [data-library-theme='2'] .game-grid .game-cover {
+:is(.library-page, .discovery-page, .platform-page)
+  [data-library-theme='2']
+  .game-grid
+  .game-cover {
   aspect-ratio: 1.25;
 }
-:is(.library-page, .discovery-page) [data-library-theme='2'] .game-cover img {
+:is(.library-page, .discovery-page, .platform-page) [data-library-theme='2'] .game-cover img {
   object-fit: contain;
   object-position: center bottom;
 }
-:is(.library-page, .discovery-page) [data-library-theme='2'] .game-platform {
+:is(.library-page, .discovery-page, .platform-page) [data-library-theme='2'] .game-platform {
   background: color-mix(in srgb, var(--ink) 5%, transparent);
   border-bottom: 1px solid var(--border-strong);
   padding: 3px 4px;
   margin: 0;
   min-width: 0;
 }
-:is(.library-page, .discovery-page) [data-library-theme='2'] .game-platform-name {
+:is(.library-page, .discovery-page, .platform-page) [data-library-theme='2'] .game-platform-name {
   height: 22px;
   font-size: 11px;
 }
-:is(.library-page, .discovery-page) [data-library-theme='2'] .game-platform-logo {
+:is(.library-page, .discovery-page, .platform-page) [data-library-theme='2'] .game-platform-logo {
   height: 20px;
 }
-:is(.library-page, .discovery-page) [data-library-theme='2'] .game-card h3 {
+:is(.library-page, .discovery-page, .platform-page) [data-library-theme='2'] .game-card h3 {
   padding: 7px 2px 0;
   font-size: 12px;
 }
-:is(.library-page, .discovery-page) [data-library-theme='2'] .library-theme-badge {
+:is(.library-page, .discovery-page, .platform-page) [data-library-theme='2'] .library-theme-badge {
   position: absolute;
   top: 3px;
   right: 3px;
@@ -166,19 +182,29 @@
   line-height: 18px;
   font-variant-numeric: tabular-nums;
 }
-:is(.library-page, .discovery-page) [data-library-theme='2'] .library-theme-badge svg {
+:is(.library-page, .discovery-page, .platform-page)
+  [data-library-theme='2']
+  .library-theme-badge
+  svg {
   fill: currentColor;
 }
-:is(.library-page, .discovery-page) [data-library-theme='2'] .library-theme-badge.desire {
+:is(.library-page, .discovery-page, .platform-page)
+  [data-library-theme='2']
+  .library-theme-badge.desire {
   color: #f5a3d0;
 }
-:is(.library-page, .discovery-page) [data-library-theme='2'] .library-theme-badge.souvenir {
+:is(.library-page, .discovery-page, .platform-page)
+  [data-library-theme='2']
+  .library-theme-badge.souvenir {
   color: #79ddd0;
 }
-:is(.library-page, .discovery-page) [data-library-theme='2'] .library-theme-badge.souvenir svg {
+:is(.library-page, .discovery-page, .platform-page)
+  [data-library-theme='2']
+  .library-theme-badge.souvenir
+  svg {
   fill: #79ddd024;
 }
-:is(.library-page, .discovery-page) [data-library-theme='2'] .favorite-badge {
+:is(.library-page, .discovery-page, .platform-page) [data-library-theme='2'] .favorite-badge {
   top: 3px;
   left: 3px;
   right: auto;
@@ -311,4 +337,38 @@
   .discovery-page [data-library-theme='1'] .discovery-game:focus-within {
     transform: none;
   }
+}
+
+.platform-page [data-library-theme='2'] .game-card .game-card-info {
+  display: block;
+}
+.platform-page [data-library-theme='2'] .game-card h3 {
+  padding-top: 6px;
+}
+.platform-page [data-library-theme='2'] .platform-desire-card {
+  background: transparent;
+  border: 1px solid transparent;
+}
+.platform-page [data-library-theme='2'] .platform-desire-card .game-card {
+  border: 0;
+}
+.platform-page [data-library-theme='2'] .platform-desire-card:hover {
+  border-color: var(--muted);
+}
+.platform-page [data-library-theme='2'] .platform-desire-card .card-desire {
+  padding: 0 6px 6px;
+}
+
+.platform-page [data-library-theme='2'] .platform-desire-card:has(.game-card[aria-current='true']) {
+  border-color: #85cbff;
+  outline: 3px solid #85cbff;
+  outline-offset: 3px;
+  box-shadow:
+    0 0 0 7px #48a8ff20,
+    0 0 30px #48a8ff45;
+  background: #273553;
+}
+.platform-page [data-library-theme='2'] .platform-desire-card .game-card[aria-current='true'] {
+  outline: none;
+  box-shadow: none;
 }

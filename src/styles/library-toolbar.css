@@ -142,3 +142,26 @@
 .discovery-page > .library-tools {
   margin-top: 0;
 }
+
+/* Six compact scope buttons in an open universe, wrapping with the content width. */
+.platform-page .library-overview .platform-overview-stat {
+  padding: 12px 10px;
+  gap: 8px;
+}
+.platform-page .library-stat-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+}
+.platform-page .library-stat-icon svg {
+  width: 21px;
+  height: 21px;
+}
+.platform-page .library-stat-label {
+  font-size: 11px;
+}
+@container (min-width: 1050px) {
+  .platform-page .library-overview .platform-overview-stats {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}

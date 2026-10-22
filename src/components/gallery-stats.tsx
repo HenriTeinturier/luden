@@ -4,16 +4,23 @@ import type { Game } from '../lib/types'
 import { MegastarTrophy } from './megastar-trophy'
 
 export function GalleryStats({
+  universe = false,
   games,
   onSelect,
   filters,
 }: {
+  universe?: boolean
   games: Game[]
   onSelect: (filters: Partial<GallerySearch>) => void
   filters: GallerySearch
 }) {
   const stats = [
-    { label: 'jeux dans ma bibliothèque', count: games.length, icon: BookOpen, tone: 'library' },
+    {
+      label: universe ? 'Tous les jeux' : 'jeux dans ma bibliothèque',
+      count: games.length,
+      icon: BookOpen,
+      tone: 'library',
+    },
     {
       label: 'jeux joués',
       count: games.filter(hasPlayed).length,
@@ -50,7 +57,9 @@ export function GalleryStats({
   return (
     <section
       className="platform-overview library-overview"
-      aria-label="Statistiques de toute ma bibliothèque"
+      aria-label={
+        universe ? 'Statistiques de cet univers' : 'Statistiques de toute ma bibliothèque'
+      }
       aria-live="polite"
       aria-atomic="true"
     >
@@ -66,6 +75,7 @@ export function GalleryStats({
               onClick={() =>
                 onSelect({
                   q: '',
+                  machine: undefined,
                   platform: '',
                   scope:
                     tone === 'played'

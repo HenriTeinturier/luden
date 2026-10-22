@@ -61,11 +61,11 @@ test('Le nombre de colonnes est enregistré et restauré après une nouvelle vis
     saveGalleryPreferences('/platforms/snes', { scope, favorite: true, columns: 7 })
     assert.deepEqual(
       restoreGalleryPreferences(storage.get(galleryPreferenceKey('/platforms/snes'))!, {}),
-      { scope, favorite: true, columns: 7 },
+      { scope: 'all', owned: 'all', favorite: true, columns: 7 },
     )
     assert.deepEqual(
       restoreGalleryPreferences(storage.get(galleryPreferenceKey('/platforms/amiga'))!, {}),
-      { scope: 'owned', favorite: false, view: 'list' },
+      { scope: 'all', owned: 'current', favorite: false },
     )
   }
 })

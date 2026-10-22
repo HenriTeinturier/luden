@@ -5,6 +5,7 @@ import {
   librarySearch,
   librarySelection,
   discoverySearch,
+  universeSearch,
   galleryFilters,
 } from '../src/lib/gallery'
 import { restoreGalleryPreferences } from '../src/lib/gallery-preferences'
@@ -105,4 +106,33 @@ test('discovery retires old filters while preserving theme and density from stor
       ['mickey'],
     )
   }
+})
+
+test('universe controls keep machine and presentation preferences but retire hidden filters', () => {
+  const old = {
+    platform: 'wrong-universe',
+    machine: 'my-pc',
+    view: 'list',
+    group: 'category',
+    status: 'FINISHED',
+    souvenir: true,
+    scope: 'owned',
+    theme: '2',
+    columns: 8,
+    sort: 'year',
+  }
+  for (const clean of [
+    universeSearch.parse(old),
+    restoreGalleryPreferences(JSON.stringify(old), {}, 'universe'),
+  ]) {
+    for (const key of ['platform', 'view', 'group', 'status', 'souvenir'])
+      assert.equal(key in clean, false)
+    assert.equal(clean.machine, 'my-pc')
+    assert.equal(clean.scope, 'all')
+    assert.equal(clean.owned, 'current')
+    assert.equal(clean.theme, '2')
+    assert.equal(clean.columns, 8)
+    assert.equal(clean.sort, 'year')
+  }
+  assert.equal(universeSearch.parse({ sort: 'platform' }).sort, 'title')
 })

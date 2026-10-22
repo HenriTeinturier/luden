@@ -9,6 +9,7 @@ import {
   filterGames,
   galleryFilters,
   cleanLibrarySearch,
+  cleanUniverseSearch,
   cleanDiscoverySearch,
   type GallerySearch,
 } from '../lib/gallery'
@@ -52,7 +53,11 @@ export function Gallery({
   const [query, setQuery] = useState(search.q ?? '')
   const editingQuery = useRef(false)
   const compactControls = showStats || discovery
-  const cleanSearch = discovery ? cleanDiscoverySearch : cleanLibrarySearch
+  const cleanSearch = platformLocked
+    ? cleanUniverseSearch
+    : discovery
+      ? cleanDiscoverySearch
+      : cleanLibrarySearch
   const normalized = compactControls ? cleanSearch(search) : search
   const filters = galleryFilters(
     {
@@ -213,7 +218,7 @@ export function Gallery({
       const restored = restoreGalleryPreferences(
         localStorage.getItem(galleryPreferenceKey(pathname)),
         search,
-        discovery ? 'discovery' : showStats,
+        platformLocked ? 'universe' : discovery ? 'discovery' : showStats,
       )
       saveGalleryPreferences(pathname, { ...restored, scope: restored.scope ?? defaultScope })
       if (
@@ -226,7 +231,7 @@ export function Gallery({
     } catch {
       // Browser storage is optional, including during private browsing.
     }
-  }, [pathname, search, navigate, defaultScope, router, showStats, discovery])
+  }, [pathname, search, navigate, defaultScope, router, showStats, discovery, platformLocked])
   const update = (patch: Partial<GallerySearch>) => {
     if (patch.q !== undefined) {
       editingQuery.current = false
@@ -298,9 +303,12 @@ export function Gallery({
   const sequence = groups.flatMap((group) => group.games.map((game) => game.id))
   return (
     <>
-      {showStats && <GalleryStats games={games} filters={filters} onSelect={update} />}
+      {showStats && (
+        <GalleryStats games={games} filters={filters} onSelect={update} universe={platformLocked} />
+      )}
       {compactControls ? (
         <LibraryToolbar
+          platformLocked={platformLocked}
           discovery={discovery}
           games={discovery ? games.filter((game) => game.discover) : games}
           filters={filters}

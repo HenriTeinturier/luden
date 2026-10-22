@@ -1,5 +1,6 @@
 import {
   cleanLibrarySearch,
+  cleanUniverseSearch,
   cleanDiscoverySearch,
   gallerySearch,
   type GallerySearch,
@@ -12,7 +13,7 @@ export function galleryPreferenceKey(pathname: string) {
 export function restoreGalleryPreferences(
   raw: string | null,
   search: GallerySearch,
-  libraryOnly: boolean | 'discovery' = false,
+  libraryOnly: boolean | 'discovery' | 'universe' = false,
 ): GallerySearch {
   try {
     const saved = gallerySearch.safeParse(JSON.parse(raw ?? '{}'))
@@ -24,11 +25,13 @@ export function restoreGalleryPreferences(
       ...preferences,
       ...Object.fromEntries(Object.entries(search).filter(([, value]) => value !== undefined)),
     }
-    return libraryOnly === 'discovery'
-      ? cleanDiscoverySearch(restored)
-      : libraryOnly
-        ? cleanLibrarySearch(restored)
-        : restored
+    return libraryOnly === 'universe'
+      ? cleanUniverseSearch(restored)
+      : libraryOnly === 'discovery'
+        ? cleanDiscoverySearch(restored)
+        : libraryOnly
+          ? cleanLibrarySearch(restored)
+          : restored
   } catch {
     return search
   }
@@ -36,8 +39,9 @@ export function restoreGalleryPreferences(
 
 export function saveGalleryPreferences(pathname: string, filters: GallerySearch) {
   try {
-    const preferences =
-      pathname.replace(/\/$/, '') === '/discover'
+    const preferences = /^\/platforms\/[^/]+\/?$/.test(pathname)
+      ? cleanUniverseSearch(filters)
+      : pathname.replace(/\/$/, '') === '/discover'
         ? cleanDiscoverySearch(filters)
         : pathname.replace(/\/$/, '') === '/library'
           ? cleanLibrarySearch(filters)

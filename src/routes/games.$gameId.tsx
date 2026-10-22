@@ -5,6 +5,7 @@ import { GameForm } from '../components/game-form'
 import { GameDetails, GameNavigation, useGameKeys } from '../components/game-details'
 import {
   cleanLibrarySearch,
+  cleanUniverseSearch,
   cleanDiscoverySearch,
   filterGames,
   gameReturnSearch,
@@ -35,26 +36,24 @@ function GamePage() {
           : true,
     )
     const filters = {
-      scope:
-        origin.from === 'discover'
-          ? ('discover' as const)
-          : origin.from === 'platform'
-            ? ('played' as const)
-            : ('all' as const),
+      scope: origin.from === 'discover' ? ('discover' as const) : ('all' as const),
       ...origin.filters,
     }
     const filtered = filterGames(
       source,
-      origin.from === 'discover'
-        ? { ...cleanDiscoverySearch(filters), scope: 'discover', sort: filters.sort ?? 'desire' }
-        : origin.from === 'library'
-          ? cleanLibrarySearch(filters)
-          : filters,
-      origin.from === 'library' || origin.from === 'discover',
+      origin.from === 'platform'
+        ? cleanUniverseSearch(filters)
+        : origin.from === 'discover'
+          ? { ...cleanDiscoverySearch(filters), scope: 'discover', sort: filters.sort ?? 'desire' }
+          : origin.from === 'library'
+            ? cleanLibrarySearch(filters)
+            : filters,
+      origin.from === 'library' || origin.from === 'discover' || origin.from === 'platform',
     )
     const ordered =
       origin.from !== 'library' &&
       origin.from !== 'discover' &&
+      origin.from !== 'platform' &&
       origin.filters?.group === 'category'
         ? groupByCategory(filtered, categories).flatMap((group) => group.games)
         : filtered

@@ -550,6 +550,16 @@
 .platform-card-entry:focus-within .platform-card-edit {
   opacity: 1;
 }
+.platform-card-edit:hover,
+.platform-card-edit:focus-visible {
+  background: var(--surface-hover);
+  color: var(--blue);
+  border-color: var(--blue);
+}
+.platform-card-edit:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
 @media (hover: none) {
   .platform-card-edit {
     opacity: 1;

@@ -1,5 +1,9 @@
 # État courant
 
+## Survol du bouton de modification des plateformes — 2026-10-22
+
+- Le bouton crayon garde un fond sombre au survol, avec icône et bordure bleues. Même traitement au focus clavier, avec contour visible ; remplacement ciblé du fond clair hérité des boutons génériques.
+
 ## Univers harmonisés — 2026-10-22
 
 - Six compteurs cliquables (Tous, Joués, Envies, Possédés, Megastar, À trier), actifs et accessibles même avec la sidebar repliée. Même interaction que la bibliothèque, avec chiffres limités à la plateforme.

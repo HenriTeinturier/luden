@@ -1,5 +1,9 @@
 # État courant
 
+## Icônes des compteurs de bibliothèque — 2026-10-22
+
+- Tous les jeux : livre ouvert, cohérent avec Ma bibliothèque dans le menu ; Jeux joués : manette ; Mes envies : flamme. Couleurs et comportements conservés.
+
 ## Commandes de bibliothèque simplifiées — 2026-10-22
 
 - Les six compteurs du haut pilotent seuls le périmètre (Tous, Joués, Envies, Possédés, Megastar, À trier), avec état actif bleu persistant et `aria-pressed`.

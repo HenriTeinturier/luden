@@ -1,4 +1,4 @@
-import { CirclePlay, Gamepad2, ShieldCheck, Sparkles, Inbox } from 'lucide-react'
+import { BookOpen, Gamepad2, ShieldCheck, Flame, Inbox } from 'lucide-react'
 import { hasPlayed, needsSorting, librarySelection, type GallerySearch } from '../lib/gallery'
 import type { Game } from '../lib/types'
 import { MegastarTrophy } from './megastar-trophy'
@@ -13,17 +13,17 @@ export function GalleryStats({
   filters: GallerySearch
 }) {
   const stats = [
-    { label: 'jeux dans ma bibliothèque', count: games.length, icon: Gamepad2, tone: 'library' },
+    { label: 'jeux dans ma bibliothèque', count: games.length, icon: BookOpen, tone: 'library' },
     {
       label: 'jeux joués',
       count: games.filter(hasPlayed).length,
-      icon: CirclePlay,
+      icon: Gamepad2,
       tone: 'played',
     },
     {
       label: 'Mes envies',
       count: games.filter((game) => game.discover).length,
-      icon: Sparkles,
+      icon: Flame,
       tone: 'desire',
     },
     {

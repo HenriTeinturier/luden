@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode, type CSSProperties } from 'react'
 import { useLocation, useNavigate } from '@tanstack/react-router'
 import type { Library } from '../lib/types'
 import { GameSelectionContext } from './game-selection'
@@ -28,6 +28,8 @@ export function GameExplorer({
   } | null>(null)
   const [busy, setBusy] = useState(false)
   const [hidingUniverse, setHidingUniverse] = useState(false)
+  const [hidingGame, setHidingGame] = useState(false)
+  const [homeColumns, setHomeColumns] = useState<number | undefined>()
   const previousMode = useRef<'sidebar' | 'full'>('sidebar')
   const scroll = useRef(0)
   const mobileLibraryScroll = useRef(0)
@@ -38,6 +40,8 @@ export function GameExplorer({
     setSelection(null)
     setBusy(false)
     setHidingUniverse(false)
+    setHidingGame(false)
+    setHomeColumns(undefined)
   }
   const universe = library?.platforms.find(
     (p) => location.pathname.replace(/\/$/, '') === `/platforms/${p.id}`,
@@ -123,7 +127,7 @@ export function GameExplorer({
     })
   }
   function close() {
-    if (busy || hidingUniverse) return
+    if (busy || hidingUniverse || hidingGame) return
     if (!game && showUniverse) {
       setHidingUniverse(true)
     } else if (mode === 'full') {
@@ -131,11 +135,21 @@ export function GameExplorer({
       restoreLibrary()
     } else {
       scroll.current = window.innerWidth > 800 ? window.scrollY : mobileLibraryScroll.current
-      setSelection(null)
-      if (universe) setUniverseVisit({ pathname: location.pathname, hidden: false })
-      restoreLibrary(true)
+      setHidingGame(true)
     }
   }
+  useEffect(() => {
+    if (!hidingGame) return
+    const duration = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 280
+    const timer = setTimeout(() => {
+      setSelection(null)
+      setHidingGame(false)
+      setHomeColumns(undefined)
+      setUniverseVisit({ pathname: location.pathname, hidden: false })
+      restoreLibrary(true)
+    }, duration)
+    return () => clearTimeout(timer)
+  }, [hidingGame, location.pathname])
   function move(delta: number) {
     const id = ids[wrapGameIndex(index, ids.length, delta)]
     if (id && selection && !busy) {
@@ -169,7 +183,7 @@ export function GameExplorer({
     setMode('full')
   }
   useGameKeys({
-    enabled: (Boolean(game) || showUniverse) && mode !== 'edit' && !busy,
+    enabled: (Boolean(game) || showUniverse) && mode !== 'edit' && !busy && !hidingGame,
     close,
     move: game ? move : undefined,
     moveVertical: game ? moveVertical : undefined,
@@ -199,6 +213,11 @@ export function GameExplorer({
             : undefined,
         open: (id, sequence) => {
           if (busy) return
+          if (!game && location.pathname === '/') {
+            const grid = document.querySelector('.home-games')
+            if (grid) setHomeColumns(getComputedStyle(grid).gridTemplateColumns.split(' ').length)
+          }
+          setHidingGame(false)
           setHidingUniverse(false)
           scroll.current = window.scrollY
           mobileLibraryScroll.current = window.scrollY
@@ -209,6 +228,7 @@ export function GameExplorer({
     >
       <div
         className={`game-workspace ${(game && mode === 'sidebar') || showUniverse ? 'with-game-sidebar' : ''} ${showUniverse ? 'with-universe-sidebar' : ''}`}
+        style={{ '--home-columns': homeColumns } as CSSProperties}
       >
         <div className="library-content" hidden={Boolean(game) && mode !== 'sidebar'}>
           {children}
@@ -247,7 +267,12 @@ export function GameExplorer({
             <section
               ref={panel}
               tabIndex={-1}
-              className={mode === 'sidebar' ? 'game-sidebar' : 'game-full-view'}
+              className={
+                mode === 'sidebar'
+                  ? `game-sidebar animated-game-sidebar${hidingGame ? ' is-closing' : ''}`
+                  : 'game-full-view'
+              }
+              inert={hidingGame || undefined}
               aria-label={`Fiche de ${game.title}`}
             >
               <GameNavigation

@@ -3,6 +3,33 @@
   padding: 48px clamp(24px, 4vw, 64px) 64px;
   container: home / inline-size;
 }
+.game-workspace:has(.animated-game-sidebar) {
+  overflow-x: clip;
+}
+.animated-game-sidebar {
+  animation: universe-sidebar-show 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.animated-game-sidebar.is-closing {
+  animation: universe-sidebar-hide 280ms cubic-bezier(0.4, 0, 1, 1) both;
+  pointer-events: none;
+}
+.with-game-sidebar .home-page .memory-quote {
+  display: none;
+}
+.with-game-sidebar .home-page .home-stories.has-memory {
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 801px) {
+  .with-game-sidebar .home-page .home-games {
+    grid-template-columns: repeat(var(--home-columns, 6), minmax(0, 1fr));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .animated-game-sidebar,
+  .animated-game-sidebar.is-closing {
+    animation: none;
+  }
+}
 .home-top {
   display: grid;
   gap: 48px;

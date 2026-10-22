@@ -1,5 +1,11 @@
 # État courant
 
+## Animation de la fiche latérale et stabilité de l’accueil — 2026-10-22
+
+- Fiche sidebar : entrée depuis la droite et sortie vers la droite en 280 ms. Maintien du panneau pendant la fermeture, interactions désactivées pendant la sortie ; mouvement réduit respecté.
+- Sur l’accueil, souvenir masqué pendant l’affichage latéral et galerie étendue à l’espace libéré. Nombre de colonnes mesuré avant l’ouverture et conservé sur ordinateur jusqu’à la fermeture.
+- TypeScript et lint ciblé vérifiés ; validation visuelle par Henri.
+
 ## Souvenir à côté des jeux récents — 2026-10-22
 
 - Encadré souvenir à droite de la galerie : petite jaquette entière, citation, titre et lien ouvrant la fiche/sidebar. Largeurs 75/25 avec 40 px d’espace, alignement sur le haut des cartes et hauteur naturelle.

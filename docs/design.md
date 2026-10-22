@@ -1,5 +1,11 @@
 # Direction graphique actuelle
 
+La fiche latérale entre depuis la droite et en sort en 280 ms, avec désactivation des
+interactions pendant la fermeture et respect de la préférence de mouvement réduit.
+Sur l’accueil, le souvenir se masque pendant son ouverture. Le nombre de colonnes des jeux
+récents est capturé avant ouverture et conservé sur ordinateur ; les cartes occupent
+l’espace libéré par le souvenir. À la fermeture, le souvenir et la grille responsive reviennent.
+
 À partir de 1 100 px de contenu disponible, le souvenir de l’accueil occupe un encadré
 à droite des jeux récents (75/25, gouttière de 40 px). Aligné sur le haut des cartes, il
 conserve sa hauteur naturelle : jaquette entière, citation, titre et lien vers la fiche.

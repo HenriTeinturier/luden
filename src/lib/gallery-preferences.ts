@@ -1,4 +1,9 @@
-import { cleanLibrarySearch, gallerySearch, type GallerySearch } from './gallery'
+import {
+  cleanLibrarySearch,
+  cleanDiscoverySearch,
+  gallerySearch,
+  type GallerySearch,
+} from './gallery'
 
 export function galleryPreferenceKey(pathname: string) {
   return `luden:gallery:v1:${pathname.replace(/\/$/, '')}`
@@ -7,7 +12,7 @@ export function galleryPreferenceKey(pathname: string) {
 export function restoreGalleryPreferences(
   raw: string | null,
   search: GallerySearch,
-  libraryOnly = false,
+  libraryOnly: boolean | 'discovery' = false,
 ): GallerySearch {
   try {
     const saved = gallerySearch.safeParse(JSON.parse(raw ?? '{}'))
@@ -19,7 +24,11 @@ export function restoreGalleryPreferences(
       ...preferences,
       ...Object.fromEntries(Object.entries(search).filter(([, value]) => value !== undefined)),
     }
-    return libraryOnly ? cleanLibrarySearch(restored) : restored
+    return libraryOnly === 'discovery'
+      ? cleanDiscoverySearch(restored)
+      : libraryOnly
+        ? cleanLibrarySearch(restored)
+        : restored
   } catch {
     return search
   }
@@ -28,7 +37,11 @@ export function restoreGalleryPreferences(
 export function saveGalleryPreferences(pathname: string, filters: GallerySearch) {
   try {
     const preferences =
-      pathname.replace(/\/$/, '') === '/library' ? cleanLibrarySearch(filters) : { ...filters }
+      pathname.replace(/\/$/, '') === '/discover'
+        ? cleanDiscoverySearch(filters)
+        : pathname.replace(/\/$/, '') === '/library'
+          ? cleanLibrarySearch(filters)
+          : { ...filters }
     delete preferences.q
     localStorage.setItem(galleryPreferenceKey(pathname), JSON.stringify(preferences))
   } catch {

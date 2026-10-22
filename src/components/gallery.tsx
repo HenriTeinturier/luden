@@ -5,7 +5,13 @@ import { GalleryToolbar } from './gallery-toolbar'
 import { GalleryStats } from './gallery-stats'
 import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties } from 'react'
 import { useGameSelection } from './game-selection'
-import { filterGames, galleryFilters, cleanLibrarySearch, type GallerySearch } from '../lib/gallery'
+import {
+  filterGames,
+  galleryFilters,
+  cleanLibrarySearch,
+  cleanDiscoverySearch,
+  type GallerySearch,
+} from '../lib/gallery'
 import {
   galleryCardPositions,
   galleryKeyboardNeighbor,
@@ -45,13 +51,19 @@ export function Gallery({
   const search = useSearch({ strict: false }) as GallerySearch
   const [query, setQuery] = useState(search.q ?? '')
   const editingQuery = useRef(false)
-  const normalized = showStats ? cleanLibrarySearch(search) : search
+  const compactControls = showStats || discovery
+  const cleanSearch = discovery ? cleanDiscoverySearch : cleanLibrarySearch
+  const normalized = compactControls ? cleanSearch(search) : search
   const filters = galleryFilters(
-    { ...normalized, q: showStats ? query : normalized.q },
+    {
+      ...normalized,
+      q: compactControls ? query : normalized.q,
+      sort: normalized.sort ?? (discovery ? 'desire' : undefined),
+    },
     defaultScope,
     discovery,
   )
-  const visible = filterGames(games, filters, showStats)
+  const visible = filterGames(games, filters, compactControls)
   const navigate = useNavigate()
   const router = useRouter()
   const pathname = useMatch({ strict: false, select: (match) => match.pathname })
@@ -59,7 +71,7 @@ export function Gallery({
     if (!editingQuery.current) setQuery(search.q ?? '')
   }, [search.q, pathname])
   useEffect(() => {
-    if (!showStats || !editingQuery.current) return
+    if (!compactControls || !editingQuery.current) return
     if (query === (search.q ?? '')) {
       editingQuery.current = false
       return
@@ -68,13 +80,13 @@ export function Gallery({
     const timer = window.setTimeout(() => {
       void navigate({
         to: '.',
-        search: cleanLibrarySearch({ ...search, q: query }),
+        search: cleanSearch({ ...search, q: query }),
         replace: true,
         resetScroll: false,
       })
     }, 150)
     return () => window.clearTimeout(timer)
-  }, [query, search, showStats, navigate])
+  }, [query, search, compactControls, cleanSearch, navigate])
   function changeQuery(value: string) {
     editingQuery.current = true
     setQuery(value)
@@ -201,7 +213,7 @@ export function Gallery({
       const restored = restoreGalleryPreferences(
         localStorage.getItem(galleryPreferenceKey(pathname)),
         search,
-        showStats,
+        discovery ? 'discovery' : showStats,
       )
       saveGalleryPreferences(pathname, { ...restored, scope: restored.scope ?? defaultScope })
       if (
@@ -214,13 +226,13 @@ export function Gallery({
     } catch {
       // Browser storage is optional, including during private browsing.
     }
-  }, [pathname, search, navigate, defaultScope, router, showStats])
+  }, [pathname, search, navigate, defaultScope, router, showStats, discovery])
   const update = (patch: Partial<GallerySearch>) => {
     if (patch.q !== undefined) {
       editingQuery.current = false
       setQuery(patch.q)
     }
-    const next = showStats ? cleanLibrarySearch({ ...filters, ...patch }) : { ...filters, ...patch }
+    const next = compactControls ? cleanSearch({ ...filters, ...patch }) : { ...filters, ...patch }
     saveGalleryPreferences(pathname, next)
     void navigate({ to: '.', search: next, replace: true, resetScroll: false })
   }
@@ -287,9 +299,10 @@ export function Gallery({
   return (
     <>
       {showStats && <GalleryStats games={games} filters={filters} onSelect={update} />}
-      {showStats ? (
+      {compactControls ? (
         <LibraryToolbar
-          games={games}
+          discovery={discovery}
+          games={discovery ? games.filter((game) => game.discover) : games}
           filters={filters}
           update={update}
           onQueryChange={changeQuery}
@@ -303,7 +316,6 @@ export function Gallery({
           games={games}
           filters={filters}
           update={update}
-          discovery={discovery}
           platformLocked={platformLocked}
           pathname={pathname}
           displayedColumns={displayedColumns}

@@ -3,7 +3,12 @@ import { useState } from 'react'
 import { useLibrary } from '../components/ui'
 import { GameForm } from '../components/game-form'
 import { GameDetails, GameNavigation, useGameKeys } from '../components/game-details'
-import { cleanLibrarySearch, filterGames, gameReturnSearch } from '../lib/gallery'
+import {
+  cleanLibrarySearch,
+  cleanDiscoverySearch,
+  filterGames,
+  gameReturnSearch,
+} from '../lib/gallery'
 import { groupByCategory } from '../lib/categories'
 import { wrapGameIndex } from '../lib/gallery-navigation'
 
@@ -40,11 +45,17 @@ function GamePage() {
     }
     const filtered = filterGames(
       source,
-      origin.from === 'library' ? cleanLibrarySearch(filters) : filters,
-      origin.from === 'library',
+      origin.from === 'discover'
+        ? { ...cleanDiscoverySearch(filters), scope: 'discover', sort: filters.sort ?? 'desire' }
+        : origin.from === 'library'
+          ? cleanLibrarySearch(filters)
+          : filters,
+      origin.from === 'library' || origin.from === 'discover',
     )
     const ordered =
-      origin.from !== 'library' && origin.filters?.group === 'category'
+      origin.from !== 'library' &&
+      origin.from !== 'discover' &&
+      origin.filters?.group === 'category'
         ? groupByCategory(filtered, categories).flatMap((group) => group.games)
         : filtered
     const result = ordered.map((game) => game.id)

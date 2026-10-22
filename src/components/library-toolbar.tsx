@@ -5,6 +5,7 @@ import type { GallerySearch } from '../lib/gallery'
 
 export function LibraryToolbar({
   games,
+  discovery = false,
   filters,
   update,
   onQueryChange,
@@ -13,6 +14,7 @@ export function LibraryToolbar({
   visibleCount,
   reshuffle,
 }: {
+  discovery?: boolean
   games: Game[]
   filters: GallerySearch
   update: (patch: Partial<GallerySearch>) => void
@@ -77,7 +79,7 @@ export function LibraryToolbar({
           <option value="recent">Tri : Récent</option>
           <option value="title">Tri : Titre A → Z</option>
           <option value="platform">Tri : Plateforme</option>
-          <option value="rating">Tri : Note</option>
+          {!discovery && <option value="rating">Tri : Note</option>}
           <option value="year">Tri : Année</option>
           <option value="desire">Tri : Envie</option>
           <option value="random">Tri : Aléatoire</option>

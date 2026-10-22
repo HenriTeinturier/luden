@@ -1,5 +1,11 @@
 # Direction graphique actuelle
 
+Mes envies reprend la ligne légère de Ma bibliothèque, sans titre répété : recherche locale
+instantanée, plateformes, tri et Présentation. Le tri par envie décroissante est le défaut,
+les choix mémorisés restent prioritaires. Le compteur apparaît seulement pendant une recherche.
+Les flammes restent éditables sur les cartes Classique et Vitrine. Les anciens contrôles de
+regroupement, liste, possession et filtres avancés ne sont plus proposés ni restaurés sur cette page.
+
 Mes plateformes : pas de titre visuel répété sous la navigation. Une ligne légère réunit
 Toutes/Ordinateurs/Consoles/Portables, constructeur, tri, Présentation (colonnes Auto ou 1–4)
 et Ajouter une plateforme. Familles et catégories reflètent les plateformes personnalisées.

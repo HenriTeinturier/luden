@@ -1,5 +1,12 @@
 # État courant
 
+## Mes envies harmonisées — 2026-10-22
+
+- Suppression du titre répété et de la barre encadrée. Recherche locale instantanée dans le titre, plateformes présentes dans les envies, tri et Présentation (Classique/Vitrine, colonnes).
+- Tri par envie décroissante par défaut, choix de tri existant conservé. Flammes toujours modifiables à la volée dans les deux thèmes ; compteur uniquement pendant une recherche.
+- Anciennes options liste, regroupement et filtres avancés retirées du contrat URL et des préférences Mes envies. Code spécifique de l’ancienne barre supprimé ; commandes des univers et collections conservées. Navigation des fiches directes cohérente avec la vue simplifiée.
+- Typecheck, lint ciblé et 12 tests de filtres/préférences validés.
+
 ## Mes plateformes harmonisées — 2026-10-22
 
 - Haut compact sans titre répété : catégories, constructeur, tri, Présentation et ajout sur une ligne adaptable. Grille plus aérée, cartes légèrement moins hautes, quatre colonnes en Auto sur grand écran ; choix de densité enregistré et Ctrl + molette conservé.

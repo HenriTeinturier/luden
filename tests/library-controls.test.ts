@@ -1,6 +1,12 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { filterGames, librarySearch, librarySelection } from '../src/lib/gallery'
+import {
+  filterGames,
+  librarySearch,
+  librarySelection,
+  discoverySearch,
+  galleryFilters,
+} from '../src/lib/gallery'
 import { restoreGalleryPreferences } from '../src/lib/gallery-preferences'
 import type { Game } from '../src/lib/types'
 
@@ -70,4 +76,33 @@ test('platform sort is alphabetical with title as tie-breaker', () => {
     filterGames(games, { sort: 'platform' }).map((g) => g.id),
     ['mario', 'zelda', 'mickey'],
   )
+})
+
+test('discovery retires old filters while preserving theme and density from storage', () => {
+  const old = {
+    scope: 'played',
+    owned: 'current',
+    favorite: true,
+    view: 'list',
+    group: 'category',
+    status: 'FINISHED',
+    theme: '2',
+    columns: 7,
+    sort: 'desire',
+  }
+  for (const clean of [
+    discoverySearch.parse(old),
+    restoreGalleryPreferences(JSON.stringify(old), {}, 'discovery'),
+  ]) {
+    for (const key of ['scope', 'owned', 'favorite', 'view', 'group', 'status'])
+      assert.equal(key in clean, false)
+    assert.equal(clean.theme, '2')
+    assert.equal(clean.columns, 7)
+    const filters = galleryFilters({ ...clean, q: 'mick' }, 'discover', true)
+    const candidates = games.map((g) => ({ ...g, discover: g.id === 'mickey' }))
+    assert.deepEqual(
+      filterGames(candidates, filters, true).map((g) => g.id),
+      ['mickey'],
+    )
+  }
 })

@@ -18,12 +18,11 @@ import { toggleGalleryScope, needsSorting, type GallerySearch } from '../lib/gal
 import { playStatuses } from '../lib/platforms'
 import type { Game } from '../lib/types'
 
-// Universe, discovery and collection controls retain their existing capabilities.
+// Universe and collection controls retain their existing capabilities.
 export function GalleryToolbar({
   games,
   filters,
   update,
-  discovery,
   platformLocked,
   pathname,
   displayedColumns,
@@ -35,7 +34,6 @@ export function GalleryToolbar({
   games: Game[]
   filters: GallerySearch
   update: (patch: Partial<GallerySearch>) => void
-  discovery: boolean
   platformLocked: boolean
   pathname: string
   displayedColumns: number | 'auto'
@@ -52,57 +50,24 @@ export function GalleryToolbar({
   return (
     <>
       <div className="gallery-toolbar gallery-toolbar-scoped">
-        <div
-          className={`platform-scope ${discovery ? '' : 'gallery-scopes'}`}
-          role="group"
-          aria-label="Vue des jeux"
-        >
-          {discovery ? (
-            <>
-              <button
-                type="button"
-                aria-pressed={true}
-                onClick={() => update({ scope: 'discover', status: '' })}
-              >
-                Mes envies
-              </button>
-              <button
-                type="button"
-                aria-pressed={filters.sort === 'desire'}
-                title={
-                  filters.sort === 'desire'
-                    ? 'Revenir aux derniers ajouts / modifiés'
-                    : 'Classer par note d’envie décroissante'
-                }
-                onClick={() =>
-                  update({
-                    sort: filters.sort === 'desire' ? 'recent' : 'desire',
-                    randomSeed: undefined,
-                  })
-                }
-              >
-                Par envie ↓
-              </button>
-            </>
-          ) : (
-            (
-              [
-                ['all', 'Tous'],
-                ['played', 'Joués'],
-                ['discover', 'Mes envies'],
-              ] as const
-            ).map(([scope, label]) => (
-              <button
-                key={scope}
-                type="button"
-                aria-pressed={filters.scope === scope}
-                title={scope === 'all' ? 'Tous les jeux, y compris ceux à trier' : undefined}
-                onClick={() => update(toggleGalleryScope(filters, scope))}
-              >
-                {label}
-              </button>
-            ))
-          )}
+        <div className="platform-scope gallery-scopes" role="group" aria-label="Vue des jeux">
+          {(
+            [
+              ['all', 'Tous'],
+              ['played', 'Joués'],
+              ['discover', 'Mes envies'],
+            ] as const
+          ).map(([scope, label]) => (
+            <button
+              key={scope}
+              type="button"
+              aria-pressed={filters.scope === scope}
+              title={scope === 'all' ? 'Tous les jeux, y compris ceux à trier' : undefined}
+              onClick={() => update(toggleGalleryScope(filters, scope))}
+            >
+              {label}
+            </button>
+          ))}
         </div>
         <div className="gallery-refinements" role="group" aria-label="Filtres cumulables">
           <span className="gallery-refinements-label">Affiner</span>
@@ -118,22 +83,20 @@ export function GalleryToolbar({
             Possédés
             <span className="filter-switch-track" aria-hidden="true" />
           </button>
-          {!discovery && (
-            <button
-              type="button"
-              className="gallery-filter-switch megastar-switch"
-              role="switch"
-              aria-checked={filters.favorite ?? false}
-              title="Limiter la vue aux jeux Megastar (favoris)"
-              onClick={() => update({ favorite: !filters.favorite })}
-            >
-              <MegastarTrophy />
-              Megastar
-              <span className="filter-switch-track" aria-hidden="true" />
-            </button>
-          )}
+          <button
+            type="button"
+            className="gallery-filter-switch megastar-switch"
+            role="switch"
+            aria-checked={filters.favorite ?? false}
+            title="Limiter la vue aux jeux Megastar (favoris)"
+            onClick={() => update({ favorite: !filters.favorite })}
+          >
+            <MegastarTrophy />
+            Megastar
+            <span className="filter-switch-track" aria-hidden="true" />
+          </button>
         </div>
-        {!discovery && (sortingCount > 0 || filters.scope === 'unassigned') && (
+        {(sortingCount > 0 || filters.scope === 'unassigned') && (
           <button
             type="button"
             className="gallery-sorting-link"
@@ -302,7 +265,7 @@ export function GalleryToolbar({
                   favorite: false,
                   souvenir: false,
                   owned: 'all',
-                  scope: discovery ? 'discover' : 'all',
+                  scope: 'all',
                 })
               }
             >
@@ -356,16 +319,14 @@ export function GalleryToolbar({
             />
             Souvenirs uniquement
           </label>
-          {!discovery && (
-            <label className="check-inline">
-              <input
-                type="checkbox"
-                checked={filters.favorite ?? false}
-                onChange={(e) => update({ favorite: e.target.checked })}
-              />
-              Coups de cœur
-            </label>
-          )}
+          <label className="check-inline">
+            <input
+              type="checkbox"
+              checked={filters.favorite ?? false}
+              onChange={(e) => update({ favorite: e.target.checked })}
+            />
+            Coups de cœur
+          </label>
         </div>
       )}
     </>

@@ -47,6 +47,18 @@ export function cleanLibrarySearch(search: GallerySearch): GallerySearch {
 }
 export const librarySearch = gallerySearch.transform(cleanLibrarySearch)
 
+export function cleanDiscoverySearch(search: GallerySearch): GallerySearch {
+  return {
+    q: search.q,
+    platform: search.platform,
+    sort: search.sort,
+    randomSeed: search.randomSeed,
+    theme: search.theme,
+    columns: search.columns,
+  }
+}
+export const discoverySearch = gallerySearch.transform(cleanDiscoverySearch)
+
 export function librarySelection(filters: GallerySearch) {
   if (filters.favorite) return 'favorites'
   if (filters.owned === 'current' || filters.scope === 'owned') return 'owned'

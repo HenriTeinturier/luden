@@ -135,3 +135,10 @@
     left: 0;
   }
 }
+
+.page.discovery-page {
+  padding-top: 24px;
+}
+.discovery-page > .library-tools {
+  margin-top: 0;
+}

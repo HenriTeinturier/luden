@@ -14,6 +14,7 @@ import { Confirm, PageHeading, useLibrary } from '../components/ui'
 import { deleteMachineFn, saveProfileFn } from '../server/functions'
 import { CategorySettings } from '../components/category-settings'
 import { PlatformVisibilitySettings } from '../components/platform-visibility-settings'
+import { HomePlatformSettings } from '../components/home-platform-settings'
 export const Route = createFileRoute('/settings')({ component: Settings })
 function Settings() {
   const { profile, config, machines } = useLibrary()
@@ -30,6 +31,7 @@ function Settings() {
       />
       <CategorySettings />
       <PlatformVisibilitySettings />
+      <HomePlatformSettings />
       <section className="settings-section">
         <h2>Votre espace personnel</h2>
         <form

@@ -1,5 +1,12 @@
 # État courant
 
+## Plateformes de l’accueil configurables — 2026-10-22
+
+- Paramètres → Plateformes sur l’accueil : Auto retient les six plateformes visibles avec le plus de jeux ; Manuel propose quatre choix initiaux, puis ajout, retrait et réorganisation sans doublons. Préférence locale `luden:home-platforms:v1`, synchronisée entre onglets ; plateformes masquées ignorées sans effacer les choix.
+- Carrousel de 4, 2 ou 1 carte selon la largeur réelle de la section (seuils 760 et 520 px), y compris lors de l’ouverture de la sidebar. Boucle toutes les 6 secondes si nécessaire, dernier groupe complété par le début de la liste.
+- Commandes précédent/suivant et pause ; suspension au survol, au focus et en onglet caché. Démarrage automatique désactivé avec la préférence de réduction des animations.
+- TypeScript, lint ciblé et tests de sélection, persistance et rotation vérifiés.
+
 ## Footer à gauche de la sidebar — 2026-10-22
 
 - Le footer appartient à la grille commune de GameExplorer : sur ordinateur, il reste sous le contenu à gauche et la sidebar couvre les deux lignes de la grille. Le panneau et sa languette ne remontent plus à l’arrivée au footer.

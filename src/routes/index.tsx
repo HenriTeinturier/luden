@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { ArrowUpRight, Plus, ArrowRight, Trophy, BookOpen, Compass, Layers3 } from 'lucide-react'
-import { SectionHeading, PlatformCard, GameCard, Cover, useLibrary } from '../components/ui'
+import { SectionHeading, GameCard, Cover, useLibrary } from '../components/ui'
 import { useGameSelection } from '../components/game-selection'
+import { HomePlatformCarousel } from '../components/home-platform-carousel'
 
 const allLibraryGames = {
   scope: 'all' as const,
@@ -17,25 +18,11 @@ const allLibraryGames = {
 export const Route = createFileRoute('/')({ component: Home })
 function Home() {
   const selection = useGameSelection()
-  const { games, platforms, collections } = useLibrary()
+  const { games, collections } = useLibrary()
   const playing = games.filter((g) => g.experience?.status === 'PLAYING')
   const memories = games.filter((g) => g.experience?.memory)
   const recentGames = (playing.length ? playing : games).slice(0, 12)
   const recentSequence = recentGames.map((game) => game.id)
-  const visiblePlatforms = platforms.filter(
-    (platform) => !platform.customization.hiddenFromPlatforms,
-  )
-  const chosen = [...visiblePlatforms].sort(
-    (a, b) =>
-      games.filter((g) => g.platformId === b.id).length -
-        games.filter((g) => g.platformId === a.id).length ||
-      a.name.localeCompare(b.name, 'fr', { sensitivity: 'base', numeric: true }),
-  )
-  const shown = games.length
-    ? chosen.slice(0, 4)
-    : ['switch', 'ps5', 'pc', 'amiga']
-        .map((id) => visiblePlatforms.find((p) => p.id === id)!)
-        .filter(Boolean)
   return (
     <div className="page home-page">
       <div className="home-top">
@@ -111,28 +98,7 @@ function Home() {
             ))}
           </div>
         </div>
-        <section className="home-universes" aria-label="Vos univers">
-          <SectionHeading
-            title="À chaque machine, son univers."
-            to="/platforms"
-            label="Toutes les plateformes"
-          />
-          <div className="platform-grid home-platforms">
-            {shown.map((p) => (
-              <PlatformCard
-                key={p.id}
-                platform={p}
-                count={games.filter((g) => g.platformId === p.id).length}
-              />
-            ))}
-          </div>
-          {shown.length === 0 && (
-            <p className="field-hint">
-              Aucune plateforme affichée.{' '}
-              <Link to="/settings">Choisir les plateformes à afficher</Link>
-            </p>
-          )}
-        </section>
+        <HomePlatformCarousel />
       </div>
       <div className={`home-stories${memories.length ? ' has-memory' : ''}`}>
         {games.length > 0 ? (

@@ -1,5 +1,13 @@
 # Direction graphique actuelle
 
+Paramètres → Plateformes sur l’accueil propose Auto (les six plateformes visibles avec le plus
+de jeux) et Manuel (choix ordonnés, ajoutables et réorganisables). La préférence est conservée
+dans ce navigateur. Les plateformes masquées restent exclues des deux modes.
+Le carrousel affiche 1 carte sous 520 px de largeur de section, 2 sous 760 px, sinon 4.
+Si la sélection dépasse cette capacité, elle tourne toutes les 6 secondes, avec précédent,
+suivant et pause. Survol, focus ou onglet caché suspendent la rotation ; la réduction des
+animations empêche son démarrage automatique. La boucle complète le dernier groupe sans trous.
+
 Sur ordinateur, le footer se place sous la colonne de contenu de GameExplorer. La sidebar
 et sa languette couvrent les lignes contenu et footer : elles restent calées sous le header
 jusqu’au bas de l’écran, même à la fin du défilement. Sans sidebar, le footer reprend toute

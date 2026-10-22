@@ -612,3 +612,31 @@
   outline: 2px solid var(--blue);
   outline-offset: 2px;
 }
+.home-platform-mode {
+  display: grid;
+  gap: 8px;
+  max-width: 540px;
+}
+.home-platform-choices {
+  display: grid;
+  gap: 12px;
+  margin: 20px 0;
+  max-width: 650px;
+}
+.home-platform-choice {
+  display: flex;
+  align-items: end;
+  gap: 6px;
+}
+.home-platform-choice label {
+  display: grid;
+  flex: 1;
+  min-width: 0;
+  gap: 6px;
+}
+.home-platform-choice select {
+  width: 100%;
+}
+.home-platform-choice .icon-button {
+  flex-shrink: 0;
+}

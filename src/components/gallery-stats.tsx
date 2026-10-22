@@ -1,4 +1,4 @@
-import { BookOpen, Gamepad2, ShieldCheck, Flame, Inbox } from 'lucide-react'
+import { BookOpen, Gamepad2, PackageCheck, Flame, Inbox } from 'lucide-react'
 import { hasPlayed, needsSorting, librarySelection, type GallerySearch } from '../lib/gallery'
 import type { Game } from '../lib/types'
 import { MegastarTrophy } from './megastar-trophy'
@@ -31,7 +31,7 @@ export function GalleryStats({
       count: games.filter((game) =>
         game.possessions.some((possession) => possession.state === 'CURRENT'),
       ).length,
-      icon: ShieldCheck,
+      icon: PackageCheck,
       tone: 'owned',
     },
     {

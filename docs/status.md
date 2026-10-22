@@ -1,5 +1,9 @@
 # État courant
 
+## Icône des jeux possédés — 2026-10-22
+
+- Le compteur Jeux possédés utilise une boîte cochée (PackageCheck) à la place du bouclier, avec le turquoise existant.
+
 ## Souvenir à la une sur l’accueil — 2026-10-22
 
 - Titre Souvenir à la une aligné sur celui des derniers jeux, avec la même typographie, à la place de Tout parcourir lorsque l’encart est présent.

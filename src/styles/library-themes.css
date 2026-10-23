@@ -420,3 +420,43 @@
     pointer-events: auto;
   }
 }
+
+/* Shared compact captions also cover platforms without a dedicated preset. */
+.platform-page .game-card .universe-card-info h3 {
+  display: block;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.platform-page .universe-card-caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  min-width: 0;
+}
+.platform-page .universe-card-caption .stars small {
+  display: none;
+}
+.platform-page .universe-card-year {
+  color: var(--text-soft);
+  font-size: 11px;
+  margin-left: auto;
+}
+.platform-page [data-library-theme='2'] .game-card .universe-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.platform-page [data-library-theme='2'] .universe-card-caption {
+  order: -1;
+  padding: 6px;
+  border-radius: 5px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+.platform-page .universe-card-caption:empty {
+  display: none;
+}

@@ -1,5 +1,11 @@
 # État courant
 
+## Cartes des univers allégées — 2026-10-23
+
+- Classique : titre sur une ligne avec ellipse et étoiles sans valeur numérique, pour toutes les plateformes, y compris Wii, PS3 et les plateformes sans présentation dédiée. Plateforme, année, statut et commentaire retirés des cartes.
+- Vitrine : étoiles sans chiffre et année dans un encart, titre sur une ligne dessous ; aucun statut ni commentaire. Dimensions des visuels, badges Megastar et édition des envies conservés.
+- TypeScript et lint ciblé vérifiés ; validation visuelle par Henri.
+
 ## Modification directe depuis les cartes de jeux — 2026-10-22
 
 - Crayon en bas à droite dans Ma bibliothèque, Mes envies et les univers, dans les deux thèmes. Visible au survol/focus et en permanence sur écran tactile ; fond sombre, survol bleu.

@@ -366,65 +366,85 @@ export function GameCard({
           </span>
         )}
       </div>
-      <div className="game-card-info">
-        <span className="game-platform">
-          <span className="game-platform-name" title={game.platform.name}>
-            {platformLogo ? (
-              <img className="game-platform-logo" src={platformLogo} alt={game.platform.name} />
-            ) : (
-              <>
-                {!simpleCard && (
-                  <i style={{ background: game.platform.color }} aria-hidden="true" />
-                )}
-                <span>{game.platform.shortName}</span>
-              </>
-            )}
-          </span>
-          {game.releaseYear ? <span className="game-platform-year">{game.releaseYear}</span> : null}
-        </span>
-        <h3 title={game.title}>{game.title}</h3>
-        {!simpleCard && (
-          <>
+      {platformId && !preview && !compact ? (
+        <div className="game-card-info universe-card-info">
+          <h3 title={game.title}>{game.title}</h3>
+          <div className="universe-card-caption">
             {!showDesire && (
-              <div className="game-card-indicator">
-                {ratingKind === 'souvenir' ||
-                (game.souvenir && rating == null && game.desire == null) ? (
-                  <span className="game-card-souvenir">
-                    <Bookmark size={18} aria-hidden="true" /> Souvenir
-                  </span>
-                ) : game.desire != null && (ratingKind === 'desire' || rating == null) ? (
-                  <span className="desire-rating">
-                    <Stars value={game.desire} kind="desire" />
-                  </span>
-                ) : (
-                  <Stars
-                    value={rating}
-                    showEmpty={
-                      platformPresentation(platformId || preview ? game.platform : '').gallery
-                        .showEmptyStars
-                    }
-                  />
-                )}
-              </div>
+              <Stars
+                value={ratingKind === 'desire' ? game.desire : rating}
+                kind={ratingKind === 'desire' ? 'desire' : undefined}
+                showEmpty={platformPresentation(game.platform).gallery.showEmptyStars}
+              />
             )}
-            <div className="game-card-bottom">
-              <span>{playStatuses[game.experience?.status ?? 'UNPLAYED']}</span>
-              <span className="possession-icons">
-                {game.possessions.some((p) => p.format === 'PHYSICAL') && (
-                  <Disc3 size={14} aria-label="Exemplaire physique" />
-                )}
-                {game.possessions.some((p) => p.format === 'DIGITAL') && (
-                  <Cloud size={14} aria-label="Version digitale" />
-                )}
-                {game.possessions.some((p) => p.state === 'PAST') && (
-                  <Clock3 size={14} aria-label="Possession ancienne" />
-                )}
-              </span>
-            </div>
-            {game.experience?.memory && <p className="card-memory">{game.experience.memory}</p>}
-          </>
-        )}
-      </div>
+            {theme === '2' && game.releaseYear ? (
+              <span className="universe-card-year">{game.releaseYear}</span>
+            ) : null}
+          </div>
+        </div>
+      ) : (
+        <div className="game-card-info">
+          <span className="game-platform">
+            <span className="game-platform-name" title={game.platform.name}>
+              {platformLogo ? (
+                <img className="game-platform-logo" src={platformLogo} alt={game.platform.name} />
+              ) : (
+                <>
+                  {!simpleCard && (
+                    <i style={{ background: game.platform.color }} aria-hidden="true" />
+                  )}
+                  <span>{game.platform.shortName}</span>
+                </>
+              )}
+            </span>
+            {game.releaseYear ? (
+              <span className="game-platform-year">{game.releaseYear}</span>
+            ) : null}
+          </span>
+          <h3 title={game.title}>{game.title}</h3>
+          {!simpleCard && (
+            <>
+              {!showDesire && (
+                <div className="game-card-indicator">
+                  {ratingKind === 'souvenir' ||
+                  (game.souvenir && rating == null && game.desire == null) ? (
+                    <span className="game-card-souvenir">
+                      <Bookmark size={18} aria-hidden="true" /> Souvenir
+                    </span>
+                  ) : game.desire != null && (ratingKind === 'desire' || rating == null) ? (
+                    <span className="desire-rating">
+                      <Stars value={game.desire} kind="desire" />
+                    </span>
+                  ) : (
+                    <Stars
+                      value={rating}
+                      showEmpty={
+                        platformPresentation(platformId || preview ? game.platform : '').gallery
+                          .showEmptyStars
+                      }
+                    />
+                  )}
+                </div>
+              )}
+              <div className="game-card-bottom">
+                <span>{playStatuses[game.experience?.status ?? 'UNPLAYED']}</span>
+                <span className="possession-icons">
+                  {game.possessions.some((p) => p.format === 'PHYSICAL') && (
+                    <Disc3 size={14} aria-label="Exemplaire physique" />
+                  )}
+                  {game.possessions.some((p) => p.format === 'DIGITAL') && (
+                    <Cloud size={14} aria-label="Version digitale" />
+                  )}
+                  {game.possessions.some((p) => p.state === 'PAST') && (
+                    <Clock3 size={14} aria-label="Possession ancienne" />
+                  )}
+                </span>
+              </div>
+              {game.experience?.memory && <p className="card-memory">{game.experience.memory}</p>}
+            </>
+          )}
+        </div>
+      )}
     </>
   )
   if (preview) return <div className={className}>{content}</div>

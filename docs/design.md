@@ -4,6 +4,10 @@ Les univers reprennent les six compteurs de sélection de la bibliothèque, calc
 plateforme, puis la recherche locale, le tri et Présentation. Aucun sélecteur de plateforme
 redondant ; les machines PC restent accessibles. Les deux thèmes sont disponibles avec les
 préférences propres à chaque univers, et sans répéter le logo de plateforme sur les cartes.
+Les cartes Classique de tous les univers affichent uniquement le titre sur une ligne
+(ellipse, titre complet au survol) et les étoiles sans chiffre. En Vitrine, les étoiles
+et l’année sont regroupées dans un encart au-dessus du titre sur une ligne. Aucun statut
+de jeu ni commentaire sur ces cartes ; les flammes éditables et badges Megastar restent disponibles.
 
 Mes envies reprend la ligne légère de Ma bibliothèque, sans titre répété : recherche locale
 instantanée, plateformes, tri et Présentation. Le tri par envie décroissante est le défaut,

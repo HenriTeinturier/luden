@@ -4,6 +4,7 @@ import { Plus, Pencil, Settings2, ChevronDown } from 'lucide-react'
 import { PlatformCard, useLibrary } from '../components/ui'
 import { matchesPlatformFilter } from '../lib/platforms'
 import { platformReleases } from '../lib/platform-releases'
+import { gamePlatformIds } from '../lib/wish-platforms'
 const columnsStorageKey = 'luden:platforms:columns:v1'
 const columnOptions = [1, 2, 3, 4]
 
@@ -57,7 +58,7 @@ function Platforms() {
   }, [])
   const gameCounts = new Map<string, number>()
   for (const game of games) {
-    gameCounts.set(game.platformId, (gameCounts.get(game.platformId) ?? 0) + 1)
+    for (const id of gamePlatformIds(game)) gameCounts.set(id, (gameCounts.get(id) ?? 0) + 1)
   }
   const visiblePlatforms = platforms.filter((p) => !p.customization.hiddenFromPlatforms)
   const families = [...new Set(visiblePlatforms.map((p) => p.family))].sort((a, b) =>
@@ -67,10 +68,8 @@ function Platforms() {
   const activeFamily = families.includes(family) ? family : ''
   const activity = new Map<string, number>()
   for (const game of games)
-    activity.set(
-      game.platformId,
-      Math.max(activity.get(game.platformId) ?? 0, Date.parse(game.updatedAt)),
-    )
+    for (const id of gamePlatformIds(game))
+      activity.set(id, Math.max(activity.get(id) ?? 0, Date.parse(game.updatedAt)))
   const filteredPlatforms = visiblePlatforms
     .filter(
       (p) => matchesPlatformFilter(p, category) && (!activeFamily || p.family === activeFamily),

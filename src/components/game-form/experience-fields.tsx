@@ -3,12 +3,14 @@ import { Heart } from 'lucide-react'
 import { playStatuses } from '../../lib/platforms'
 import type { GameInput } from '../../lib/validation'
 import type { GameFieldsProps, ChangeExperienceField } from './field-types'
+import { useLibrary } from '../ui'
 
 export function ExperienceFields({
   data,
   change,
   experience,
 }: GameFieldsProps & { experience: ChangeExperienceField }) {
+  const { platforms } = useLibrary()
   return (
     <section className="form-section">
       <div className="form-section-title">
@@ -16,6 +18,12 @@ export function ExperienceFields({
         <h2>Votre expérience.</h2>
         <small>Facultatif</small>
       </div>
+      {data.discover && Boolean(data.alternativePlatformIds?.length) && (
+        <p className="field-hint">
+          Expérience et possessions sur {platforms.find((p) => p.id === data.platformId)?.name}{' '}
+          uniquement. Pour une autre version, choisissez d’abord sa plateforme en haut de la fiche.
+        </p>
+      )}
       <div className="form-row">
         <label>
           Où en êtes-vous ?

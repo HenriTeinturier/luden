@@ -10,6 +10,7 @@ import { removeUnusedImages } from './media'
 import { organizeGameImages } from './media-organization'
 import { customizePlatform } from '../lib/platform-customization'
 import { accessiblePlatforms } from './platforms'
+import { alternativePlatforms, hasVersionHistory } from '../lib/wish-platforms'
 
 export async function loadLibrary() {
   const [profile, platforms, machines, games, collections, categories, platformVisuals] =
@@ -22,6 +23,7 @@ export async function loadLibrary() {
         orderBy: { updatedAt: 'desc' },
         include: {
           platform: true,
+          wishPlatforms: { select: { platformId: true }, orderBy: { platformId: 'asc' } },
           machine: true,
           cover: { select: { id: true, width: true, height: true } },
           experience: true,
@@ -66,8 +68,9 @@ export async function loadLibrary() {
     platformVisuals: platformVisuals.map((v) => ({ ...v, url: `/platform-media/${v.id}` })),
     machines,
     categories,
-    games: games.map((g) => ({
+    games: games.map(({ wishPlatforms, ...g }) => ({
       ...g,
+      alternativePlatformIds: wishPlatforms.map((p) => p.platformId),
       platform: customizePlatform(g.platform),
       createdAt: g.createdAt.toISOString(),
       updatedAt: g.updatedAt.toISOString(),
@@ -83,15 +86,61 @@ export async function loadLibrary() {
 
 export async function saveGame(input: unknown) {
   const data = gameSchema.parse(input)
-  const { id, experience, possessions, collectionIds, media, links, presentation, ...fields } = data
+  const {
+    id,
+    experience,
+    possessions,
+    collectionIds,
+    media,
+    links,
+    presentation,
+    alternativePlatformIds,
+    wishSourceId,
+    ...fields
+  } = data
   const unused: string[] = []
   const result = await db.$transaction(async (tx) => {
+    if (id)
+      await tx.$queryRaw`SELECT "id" FROM "Game" WHERE "id" = ${id} AND "ownerId" = ${ownerId} FOR UPDATE`
+    if (wishSourceId) {
+      if (id) throw new Error('Une nouvelle version doit avoir sa propre fiche.')
+      // Serializes double submissions and checks the wish again at save time.
+      const claimed = await tx.game.updateMany({
+        where: {
+          id: wishSourceId,
+          ownerId,
+          discover: true,
+          wishPlatforms: { some: { platformId: fields.platformId } },
+        },
+        data: { discover: false, desire: null },
+      })
+      if (claimed.count !== 1)
+        throw new Error(
+          'Cette envie a déjà été déplacée ou cette plateforme n’est plus une alternative. Rouvrez la fiche.',
+        )
+    }
     const existing = id
       ? await tx.game.findFirstOrThrow({
           where: { id, ownerId },
-          include: { media: true, possessions: { include: { media: true } } },
+          include: {
+            media: true,
+            possessions: { include: { media: true } },
+            wishPlatforms: true,
+            experience: true,
+            entries: true,
+          },
         })
       : null
+    if (
+      existing &&
+      (existing.discover || fields.discover) &&
+      existing.platformId !== fields.platformId &&
+      (existing.wishPlatforms.length > 0 || alternativePlatformIds?.length) &&
+      hasVersionHistory(existing)
+    )
+      throw new Error(
+        'Cette fiche contient déjà votre histoire sur sa plateforme. Utilisez « Créer une fiche pour cette version » pour conserver vos parties et possessions.',
+      )
     // Older clients can omit the gallery; never erase it implicitly.
     const images =
       media ??
@@ -132,6 +181,16 @@ export async function saveGame(input: unknown) {
     await tx.platform.findFirstOrThrow({
       where: { id: fields.platformId, isDraft: false, ...accessiblePlatforms },
     })
+    const alternatives = alternativePlatforms(
+      fields.platformId,
+      alternativePlatformIds ?? existing?.wishPlatforms.map((p) => p.platformId),
+    )
+    if (
+      (await tx.platform.count({
+        where: { id: { in: alternatives }, isDraft: false, ...accessiblePlatforms },
+      })) !== alternatives.length
+    )
+      throw new Error('Une plateforme envisagée est introuvable ou indisponible.')
     if (fields.categoryId)
       await tx.gameCategory.findFirstOrThrow({ where: { id: fields.categoryId, ownerId } })
     if (fields.machineId) {
@@ -160,6 +219,10 @@ export async function saveGame(input: unknown) {
         where: { id },
         data: {
           ...fields,
+          wishPlatforms: {
+            deleteMany: {},
+            create: alternatives.map((platformId) => ({ platformId })),
+          },
           presentation: visuals,
           experience: { upsert: { create: experience, update: experience } },
           possessions: { create: possessions.filter((p) => !p.id) },
@@ -183,6 +246,7 @@ export async function saveGame(input: unknown) {
     return tx.game.create({
       data: {
         ...fields,
+        wishPlatforms: { create: alternatives.map((platformId) => ({ platformId })) },
         presentation: visuals,
         ownerId,
         experience: { create: experience },
@@ -315,6 +379,7 @@ export async function exportLibrary() {
         where: { ownerId },
         include: {
           platform: true,
+          wishPlatforms: { select: { platformId: true }, orderBy: { platformId: 'asc' } },
           experience: true,
           possessions: { include: { media: true } },
           media: true,
@@ -330,7 +395,7 @@ export async function exportLibrary() {
     ])
   return {
     format: 'luden',
-    version: 9,
+    version: 10,
     exportedAt: new Date().toISOString(),
     profile,
     games,

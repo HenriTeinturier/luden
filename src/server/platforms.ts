@@ -87,6 +87,10 @@ export async function deletePersonalPlatform(input: unknown) {
     await tx.platform.findFirstOrThrow({ where: { id, ownerId } })
     if (await tx.game.count({ where: { platformId: id } }))
       throw new Error('Déplacez ou supprimez les jeux de cette plateforme avant de la supprimer.')
+    if (await tx.gameWishPlatform.count({ where: { platformId: id } }))
+      throw new Error(
+        'Retirez cette plateforme des alternatives de vos envies avant de la supprimer.',
+      )
     const visuals = await tx.platformVisual.findMany({ where: { platformId: id } })
     const paths = visuals.map((visual) =>
       resolveMediaPath(process.env.LUDEN_DATA_DIR ?? '', visual.path),

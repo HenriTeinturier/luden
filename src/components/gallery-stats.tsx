@@ -1,5 +1,5 @@
 import { BookOpen, Gamepad2, PackageCheck, Flame, Inbox } from 'lucide-react'
-import { hasPlayed, needsSorting, librarySelection, type GallerySearch } from '../lib/gallery'
+import { galleryCounts, librarySelection, type GallerySearch } from '../lib/gallery'
 import type { Game } from '../lib/types'
 import { MegastarTrophy } from './megastar-trophy'
 
@@ -8,48 +8,49 @@ export function GalleryStats({
   games,
   onSelect,
   filters,
+  platformId,
 }: {
   universe?: boolean
   games: Game[]
   onSelect: (filters: Partial<GallerySearch>) => void
   filters: GallerySearch
+  platformId?: string
 }) {
+  const counts = galleryCounts(games, platformId)
   const stats = [
     {
       label: universe ? 'Tous les jeux' : 'jeux dans ma bibliothèque',
-      count: games.length,
+      count: counts.library,
       icon: BookOpen,
       tone: 'library',
     },
     {
       label: 'jeux joués',
-      count: games.filter(hasPlayed).length,
+      count: counts.played,
       icon: Gamepad2,
       tone: 'played',
     },
     {
       label: 'Mes envies',
-      count: games.filter((game) => game.discover).length,
+      count: counts.desire,
       icon: Flame,
       tone: 'desire',
     },
     {
       label: 'jeux possédés',
-      count: games.filter((game) =>
-        game.possessions.some((possession) => possession.state === 'CURRENT'),
-      ).length,
+      count: counts.owned,
       icon: PackageCheck,
       tone: 'owned',
     },
     {
       label: 'Megastar',
-      count: games.filter((game) => game.favorite).length,
+      count: counts.favorites,
       icon: MegastarTrophy,
       tone: 'favorites',
     },
     {
       label: 'À trier',
-      count: games.filter(needsSorting).length,
+      count: counts.sorting,
       icon: Inbox,
       tone: 'sorting',
     },

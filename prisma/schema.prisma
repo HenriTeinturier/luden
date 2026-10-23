@@ -21,24 +21,25 @@ model Profile {
 }
 
 model Platform {
-  id                String           @id
+  id                String             @id
   name              String
   shortName         String
   family            String
   color             String
   era               String
-  igdbId            Int?             @unique
+  igdbId            Int?               @unique
   games             Game[]
+  wishedGames       GameWishPlatform[]
   visuals           PlatformVisual[]
-  slideshowEnabled  Boolean          @default(false)
-  slideshowSeconds  Int              @default(8)
-  customization     Json             @default("{}")
+  slideshowEnabled  Boolean            @default(false)
+  slideshowSeconds  Int                @default(8)
+  customization     Json               @default("{}")
   ownerId           String?
-  owner             Profile?         @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  owner             Profile?           @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   catalogPlatformId String?
-  catalogPlatform   Platform?        @relation("PlatformCatalog", fields: [catalogPlatformId], references: [id], onDelete: Restrict)
-  personalPlatforms Platform[]       @relation("PlatformCatalog")
-  isDraft           Boolean          @default(false)
+  catalogPlatform   Platform?          @relation("PlatformCatalog", fields: [catalogPlatformId], references: [id], onDelete: Restrict)
+  personalPlatforms Platform[]         @relation("PlatformCatalog")
+  isDraft           Boolean            @default(false)
 
   @@index([ownerId, isDraft])
 }
@@ -84,41 +85,53 @@ model Machine {
 }
 
 model Game {
-  id           String            @id @default(cuid())
-  ownerId      String
-  owner        Profile           @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  platformId   String
-  platform     Platform          @relation(fields: [platformId], references: [id])
-  machineId    String?
-  machine      Machine?          @relation(fields: [machineId], references: [id], onDelete: SetNull)
-  title        String
-  categoryId   String?
-  category     GameCategory?     @relation(fields: [categoryId], references: [id], onDelete: SetNull)
-  releaseYear  Int?
-  developer    String            @default("")
-  publisher    String            @default("")
-  genres       String[]          @default([])
-  summary      String            @default("")
-  igdbId       Int?
-  sourceUrl    String?
-  discover     Boolean           @default(false)
-  souvenir     Boolean           @default(false)
-  desire       Float?
-  favorite     Boolean           @default(false)
-  presentation Json              @default("{}")
-  coverId      String?
-  cover        Media?            @relation(fields: [coverId], references: [id], onDelete: SetNull)
-  experience   Experience?
-  possessions  Possession[]
-  media        MediaAttachment[]
-  links        GameLink[]
-  entries      CollectionEntry[]
-  createdAt    DateTime          @default(now())
-  updatedAt    DateTime          @updatedAt
+  id            String             @id @default(cuid())
+  ownerId       String
+  owner         Profile            @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  platformId    String
+  platform      Platform           @relation(fields: [platformId], references: [id])
+  machineId     String?
+  machine       Machine?           @relation(fields: [machineId], references: [id], onDelete: SetNull)
+  title         String
+  categoryId    String?
+  category      GameCategory?      @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  releaseYear   Int?
+  developer     String             @default("")
+  publisher     String             @default("")
+  genres        String[]           @default([])
+  summary       String             @default("")
+  igdbId        Int?
+  sourceUrl     String?
+  discover      Boolean            @default(false)
+  souvenir      Boolean            @default(false)
+  desire        Float?
+  favorite      Boolean            @default(false)
+  presentation  Json               @default("{}")
+  coverId       String?
+  cover         Media?             @relation(fields: [coverId], references: [id], onDelete: SetNull)
+  experience    Experience?
+  possessions   Possession[]
+  media         MediaAttachment[]
+  links         GameLink[]
+  entries       CollectionEntry[]
+  wishPlatforms GameWishPlatform[]
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
 
   @@index([ownerId, platformId])
   @@index([categoryId])
   @@index([ownerId, updatedAt])
+}
+
+// Alternative platforms for one shared wish. Experience and ownership stay on Game.platformId.
+model GameWishPlatform {
+  gameId     String
+  game       Game     @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  platformId String
+  platform   Platform @relation(fields: [platformId], references: [id], onDelete: Restrict)
+
+  @@id([gameId, platformId])
+  @@index([platformId])
 }
 
 model GameCategory {

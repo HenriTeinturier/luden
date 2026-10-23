@@ -2,6 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { useLibrary } from '../components/ui'
 import { Gallery } from '../components/gallery'
 import { universeSearch } from '../lib/gallery'
+import { belongsToPlatform } from '../lib/wish-platforms'
 import { platformPresentation } from '../lib/presentation'
 import type { CSSProperties } from 'react'
 export const Route = createFileRoute('/platforms/$platformId')({
@@ -20,7 +21,7 @@ function PlatformPage() {
         <Link to="/platforms">Toutes les plateformes</Link>
       </div>
     )
-  const chosen = games.filter((g) => g.platformId === platformId)
+  const chosen = games.filter((g) => belongsToPlatform(g, platformId))
   const presentation = platformPresentation(platform)
   const gallery = presentation.gallery
   return (
@@ -55,7 +56,7 @@ function PlatformPage() {
           ))}
         </div>
       )}
-      <Gallery games={chosen} platformLocked showStats />
+      <Gallery games={chosen} platformLocked universePlatformId={platformId} showStats />
     </div>
   )
 }

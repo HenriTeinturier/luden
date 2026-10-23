@@ -41,11 +41,13 @@ export function Gallery({
   defaultScope = 'all',
   discovery = false,
   showStats = false,
+  universePlatformId,
 }: {
   games: Game[]
   discovery?: boolean
   showStats?: boolean
   platformLocked?: boolean
+  universePlatformId?: string
   defaultScope?: GallerySearch['scope']
 }) {
   const library = useLibrary()
@@ -68,7 +70,7 @@ export function Gallery({
     defaultScope,
     discovery,
   )
-  const visible = filterGames(games, filters, compactControls)
+  const visible = filterGames(games, filters, compactControls, universePlatformId)
   const navigate = useNavigate()
   const router = useRouter()
   const pathname = useMatch({ strict: false, select: (match) => match.pathname })
@@ -304,7 +306,13 @@ export function Gallery({
   return (
     <>
       {showStats && (
-        <GalleryStats games={games} filters={filters} onSelect={update} universe={platformLocked} />
+        <GalleryStats
+          games={games}
+          filters={filters}
+          onSelect={update}
+          universe={platformLocked}
+          platformId={universePlatformId}
+        />
       )}
       {compactControls ? (
         <LibraryToolbar

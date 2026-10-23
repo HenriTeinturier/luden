@@ -15,7 +15,9 @@ export const possessionSchema = z
 export const gameSchema = z.object({
   id: z.string().optional(),
   title: z.string().trim().min(1, 'Le titre est obligatoire.').max(200),
+  wishSourceId: z.string().min(1).optional(),
   platformId: z.string().min(1, 'Choisis une plateforme.'),
+  alternativePlatformIds: z.array(z.string().min(1)).max(100).optional(),
   machineId: z.string().nullable().default(null),
   categoryId: z.string().min(1).nullable().optional(),
   releaseYear: z.number().int().min(1950).max(2100).nullable(),
@@ -76,6 +78,7 @@ export function assertRealCollection(possessions: unknown[], selectedReal: boole
 export const emptyGame: GameInput = {
   title: '',
   platformId: '',
+  alternativePlatformIds: [],
   machineId: null,
   categoryId: null,
   releaseYear: null,

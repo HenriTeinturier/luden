@@ -1,3 +1,4 @@
+import { belongsToPlatform } from '../lib/wish-platforms'
 import { ChevronDown, Search, Settings2, Shuffle, X } from 'lucide-react'
 import { useLibrary } from './ui'
 import type { Game } from '../lib/types'
@@ -65,7 +66,7 @@ export function LibraryToolbar({
           >
             <option value="">Toutes les plateformes</option>
             {platforms
-              .filter((p) => games.some((g) => g.platformId === p.id))
+              .filter((p) => games.some((g) => belongsToPlatform(g, p.id)))
               .map((p) => (
                 <option key={p.id} value={p.id}>
                   {p.name}

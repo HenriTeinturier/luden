@@ -1,9 +1,23 @@
 import { ChevronDown } from 'lucide-react'
 import { useLibrary } from '../ui'
 import type { GameFieldsProps } from './field-types'
+import { WishPlatformFields } from './wish-platform-fields'
+import { Link } from '@tanstack/react-router'
+import { hasVersionHistory } from '../../lib/wish-platforms'
+import type { Game } from '../../lib/types'
 
-export function IdentityFields({ data, change }: GameFieldsProps) {
+export function IdentityFields({
+  data,
+  change,
+  existingGame,
+}: GameFieldsProps & { existingGame?: Game }) {
   const library = useLibrary()
+  const preserveHistory = Boolean(
+    existingGame &&
+    (existingGame.discover || data.discover) &&
+    hasVersionHistory(existingGame) &&
+    (existingGame.alternativePlatformIds.length || data.alternativePlatformIds?.length),
+  )
   return (
     <section className="form-section">
       <div className="form-section-title">
@@ -22,9 +36,10 @@ export function IdentityFields({ data, change }: GameFieldsProps) {
       </label>
       <div className="form-row">
         <label>
-          Plateforme <span className="required">*</span>
+          {data.discover ? 'Plateforme préférée' : 'Plateforme'} <span className="required">*</span>
           <select
             required
+            disabled={preserveHistory || Boolean(data.wishSourceId)}
             value={data.platformId}
             onChange={(e) => {
               change('platformId', e.target.value)
@@ -51,6 +66,31 @@ export function IdentityFields({ data, change }: GameFieldsProps) {
           />
         </label>
       </div>
+      {data.discover && data.platformId && <WishPlatformFields data={data} change={change} />}
+      {preserveHistory && (
+        <div className="wish-platform-summary">
+          <p>
+            Votre histoire sur {existingGame!.platform.shortName} reste dans cette fiche. Pour jouer
+            ou posséder une autre version :
+          </p>
+          {existingGame!.discover &&
+            library.platforms
+              .filter((p) => existingGame!.alternativePlatformIds.includes(p.id))
+              .map((p) => (
+                <Link
+                  key={p.id}
+                  to="/games/new"
+                  search={{ platform: p.id, fromWish: existingGame!.id }}
+                  className="text-link"
+                >
+                  Créer une fiche pour cette version : {p.shortName}
+                </Link>
+              ))}
+          {!existingGame!.alternativePlatformIds.length && (
+            <p>Enregistrez les alternatives pour pouvoir créer la fiche d’une autre version.</p>
+          )}
+        </div>
+      )}
       {data.platformId === 'pc' && library.machines.length > 0 && (
         <label>
           Mon PC

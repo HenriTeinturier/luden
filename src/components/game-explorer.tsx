@@ -1,3 +1,4 @@
+import { belongsToPlatform } from '../lib/wish-platforms'
 import { useEffect, useRef, useState, type ReactNode, type CSSProperties } from 'react'
 import { useLocation, useNavigate } from '@tanstack/react-router'
 import { ChevronRight } from 'lucide-react'
@@ -72,7 +73,7 @@ export function GameExplorer({
   const index = game ? ids.indexOf(game.id) : -1
   const showUniverse = Boolean(universe && !game && !universeVisit.hidden)
   const platforms =
-    library?.platforms.filter((p) => library.games.some((g) => g.platformId === p.id)) ?? []
+    library?.platforms.filter((p) => library.games.some((g) => belongsToPlatform(g, p.id))) ?? []
   useEffect(() => {
     if (!universe || platforms.length < 2 || mode === 'edit' || busy || hidingUniverse) return
     function changeUniverse(event: KeyboardEvent) {

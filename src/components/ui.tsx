@@ -30,6 +30,7 @@ import { platformArtwork, artworkStyle } from '../lib/platform-artwork'
 import { originalCardStyles } from '../lib/platform-card-layout'
 import type { PlatformVisual } from '../lib/platform-visuals'
 import { readPlatformCustomization } from '../lib/platform-customization'
+import { isAlternativeWish } from '../lib/wish-platforms'
 
 export function useLibrary() {
   const { library } = useLoaderData({ from: '__root__' })
@@ -311,20 +312,21 @@ export function GameCard({
   overview?: boolean
 }) {
   const selection = useGameSelection()
-  const { platformVisuals } = useLibrary()
+  const { platformVisuals, platforms } = useLibrary()
   const rating = game.experience?.rating
   const { platformId, collectionId } = useParams({ strict: false })
   const location = useLocation()
   const libraryCard = !preview && (overview || location.pathname.replace(/\/$/, '') === '/library')
   const discoveryCard = !preview && location.pathname.replace(/\/$/, '') === '/discover'
-  const ratingKind = sidebarRatingKind(game)
+  const alternative = !preview && isAlternativeWish(game, platformId)
+  const ratingKind = alternative ? 'desire' : sidebarRatingKind(game)
   const freeBoxes = libraryCard && theme === '2'
   const badgeValue = ratingKind === 'desire' ? game.desire : rating
   const badgeLabel =
     ratingKind === 'souvenir'
       ? 'Souvenir'
       : `${ratingKind === 'desire' ? 'Envie de jouer' : 'Ma note'} : ${badgeValue == null ? 'non renseignée' : `${badgeValue.toLocaleString('fr-FR')} sur 5`}`
-  const showDesire = libraryCard ? ratingKind === 'desire' : editDesire
+  const showDesire = alternative || (libraryCard ? ratingKind === 'desire' : editDesire)
   const simpleCard =
     !preview &&
     (overview || ['/library', '/discover'].includes(location.pathname.replace(/\/$/, '')))
@@ -335,11 +337,11 @@ export function GameCard({
         platformVisuals.filter((v) => v.platformId === game.platformId),
       ).logo
     : undefined
-  const className = `game-card ${compact ? 'compact' : ''} ${coverFormat(game.platform).wide ? 'wide-cover' : ''}`
+  const className = `game-card ${alternative ? 'alternative-wish-card' : ''} ${compact ? 'compact' : ''} ${coverFormat(game.platform).wide ? 'wide-cover' : ''}`
   const content = (
     <>
       <div className="cover-frame">
-        <Cover game={game} />
+        <Cover game={game} sizes={alternative ? '(max-width: 700px) 45vw, 320px' : undefined} />
         {freeBoxes && (
           <span
             className={`library-theme-badge ${ratingKind}`}
@@ -360,7 +362,7 @@ export function GameCard({
             )}
           </span>
         )}
-        {game.favorite && (
+        {game.favorite && !alternative && (
           <span className="favorite-badge">
             <img src="/megastar.webp" alt="Megastar — Jeu culte" width={400} height={394} />
           </span>
@@ -369,6 +371,11 @@ export function GameCard({
       {platformId && !preview && !compact ? (
         <div className="game-card-info universe-card-info">
           <h3 title={game.title}>{game.title}</h3>
+          {alternative && (
+            <span className="alternative-wish-label">
+              Également envisagé sur {platforms.find((p) => p.id === platformId)?.shortName}
+            </span>
+          )}
           <div className="universe-card-caption">
             {!showDesire && (
               <Stars

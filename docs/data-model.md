@@ -42,6 +42,13 @@
 - Machine : ancien PC personnel nommé ; conservé pour compatibilité des fiches et exports, sans nouvelle création.
   La base locale ne contenait plus de Machine ni de jeu rattaché lors de l’étape 3 ; aucune migration destructive.
 - Game : fiche personnelle sur UNE plateforme, toutes métadonnées indépendantes. Aucun Game universel imposé.
+  `GameWishPlatform` ajoute des plateformes alternatives (clé composée Game–Platform, sans doublon),
+  uniquement pour l’envie partagée. `Game.platformId` reste la plateforme préférée et celle de
+  l’expérience/possession. Les alternatives n’ont ni note, ni possession, ni média propres.
+  Leur présence dans les univers dépend de `discover` ; les choix restent stockés quand il est décoché.
+  Sauvegarde : références accessibles et publiées exigées, plateforme principale exclue, champ
+  `alternativePlatformIds` omis = choix précédents conservés ; tableau vide = retrait explicite.
+  Une plateforme personnelle encore référencée comme alternative ne peut pas être supprimée.
   `presentation` JSON contient les rôles boîte/support/logo/fond (identifiants de médias déjà attachés
   à cette fiche) et `sidebarCrop` (x/y en %, zoom 1–3). Schéma Zod ; références retirées quand le média
   quitte la fiche. Omettre ce champ lors d’une sauvegarde conserve les choix existants encore valides.
@@ -91,3 +98,17 @@ la création utilise le défaut en base. Les contrôles actuels envoient la vale
 `Platform.customization.hiddenFromPlatforms` (booléen, défaut false) masque
 la carte sur l’index des plateformes et dans l’encadré des plateformes de l’accueil, ainsi que l’entrée du menu Mes univers et les raccourcis du header. Le catalogue chargé, les jeux et leurs rattachements
 ne sont pas filtrés. Le réglage se modifie depuis Paramètres et reste conservé par l’éditeur visuel.
+
+## Choisir une autre version d’une envie
+
+Une envie sans historique peut changer de plateforme préférée ; choisir une alternative conserve
+l’ancienne plateforme parmi les alternatives. Avec une expérience, une possession, un souvenir,
+un favori ou une collection, la réattribution d’une envie multiplateforme est refusée.
+Le parcours `/games/new?platform=…&fromWish=…` préremplit une nouvelle version avec les métadonnées
+et médias, mais sans partie, possession, favori, souvenir ni appartenance aux collections.
+L’enregistrement via `wishSourceId` transfère l’envie dans la même transaction que la création :
+la source perd seulement `discover` et `desire`, et conserve son historique et ses choix dormants.
+La source doit encore être une envie accessible et la destination une alternative enregistrée ;
+un double enregistrement ou un échec ne crée pas une deuxième envie. La fiche reste modifiable
+avant validation, notamment les alternatives et la boîte. Acheter ou jouer ne décoche pas l’envie.
+Export JSON v10 : `wishPlatforms: [{ platformId }]` sur chaque jeu, même pour les choix dormants.

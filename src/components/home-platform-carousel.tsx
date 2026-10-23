@@ -1,3 +1,4 @@
+import { belongsToPlatform } from '../lib/wish-platforms'
 import { useEffect, useRef, useState } from 'react'
 import { Link } from '@tanstack/react-router'
 import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react'
@@ -104,7 +105,7 @@ function PlatformSlides({
           <PlatformCard
             key={p.id}
             platform={p}
-            count={games.filter((g) => g.platformId === p.id).length}
+            count={games.filter((g) => belongsToPlatform(g, p.id)).length}
           />
         ))}
       </div>

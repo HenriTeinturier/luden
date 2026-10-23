@@ -1,3 +1,4 @@
+import { belongsToPlatform } from '../lib/wish-platforms'
 import { useRef, useState } from 'react'
 import { useRouter } from '@tanstack/react-router'
 import { useLibrary } from './ui'
@@ -38,7 +39,7 @@ export function PlatformVisibilitySettings() {
       </p>
       <div className="platform-visibility-options">
         {platforms.map((platform) => {
-          const count = games.filter((game) => game.platformId === platform.id).length
+          const count = games.filter((game) => belongsToPlatform(game, platform.id)).length
           return (
             <label key={platform.id}>
               <input

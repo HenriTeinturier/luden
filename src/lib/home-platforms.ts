@@ -1,3 +1,4 @@
+import { gamePlatformIds, type PlatformMembership } from './wish-platforms'
 export type HomePlatformsPreference = { mode: 'auto' | 'manual'; ids: string[] }
 export const defaultHomePlatforms: HomePlatformsPreference = { mode: 'auto', ids: [] }
 export const homePlatformsKey = 'luden:home-platforms:v1'
@@ -19,7 +20,7 @@ export function parseHomePlatforms(value: string | null): HomePlatformsPreferenc
 type HomePlatform = { id: string; name: string; customization: { hiddenFromPlatforms: boolean } }
 export function selectHomePlatforms<T extends HomePlatform>(
   platforms: T[],
-  games: { platformId: string }[],
+  games: PlatformMembership[],
   preference: HomePlatformsPreference,
 ): T[] {
   const visible = platforms.filter((p) => !p.customization.hiddenFromPlatforms)
@@ -31,7 +32,8 @@ export function selectHomePlatforms<T extends HomePlatform>(
     })
   }
   const counts = new Map<string, number>()
-  for (const game of games) counts.set(game.platformId, (counts.get(game.platformId) ?? 0) + 1)
+  for (const game of games)
+    for (const id of gamePlatformIds(game)) counts.set(id, (counts.get(id) ?? 0) + 1)
   return visible
     .sort(
       (a, b) =>

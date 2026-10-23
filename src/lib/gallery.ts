@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import type { Game } from './types'
+import { belongsToPlatform, isAlternativeWish } from './wish-platforms'
 
 export const gallerySearch = z.object({
   q: z.string().optional(),
@@ -116,6 +117,19 @@ export function needsSorting(game: Game) {
   return !hasPlayed(game) && !game.discover && !game.souvenir
 }
 
+export function galleryCounts(games: Game[], platformId?: string) {
+  const visible = platformId ? games.filter((game) => belongsToPlatform(game, platformId)) : games
+  const versions = platformId ? visible.filter((game) => game.platformId === platformId) : visible
+  return {
+    library: visible.length,
+    played: versions.filter(hasPlayed).length,
+    desire: visible.filter((game) => game.discover).length,
+    owned: versions.filter((game) => game.possessions.some((p) => p.state === 'CURRENT')).length,
+    favorites: versions.filter((game) => game.favorite).length,
+    sorting: versions.filter(needsSorting).length,
+  }
+}
+
 // Stable per-game ranks preserve relative order through filtering, edits and return navigation.
 function randomRank(id: string, seed: number) {
   let hash = 2166136261 ^ seed
@@ -127,7 +141,23 @@ function randomRank(id: string, seed: number) {
   return (hash ^ (hash >>> 16)) >>> 0
 }
 
-export function filterGames(games: Game[], filters: GallerySearch, titleOnly = false) {
+export function filterGames(
+  games: Game[],
+  filters: GallerySearch,
+  titleOnly = false,
+  universePlatformId?: string,
+) {
+  const platformId = universePlatformId || filters.platform
+  const versionOnly = Boolean(
+    filters.scope === 'played' ||
+    filters.scope === 'owned' ||
+    filters.scope === 'unassigned' ||
+    filters.status ||
+    filters.machine ||
+    filters.favorite ||
+    filters.souvenir ||
+    (filters.owned && filters.owned !== 'all'),
+  )
   const normalize = (s: string) =>
     s
       .normalize('NFD')
@@ -141,7 +171,8 @@ export function filterGames(games: Game[], filters: GallerySearch, titleOnly = f
             ? g.title
             : `${g.title} ${g.developer} ${g.genres.join(' ')} ${g.experience?.memory ?? ''}`,
         ).includes(normalize(filters.q.trim()))) &&
-      (!filters.platform || g.platformId === filters.platform) &&
+      (!platformId || belongsToPlatform(g, platformId)) &&
+      (!versionOnly || !isAlternativeWish(g, platformId)) &&
       (!filters.machine || g.machineId === filters.machine) &&
       (!filters.status || (g.experience?.status ?? 'UNPLAYED') === filters.status) &&
       (filters.scope !== 'played' || hasPlayed(g)) &&

@@ -1,0 +1,69 @@
+.wish-platform-fields {
+  min-width: 0;
+  margin: 16px 0;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.wish-platform-fields legend {
+  padding: 0 6px;
+  font-weight: 600;
+}
+.wish-platform-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
+  gap: 10px 16px;
+  max-height: 220px;
+  overflow-y: auto;
+  padding: 10px 4px;
+}
+.wish-platform-options .check-inline {
+  margin: 0;
+}
+.wish-platform-summary {
+  margin: 8px 0 16px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.wish-platform-summary p {
+  margin: 0 0 6px;
+}
+.wish-platform-summary .text-link {
+  display: block;
+  margin-top: 6px;
+  text-align: left;
+}
+.dossier-compact .wish-platform-summary {
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  margin: 4px 0 12px;
+}
+.dossier-compact .wish-platform-summary p {
+  margin: 0;
+}
+.wish-platform-summary strong,
+.alternative-wish-label {
+  color: #ffacd2;
+}
+.platform-page .game-card .alternative-wish-label {
+  display: block;
+  font-size: 11px;
+  line-height: 1.4;
+  margin: 3px 0;
+}
+/* The preferred box stays whole, even inside an alternative universe with a different format. */
+.platform-page .game-grid .alternative-wish-card .game-cover {
+  aspect-ratio: auto;
+  height: auto;
+  min-height: 0;
+}
+.platform-page .game-grid .alternative-wish-card .game-cover img {
+  width: 100%;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
+}

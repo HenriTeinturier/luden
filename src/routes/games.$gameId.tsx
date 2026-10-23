@@ -12,6 +12,7 @@ import {
 } from '../lib/gallery'
 import { groupByCategory } from '../lib/categories'
 import { wrapGameIndex } from '../lib/gallery-navigation'
+import { belongsToPlatform } from '../lib/wish-platforms'
 
 export const Route = createFileRoute('/games/$gameId')({
   validateSearch: (input) => gameReturnSearch.parse(input),
@@ -30,7 +31,7 @@ function GamePage() {
   const [ids] = useState(() => {
     const source = games.filter((game) =>
       origin.from === 'platform'
-        ? game.platformId === origin.fromId
+        ? Boolean(origin.fromId && belongsToPlatform(game, origin.fromId))
         : origin.from === 'collection'
           ? game.entries.some((entry) => entry.collectionId === origin.fromId)
           : true,
@@ -49,6 +50,7 @@ function GamePage() {
             ? cleanLibrarySearch(filters)
             : filters,
       origin.from === 'library' || origin.from === 'discover' || origin.from === 'platform',
+      origin.from === 'platform' ? origin.fromId : undefined,
     )
     const ordered =
       origin.from !== 'library' &&

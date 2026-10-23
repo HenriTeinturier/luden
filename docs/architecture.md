@@ -89,6 +89,12 @@ Export JSON v8 : plateformes personnelles, propriétaire, catalogue associé, br
 en plus des personnalisations et rôles (v7), réglages de défilement (v6) et visuels personnels (v5).
 Pas de copie de la base vivante dans OneDrive ; volume Docker dédié.
 
+Envies multiplateformes : `lib/wish-platforms.ts` centralise l’appartenance aux univers ;
+`lib/gallery.ts` applique les filtres et compteurs sans attribuer aux alternatives l’histoire
+de la version principale. `loadLibrary` expose les identifiants alternatifs, `saveGame` valide
+et sauvegarde les associations `GameWishPlatform`. Le transfert facultatif d’une envie vers
+une nouvelle version est atomique et conserve la fiche d’origine. Export v10 avec les associations.
+
 ## Futur
 
 Propriétaire partout, mais profil local n'est PAS une authentification.

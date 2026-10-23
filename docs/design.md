@@ -763,3 +763,22 @@ lorsqu’il est présent, sans répéter les étoiles.
 Les cartes de Ma bibliothèque partagent un même pied pour étoiles, flammes ou repère Souvenir,
 sous le lien de la fiche : mêmes marges latérales et hauteur de ligne réservée. Les symboles sont
 centrés verticalement sur cette ligne, y compris lorsque le bouton d’effacement d’envie est présent.
+
+## Envies avec plusieurs plateformes possibles
+
+Cocher « Dans mes envies » fait apparaître « Plateforme préférée » et « Autres plateformes
+envisagées » dans l’identité du jeu. Recherche locale des plateformes, cases à cocher et nombre
+de choix ; les plateformes sélectionnées restent visibles pendant la recherche.
+Une même envie apparaît une fois dans Mes envies et Ma bibliothèque, et dans Tous/Envies de
+chaque univers choisi. Les filtres et compteurs Joués/Possédés/Megastar restent liés aux versions
+réelles. La boîte principale reste entière dans les autres univers, accompagnée de
+« Également envisagé sur … ». La fiche rappelle la préférence, les alternatives et la plateforme
+des parties/possessions. Les flammes sont communes à toutes les vues.
+La sidebar se limite à la ligne « PS5 en priorité · Autres possibilités : PC », sans encadré,
+explication ou bouton ajouté ; les actions détaillées restent dans la fiche complète et le formulaire.
+
+Une fiche avec historique propose « Créer une fiche pour cette version » pour une alternative.
+Le formulaire prérempli précise que l’envie sera transférée à l’enregistrement et que l’ancienne
+histoire sera conservée. La recherche IGDB reste présente dans tous les formulaires, y compris
+en modification. Le filtre « Plateforme pour la recherche » est indépendant de la plateforme
+enregistrée : choisir une fiche IGDB ne remplace pas une plateforme déjà choisie.

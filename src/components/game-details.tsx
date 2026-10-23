@@ -1,3 +1,4 @@
+import { hasVersionHistory } from '../lib/wish-platforms'
 import {
   useCallback,
   useEffect,
@@ -1051,7 +1052,7 @@ export function GameDetails({
   onDeleted: () => void
   onBusyChange: (busy: boolean) => void
 }) {
-  const { collections, categories } = useLibrary()
+  const { collections, categories, platforms } = useLibrary()
   const router = useRouter()
   const notify = useNotification()
   const [error, setError] = useState('')
@@ -1231,6 +1232,47 @@ export function GameDetails({
             </button>
           )}
         </div>
+        {game.discover && game.alternativePlatformIds.length > 0 && (
+          <div className="wish-platform-summary">
+            <p>
+              <strong>{game.platform.shortName} en priorité</strong>
+              {' · '}Autres possibilités :{' '}
+              {platforms
+                .filter((p) => game.alternativePlatformIds.includes(p.id))
+                .map((p) => p.shortName)
+                .join(', ')}
+            </p>
+            {!compact && (
+              <>
+                <p>Parties et possessions de cette fiche : {game.platform.shortName}.</p>
+                <button
+                  type="button"
+                  className="text-link"
+                  disabled={busy || editingMemory}
+                  onClick={onEdit}
+                >
+                  Modifier les plateformes
+                </button>
+              </>
+            )}
+            {!compact &&
+              hasVersionHistory(game) &&
+              !busy &&
+              !editingMemory &&
+              platforms
+                .filter((p) => game.alternativePlatformIds.includes(p.id))
+                .map((p) => (
+                  <Link
+                    key={p.id}
+                    className="text-link"
+                    to="/games/new"
+                    search={{ platform: p.id, fromWish: game.id }}
+                  >
+                    Créer une fiche pour cette version : {p.shortName}
+                  </Link>
+                ))}
+          </div>
+        )}
         {compact ? (
           <QuickExperience
             game={game}

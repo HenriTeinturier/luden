@@ -1,7 +1,9 @@
-type GameActivity = { id: string; platformId: string; updatedAt: string }
+import { gamePlatformIds, type PlatformMembership } from './wish-platforms'
+
+type GameActivity = PlatformMembership & { id: string; updatedAt: string }
 type Universe = { id: string; name: string }
 export type UniverseActivity = {
-  games: Record<string, string>
+  games: Record<string, string | string[]>
   changed: Record<string, number>
 }
 
@@ -11,12 +13,14 @@ export function updateUniverseActivity(
   now: number,
 ): UniverseActivity {
   const changed = { ...previous?.changed }
-  const current = Object.fromEntries(games.map((game) => [game.id, game.platformId]))
+  const current = Object.fromEntries(games.map((game) => [game.id, gamePlatformIds(game)]))
   for (const game of games) {
-    changed[game.platformId] = Math.max(changed[game.platformId] ?? 0, Date.parse(game.updatedAt))
+    for (const id of gamePlatformIds(game))
+      changed[id] = Math.max(changed[id] ?? 0, Date.parse(game.updatedAt))
   }
-  for (const [id, platformId] of Object.entries(previous?.games ?? {})) {
-    if (current[id] !== platformId) changed[platformId] = now
+  for (const [id, platformIds] of Object.entries(previous?.games ?? {})) {
+    for (const platformId of typeof platformIds === 'string' ? [platformIds] : platformIds)
+      if (!current[id]?.includes(platformId)) changed[platformId] = now
   }
   return { games: current, changed }
 }
@@ -29,8 +33,10 @@ export function universeShortcuts<T extends Universe>(
   const counts = new Map<string, number>()
   const activity = { ...changed }
   for (const game of games) {
-    counts.set(game.platformId, (counts.get(game.platformId) ?? 0) + 1)
-    activity[game.platformId] = Math.max(activity[game.platformId] ?? 0, Date.parse(game.updatedAt))
+    for (const id of gamePlatformIds(game)) {
+      counts.set(id, (counts.get(id) ?? 0) + 1)
+      activity[id] = Math.max(activity[id] ?? 0, Date.parse(game.updatedAt))
+    }
   }
   const byName = (a: T, b: T) => a.name.localeCompare(b.name, 'fr')
   const largest = platforms

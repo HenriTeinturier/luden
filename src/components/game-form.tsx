@@ -13,12 +13,14 @@ import type { Game } from '../lib/types'
 import { deleteGameFn, saveGameFn, searchIgdbFn } from '../server/functions'
 import { Confirm, PageHeading, useLibrary } from './ui'
 import { metadataPlatformId } from '../lib/personal-platforms'
+import { alternativePlatforms } from '../lib/wish-platforms'
 
 type SearchResult = Extract<Awaited<ReturnType<typeof searchIgdbFn>>, { ok: true }>['data'][number]
 
 export function GameForm({
   game,
   initialPlatformId,
+  initialWish,
   onSaved,
   onDeleted,
   onCancel,
@@ -26,6 +28,7 @@ export function GameForm({
 }: {
   game?: Game
   initialPlatformId?: string
+  initialWish?: Game
   onSaved?: () => void
   onDeleted?: () => void
   onCancel?: () => void
@@ -33,54 +36,56 @@ export function GameForm({
 }) {
   const library = useLibrary()
   const notify = useNotification()
-  const [data, setData] = useState<GameInput>(() =>
-    game
+  const [data, setData] = useState<GameInput>(() => {
+    const source = game ?? initialWish
+    const gameData: GameInput = source
       ? {
-          id: game.id,
-          title: game.title,
-          platformId: game.platformId,
-          machineId: game.machineId,
-          categoryId: game.categoryId,
-          releaseYear: game.releaseYear,
-          developer: game.developer,
-          publisher: game.publisher,
-          genres: game.genres,
-          summary: game.summary,
-          igdbId: game.igdbId,
-          coverId: game.coverId,
-          presentation: readPresentation(game.presentation),
-          media: game.media.map(({ mediaId, category, position, caption, isPrimary }) => ({
+          id: source.id,
+          title: source.title,
+          platformId: source.platformId,
+          alternativePlatformIds: source.alternativePlatformIds,
+          machineId: source.machineId,
+          categoryId: source.categoryId,
+          releaseYear: source.releaseYear,
+          developer: source.developer,
+          publisher: source.publisher,
+          genres: source.genres,
+          summary: source.summary,
+          igdbId: source.igdbId,
+          coverId: source.coverId,
+          presentation: readPresentation(source.presentation),
+          media: source.media.map(({ mediaId, category, position, caption, isPrimary }) => ({
             mediaId,
             category,
             position,
             caption,
             isPrimary,
           })),
-          links: game.links.map(({ url, title, type, position }) => ({
+          links: source.links.map(({ url, title, type, position }) => ({
             url,
             title,
             type,
             position,
           })),
-          discover: game.discover,
-          souvenir: game.souvenir,
-          desire: game.desire,
-          favorite: game.favorite,
-          experience: game.experience
+          discover: source.discover,
+          souvenir: source.souvenir,
+          desire: source.desire,
+          favorite: source.favorite,
+          experience: source.experience
             ? {
-                status: game.experience.status,
-                rating: game.experience.rating,
-                memory: game.experience.memory,
-                period: game.experience.period,
+                status: source.experience.status,
+                rating: source.experience.rating,
+                memory: source.experience.memory,
+                period: source.experience.period,
               }
             : { ...emptyGame.experience },
-          possessions: game.possessions.map((p) => ({
+          possessions: source.possessions.map((p) => ({
             id: p.id,
             format: p.format,
             state: p.state,
             store: p.store,
           })),
-          collectionIds: game.entries.map((e) => e.collectionId),
+          collectionIds: source.entries.map((e) => e.collectionId),
         }
       : {
           ...structuredClone(emptyGame),
@@ -88,8 +93,25 @@ export function GameForm({
             ? initialPlatformId!
             : '',
           experience: { ...emptyGame.experience, status: 'PLAYED' },
-        },
-  )
+        }
+    if (!initialWish) return gameData
+    return {
+      ...gameData,
+      id: undefined,
+      wishSourceId: initialWish.id,
+      platformId: initialPlatformId!,
+      alternativePlatformIds: alternativePlatforms(initialPlatformId!, [
+        initialWish.platformId,
+        ...initialWish.alternativePlatformIds,
+      ]),
+      machineId: null,
+      experience: { ...emptyGame.experience },
+      possessions: [],
+      collectionIds: [],
+      souvenir: false,
+      favorite: false,
+    }
+  })
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
   const [uploading, setUploading] = useState(false)
@@ -108,7 +130,8 @@ export function GameForm({
   useEffect(() => {
     if (error) errorRef.current?.focus()
   }, [error])
-  const [query, setQuery] = useState('')
+  const [query, setQuery] = useState(game?.title ?? initialWish?.title ?? '')
+  const [searchPlatformId, setSearchPlatformId] = useState(data.platformId)
   const [searching, setSearching] = useState(false)
   const [results, setResults] = useState<SearchResult[] | null>(null)
   const [searchError, setSearchError] = useState('')
@@ -118,6 +141,17 @@ export function GameForm({
   const change = <K extends keyof GameInput>(key: K, value: GameInput[K]) =>
     setData((d) => {
       const next = { ...d, [key]: value }
+      if (key === 'platformId') {
+        const platformId = value as string
+        const alternatives = d.alternativePlatformIds ?? []
+        next.alternativePlatformIds = alternativePlatforms(
+          platformId,
+          alternatives.includes(platformId) && d.platformId
+            ? [...alternatives, d.platformId]
+            : alternatives,
+        )
+        next.machineId = null
+      }
       if (key === 'media') {
         next.coverId =
           (value as NonNullable<GameInput['media']>).find((m) => m.isPrimary)?.mediaId ?? null
@@ -148,7 +182,7 @@ export function GameForm({
     setSearchError('')
     try {
       const result = await searchIgdbFn({
-        data: { query, platformId: data.platformId || undefined },
+        data: { query, platformId: searchPlatformId || undefined },
       })
       if (result.ok) setResults(result.data)
       else setSearchError(result.error)
@@ -162,8 +196,12 @@ export function GameForm({
     setSelectedResult(result)
     setData((d) => ({
       ...d,
-      platformId: result.suggestedPlatformId ?? '',
-      machineId: result.suggestedPlatformId === 'pc' ? d.machineId : null,
+      platformId: d.platformId || result.suggestedPlatformId || '',
+      alternativePlatformIds: alternativePlatforms(
+        d.platformId || result.suggestedPlatformId || '',
+        d.alternativePlatformIds,
+      ),
+      machineId: (d.platformId || result.suggestedPlatformId) === 'pc' ? d.machineId : null,
       title: result.title,
       summary: result.summary,
       releaseYear: result.releaseYear,
@@ -260,102 +298,108 @@ export function GameForm({
         title={game ? 'Un souvenir à préciser.' : 'Quel jeu vous accompagne ?'}
         description="Un titre et une plateforme suffisent. Le reste peut attendre."
       />
-      {!game && (
-        <section className="import-panel">
-          <div>
-            <Sparkles size={19} />
-            <strong>Un coup de pouce pour commencer</strong>
-            <span>Rechercher une fiche sur IGDB</span>
+      <section className="import-panel">
+        <div>
+          <Sparkles size={19} />
+          <strong>Compléter les informations du jeu</strong>
+          <span>Rechercher une fiche sur IGDB</span>
+        </div>
+        <div className="import-search">
+          <select
+            aria-label="Plateforme pour la recherche"
+            value={searchPlatformId}
+            onChange={(e) => {
+              setSearchPlatformId(e.target.value)
+              setResults(null)
+              setSelectedResult(null)
+            }}
+          >
+            <option value="">Toutes les plateformes</option>
+            {library.platforms.map((p) => (
+              <option key={p.id} value={p.id}>
+                {p.name}
+              </option>
+            ))}
+          </select>
+          <input
+            aria-label="Titre à rechercher sur IGDB"
+            placeholder="Zelda, Monkey Island, Half-Life…"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault()
+                void search()
+              }
+            }}
+          />
+          <button
+            className="button secondary"
+            type="button"
+            disabled={searching || query.trim().length < 2 || !library.config.igdbConfigured}
+            onClick={() => void search()}
+          >
+            {searching ? <LoaderCircle size={17} className="spin" /> : <Search size={17} />}
+            Rechercher
+          </button>
+        </div>
+        <p className="field-hint">
+          La recherche est indépendante de la plateforme de votre fiche. Vous pouvez chercher les
+          informations d’une autre version sans changer votre plateforme préférée.
+        </p>
+        {!library.config.igdbConfigured && (
+          <p className="field-hint">
+            IGDB n’est pas configuré. L’ajout manuel ci-dessous est prêt à l’emploi.{' '}
+            <Link to="/settings">Voir les paramètres</Link>
+          </p>
+        )}
+        {searchError && (
+          <p className="form-error" role="alert">
+            {searchError}
+          </p>
+        )}
+        {results && (
+          <div className="igdb-results">
+            {results.length ? (
+              results.map((r) => (
+                <button key={r.igdbId} onClick={() => select(r)}>
+                  {r.coverUrl ? (
+                    <img src={r.coverUrl} alt="" referrerPolicy="no-referrer" />
+                  ) : (
+                    <ImagePlus size={22} />
+                  )}
+                  <span>
+                    <strong>{r.title}</strong>
+                    <small>
+                      {r.releaseDate ?? r.releaseYear ?? 'Date inconnue'} ·{' '}
+                      {r.platforms.map((p) => p.name).join(', ')}
+                    </small>
+                  </span>
+                  <Plus size={17} />
+                </button>
+              ))
+            ) : (
+              <p>Aucun résultat. Essayez le titre original, ou complétez la fiche manuellement.</p>
+            )}
           </div>
-          <div className="import-search">
-            <select
-              aria-label="Plateforme pour la recherche"
-              value={data.platformId}
-              onChange={(e) => {
-                change('platformId', e.target.value)
-                change('machineId', null)
-                setResults(null)
-                setSelectedResult(null)
-              }}
-            >
-              <option value="">Toutes les plateformes</option>
-              {library.platforms.map((p) => (
-                <option key={p.id} value={p.id}>
-                  {p.name}
-                </option>
-              ))}
-            </select>
-            <input
-              aria-label="Titre à rechercher sur IGDB"
-              placeholder="Zelda, Monkey Island, Half-Life…"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  e.preventDefault()
-                  void search()
-                }
-              }}
-            />
-            <button
-              className="button secondary"
-              type="button"
-              disabled={searching || query.trim().length < 2 || !library.config.igdbConfigured}
-              onClick={() => void search()}
-            >
-              {searching ? <LoaderCircle size={17} className="spin" /> : <Search size={17} />}
-              Rechercher
-            </button>
-          </div>
-          {!library.config.igdbConfigured && (
-            <p className="field-hint">
-              IGDB n’est pas configuré. L’ajout manuel ci-dessous est prêt à l’emploi.{' '}
-              <Link to="/settings">Voir les paramètres</Link>
-            </p>
-          )}
-          {searchError && (
-            <p className="form-error" role="alert">
-              {searchError}
-            </p>
-          )}
-          {results && (
-            <div className="igdb-results">
-              {results.length ? (
-                results.map((r) => (
-                  <button key={r.igdbId} onClick={() => select(r)}>
-                    {r.coverUrl ? (
-                      <img src={r.coverUrl} alt="" referrerPolicy="no-referrer" />
-                    ) : (
-                      <ImagePlus size={22} />
-                    )}
-                    <span>
-                      <strong>{r.title}</strong>
-                      <small>
-                        {r.releaseDate ?? r.releaseYear ?? 'Date inconnue'} ·{' '}
-                        {r.platforms.map((p) => p.name).join(', ')}
-                      </small>
-                    </span>
-                    <Plus size={17} />
-                  </button>
-                ))
-              ) : (
-                <p>
-                  Aucun résultat. Essayez le titre original, ou complétez la fiche manuellement.
-                </p>
-              )}
-            </div>
-          )}
-          {selectedResult && (
-            <p className="success-note">
-              <Check size={15} /> Fiche préremplie. Vérifiez les informations de cette version avant
-              d’enregistrer.
-            </p>
-          )}
-        </section>
-      )}
+        )}
+        {selectedResult && (
+          <p className="success-note">
+            <Check size={15} /> Fiche préremplie. Vérifiez les informations de cette version avant
+            d’enregistrer.
+          </p>
+        )}
+      </section>
       <form id={formId} onSubmit={save} className="game-form">
         <div className="form-main">
-          <IdentityFields data={data} change={change} />
+          {initialWish && (
+            <p className="success-note">
+              Nouvelle version préremplie : vérifiez les informations et la boîte. À
+              l’enregistrement, l’envie sera déplacée ici ; votre histoire sur{' '}
+              {initialWish.platform.shortName} restera dans sa fiche.
+            </p>
+          )}
+          <IdentityFields data={data} change={change} existingGame={game} />
           <ExperienceFields data={data} change={change} experience={experience} />
           <PossessionFields data={data} change={change} />
           <MediaFields data={data} change={change} onBusyChange={setUploading} />
@@ -379,6 +423,9 @@ export function GameForm({
             </div>
             <p className="field-hint">
               Choisissez votre image principale avec l’étoile dans « Médias & liens ».
+              {data.discover &&
+                Boolean(data.alternativePlatformIds?.length) &&
+                ' Cette image sera aussi utilisée dans les univers secondaires.'}
             </p>
           </section>
           <section className="desire-panel">

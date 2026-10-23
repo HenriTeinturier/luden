@@ -1,3 +1,4 @@
+import { belongsToPlatform } from '../lib/wish-platforms'
 import { useState } from 'react'
 import {
   Search,
@@ -143,7 +144,7 @@ export function GalleryToolbar({
             >
               <option value="">Toutes les plateformes</option>
               {library.platforms
-                .filter((p) => games.some((g) => g.platformId === p.id))
+                .filter((p) => games.some((g) => belongsToPlatform(g, p.id)))
                 .map((p) => (
                   <option key={p.id} value={p.id}>
                     {p.name}

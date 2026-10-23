@@ -1,5 +1,14 @@
 # État courant
 
+## Envies sur plusieurs plateformes — 2026-10-23
+
+- Une plateforme préférée et des alternatives facultatives à cocher dans le formulaire. Une seule fiche et une seule note d’envie dans les vues générales ; présence dans chaque univers envisagé tant que le jeu est dans les envies.
+- Compteurs, filtres de plateformes, accueil, menus et navigation intègrent ces alternatives. Parties, possessions, notes, souvenirs et Megastar restent propres à la plateforme de la fiche. Boîte principale entière réutilisée dans les univers secondaires, avec une indication discrète.
+- Retirer des envies masque les alternatives sans effacer les choix. Une envie sans historique peut changer de plateforme préférée ; une fiche avec historique propose la création d’une autre version préremplie. L’envie est transférée à l’enregistrement, sans déplacer les anciens souvenirs ni possessions ; annulation et échec ne changent rien.
+- Recherche IGDB disponible en ajout, modification et création d’une autre version. Son filtre de plateforme est indépendant de la fiche : rechercher les informations PS5 pour une fiche PC conserve le choix PC.
+- Sidebar : seulement « PS5 en priorité · Autres possibilités : PC », sans encadré ni actions supplémentaires. Les explications et le parcours vers une autre version restent dans le formulaire et la fiche complète.
+- Migration additive `20261023120000_wish_platforms` appliquée après sauvegarde vérifiée dans `.local/backups/`. Export JSON v10. TypeScript, lint, 45 tests ciblés et compilation validés. Parcours serveur et navigateur vérifiés (IGDB indépendant, modification, visibilité dans les deux univers), fiches temporaires nettoyées ; validation visuelle finale par Henri.
+
 ## Couleur commune des flammes — 2026-10-23
 
 - Le composant commun des notes applique directement le style rose des envies (`#ffacd2`), sans dépendre d’un conteneur parent. Corrige les flammes jaunes des cartes d’univers, dont PS5, dans les deux thèmes et pour toutes les plateformes.

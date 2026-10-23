@@ -1,3 +1,4 @@
+import { belongsToPlatform } from '../lib/wish-platforms'
 import { Link, useLocation, useNavigate } from '@tanstack/react-router'
 import {
   BookOpen,
@@ -63,7 +64,8 @@ export function Shell({ children, library }: { children: ReactNode; library: Lib
     library?.platforms
       .filter(
         (p) =>
-          !p.customization.hiddenFromPlatforms && library.games.some((g) => g.platformId === p.id),
+          !p.customization.hiddenFromPlatforms &&
+          library.games.some((g) => belongsToPlatform(g, p.id)),
       )
       .map((p) => ({
         ...p,

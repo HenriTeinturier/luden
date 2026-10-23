@@ -1,3 +1,4 @@
+import { belongsToPlatform } from '../lib/wish-platforms'
 import { useEffect, useRef, useState } from 'react'
 import { Link, useRouter } from '@tanstack/react-router'
 import { ArrowLeft, ArrowRight, ArrowUp, ArrowDown, ImagePlus, Check, Trash2 } from 'lucide-react'
@@ -607,7 +608,7 @@ export function PlatformVisualForm({
                 <div className="platforms-index">
                   <PlatformCard
                     platform={draftPlatform}
-                    count={games.filter((g) => g.platformId === platform.id).length}
+                    count={games.filter((g) => belongsToPlatform(g, platform.id)).length}
                     visuals={orderedItems}
                     preview
                   />

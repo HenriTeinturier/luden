@@ -9,11 +9,12 @@ Excel/Figma sont des inspirations, jamais un cahier des charges à reproduire.
 - Fiche indépendante par jeu ET plateforme ; jaquette et métadonnées propres.
 - Une expérience synthétique par fiche : statut, note /10 par demi-point, souvenir, période libre.
 - À découvrir/rejouer et envie /5 indépendants du fait d'avoir joué ou possédé.
+- Une envie peut avoir une plateforme préférée et des alternatives : une seule fiche dans les vues générales, visible dans chaque univers envisagé. Parties et possessions restent propres à leur version.
 - Possessions actuelles/anciennes physiques ou digitales, boutique facultative.
 - Collection réelle : sélection volontaire de possessions actuelles OU anciennes.
 - Collection rêvée : vitrine virtuelle, pas une liste d'achats.
 - Galeries par plateforme, plateformes personnelles (PC d’époque, ordinateur ou console absent du catalogue), recherche/filtres/vue compacte.
-- Ajout manuel et recherche IGDB facultative ; médias locaux et export JSON.
+- Ajout manuel et recherche IGDB facultative, également disponible en modification et indépendante de la plateforme choisie ; médias locaux et export JSON.
 - Reconstruction manuelle : aucun import Excel.
 
 ## Plus tard

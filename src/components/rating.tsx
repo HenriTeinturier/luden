@@ -122,7 +122,7 @@ export function Stars({
   if (value == null && !showEmpty) return <span className="unrated">Pas encore noté</span>
   return (
     <span
-      className="stars"
+      className={`stars${kind === 'desire' ? ' desire-rating' : ''}`}
       role="img"
       aria-label={
         value == null

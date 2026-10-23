@@ -2314,6 +2314,7 @@ kbd {
 }
 
 /* Desire is a future intention, visually distinct from the yellow experience rating. */
+.stars.desire-rating,
 .desire-rating .stars,
 .desire-rating .star > span {
   color: #ffacd2;

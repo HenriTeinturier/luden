@@ -1,5 +1,10 @@
 # État courant
 
+## Couleur commune des flammes — 2026-10-23
+
+- Le composant commun des notes applique directement le style rose des envies (`#ffacd2`), sans dépendre d’un conteneur parent. Corrige les flammes jaunes des cartes d’univers, dont PS5, dans les deux thèmes et pour toutes les plateformes.
+- Contours vides mauves et demi-flammes conservés ; étoiles de note toujours jaunes. TypeScript et lint ciblé vérifiés.
+
 ## Cartes des univers allégées — 2026-10-23
 
 - Classique : titre sur une ligne avec ellipse et étoiles sans valeur numérique, pour toutes les plateformes, y compris Wii, PS3 et les plateformes sans présentation dédiée. Plateforme, année, statut et commentaire retirés des cartes.

@@ -143,6 +143,10 @@ Megastar reste visible en haut à gauche. La vue compacte reprend le même habil
 
 ## Modèles de présentation des jeux
 
+Dans l’univers PS3, la présentation d’origine suit la hauteur naturelle des images afin
+d’éviter les bandes vides au-dessus et en dessous des boîtes. Les images restent entières,
+sans déformation ; le ratio 0,8 sert de repli sans image. Les modèles personnalisés restent prioritaires.
+
 Étape 1 de la refonte des plateformes : modèles communs dans `src/lib/presentation.ts`,
 affectés aux plateformes existantes en conservant les réglages validés. Grande boîte ordinateur,
 boîte verticale (dont 3:4), boîte horizontale (dont grande cartouche), boîtier vertical/cartouche,

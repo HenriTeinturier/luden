@@ -18,6 +18,7 @@ test('catalogue cover formats stay compatible, including unstyled platforms', ()
     n64: '1.42',
     gba: '1.42',
     ps1: '1',
+    ps3: '0.8',
     dreamcast: '1',
     ds: '1',
     gameboy: '0.8',

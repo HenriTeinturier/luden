@@ -275,6 +275,7 @@ const platformChoices = {
   ps1: { preset: 'jewel-case' },
   dreamcast: { preset: 'wide-jewel-case' },
   ps2: { preset: 'dvd-case' },
+  ps3: { preset: 'standard', gallery: { ratio: '0.8', naturalImageHeight: true } },
   gamecube: { preset: 'mini-disc' },
   xbox: { preset: 'dvd-case', scene: { marginBottom: 210, objectsBottom: -190 } },
   switch: { preset: 'slim-case', gallery: { appearance: 'legacy', showEmptyStars: false } },

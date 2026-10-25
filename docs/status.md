@@ -1,5 +1,10 @@
 # État courant
 
+## Dimensions des vignettes PS3 — 2026-10-25
+
+- Dans l’univers PS3, le cadre suit la hauteur naturelle des images pour supprimer les bandes vides au-dessus et en dessous des boîtes. Images entières, sans recadrage ; ratio 0,8 en repli sans image. Les présentations personnalisées restent prioritaires.
+- TypeScript, lint ciblé et tests de présentation vérifiés ; validation visuelle finale par Henri.
+
 ## Envies sur plusieurs plateformes — 2026-10-23
 
 - Une plateforme préférée et des alternatives facultatives à cocher dans le formulaire. Une seule fiche et une seule note d’envie dans les vues générales ; présence dans chaque univers envisagé tant que le jeu est dans les envies.

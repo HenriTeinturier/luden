@@ -8,6 +8,9 @@ Les cartes Classique de tous les univers affichent uniquement le titre sur une l
 (ellipse, titre complet au survol) et les étoiles sans chiffre. En Vitrine, les étoiles
 et l’année sont regroupées dans un encart au-dessus du titre sur une ligne. Aucun statut
 de jeu ni commentaire sur ces cartes ; les flammes éditables et badges Megastar restent disponibles.
+Dans les deux thèmes, le marque-page turquoise « Souvenir » remplace la note pour un jeu
+non joué marqué Souvenir et hors envies, comme dans Ma bibliothèque. Cette règle commune
+ne dépend d’aucun profil de plateforme et couvre aussi les plateformes personnelles ou futures.
 
 Mes envies reprend la ligne légère de Ma bibliothèque, sans titre répété : recherche locale
 instantanée, plateformes, tri et Présentation. Le tri par envie décroissante est le défaut,

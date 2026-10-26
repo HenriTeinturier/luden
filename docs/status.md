@@ -1,5 +1,11 @@
 # État courant
 
+## Indicateur Souvenir dans les univers — 2026-10-26
+
+- Le rendu partagé des cartes d’univers avait omis le cas Souvenir et affichait une note vide. Le marque-page turquoise « Souvenir » est rétabli en Classique et Vitrine, selon la même règle que la bibliothèque : non joué, marqué Souvenir et hors envies.
+- Correction indépendante des profils, pour toutes les plateformes actuelles, personnelles et futures. Les envies sur une plateforme alternative conservent leurs flammes sans reprendre l’historique de la version principale.
+- TypeScript, lint ciblé et tests des indicateurs/alternatives vérifiés ; validation visuelle finale par Henri.
+
 ## Dimensions des vignettes PS3 — 2026-10-25
 
 - Dans l’univers PS3, le cadre suit la hauteur naturelle des images pour supprimer les bandes vides au-dessus et en dessous des boîtes. Images entières, sans recadrage ; ratio 0,8 en repli sans image. Les présentations personnalisées restent prioritaires.

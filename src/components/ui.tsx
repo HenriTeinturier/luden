@@ -377,13 +377,18 @@ export function GameCard({
             </span>
           )}
           <div className="universe-card-caption">
-            {!showDesire && (
-              <Stars
-                value={ratingKind === 'desire' ? game.desire : rating}
-                kind={ratingKind === 'desire' ? 'desire' : undefined}
-                showEmpty={platformPresentation(game.platform).gallery.showEmptyStars}
-              />
-            )}
+            {!showDesire &&
+              (ratingKind === 'souvenir' ? (
+                <span className="game-card-souvenir">
+                  <Bookmark size={18} aria-hidden="true" /> Souvenir
+                </span>
+              ) : (
+                <Stars
+                  value={ratingKind === 'desire' ? game.desire : rating}
+                  kind={ratingKind === 'desire' ? 'desire' : undefined}
+                  showEmpty={platformPresentation(game.platform).gallery.showEmptyStars}
+                />
+              ))}
             {theme === '2' && game.releaseYear ? (
               <span className="universe-card-year">{game.releaseYear}</span>
             ) : null}

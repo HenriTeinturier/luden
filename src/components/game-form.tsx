@@ -401,7 +401,11 @@ export function GameForm({
           </div>
         )}
         {results && (results.length > 0 || searchPage > 1) && (
-          <nav className="igdb-pagination" aria-label="Pages des résultats IGDB">
+          <nav
+            className="igdb-pagination"
+            aria-label="Pages des résultats IGDB"
+            aria-busy={searching}
+          >
             <button
               type="button"
               className="button secondary"
@@ -410,7 +414,11 @@ export function GameForm({
             >
               Précédente
             </button>
-            <span role="status">Page {searchPage}</span>
+            <span role="status">
+              {searching
+                ? 'Chargement…'
+                : `Page ${searchPage}${hasNextPage ? '' : ' · Fin des résultats'}`}
+            </span>
             <button
               type="button"
               className="button secondary"
@@ -420,6 +428,12 @@ export function GameForm({
               Suivante
             </button>
           </nav>
+        )}
+        {results && results.length > 0 && !hasNextPage && !searching && searchPlatformId && (
+          <p className="field-hint">
+            Aucun autre résultat pour cette plateforme. Pour élargir la recherche, choisissez «
+            Toutes les plateformes » : la plateforme de votre fiche sera conservée.
+          </p>
         )}
         {selectedResult && (
           <p className="success-note">

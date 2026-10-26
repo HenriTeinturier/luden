@@ -4,6 +4,8 @@ La recherche IGDB des formulaires propose huit résultats par page et une naviga
 Précédente / Page N / Suivante sous les résultats. Les boutons respectent les limites
 des résultats et sont désactivés pendant le chargement. Modifier le titre ou le filtre
 de plateforme efface les résultats précédents ; la prochaine recherche repart en page 1.
+La dernière page indique « Fin des résultats » ; avec un filtre actif, un texte invite
+à rechercher sur toutes les plateformes. Le curseur d’attente est réservé au chargement.
 
 Les univers reprennent les six compteurs de sélection de la bibliothèque, calculés sur leur
 plateforme, puis la recherche locale, le tri et Présentation. Aucun sélecteur de plateforme

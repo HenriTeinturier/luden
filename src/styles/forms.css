@@ -51,6 +51,14 @@
   margin-top: 16px;
 }
 
+.igdb-pagination button:disabled {
+  cursor: not-allowed;
+}
+
+.igdb-pagination[aria-busy='true'] button:disabled {
+  cursor: wait;
+}
+
 .igdb-results {
   display: grid;
   grid-template-columns: 1fr 1fr;

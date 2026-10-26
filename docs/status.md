@@ -1,5 +1,11 @@
 # État courant
 
+## Fin des résultats IGDB explicite — 2026-10-26
+
+- Les boutons de pagination désactivés n’affichent plus un curseur d’attente hors chargement. La dernière page indique « Fin des résultats » et propose d’élargir le filtre de plateforme.
+- Vérification réelle : « the last of us » sur PS4 renvoie huit fiches, puis une page vide. Le bouton Suivante était donc correctement désactivé, mais son curseur prêtait à confusion.
+- TypeScript et lint ciblé vérifiés ; rendu final à valider par Henri.
+
 ## Pagination de la recherche IGDB — 2026-10-26
 
 - Recherche du formulaire d’ajout/modification : huit résultats par page, commandes Précédente/Suivante et numéro de page. Le titre et le filtre restent identiques entre pages ; une nouvelle recherche repart en page 1.

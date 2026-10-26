@@ -397,7 +397,7 @@
   pointer-events: none;
 }
 .game-card-entry:hover > .game-card-edit,
-.game-card-entry:focus-within > .game-card-edit {
+.game-card-entry:has(:focus-visible) > .game-card-edit {
   opacity: 1;
   pointer-events: auto;
 }

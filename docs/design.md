@@ -390,7 +390,9 @@ Gauche/droite parcourent l’ordre visible au moment de l’ouverture, regroupem
 droite sur le dernier revient au premier, gauche sur le premier rejoint le dernier. Même comportement
 dans la galerie sans jeu ouvert, la sidebar et la fiche complète (y compris les URLs directes).
 Les boutons précédent/suivant restent disponibles aux extrémités ; désactivés avec un seul jeu.
-À l’arrivée dans une plateforme, le focus rejoint la première jaquette sans ouvrir de fiche.
+À l’arrivée dans une plateforme, la première jaquette sert de point de départ aux flèches,
+sans recevoir automatiquement le focus. Le crayon d’édition apparaît au survol de la carte
+ou au focus clavier visible, et reste accessible sur écran tactile.
 Tant qu’aucun jeu n’est ouvert (accueil de plateforme visible ou sidebar masquée), les quatre
 flèches déplacent uniquement le focus entre les jaquettes visibles :
 reprise depuis le dernier jeu consulté, ou premier résultat si ce jeu n’est plus affiché. Entrée

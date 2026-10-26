@@ -1,5 +1,11 @@
 # État courant
 
+## Crayon à l’arrivée dans un univers — 2026-10-26
+
+- Suppression du focus automatique sur la première jaquette, qui rendait son crayon visible sans survol. Le point de départ de la navigation par flèches est conservé.
+- Le crayon commun apparaît au survol ou au focus clavier visible, plutôt que pour tout focus. Accès tactile conservé.
+- TypeScript, lint ciblé et tests de navigation vérifiés ; validation visuelle finale par Henri.
+
 ## Indicateur Souvenir dans les univers — 2026-10-26
 
 - Le rendu partagé des cartes d’univers avait omis le cas Souvenir et affichait une note vide. Le marque-page turquoise « Souvenir » est rétabli en Classique et Vitrine, selon la même règle que la bibliothèque : non joué, marqué Souvenir et hors envies.

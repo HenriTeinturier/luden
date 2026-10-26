@@ -112,7 +112,6 @@ export function Gallery({
       if (!first?.dataset.gameId) return
       focusedPlatform.current = pathname
       lastGame.current = { pathname, id: first.dataset.gameId }
-      first.focus({ preventScroll: true })
     })
     return () => cancelAnimationFrame(frame)
   }, [platformLocked, browseGames, pathname, visible.length])

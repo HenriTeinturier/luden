@@ -1,5 +1,11 @@
 # État courant
 
+## Pagination de la recherche IGDB — 2026-10-26
+
+- Recherche du formulaire d’ajout/modification : huit résultats par page, commandes Précédente/Suivante et numéro de page. Le titre et le filtre restent identiques entre pages ; une nouvelle recherche repart en page 1.
+- La présence d’un résultat supplémentaire détermine si la page suivante existe. Commandes désactivées pendant le chargement ; une erreur conserve la page affichée.
+- TypeScript, lint ciblé et test de pagination avec IGDB simulé vérifiés ; validation visuelle finale par Henri.
+
 ## Crayon à l’arrivée dans un univers — 2026-10-26
 
 - Suppression du focus automatique sur la première jaquette, qui rendait son crayon visible sans survol. Le point de départ de la navigation par flèches est conservé.

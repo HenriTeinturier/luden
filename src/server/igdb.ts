@@ -63,7 +63,8 @@ async function request<T>(endpoint: string, body: string): Promise<T> {
   return response.json() as Promise<T>
 }
 
-export async function searchGames(query: string, platformId?: string) {
+export async function searchGames(query: string, platformId?: string, page = 1) {
+  const pageSize = 8
   const platform = platformId
     ? await db.platform.findFirstOrThrow({
         where: { id: platformId, isDraft: false, ...accessiblePlatforms },
@@ -74,13 +75,13 @@ export async function searchGames(query: string, platformId?: string) {
   const safeQuery = query.replace(/["\\\r\n]/g, ' ').trim()
   const games = await request<IgdbGame[]>(
     'games',
-    `search "${safeQuery}"; fields name,summary,first_release_date,cover.image_id,platforms.name,genres.name,involved_companies.company.name,involved_companies.developer,involved_companies.publisher,release_dates.platform,release_dates.y,release_dates.human,release_dates.date; ${igdbPlatformId ? `where platforms = (${igdbPlatformId});` : ''} limit 12;`,
+    `search "${safeQuery}"; fields name,summary,first_release_date,cover.image_id,platforms.name,genres.name,involved_companies.company.name,involved_companies.developer,involved_companies.publisher,release_dates.platform,release_dates.y,release_dates.human,release_dates.date; ${igdbPlatformId ? `where platforms = (${igdbPlatformId});` : ''} limit ${pageSize + 1}; offset ${(page - 1) * pageSize};`,
   )
   const platforms = await db.platform.findMany({
     where: { ownerId: null, isDraft: false },
     select: { id: true, igdbId: true },
   })
-  return games.map((game) => {
+  const results = games.slice(0, pageSize).map((game) => {
     const dates = (game.release_dates ?? [])
       .filter((d) => !platform || d.platform === igdbPlatformId)
       .sort((a, b) => (a.date ?? Infinity) - (b.date ?? Infinity))
@@ -116,6 +117,7 @@ export async function searchGames(query: string, platformId?: string) {
         : null,
     }
   })
+  return { results, page, hasNextPage: games.length > pageSize }
 }
 
 export async function gameImages(id: number) {

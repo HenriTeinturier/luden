@@ -42,6 +42,15 @@
 .import-panel .field-hint {
   margin: 12px 0 0;
 }
+.igdb-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
 .igdb-results {
   display: grid;
   grid-template-columns: 1fr 1fr;

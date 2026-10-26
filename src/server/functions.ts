@@ -124,12 +124,16 @@ export const saveProfileFn = createServerFn({ method: 'POST' })
   })
 export const searchIgdbFn = createServerFn({ method: 'POST' })
   .validator(
-    z.object({ query: z.string().trim().min(2).max(120), platformId: z.string().optional() }),
+    z.object({
+      query: z.string().trim().min(2).max(120),
+      platformId: z.string().optional(),
+      page: z.number().int().min(1).max(1000000).default(1),
+    }),
   )
   .handler(async ({ data }) => {
     const { mutation } = await import('./request')
     const { searchGames } = await import('./igdb')
-    return mutation(() => searchGames(data.query, data.platformId))
+    return mutation(() => searchGames(data.query, data.platformId, data.page))
   })
 export const importIgdbCoverFn = createServerFn({ method: 'POST' })
   .validator(z.number().int().positive())

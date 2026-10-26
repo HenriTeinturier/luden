@@ -136,7 +136,9 @@ try {
       },
     ])
   }
-  const [result] = await searchGames('Fixture', platformId)
+  const {
+    results: [result],
+  } = await searchGames('Fixture', platformId)
   assert.ok(bodies[0].includes('where platforms = (6);'))
   assert.equal(result.suggestedPlatformId, platformId)
   assert.equal(result.releaseYear, 1998)

@@ -15,7 +15,10 @@ import { Confirm, PageHeading, useLibrary } from './ui'
 import { metadataPlatformId } from '../lib/personal-platforms'
 import { alternativePlatforms } from '../lib/wish-platforms'
 
-type SearchResult = Extract<Awaited<ReturnType<typeof searchIgdbFn>>, { ok: true }>['data'][number]
+type SearchResult = Extract<
+  Awaited<ReturnType<typeof searchIgdbFn>>,
+  { ok: true }
+>['data']['results'][number]
 
 export function GameForm({
   game,
@@ -134,6 +137,8 @@ export function GameForm({
   const [searchPlatformId, setSearchPlatformId] = useState(data.platformId)
   const [searching, setSearching] = useState(false)
   const [results, setResults] = useState<SearchResult[] | null>(null)
+  const [searchPage, setSearchPage] = useState(1)
+  const [hasNextPage, setHasNextPage] = useState(false)
   const [searchError, setSearchError] = useState('')
   const [selectedResult, setSelectedResult] = useState<SearchResult | null>(null)
   const router = useRouter()
@@ -176,16 +181,19 @@ export function GameForm({
     key: K,
     value: GameInput['experience'][K],
   ) => setData((d) => ({ ...d, experience: { ...d.experience, [key]: value } }))
-  async function search() {
-    if (query.trim().length < 2) return
+  async function search(page = 1) {
+    if (searching || query.trim().length < 2) return
     setSearching(true)
     setSearchError('')
     try {
       const result = await searchIgdbFn({
-        data: { query, platformId: searchPlatformId || undefined },
+        data: { query, platformId: searchPlatformId || undefined, page },
       })
-      if (result.ok) setResults(result.data)
-      else setSearchError(result.error)
+      if (result.ok) {
+        setResults(result.data.results)
+        setSearchPage(result.data.page)
+        setHasNextPage(result.data.hasNextPage)
+      } else setSearchError(result.error)
     } catch {
       setSearchError('La recherche n’a pas abouti. Vous pouvez ajouter le jeu manuellement.')
     } finally {
@@ -307,10 +315,13 @@ export function GameForm({
         <div className="import-search">
           <select
             aria-label="Plateforme pour la recherche"
+            disabled={searching}
             value={searchPlatformId}
             onChange={(e) => {
               setSearchPlatformId(e.target.value)
               setResults(null)
+              setSearchPage(1)
+              setSearchError('')
               setSelectedResult(null)
             }}
           >
@@ -323,9 +334,15 @@ export function GameForm({
           </select>
           <input
             aria-label="Titre à rechercher sur IGDB"
+            disabled={searching}
             placeholder="Zelda, Monkey Island, Half-Life…"
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e) => {
+              setQuery(e.target.value)
+              setResults(null)
+              setSearchPage(1)
+              setSearchError('')
+            }}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
                 e.preventDefault()
@@ -359,10 +376,10 @@ export function GameForm({
           </p>
         )}
         {results && (
-          <div className="igdb-results">
+          <div className="igdb-results" aria-busy={searching}>
             {results.length ? (
               results.map((r) => (
-                <button key={r.igdbId} onClick={() => select(r)}>
+                <button type="button" key={r.igdbId} disabled={searching} onClick={() => select(r)}>
                   {r.coverUrl ? (
                     <img src={r.coverUrl} alt="" referrerPolicy="no-referrer" />
                   ) : (
@@ -382,6 +399,27 @@ export function GameForm({
               <p>Aucun résultat. Essayez le titre original, ou complétez la fiche manuellement.</p>
             )}
           </div>
+        )}
+        {results && (results.length > 0 || searchPage > 1) && (
+          <nav className="igdb-pagination" aria-label="Pages des résultats IGDB">
+            <button
+              type="button"
+              className="button secondary"
+              disabled={searching || searchPage === 1}
+              onClick={() => void search(searchPage - 1)}
+            >
+              Précédente
+            </button>
+            <span role="status">Page {searchPage}</span>
+            <button
+              type="button"
+              className="button secondary"
+              disabled={searching || !hasNextPage}
+              onClick={() => void search(searchPage + 1)}
+            >
+              Suivante
+            </button>
+          </nav>
         )}
         {selectedResult && (
           <p className="success-note">

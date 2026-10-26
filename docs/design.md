@@ -1,5 +1,10 @@
 # Direction graphique actuelle
 
+La recherche IGDB des formulaires propose huit résultats par page et une navigation
+Précédente / Page N / Suivante sous les résultats. Les boutons respectent les limites
+des résultats et sont désactivés pendant le chargement. Modifier le titre ou le filtre
+de plateforme efface les résultats précédents ; la prochaine recherche repart en page 1.
+
 Les univers reprennent les six compteurs de sélection de la bibliothèque, calculés sur leur
 plateforme, puis la recherche locale, le tri et Présentation. Aucun sélecteur de plateforme
 redondant ; les machines PC restent accessibles. Les deux thèmes sont disponibles avec les

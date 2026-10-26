@@ -1,5 +1,10 @@
 # État courant
 
+## Dimensions des vignettes PS4 — 2026-10-26
+
+- Dans l’univers PS4, le cadre suit la hauteur naturelle des images pour supprimer les bandes vides au-dessus et en dessous des boîtes. Images entières, sans recadrage ; ratio 0,8 en repli sans image. Les présentations personnalisées restent prioritaires.
+- TypeScript, lint ciblé et tests de présentation vérifiés ; validation visuelle finale par Henri.
+
 ## Fin des résultats IGDB explicite — 2026-10-26
 
 - Les boutons de pagination désactivés n’affichent plus un curseur d’attente hors chargement. La dernière page indique « Fin des résultats » et propose d’élargir le filtre de plateforme.

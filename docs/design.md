@@ -153,7 +153,7 @@ Megastar reste visible en haut à gauche. La vue compacte reprend le même habil
 
 ## Modèles de présentation des jeux
 
-Dans l’univers PS3, la présentation d’origine suit la hauteur naturelle des images afin
+Dans les univers PS3 et PS4, la présentation d’origine suit la hauteur naturelle des images afin
 d’éviter les bandes vides au-dessus et en dessous des boîtes. Les images restent entières,
 sans déformation ; le ratio 0,8 sert de repli sans image. Les modèles personnalisés restent prioritaires.
 

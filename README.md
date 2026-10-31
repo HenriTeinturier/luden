@@ -28,7 +28,7 @@ Luden est une application personnelle en français pour garder la mémoire des j
 - **Docker Desktop démarré**, avec les conteneurs Linux sur Windows. L’application tourne avec Node sur votre ordinateur ; Docker héberge PostgreSQL.
 - Un dossier de données accessible en écriture, hors du dépôt, et de l’espace disque.
 
-Windows est la plateforme utilisée par l’auteur. La CI prévoit aussi des contrôles Linux ; cela ne constitue pas une validation manuelle de toutes les plateformes. macOS n’a pas été vérifié.
+Windows est la plateforme utilisée par l’auteur. Tests et compilation sont vérifiés sous Windows et Linux avec Node 22 en CI ; le parcours complet d’installation et de restauration est vérifié sous Windows localement et sous Linux en CI. La validation du rendu reste manuelle. macOS n’a pas été vérifié.
 
 ### 1. Récupérer les sources
 

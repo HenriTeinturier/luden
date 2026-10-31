@@ -35,7 +35,7 @@ Gardez **une seule instance serveur**, sans script de migration/rangement ni acc
 
 Avant le remplacement, une archive de sécurité et un journal `backups/restore-journal.json` sont créés. En cas d’erreur normale avant validation de la transaction, les images précédentes sont rétablies. Si le processus ou la machine s’arrête pendant le remplacement, la première requête après redémarrage rétablit la sauvegarde de sécurité avant d’autoriser l’accès. Une interruption très tardive peut donc annuler une restauration déjà effectuée : la priorité est de retrouver un état cohérent connu.
 
-Ne supprimez pas le journal ni l’archive de sécurité pendant une reprise. Une erreur de reprise bloque les opérations ; conservez les fichiers et corrigez Docker, le dossier ou l’espace disque avant de redémarrer. Les répertoires `.work/` contiennent des données personnelles temporaires, notamment les imports en attente. Les imports expirés sont nettoyés à la requête suivante ; un arrêt brutal peut laisser des répertoires de travail. Nettoyage manuel uniquement serveur arrêté, après avoir vérifié l’absence de journal de restauration à reprendre.
+Ne supprimez pas le journal ni l’archive de sécurité pendant une reprise. Une erreur de reprise bloque les opérations ; conservez les fichiers et corrigez Docker, le dossier ou l’espace disque avant de redémarrer. Les répertoires `.work/` contiennent des données personnelles temporaires, notamment les imports en attente. Les imports expirés sont nettoyés à la vérification ou restauration suivante ; un arrêt brutal peut laisser des répertoires de travail. Nettoyage manuel uniquement serveur arrêté, après avoir vérifié l’absence de journal de restauration à reprendre.
 
 ## Prérequis et limites
 

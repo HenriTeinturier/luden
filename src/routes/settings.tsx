@@ -15,6 +15,7 @@ import { deleteMachineFn, saveProfileFn } from '../server/functions'
 import { CategorySettings } from '../components/category-settings'
 import { PlatformVisibilitySettings } from '../components/platform-visibility-settings'
 import { HomePlatformSettings } from '../components/home-platform-settings'
+import { BackupSettings } from '../components/backup-settings'
 export const Route = createFileRoute('/settings')({ component: Settings })
 function Settings() {
   const { profile, config, machines } = useLibrary()
@@ -78,17 +79,25 @@ function Settings() {
         </div>
         <p>
           Choisissez un dossier de votre disque, synchronisé par OneDrive si vous le souhaitez.
-          Luden y conservera les images dans un sous-dossier <code>media</code>.
+          Luden y conservera les images dans <code>media</code>, les sauvegardes dans{' '}
+          <code>backups</code> et, par défaut, les miniatures dans <code>cache</code>.
         </p>
         <div className="config-code">
           <span>Dans le fichier .env du projet</span>
-          <code>LUDEN_DATA_DIR="C:/Users/vous/OneDrive/Luden"</code>
+          <code>
+            LUDEN_DATA_DIR="C:/LudenData"
+            <br />
+            LUDEN_CACHE_DIR=""
+          </code>
         </div>
         <p className="field-hint">
           Remplacez cet exemple par votre chemin, puis redémarrez l’application. Le dossier doit
-          être disponible localement. Aucune racine n’est choisie automatiquement.
+          être disponible localement. Aucune racine n’est choisie automatiquement. Pour un cache
+          séparé, renseignez un chemin absolu dans <code>LUDEN_CACHE_DIR</code>. Modifier les
+          chemins ne déplace pas les fichiers existants.
         </p>
       </section>
+      <BackupSettings />
       <section className="settings-section">
         <div className="settings-title">
           <Cloud size={21} />
@@ -131,7 +140,8 @@ function Settings() {
         </a>
         <p className="field-hint">
           Les fichiers images ne sont pas inclus : conservez aussi votre dossier media. Cet export
-          n’est pas une sauvegarde PostgreSQL. La réimportation n’est pas encore disponible.
+          n’est pas une sauvegarde complète et ne peut pas être réimporté. Utilisez la sauvegarde
+          complète pour restaurer votre bibliothèque.
         </p>
       </section>
       {machines.length > 0 && (
@@ -176,6 +186,11 @@ function Settings() {
           <p>
             Cette première version fonctionne uniquement sur votre PC. Les comptes et le partage de
             collections seront ajoutés dans une future version hébergée.
+          </p>
+          <p>
+            <a href="https://github.com/HenriTeinturier/luden" target="_blank" rel="noreferrer">
+              Code source de Luden — AGPL v3
+            </a>
           </p>
         </div>
       </div>

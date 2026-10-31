@@ -5,6 +5,7 @@ import { webUrlSchema } from '../lib/media'
 import { categoriesSchema } from '../lib/categories'
 import { platformVisualsSchema, deletePlatformVisualSchema } from '../lib/platform-visuals'
 import { createPlatformSchema } from '../lib/personal-platforms'
+import { withLibraryAccess } from './maintenance'
 
 export const setPlatformVisibilityFn = createServerFn({ method: 'POST' })
   .validator(z.object({ platformId: z.string().min(1), visible: z.boolean() }))
@@ -58,7 +59,7 @@ export const libraryFn = createServerFn({ method: 'GET' }).handler(async () => {
   assertLocalRequest()
   const { loadLibrary } = await import('./library')
   try {
-    return { library: await loadLibrary(), error: null }
+    return { library: await withLibraryAccess(loadLibrary), error: null }
   } catch {
     return {
       library: null,

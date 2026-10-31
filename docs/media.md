@@ -28,7 +28,7 @@ pour éviter les verrous de fichiers Windows, écriture temporaire puis renommag
 Un échec de conversion ou de cache laisse l’original disponible et permet une nouvelle
 tentative à la prochaine demande ; variantes réussies en cache navigateur privé pendant un jour.
 
-Cache disque : `LUDEN_DATA_DIR/cache/thumbnails/v1/<empreinte>/<largeur>.webp`, hors des
+Cache disque : `LUDEN_CACHE_DIR/thumbnails/v1/<empreinte>/<largeur>.webp` si configuré, sinon `LUDEN_DATA_DIR/cache/thumbnails/v1/<empreinte>/<largeur>.webp`, hors des
 originaux et du rangement des médias. L’empreinte inclut chemin, taille et date de modification
 du contenu (`mtime`) ; elle ignore `ctime`, qui peut changer à la lecture/synchronisation d’un
 fichier OneDrive sans changement des octets. Les miniatures identifiables avec l’ancienne clé

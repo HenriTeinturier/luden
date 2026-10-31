@@ -4,6 +4,7 @@ import path from 'node:path'
 import sharp from 'sharp'
 import { imageWidths, type ImageWidth } from '../lib/image-variants'
 import { resolveMediaPath } from './media-path'
+import { thumbnailRoot } from './storage-config'
 
 const pending = new Map<string, Promise<Buffer>>()
 const waiting: Array<() => void> = []
@@ -24,7 +25,7 @@ export async function removeStoredImage(root: string, relative: string) {
   const revision = `${source}:${original.size}:${original.mtimeMs}`
   for (const value of [revision, `${revision}:${original.ctimeMs}`]) {
     const key = createHash('sha256').update(value).digest('hex')
-    const directory = path.resolve(root, 'cache', 'thumbnails', 'v1', key)
+    const directory = path.join(thumbnailRoot(root), key)
     for (const width of imageWidths) {
       const destination = path.join(directory, `${width}.webp`)
       await pending.get(destination)?.catch(() => undefined)
@@ -67,7 +68,7 @@ async function thumbnail(root: string, source: string, width: ImageWidth) {
   // Use only content modification time and size to invalidate an unchanged source path.
   const revision = `${source}:${original.size}:${original.mtimeMs}`
   const key = createHash('sha256').update(revision).digest('hex')
-  const directory = path.join(root, 'cache', 'thumbnails', 'v1', key)
+  const directory = path.join(thumbnailRoot(root), key)
   const destination = path.join(directory, `${width}.webp`)
   try {
     return await readFile(destination)
@@ -77,7 +78,7 @@ async function thumbnail(root: string, source: string, width: ImageWidth) {
   // Reuse the previous cache format when its current revision is still identifiable.
   // Copy only: existing variants and any older running process remain undisturbed.
   const legacyKey = createHash('sha256').update(`${revision}:${original.ctimeMs}`).digest('hex')
-  const legacy = path.join(root, 'cache', 'thumbnails', 'v1', legacyKey, `${width}.webp`)
+  const legacy = path.join(thumbnailRoot(root), legacyKey, `${width}.webp`)
   try {
     const bytes = await readFile(legacy)
     try {

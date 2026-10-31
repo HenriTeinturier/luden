@@ -1,5 +1,17 @@
 # État courant
 
+## Préparation au partage — 0.2.0 — 2026-10-31
+
+- README réécrit : installation depuis zéro, PostgreSQL Docker, utilisation, stockage, IGDB facultatif, sauvegarde/restauration et dépannage. Huit captures fournies pour la présentation sont dans `docs/screenshots/` ; aucune collection personnelle n’est ajoutée à l’installation.
+- Code sous AGPL-3.0-only ; `LICENSE`, `NOTICE.md`, `SECURITY.md` et `CONTRIBUTING.md`. Les éléments visuels tiers conservent leurs droits propres.
+- `LUDEN_DATA_DIR` reste la racine des images et sauvegardes. Nouveau `LUDEN_CACHE_DIR` facultatif pour les miniatures ; `.env.example` décrit tous les dossiers et la limite `LUDEN_BACKUP_MAX_MB`. Pas de déplacement des données existantes ni changement du `.env` personnel.
+- Paramètres : archive complète dump PostgreSQL + images référencées, choix du fichier quand le navigateur le permet et téléchargement classique en secours. Mention explicite des secrets exclus : mot de passe PostgreSQL, identifiants IGDB et `.env`. Export JSON conservé séparément.
+- Restauration complète confirmée : contrôle des chemins/tailles/empreintes et des migrations, essai PostgreSQL temporaire, sauvegarde de sécurité, remplacement transactionnel et récupération après interruption. Une seule instance locale ; archives de confiance seulement. Voir `docs/backups.md`.
+- TanStack Start/Router, Vite, Zod et Sharp mis à jour. Audit des dépendances d’exécution : aucune vulnérabilité signalée le 2026-10-31 ; alertes modérées ESLint/minimatch de développement documentées dans `SECURITY.md`.
+- Vérifié sur Windows / Node 24.21.0 : `npm ci`, 12 migrations sur base vide, initialisation sans jeux, TypeScript, ESLint, 91 tests, build et serveur compilé. `npm run verify:release` contrôle aussi le cycle HTTP import image → sauvegarde → modification → restauration, images de jeu et plateforme, copie de sécurité, refus interorigine et reprise après interruption simulée. Base et dossiers jetables ; collection personnelle non utilisée. Rapport local hors Git sous `.local/release-check-21b9dc7bcf/report.json`.
+- CI ajoutée : contrôles et build sous Windows/Linux Node 22, plus installation/restauration Docker sous Linux. Le résultat distant doit être vérifié après push ; ne pas confondre cette configuration avec une validation déjà effectuée sur ces plateformes.
+- Navigateur : téléchargement classique d’une archive, sélection du fichier, aperçu et confirmation de remplacement vérifiés sur l’instance jetable ; aucune erreur JavaScript relevée. Pas de snapshots visuels ajoutés. Procédure de réinitialisation du mot de passe PostgreSQL perdue ajoutée au README ; accès par socket local sans mot de passe confirmé dans le conteneur jetable, sans changer les identifiants personnels.
+
 ## Dimensions des vignettes PS4 — 2026-10-26
 
 - Dans l’univers PS4, le cadre suit la hauteur naturelle des images pour supprimer les bandes vides au-dessus et en dessous des boîtes. Images entières, sans recadrage ; ratio 0,8 en repli sans image. Les présentations personnalisées restent prioritaires.

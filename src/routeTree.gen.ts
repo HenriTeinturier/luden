@@ -13,8 +13,10 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as DiscoverRouteImport } from './routes/discover'
 import { Route as LibraryRouteImport } from './routes/library'
 import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as ApiBackupRouteImport } from './routes/api.backup'
 import { Route as ApiExportRouteImport } from './routes/api.export'
 import { Route as ApiMediaRouteImport } from './routes/api.media'
+import { Route as ApiRestoreRouteImport } from './routes/api.restore'
 import { Route as CollectionsIndexRouteImport } from './routes/collections.index'
 import { Route as CollectionsCollectionIdRouteImport } from './routes/collections.$collectionId'
 import { Route as GamesGameIdRouteImport } from './routes/games.$gameId'
@@ -46,6 +48,11 @@ const SettingsRoute = SettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiBackupRoute = ApiBackupRouteImport.update({
+  id: '/api/backup',
+  path: '/api/backup',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiExportRoute = ApiExportRouteImport.update({
   id: '/api/export',
   path: '/api/export',
@@ -54,6 +61,11 @@ const ApiExportRoute = ApiExportRouteImport.update({
 const ApiMediaRoute = ApiMediaRouteImport.update({
   id: '/api/media',
   path: '/api/media',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiRestoreRoute = ApiRestoreRouteImport.update({
+  id: '/api/restore',
+  path: '/api/restore',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CollectionsIndexRoute = CollectionsIndexRouteImport.update({
@@ -112,8 +124,10 @@ export interface FileRoutesByFullPath {
   '/discover': typeof DiscoverRoute
   '/library': typeof LibraryRoute
   '/settings': typeof SettingsRoute
+  '/api/backup': typeof ApiBackupRoute
   '/api/export': typeof ApiExportRoute
   '/api/media': typeof ApiMediaRoute
+  '/api/restore': typeof ApiRestoreRoute
   '/collections/$collectionId': typeof CollectionsCollectionIdRoute
   '/games/$gameId': typeof GamesGameIdRoute
   '/games/new': typeof GamesNewRoute
@@ -130,8 +144,10 @@ export interface FileRoutesByTo {
   '/discover': typeof DiscoverRoute
   '/library': typeof LibraryRoute
   '/settings': typeof SettingsRoute
+  '/api/backup': typeof ApiBackupRoute
   '/api/export': typeof ApiExportRoute
   '/api/media': typeof ApiMediaRoute
+  '/api/restore': typeof ApiRestoreRoute
   '/collections/$collectionId': typeof CollectionsCollectionIdRoute
   '/games/$gameId': typeof GamesGameIdRoute
   '/games/new': typeof GamesNewRoute
@@ -149,8 +165,10 @@ export interface FileRoutesById {
   '/discover': typeof DiscoverRoute
   '/library': typeof LibraryRoute
   '/settings': typeof SettingsRoute
+  '/api/backup': typeof ApiBackupRoute
   '/api/export': typeof ApiExportRoute
   '/api/media': typeof ApiMediaRoute
+  '/api/restore': typeof ApiRestoreRoute
   '/collections/$collectionId': typeof CollectionsCollectionIdRoute
   '/games/$gameId': typeof GamesGameIdRoute
   '/games/new': typeof GamesNewRoute
@@ -169,8 +187,10 @@ export interface FileRouteTypes {
     | '/discover'
     | '/library'
     | '/settings'
+    | '/api/backup'
     | '/api/export'
     | '/api/media'
+    | '/api/restore'
     | '/collections/$collectionId'
     | '/games/$gameId'
     | '/games/new'
@@ -187,8 +207,10 @@ export interface FileRouteTypes {
     | '/discover'
     | '/library'
     | '/settings'
+    | '/api/backup'
     | '/api/export'
     | '/api/media'
+    | '/api/restore'
     | '/collections/$collectionId'
     | '/games/$gameId'
     | '/games/new'
@@ -205,8 +227,10 @@ export interface FileRouteTypes {
     | '/discover'
     | '/library'
     | '/settings'
+    | '/api/backup'
     | '/api/export'
     | '/api/media'
+    | '/api/restore'
     | '/collections/$collectionId'
     | '/games/$gameId'
     | '/games/new'
@@ -224,8 +248,10 @@ export interface RootRouteChildren {
   DiscoverRoute: typeof DiscoverRoute
   LibraryRoute: typeof LibraryRoute
   SettingsRoute: typeof SettingsRoute
+  ApiBackupRoute: typeof ApiBackupRoute
   ApiExportRoute: typeof ApiExportRoute
   ApiMediaRoute: typeof ApiMediaRoute
+  ApiRestoreRoute: typeof ApiRestoreRoute
   CollectionsCollectionIdRoute: typeof CollectionsCollectionIdRoute
   GamesGameIdRoute: typeof GamesGameIdRoute
   GamesNewRoute: typeof GamesNewRoute
@@ -268,6 +294,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/backup': {
+      id: '/api/backup'
+      path: '/api/backup'
+      fullPath: '/api/backup'
+      preLoaderRoute: typeof ApiBackupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/export': {
       id: '/api/export'
       path: '/api/export'
@@ -280,6 +313,13 @@ declare module '@tanstack/react-router' {
       path: '/api/media'
       fullPath: '/api/media'
       preLoaderRoute: typeof ApiMediaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/restore': {
+      id: '/api/restore'
+      path: '/api/restore'
+      fullPath: '/api/restore'
+      preLoaderRoute: typeof ApiRestoreRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/collections/': {
@@ -360,8 +400,10 @@ const rootRouteChildren: RootRouteChildren = {
   DiscoverRoute: DiscoverRoute,
   LibraryRoute: LibraryRoute,
   SettingsRoute: SettingsRoute,
+  ApiBackupRoute: ApiBackupRoute,
   ApiExportRoute: ApiExportRoute,
   ApiMediaRoute: ApiMediaRoute,
+  ApiRestoreRoute: ApiRestoreRoute,
   CollectionsCollectionIdRoute: CollectionsCollectionIdRoute,
   GamesGameIdRoute: GamesGameIdRoute,
   GamesNewRoute: GamesNewRoute,

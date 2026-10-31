@@ -18,6 +18,33 @@ import sharp, { type Sharp } from 'sharp'
 import { mediaImageSources, parseImageWidth } from '../src/lib/image-variants'
 import { readStoredImage, removeStoredImage } from '../src/server/image-variants'
 
+// These tests own their temporary storage, independently of the installation's cache.
+process.env.LUDEN_CACHE_DIR = ''
+
+test('Miniatures : création et retrait dans le cache séparé choisi', async () => {
+  const root = await mkdtemp(path.join(os.tmpdir(), 'luden-separated-images-'))
+  const cache = await mkdtemp(path.join(os.tmpdir(), 'luden-separated-cache-'))
+  process.env.LUDEN_CACHE_DIR = cache
+  try {
+    await mkdir(path.join(root, 'media'))
+    await writeFile(
+      path.join(root, 'media', 'image.png'),
+      await sharp({ create: { width: 640, height: 480, channels: 3, background: '#123456' } })
+        .png()
+        .toBuffer(),
+    )
+    await readyThumbnail(root, 'image.png', 320)
+    assert.equal((await readdir(path.join(cache, 'thumbnails', 'v1'))).length, 1)
+    await assert.rejects(stat(path.join(root, 'cache')))
+    await removeStoredImage(root, 'image.png')
+    assert.deepEqual(await readdir(path.join(cache, 'thumbnails', 'v1')), [])
+  } finally {
+    process.env.LUDEN_CACHE_DIR = ''
+    await rm(root, { recursive: true, force: true })
+    await rm(cache, { recursive: true, force: true })
+  }
+})
+
 async function readyThumbnail(root: string, relative: string, width: 320 | 640) {
   for (let attempt = 0; attempt < 500; attempt++) {
     const result = await readStoredImage(root, relative, 'image/png', width)

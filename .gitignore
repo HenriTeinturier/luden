@@ -11,3 +11,7 @@ coverage/
 *.tsbuildinfo
 .local/
 media/
+backups/
+*.dump
+*.luden.tar.gz
+.playwright-cli/

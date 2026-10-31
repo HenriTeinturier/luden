@@ -302,7 +302,7 @@ export function Shell({ children, library }: { children: ReactNode; library: Lib
                     <span>Une vie de jeux, une collection de souvenirs.</span>
                   </span>
                   <span>
-                    <Sparkles size={12} /> Édition personnelle · v0.1
+                    <Sparkles size={12} /> Édition personnelle · v0.2.0
                   </span>
                 </footer>
               }

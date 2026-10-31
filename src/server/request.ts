@@ -1,5 +1,6 @@
 import { getRequest } from '@tanstack/react-start/server'
 import { z } from 'zod'
+import { withLibraryAccess } from './maintenance'
 
 export function assertLocalRequest(request = getRequest()) {
   const url = new URL(request.url)
@@ -14,7 +15,7 @@ export function assertLocalRequest(request = getRequest()) {
 export async function mutation<T>(action: () => Promise<T>) {
   assertLocalRequest()
   try {
-    return { ok: true as const, data: await action() }
+    return { ok: true as const, data: await withLibraryAccess(action) }
   } catch (error) {
     if (error instanceof z.ZodError)
       return { ok: false as const, error: error.issues[0]?.message ?? 'Vérifie les champs.' }

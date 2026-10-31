@@ -48,6 +48,8 @@ confirmation. `Game.presentation` est validé par Zod et limité aux médias att
 
 ## Stockage
 
+Sauvegarde complète : `api.backup` / `api.restore` → `server/backup.ts` → outils PostgreSQL 17 dans le service Compose `db`. Archive tar.gz avec dump custom sans rôles/propriétaires/permissions, manifeste à empreintes et médias référencés. `maintenance.ts` suspend les accès de cette instance et attend les opérations en cours. Validation du format et des fichiers, contrôle des migrations, essai dans une base temporaire, sauvegarde de sécurité puis remplacement PostgreSQL transactionnel et permutation des images. Un journal permet le retour à la copie de sécurité après interruption. Un seul processus applicatif ; pas de maintenance CLI concurrente. Les dumps doivent être de confiance. Détails : `docs/backups.md`.
+
 `LUDEN_DATA_DIR` absolu fourni par l'utilisateur. Médias sous `media/`, DB avec chemins relatifs.
 Imports provisoires dans `_imports/`, puis rangement par plateforme/jeu à la sauvegarde de fiche.
 `media-organization.ts` calcule les destinations ; `media-storage.ts` assure copie vérifiée,
@@ -56,7 +58,7 @@ Validation de taille/format, décodage et conversion WebP côté serveur, sans r
 Import fichier, URL publique ou sélection IGDB : même stockage local, dimensions et source conservées.
 Miniatures à la demande : `/media/<id>?w=320|640|1280` → `media.readImage` (propriétaire)
 → `image-variants.ts` (Sharp, deux conversions simultanées, cache disque régénérable sous
-`LUDEN_DATA_DIR/cache/thumbnails/v1`). Les vues compactes choisissent une taille via
+`LUDEN_CACHE_DIR/thumbnails/v1`, ou `LUDEN_DATA_DIR/cache/thumbnails/v1` par défaut). Les vues compactes choisissent une taille via
 `srcset`/`sizes` ; originaux conservés pour les agrandissements. Aucune migration nécessaire.
 Cache absent : original servi sans attendre, génération en arrière-plan ; les requêtes
 image ne sont jamais mises en attente de la conversion.

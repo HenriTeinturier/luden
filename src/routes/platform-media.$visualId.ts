@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { assertLocalRequest } from '../server/request'
 import { readPlatformImage } from '../server/platform-visuals'
+import { withLibraryAccess } from '../server/maintenance'
 
 export const Route = createFileRoute('/platform-media/$visualId')({
   server: {
@@ -8,7 +9,7 @@ export const Route = createFileRoute('/platform-media/$visualId')({
       GET: async ({ request, params }) => {
         try {
           assertLocalRequest(request)
-          const bytes = await readPlatformImage(params.visualId)
+          const bytes = await withLibraryAccess(() => readPlatformImage(params.visualId))
           if (!bytes) return new Response('Image indisponible', { status: 404 })
           return new Response(new Uint8Array(bytes), {
             headers: {
